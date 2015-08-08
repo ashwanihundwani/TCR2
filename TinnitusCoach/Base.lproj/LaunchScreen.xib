@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6250" systemVersion="14A389" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="480" height="480"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tcSplash.png" translatesAutoresizingMaskIntoConstraints="NO" id="YQp-Xg-Jyp">
+                    <rect key="frame" x="0.0" y="0.0" width="480" height="480"/>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="v 1.0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FFe-7C-Vwj">
+                    <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="100" id="LFV-Wt-EFg"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="29"/>
+                    <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <nil key="highlightedColor"/>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="LFV-Wt-EFg"/>
+                        </mask>
+                    </variation>
+                    <variation key="widthClass=compact">
+                        <mask key="constraints">
+                            <include reference="LFV-Wt-EFg"/>
+                        </mask>
+                    </variation>
+                </label>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="YQp-Xg-Jyp" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="2E3-Fa-AJ7"/>
+                <constraint firstAttribute="trailing" secondItem="YQp-Xg-Jyp" secondAttribute="trailing" id="2E5-mJ-0o9"/>
+                <constraint firstItem="FFe-7C-Vwj" firstAttribute="centerX" secondItem="YQp-Xg-Jyp" secondAttribute="centerX" id="9PV-o2-fEM"/>
+                <constraint firstAttribute="bottom" secondItem="YQp-Xg-Jyp" secondAttribute="bottom" id="a0J-oG-uSl"/>
+                <constraint firstItem="YQp-Xg-Jyp" firstAttribute="top" secondItem="FFe-7C-Vwj" secondAttribute="bottom" constant="-172" id="tYJ-8C-FyM">
+                    <variation key="widthClass=compact" constant="-199"/>
+                </constraint>
+                <constraint firstItem="YQp-Xg-Jyp" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="vPI-2j-aDm"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <variation key="default">
+                <mask key="subviews">
+                    <exclude reference="FFe-7C-Vwj"/>
+                </mask>
+                <mask key="constraints">
+                    <exclude reference="9PV-o2-fEM"/>
+                    <exclude reference="tYJ-8C-FyM"/>
+                </mask>
+            </variation>
+            <variation key="widthClass=compact">
+                <mask key="subviews">
+                    <include reference="FFe-7C-Vwj"/>
+                </mask>
+                <mask key="constraints">
+                    <include reference="9PV-o2-fEM"/>
+                    <include reference="tYJ-8C-FyM"/>
+                </mask>
+            </variation>
+            <point key="canvasLocation" x="548" y="455"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="tcSplash.png" width="640" height="1136"/>
+    </resources>
+</document>

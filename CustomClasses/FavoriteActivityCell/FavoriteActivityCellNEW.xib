@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6250" systemVersion="14A389" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="86" id="KGk-i7-Jjw" customClass="FavoriteActivityCell">
+            <rect key="frame" x="0.0" y="0.0" width="317" height="86"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7w4-90-2cK">
+                        <rect key="frame" x="22" y="45" width="90" height="30"/>
+                        <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="90" id="3l6-hR-vwr"/>
+                            <constraint firstAttribute="width" constant="100" id="X9w-zX-Tir"/>
+                            <constraint firstAttribute="height" constant="30" id="x58-3Y-n2L"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <state key="normal" title="- Favorite">
+                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                <integer key="value" value="5"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="X9w-zX-Tir"/>
+                            </mask>
+                        </variation>
+                    </button>
+                    <button contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KGN-Pt-J2x">
+                        <rect key="frame" x="22" y="13" width="273" height="20"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="20" id="SJp-JS-Tpg"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
+                        <state key="normal" title="This is button">
+                            <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                    </button>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="66X-7b-6RL">
+                        <rect key="frame" x="126" y="49" width="172" height="20"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="20" id="0lR-rL-gGD"/>
+                            <constraint firstAttribute="width" constant="172" id="3kk-Mf-8it"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
+                        <color key="textColor" red="0.34509803921568627" green="0.34901960784313724" blue="0.35686274509803922" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2Bv-BC-trh" userLabel="Separator">
+                        <rect key="frame" x="0.0" y="83" width="317" height="1"/>
+                        <color key="backgroundColor" red="0.93333333333333335" green="0.93333333333333335" blue="0.93333333333333335" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="1" id="Egz-cF-DD3"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="2Bv-BC-trh" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="2MO-Cu-DmE"/>
+                    <constraint firstAttribute="bottom" secondItem="7w4-90-2cK" secondAttribute="bottom" constant="10" id="6HI-jX-p7s"/>
+                    <constraint firstAttribute="trailing" secondItem="KGN-Pt-J2x" secondAttribute="trailing" id="D7Y-Sl-NcS"/>
+                    <constraint firstItem="KGN-Pt-J2x" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="13" id="JOn-Xq-1WO"/>
+                    <constraint firstAttribute="trailing" secondItem="KGN-Pt-J2x" secondAttribute="trailing" constant="22" id="Mw4-Xc-jEN"/>
+                    <constraint firstAttribute="trailing" secondItem="2Bv-BC-trh" secondAttribute="trailing" id="Pj5-jH-c5V"/>
+                    <constraint firstItem="KGN-Pt-J2x" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="-4" id="ZNv-lI-Qe0"/>
+                    <constraint firstItem="66X-7b-6RL" firstAttribute="leading" secondItem="7w4-90-2cK" secondAttribute="trailing" constant="14" id="f83-if-zQ2"/>
+                    <constraint firstItem="7w4-90-2cK" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="22" id="iN1-eA-8XB"/>
+                    <constraint firstItem="KGN-Pt-J2x" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="22" id="mfu-OC-DxL"/>
+                    <constraint firstAttribute="bottom" secondItem="66X-7b-6RL" secondAttribute="bottom" constant="16" id="pdH-vU-i0r"/>
+                    <constraint firstAttribute="bottom" secondItem="2Bv-BC-trh" secondAttribute="bottom" constant="1" id="s2c-69-NVg"/>
+                </constraints>
+                <variation key="default">
+                    <mask key="constraints">
+                        <exclude reference="D7Y-Sl-NcS"/>
+                        <exclude reference="ZNv-lI-Qe0"/>
+                    </mask>
+                </variation>
+            </tableViewCellContentView>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <connections>
+                <outlet property="activityNameButton" destination="KGN-Pt-J2x" id="tlG-DI-wiD"/>
+                <outlet property="dateLabel" destination="66X-7b-6RL" id="XcT-L4-JYD"/>
+                <outlet property="removeFavoriteButton" destination="7w4-90-2cK" id="GqR-rr-7iq"/>
+            </connections>
+            <point key="canvasLocation" x="414.5" y="276"/>
+        </tableViewCell>
+    </objects>
+</document>

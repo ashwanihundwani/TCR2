@@ -1,0 +1,31 @@
+//
+//  PrefixHeader.pch
+//  TinnitusCoach
+//
+//  Created by Creospan on 3/21/15.
+//  Copyright (c) 2015 Creospan. All rights reserved.
+//
+
+#import <Availability.h>
+
+
+// Include any system framework and library headers here that should be included in all compilation units.
+// You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
+
+#ifdef __OBJC__
+#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
+#import <AVFoundation/AVFoundation.h>
+#import <MediaPlayer/MediaPlayer.h>
+#import "MYIntroductionPanel.h"
+#import "MYIntroductionView.h"
+#import "DBManager.h"
+#import "Constants.h"
+
+#endif
+
+
+typedef enum{
+    audio,
+    video
+}audioPanning;

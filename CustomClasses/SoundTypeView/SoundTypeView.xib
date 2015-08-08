@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6250" systemVersion="14A389" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" restorationIdentifier="SoundTypeView" id="iN0-l3-epB" customClass="SoundTypeView">
+            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Soothing Sounds" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vMY-AY-nym">
+                    <rect key="frame" x="8" y="16" width="584" height="21"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="21" id="OUl-hF-lYG"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
+                    <color key="textColor" red="0.31372549020000001" green="0.31372549020000001" blue="0.31372549020000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This type of sound makes you feel better as soon as you hear it." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Eiq-iW-A7D">
+                    <rect key="frame" x="8" y="45" width="584" height="54"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="54" id="hBO-gf-yd9"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GzM-ZP-0UY">
+                    <rect key="frame" x="452" y="107" width="140" height="30"/>
+                    <color key="backgroundColor" red="0.0" green="0.47843137254901957" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="140" id="dsR-oR-6Pe"/>
+                        <constraint firstAttribute="height" constant="30" id="lDB-3F-8TM"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                    <state key="normal" title="Explore &amp; Add">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                            <integer key="value" value="5"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                </button>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Includes Devices" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jls-uD-4kh">
+                    <rect key="frame" x="452" y="145" width="140" height="21"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="140" id="OyH-pO-XTS"/>
+                        <constraint firstAttribute="height" constant="21" id="TuJ-T7-ZpA"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                    <color key="textColor" red="0.31372549020000001" green="0.31372549020000001" blue="0.31372549020000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You have no added sounds." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yPR-iP-cYL">
+                    <rect key="frame" x="8" y="170" width="584" height="21"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="21" id="XzK-LK-vdQ"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="WBr-Fn-6BT">
+                    <rect key="frame" x="8" y="199" width="584" height="393"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <connections>
+                        <outlet property="dataSource" destination="iN0-l3-epB" id="d4C-K0-Qou"/>
+                        <outlet property="delegate" destination="iN0-l3-epB" id="Pna-DQ-9XC"/>
+                    </connections>
+                </tableView>
+                <imageView userInteractionEnabled="NO" alpha="0.35000000000000003" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="line.png" translatesAutoresizingMaskIntoConstraints="NO" id="fqg-de-SCV">
+                    <rect key="frame" x="99" y="0.0" width="330" height="11"/>
+                </imageView>
+            </subviews>
+            <color key="backgroundColor" white="0.95822679924242427" alpha="1" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="WBr-Fn-6BT" secondAttribute="bottom" constant="8" id="92U-4u-ihV"/>
+                <constraint firstAttribute="trailing" secondItem="Eiq-iW-A7D" secondAttribute="trailing" constant="8" id="CCo-on-Vys"/>
+                <constraint firstAttribute="trailing" secondItem="GzM-ZP-0UY" secondAttribute="trailing" constant="8" id="IFn-IS-TW7"/>
+                <constraint firstAttribute="trailing" secondItem="vMY-AY-nym" secondAttribute="trailing" constant="8" id="IMq-hR-kMF"/>
+                <constraint firstItem="yPR-iP-cYL" firstAttribute="top" secondItem="jls-uD-4kh" secondAttribute="bottom" constant="4" id="J4I-f8-K6o"/>
+                <constraint firstItem="yPR-iP-cYL" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="8" id="KI4-d6-HTa"/>
+                <constraint firstItem="WBr-Fn-6BT" firstAttribute="top" secondItem="yPR-iP-cYL" secondAttribute="bottom" constant="8" id="Xy5-b4-yS8"/>
+                <constraint firstItem="vMY-AY-nym" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="8" id="ZtY-an-Myy"/>
+                <constraint firstAttribute="trailing" secondItem="WBr-Fn-6BT" secondAttribute="trailing" constant="8" id="cEn-ab-zde"/>
+                <constraint firstItem="Eiq-iW-A7D" firstAttribute="top" secondItem="vMY-AY-nym" secondAttribute="bottom" constant="8" id="csW-7f-YfI"/>
+                <constraint firstAttribute="trailing" secondItem="jls-uD-4kh" secondAttribute="trailing" constant="8" id="h44-ts-vAg"/>
+                <constraint firstAttribute="trailing" secondItem="yPR-iP-cYL" secondAttribute="trailing" constant="8" id="lz2-kh-xR0"/>
+                <constraint firstItem="vMY-AY-nym" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="16" id="poP-cN-mj5"/>
+                <constraint firstItem="GzM-ZP-0UY" firstAttribute="top" secondItem="Eiq-iW-A7D" secondAttribute="bottom" constant="8" id="pqv-73-Kvk"/>
+                <constraint firstAttribute="centerX" secondItem="fqg-de-SCV" secondAttribute="centerX" id="qV2-bT-rpo"/>
+                <constraint firstItem="jls-uD-4kh" firstAttribute="top" secondItem="GzM-ZP-0UY" secondAttribute="bottom" constant="8" id="s2e-Yf-F2A"/>
+                <constraint firstItem="Eiq-iW-A7D" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="8" id="xgx-2E-gce"/>
+                <constraint firstItem="WBr-Fn-6BT" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="8" id="yLQ-9j-Gwg"/>
+            </constraints>
+            <connections>
+                <outlet property="exploreAndAddButton" destination="GzM-ZP-0UY" id="pB2-DZ-Rde"/>
+                <outlet property="soundActivitiesTableView" destination="WBr-Fn-6BT" id="etw-P8-7sq"/>
+                <outlet property="soundActivityTableStatus" destination="yPR-iP-cYL" id="B8q-Zv-qyl"/>
+                <outlet property="soundDescriptionLabel" destination="Eiq-iW-A7D" id="fBF-RB-OVM"/>
+                <outlet property="soundTitleLabel" destination="vMY-AY-nym" id="zto-s3-faZ"/>
+            </connections>
+            <point key="canvasLocation" x="-256" y="459"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="line.png" width="400" height="8"/>
+    </resources>
+</document>
