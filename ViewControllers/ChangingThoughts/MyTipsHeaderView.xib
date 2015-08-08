@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6250" systemVersion="14A389" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="sbl-WI-ut2" customClass="MyTipsHeaderView">
+            <rect key="frame" x="0.0" y="0.0" width="317" height="154"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AS6-FG-jgd">
+                    <rect key="frame" x="60" y="246" width="200" height="30"/>
+                    <color key="backgroundColor" red="0.1215686275" green="0.37647058820000001" blue="0.97254901959999995" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="30" id="5jZ-Qv-V7G"/>
+                        <constraint firstAttribute="width" constant="180" id="7k6-pl-ZV2"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                    <state key="normal" title="Edit Tips">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                </button>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="These are the sleep tips selected by you to use. You can always change the list." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rnb-ii-ujl">
+                    <rect key="frame" x="19" y="177" width="514" height="54"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="54" id="S74-F1-4hG"/>
+                        <constraint firstAttribute="width" constant="280" id="t5Q-l2-l4K"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="AS6-FG-jgd" firstAttribute="leading" secondItem="sbl-WI-ut2" secondAttribute="leading" constant="60" id="9fn-eK-GFE"/>
+                <constraint firstAttribute="trailing" secondItem="AS6-FG-jgd" secondAttribute="trailing" constant="60" id="DgL-FI-EqP"/>
+                <constraint firstItem="rnb-ii-ujl" firstAttribute="leading" secondItem="sbl-WI-ut2" secondAttribute="leading" constant="20" id="Dlj-MF-8kf"/>
+                <constraint firstAttribute="trailing" secondItem="rnb-ii-ujl" secondAttribute="trailing" constant="20" id="O9O-uD-gnN"/>
+                <constraint firstItem="AS6-FG-jgd" firstAttribute="top" secondItem="rnb-ii-ujl" secondAttribute="bottom" constant="15" id="dNH-S6-SfW"/>
+                <constraint firstAttribute="centerX" secondItem="AS6-FG-jgd" secondAttribute="centerX" id="frK-oG-gC1"/>
+                <constraint firstAttribute="centerX" secondItem="rnb-ii-ujl" secondAttribute="centerX" id="nNd-Xz-8l7"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="Dlj-MF-8kf"/>
+                    <exclude reference="O9O-uD-gnN"/>
+                    <exclude reference="9fn-eK-GFE"/>
+                    <exclude reference="DgL-FI-EqP"/>
+                </mask>
+            </variation>
+            <connections>
+                <outlet property="btnEditTips" destination="AS6-FG-jgd" id="cr8-lL-obK"/>
+                <outlet property="lblHelp" destination="rnb-ii-ujl" id="trq-gr-6f1"/>
+            </connections>
+            <point key="canvasLocation" x="576.5" y="362"/>
+        </view>
+    </objects>
+</document>
