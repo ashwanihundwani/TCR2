@@ -1,0 +1,19 @@
+/*! intel-appframework - v2.2.0 - 2015-02-12 */
+
+/**********************************************************
+    GENERAL UI ELEMENTS
+**********************************************************/
+
+* {
+    -webkit-user-select:none; /* Prevent copy paste for all elements except text fields */
+    -webkit-tap-highlight-color:rgba(0, 0, 0, 0); /* set highlight color for user interaction */
+    -moz-tap-highlight-color:rgba(0, 0, 0, 0); /* set highlight color for user interaction */
+    -ms-touch-action:none;
+    -moz-user-select:-moz-none;
+    -webkit-touch-callout: none; /* prevent the popup menu on any links*/
+    margin:0px;
+    padding:0px;
+    -webkit-box-sizing:border-box;
+    -moz-box-sizing:border-box;
+    box-sizing:border-box;
+}

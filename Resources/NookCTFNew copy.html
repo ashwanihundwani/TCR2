@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>List View App template</title>
+        <!--
+         This template can be used for simple list view application that has a main view with list and detail view for each list item, for applications like Mail app, Messages App or Twitter app.
+         -->
+        <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0;" />
+
+        <link rel="stylesheet" type="text/css" href="af.ui.css" />
+        <link rel="stylesheet" type="text/css" href="icons.css" />
+        <link rel="stylesheet" type="text/css" href="style.css" />
+        <script type="text/javascript" charset="utf-8" src="appframework.ui.min.js"></script>
+
+        <!-- phantom library, needed for XDK "legacy" container api calls -->
+        <script src="intelxdk.js"></script>
+        <!-- phantom library, needed for Cordova api calls -->
+        <script src="cordova.js"></script>
+        <!-- phantom library, needed for XDK "legacy" container CORS -->
+        <script src="xhr.js"></script>
+
+        <script>
+            var onDeviceReady=function(){                             // called when Cordova is ready
+                if( window.Cordova && navigator.splashscreen ) {     // Cordova API detected
+                    $.ui.launch();
+                    navigator.splashscreen.hide() ;                 // hide splash screen
+                }
+            } ;
+        document.addEventListener("deviceready", onDeviceReady, false) ;
+            </script>
+
+        <script>
+            $.ui.autoLaunch = false;
+            $.ui.backButtonText = "Changing Thoughts and Feelings";
+
+            $(document).ready(function(){
+                              $.ui.launch();
+                              });
+            </script>
+    </head>
+    <body vlink="black" link="black" bgcolor="white">
+        <font size="3">
+          <div id="afui">
+            <div id="content" style="">
+                <!--List View Page-->
+                <div class="panel" title="Changing Thoughts & Feelings" id="listview" data-footer="none" selected="true">
+                    <ul class="list">
+
+                        <a href="#item1"><div class="list-div"><li>Article: Cognitive Behavioral Therapy for tinnitus</li>
+                        <img class="next-chevron" align="right" src="Next-Arrow.png"></img>
+                        </div></a>
+                        <a href="#item2"><div class="list-div"><li>Overview of 'Changing Thoughts and Feelings'</li>
+                        <img class="next-chevron" align="right" src="Next-Arrow.png"></img>
+                        </div></a>
+                        <a href="#item3"><div class="list-div"><li>Correcting thought errors - steps 1-3</li>
+                        <img class="next-chevron" align="right" src="Next-Arrow.png"></img>
+                        </div></a>
+
+                        <a href="#item4"><div class="list-div"><li>Correcting thought errors - step 4</li>
+                        <img class="next-chevron" align="right" src="Next-Arrow.png"></img>
+                        </div></a>
+                        <a href="#item5"><div class="list-div"><li>Correcting thought errors - steps 5-7</li>
+                        <img class="next-chevron" align="right" src="Next-Arrow.png"></img>
+                        </div></a>
+
+                    </ul>
+              </div>
+
+                <!--Detail View Pages for each list items-->
+                <div class="panel" title=" " id="item1" data-footer="none">
+                  <br />
+                    <p>  Many of the skills in the Tinnitus Coach   are based on a method called Cognitive Behavioral Therapy (CBT). This article is an overview of CBT and how it is used for tinnitus.
+                        </p><p><br>
+                    </p> <a style="background: #3498db;  background-image: -webkit-linear-gradient(top, #3498db, #2980b9);  background-image: -moz-linear-gradient(top, #3498db, #2980b9);  background-image: -ms-linear-gradient(top, #3498db, #2980b9);  background-image: -o-linear-gradient(top, #3498db, #2980b9);  background-image: linear-gradient(to bottom, #3498db, #2980b9);  -webkit-border-radius: 15;  -moz-border-radius: 10;  border-radius: 15px;  color: #ffffff;  padding: 6px 16px 6px 16px;  text-decoration: none;"  href="apple://">View article </a>
+                    </p>
+                </div>
+
+                <div class="panel" title=" " id="item2" data-footer="none">
+                  <br />
+                    <p><strong>Overview of &ldquo;Changing Thoughts and Feelings&rdquo;</strong></p>
+
+                    <p>The information below is the same as that found in the &ldquo;Changing Thoughts and Feelings&rdquo; skill in the app.&nbsp; You may prefer to read the information instead of using the interactive portion of the app.</p>
+                    <br />
+                    <p><strong>What does &ldquo;Changing Thoughts&rdquo; mean?</strong></p>
+
+                    <ul>
+                        <li> First you identify thoughts you had just before feeling bad</li>
+                        <li> Then you work on changing that thought to something that is more</li>
+                    </ul>
+                    <br />
+                    <p><strong>How can &ldquo;Changing Thoughts&rdquo; help?</strong></p>
+
+                    <ul>
+                        <li> Changing your thoughts about tinnitus can help you change the way you feel</li>
+                    </ul>
+                    <br />
+                    <p><strong>When can I use &ldquo;Changing Thoughts&rdquo;?</strong></p>
+
+                    <ul>
+                        <li> Any time you feel tension or stress when you think about your tinnitus</li>
+                    </ul>
+                    <br />
+                    <p><strong>Thoughts affect feelings</strong></p>
+
+                    <p>What you <em>think</em> affects how you <em>feel</em>. For example, imagine you are expecting guests to come to your house for dinner and they don&rsquo;t show up on time. The thoughts you have about your guests being late will affect how you feel (your emotions).</p>
+
+                    <p>If you think &ldquo;it&rsquo;s rude to be late,&rdquo; then you might get <em>angry</em>. If you think &ldquo;it&rsquo;s nice to have extra time to clean up,&rdquo; then you may feel <em>relieved</em>. If you think &ldquo;they could have been in an accident,&rdquo; then you might become <em>worried</em>. In this example, the event is the same, but your thoughts about the event are different. Sometimes the way you feel is caused by the <em>thoughts</em> about the event, not the event itself.</p>
+
+                    <p>What thoughts do you have about your tinnitus? When you think about tinnitus, how do you feel?</p>
+                    <br />
+                    <p><strong>Feelings Affect Health</strong></p>
+
+                    <p>What you think affects how you feel, and your feelings affect your health. Stress and negative emotions can lead to many health problems. In times of stress our brains release hormones into our bodies. These hormones increase heart rate, blood pressure, and muscle tension.</p>
+
+                    <p>The changes caused by these hormones help us react to emergencies. However, if our brains release these hormones too often it is bad for our health. People who are stressed for a long time may be more likely to get colds, heart disease, and other health problems. This is why it is so important to learn how to change your thoughts that cause negative feelings.</p>
+
+                <div class="panel" title="   " id="item3" data-footer="none">
+                  <br />
+                    <p> <p><strong>Correcting thought errors &ndash; steps 1-3</strong></p>
+
+                    <p>So how can you control negative feelings? Your thoughts determine the feelings you experience. You may not be able to change events, or tinnitus. However, the way you think about an event <em>is under your control</em>. Change your thoughts, and your feelings will change too. Below is a description for how to change your thoughts, step-by-step.</p>
+                    <br />
+                    <p><strong>Changing thoughts step-by-step</strong></p>
+                    <br />
+                    <p><em>Step 1 of 7: </em></p>
+
+                    <p>Describe Situation. Identify what was going on when you started feeling bad&mdash;what happened? Sometimes it is hard to remember the situation that made you feel bad until later. If this is the case for you, go to the second step and come back to this step later.</p>
+                    <br />
+                    <p><em>Step 2 of 7: </em></p>
+                    <p>Describe Thoughts. Now try to write down a thought you had just before you started feeling bad or upset. What was the first thought that came into your mind? You may have had many thoughts just before you started feeling bad. If you had more than one thought, pick the one that made you feel the worst.</p>
+                    <br />
+                    <p><em>Step 3 of 7: </em></p>
+                    <p>List Feelings. Write down any bad or upsetting feelings you are having. For example, sad, angry, jealous, or disappointed.</p>
+                  </p>
+
+                </div>
+
+        <div class="panel" title=" " id="item4" data-footer="none">
+          <br />
+            <p><strong>Correcting thought errors &ndash; step 4</strong></p>
+
+            <p>So how can you control negative feelings? Your thoughts determine the feelings you experience. You may not be able to change events, or tinnitus. However, the way you think about an event <em>is under your control</em>. Change your thoughts, and your feelings will change too. Below is a description for how to change your thoughts, step-by-step.</p>
+            <br />
+            <p><strong>Changing thoughts step-by-step</strong></p>
+            <br />
+            <p><em>Step 4 of 7:&nbsp; </em></p>
+
+            <p>Identify Thought Errors:&nbsp; Our thoughts often have some truth to them, but some have many more errors. Sometimes people get in the habit of having thoughts that are not helpful. Thoughts that are not helpful or unhealthy are called &ldquo;thought errors.&rdquo; You may feel bad or get upset out of habit and find out later that the reason you got upset was your own &ldquo;thought error.&rdquo;</p>
+
+            <p>All people make thought errors from time to time. Many people make thought errors that cause them to feel sad or upset. If you are aware of the most common thought errors, you can catch yourself and correct your thinking. Read the list of thought errors below. Think about which ones are familiar to you.</p>
+            <br />
+            <p><em>Ten common thought errors:</em></p>
+
+            <ol class="bullet-lists" style="list-style: decimal; padding-left: 10px;">
+                <li> All-or-nothing thinking: When you see things in only two categories such as right or wrong.</li>
+                <li> Over-simplifying: When you see one bad event as a pattern that never changes.</li>
+                <li> Focusing on wrong details: When you pick out a single detail and focus on it. You don&rsquo;t think about other more positive details.</li>
+                <li> Jumping to conclusions: When you come to believe something is true without enough information to know if it really is true. You might assume that you know what someone else is thinking or assume things will turn out badly.&nbsp;</li>
+                <li> Assuming the worst: When you think something is much worse than it really is.</li>
+                <li> Emotional thoughts: When you think that your emotions show the way things really are. You might think, &ldquo;I feel it, so it must be true.&rdquo;</li>
+                <li> &ldquo;Should&rdquo; statements: When you say &ldquo;should&rdquo; and &ldquo;shouldn&rsquo;t&rdquo; to try to get yourself to do hard tasks. These statements tend to make you feel guilty. Also included are statements with the words &ldquo;must&rdquo; and &ldquo;ought.&rdquo;</li>
+                <li> Labeling: Attaching a bad label to yourself or others.</li>
+                <li> Making Things Personal: You see yourself as the cause of some negative event when you are not responsible. You ignore other details.</li>
+                <li> Blaming: You blame others for your problems. You may also blame yourself for other people&rsquo;s problems.</li>
+            </ol>
+
+            <p>Can you identify any of the 10 thought errors from the list? You can have more than one thought error in one thought.</p>
+
+          </div>
+
+          <div class="panel" title="  " id="item5" data-footer="none">
+            <br />
+              <p><strong>Correcting thought errors &ndash; steps 5-7</strong></p>
+
+              <p>So how can you control negative feelings? Your thoughts determine the feelings you experience. You may not be able to change events, or tinnitus. However, the way you think about an event <em>is under your control</em>. Change your thoughts, and your feelings will change too. Below is a description for how to change your thoughts, step-by-step.</p>
+              <br />
+              <p><strong>Changing thoughts step-by-step</strong></p>
+              <br />
+              <p><em>Step 5 of 7: </em>
+
+
+              <p>New positive thought. Write down a new thought about the event that is more helpful. This step requires a lot of practice. With practice it will become more natural to create new positive thoughts.</p>
+
+              <p>Sometimes it helps to say statements that apply to many things. For example, &ldquo;I am whole and complete,&rdquo; or &ldquo;I love and accept myself.&rdquo;</p>
+              <br />
+              <p>New positive thoughts should be:</p>
+
+              <ul class="bullet-lists">
+                <li> Brief</li>
+                <li> Easy to remember</li>
+                <li> Thoughts you believe are true</li>
+                <li> Thoughts that apply to your life</li>
+                <li> Helpful</li>
+              </ul>
+              <br />
+              <p><em>Step 6 of 7: </em></p>
+
+              <p>Feelings when you think the new thought. As you practice, pay attention to how you feel when you have positive thoughts instead of negative thoughts. Do you notice your tinnitus as much? Are your muscles relaxed?</p>
+              <br />
+              <p><em>Step 7 of 7: </em></p>
+
+              <p>Picture yourself in the future. Look at the negative thought from Step 2 again. Think of a time in the future when you might have that thought again. Picture yourself thinking the positive thought from Step 6 instead.</p>
+
+        </div>
+   </font>
