@@ -7,14 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SoundsActivityCell.h"
 
 @protocol SoundTypeViewProtocol <NSObject>
-@required
+@optional
 - (void) tableViewCellClicked:(NSDictionary *)soundDict;
-- (void) tableViewCellDeleted:(NSDictionary *)soundDict;
+- (void) tableViewCellDeleted:(NSDictionary *)soundDict fromView:(UIView*)view;
  @end
 
-@interface SoundTypeView : UIView <UITableViewDataSource, UITableViewDelegate>
+@interface SoundTypeView : UIView <UITableViewDataSource, UITableViewDelegate, SoundActivityCellDelegate>
 - (id)initWithFrame:(CGRect)frame andData:(NSArray *)dataArray;
 
 @property (nonatomic,strong) id <SoundTypeViewProtocol> delegate;
@@ -26,5 +27,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *soundActivityTableStatus;
 @property (weak, nonatomic) IBOutlet UILabel *soundTitleLabel;
 
+-(void)reInitializeUIWithFrame:(CGRect)frame andData:(NSArray *)dataArray;
 
 @end

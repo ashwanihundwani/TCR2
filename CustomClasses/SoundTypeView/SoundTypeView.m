@@ -36,8 +36,10 @@
     {
         for (UIView *aView in views)
         {
-            if ([aView isKindOfClass: NSClassFromString(name)])
+            if ([aView isKindOfClass: NSClassFromString(name)]){
                 view = aView;
+            }
+            
         }
     }
     return view;
@@ -81,6 +83,23 @@
     return self;
 }
 
+-(void)reInitializeUIWithFrame:(CGRect)frame andData:(NSArray *)dataArray{
+    self.soundActivitiesArray = [[NSMutableArray alloc] initWithArray:dataArray];
+    
+    self.tempSoundsArray = [self setData:self.soundActivitiesArray];
+
+    float heightForTable = [self getHeightForTableView:self.tempSoundsArray];
+    [self.soundActivitiesTableView setFrame:CGRectMake(self.soundActivitiesTableView.frame.origin.x, self.soundActivitiesTableView.frame.origin.y, self.soundActivitiesTableView.frame.size.width, heightForTable)];
+    
+    self.frame = CGRectMake(frame.origin.x, frame.origin.y, frame.size.width, frame.size.height + heightForTable);
+    if ([self.tempSoundsArray count]>0) {
+        self.soundActivityTableStatus.text = @"Below are the activities under this plan";
+        
+    }
+    [self setNeedsDisplay];
+    [self.soundActivitiesTableView reloadData];
+}
+
 -(void)drawRect:(CGRect)rect
 {
     
@@ -109,6 +128,30 @@
     }
     
     return heightForTableView;
+    
+}
+
+-(float)getHeightForTableItem:(NSDictionary*)dict
+{
+    float heightForItem = 0;
+
+        if ([dict valueForKey:@"websiteID"]) {
+            heightForItem = 100;
+        }
+        else if ([dict valueForKey:@"deviceID"])
+        {
+            heightForItem =  90;
+            
+        }
+        else if ([dict valueForKey:@"MyOwnSoundID"])
+        {
+            heightForItem = 44;
+            
+        }
+        else
+            heightForItem =  44;
+    
+    return heightForItem;
     
 }
 
@@ -501,6 +544,12 @@
             
             cell.nameLabel.text = [[self.tempSoundsArray objectAtIndex:indexPath.row] valueForKey:@"comments"];
         }
+        
+        UIImageView *deleteButton = [[UIImageView alloc]initWithFrame:CGRectMake(12, 65, 27, 27)];
+        
+        [deleteButton setImage:[UIImage imageNamed:@"Active_Trash_Button.png"]];
+        
+        deleteButton.tag = indexPath.row;
         cell.tag = indexPath.row;
         
         
@@ -515,6 +564,9 @@
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
 
         cell.commentsTextField.text = [[self.tempSoundsArray objectAtIndex:indexPath.row] valueForKey:@"URL"];
+        [Utils addTapGestureToView:deleteButton target:self selector:@selector(onDelete:)];
+        
+        [cell addSubview:deleteButton];
         return cell;
     }
     
@@ -530,14 +582,10 @@
             }
             
             cell.nameLabel.text = [[self.tempSoundsArray objectAtIndex:indexPath.row] valueForKey:@"soundName"];
-        cell.nameLabel.tag = 2222;//indexPath.row;
-        
-        
-        //   cell.descriptionLabel.text =[[self.tempSoundsArray objectAtIndex:indexPath.row] valueForKey:@"URL"];
+            cell.nameLabel.tag = 2222;//indexPath.row;
+            cell.delegate = self;
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            
-          //  cell.commentsTextField.text = [[self.tempSoundsArray objectAtIndex:indexPath.row] valueForKey:@"URL"];
             return cell;
     }
     
@@ -617,57 +665,57 @@
     return @[button];
 }
 
+
+
 -(void)onDelete:(id)sender
 {
-    
+     NSInteger tag =[(UIGestureRecognizer *)sender view].tag;
+    if([self confirmAndDeleteSoundItemAtPosition:tag]){
+        float heightForTable = [self getHeightForTableView:self.tempSoundsArray];
+        self.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y, self.frame.size.width, self.frame.size.height - heightForTable);
+        [self.soundActivitiesTableView reloadData];
+    }
+       
+}
+
+-(BOOL)confirmAndDeleteSoundItemAtPosition:(NSInteger)index{
     DeleteCormationManager *manager = [DeleteCormationManager getInstance];
-    
+    __block BOOL retval = NO;
     [manager showAlertwithPositiveBlock:^(BOOL positive) {
         
-        
-        NSInteger tag =[(UIGestureRecognizer *)sender view].tag;
-        
-        
-        
-        [self deleteSoundFromDB:[self.tempSoundsArray objectAtIndex:tag] andCompletion:^(BOOL success)
-        
-        
-        
-        
-        
-        {
+        [self deleteSoundFromDB:[self.tempSoundsArray objectAtIndex:index] andCompletion:^(BOOL success)
+         
+         {
              if (success) {
-//                 
-//                 [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
-//                 UIAlertView *alert = [[UIAlertView alloc]   //show alert box with option to play or exit
-//                                       initWithTitle: @"Removed an Item"
-//                                       message:@"The item in this list was removed. You should see it cleared from the list when you come back to this screen."
-//                                       delegate:self
-//                                       cancelButtonTitle:nil
-//                                       otherButtonTitles:@"OK",nil];
-//                 
-//                 
-//                 
-//                  [alert show];
 
-                 
-                 [self.tempSoundsArray removeObjectAtIndex:tag];
-                 
-                 
- //   [self.soundActivitiesTableView deleteRowsAtIndexPaths:tag withRowAnimation:UITableViewRowAnimationRight];
-                 [[NSNotificationCenter defaultCenter] postNotificationName:@"sayHelloNotification" object:nil];
-                 
-
-                 
-                 
+                 [self itemDeletedAtIndex:index];
+                 retval = YES;
+                 //[[NSNotificationCenter defaultCenter] postNotificationName:@"sayHelloNotification" object:nil];
              }
              
          }];
     } negativeBlock:^(BOOL negative) {
-        
+        retval = NO;
         //DO nothing
     }];
+    return retval;
+}
+
+-(void)itemDeletedAtIndex:(NSInteger)index{
     
+    NSDictionary* dict = [self.tempSoundsArray objectAtIndex:index];
+    [self.tempSoundsArray removeObjectAtIndex:index];
+    float heightAdjust = [self getHeightForTableItem:dict];
+    //[self setNeedsDisplay];
+    if(self.tempSoundsArray.count == 0){
+        self.soundActivityTableStatus.text = @"You have no added sounds";
+    }
+    [self.soundActivitiesTableView reloadData];
+    self.soundActivitiesTableView.frame = CGRectMake(self.soundActivitiesTableView.frame.origin.x, self.soundActivitiesTableView.frame.origin.y, self.soundActivitiesTableView.frame.size.width, [self getHeightForTableView:self.tempSoundsArray]);
+    self.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y, self.frame.size.width, self.frame.size.height - heightAdjust);
+    
+    [self.delegate tableViewCellDeleted:dict fromView:self];
+   // [[NSNotificationCenter defaultCenter] postNotificationName:@"sayHelloNotification" object:nil];
 }
 
 
@@ -698,7 +746,7 @@
              //      [self.soundActivitiesTableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationRight];
          //    [self.soundActivitiesTableView reloadData];
              if([[self delegate] respondsToSelector:@selector(tableViewCellDeleted:)]) {
-                 [[self delegate] tableViewCellDeleted:[self.soundActivitiesArray objectAtIndex:tag]];
+                // [[self delegate] tableViewCellDeleted:[self.soundActivitiesArray objectAtIndex:tag]];
              }
          }
          
@@ -868,6 +916,16 @@
         
     }
     
+}
+
+
+
+#pragma mark - SoundActivityCellDelegate
+
+-(void)onDeleteSoundItem:(UITableViewCell*)cell{
+    NSLog(@"On delete cell called");
+    NSIndexPath* indexPath = [self.soundActivitiesTableView indexPathForCell:cell];
+    [self confirmAndDeleteSoundItemAtPosition:indexPath.row];
 }
 
 

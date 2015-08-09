@@ -20,4 +20,9 @@
     // Configure the view for the selected state
 }
 
+
+-(IBAction)onDeletePressed:(id)sender{
+    [self.delegate onDeleteSoundItem:self];
+}
+
 @end

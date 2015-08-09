@@ -28,7 +28,7 @@
     NSDictionary *otherDevicesPopupMessageDict;
     NSArray *mySoundsArray;
     NSArray *finalSoundsArray;
-
+    
     
 }
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *heightParameter;
@@ -37,13 +37,14 @@
 @property (nonatomic, strong) SoundTypeView *backgroundSoundView;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (nonatomic, strong) DBManager *dbManagerMySounds;
-
+@property (nonatomic) BOOL isViewLoaded;
 @end
 
 @implementation SoundActivitiesViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.isViewLoaded = YES;
     UIView *titleView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 170, 44)];
     
     titleView.backgroundColor = [Utils colorWithHexValue:NAV_BAR_BLACK_COLOR];
@@ -105,6 +106,8 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     //NSLog(@"%@",[PersistenceStorage getObjectForKey:@"mediaURL"]);
+    [self finalSoundArray];
+
 }
 
 
@@ -327,17 +330,13 @@
     [hud show:YES];
     [hud hide:YES afterDelay:1];
     
-    [self setUpSubViews];
-
 }
 -(void)viewDidAppear:(BOOL)animated
 {
-    [self finalSoundArray];
+    [self setUpSubViews];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sayHello:) name:@"sayHelloNotification" object:nil];
     
 //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sayHello:) name:@"sayHelloNotification"; object:nil];
-    
-    [self setUpSubViews];
     
     //// To chech for the feedback modal
     if ([[PersistenceStorage getObjectForKey:@"Referer"] isEqual: @"AudioPlayerOneViewController"]) {
@@ -435,7 +434,14 @@
 }
 
 
-
+-(void)viewDidDisappear:(BOOL)animated{
+    if(self.soothingSoundView)
+        [self.soothingSoundView removeFromSuperview];
+    if(self.interestingSoundView)
+        [self.interestingSoundView removeFromSuperview];
+    if(self.backgroundSoundView)
+        [self.backgroundSoundView removeFromSuperview];
+}
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
@@ -504,7 +510,6 @@
 
 -(void)setUpSubViews
 {
-
     mySoothingSoundsArray = [[NSMutableArray alloc] init];
     [mySoothingSoundsArray addObjectsFromArray:[self loadMySounds:1]];
     [mySoothingSoundsArray addObjectsFromArray:[self loadMyDevices:1]];
@@ -512,7 +517,13 @@
     [mySoothingSoundsArray addObjectsFromArray:[self loadMyOwnSounds:1]];
     
     //NSLog(@"%@",mySoothingSoundsArray);
+    if(YES){//self.soothingSoundView != nil || self.isViewLoaded){
     self.soothingSoundView = [[SoundTypeView alloc] initWithFrame:CGRectMake(0, 490.0, self.view.frame.size.width, 216) andData:mySoothingSoundsArray];
+    }else{
+        
+        [self.soothingSoundView reInitializeUIWithFrame:CGRectMake(0, 490.0, self.view.frame.size.width, 216) andData:mySoothingSoundsArray];
+
+    }
     self.soothingSoundView.delegate = self;
     self.soothingSoundView.soundTitleLabel.text = @"Soothing Sound";
     self.soothingSoundView.soundDescriptionLabel.text = @"This type of sound makes you feel better as soon as you hear it.";
@@ -527,8 +538,11 @@
     [myInterestingSoundsArray addObjectsFromArray:[self loadMyWebsitesAndApps:2]];
     [myInterestingSoundsArray addObjectsFromArray:[self loadMyOwnSounds:2]];
   //  NSLog(@"%@",myInterestingSoundsArray);
-    
+    if(YES){//self.interestingSoundView != nil || self.isViewLoaded){
     self.interestingSoundView = [[SoundTypeView alloc] initWithFrame:CGRectMake(0.0, self.soothingSoundView.frame.origin.y + self.soothingSoundView.frame.size.height +8, self.view.frame.size.width, 216) andData:myInterestingSoundsArray];
+    } else{
+        [self.interestingSoundView reInitializeUIWithFrame:CGRectMake(0.0, self.soothingSoundView.frame.origin.y + self.soothingSoundView.frame.size.height +8, self.view.frame.size.width, 216) andData:myInterestingSoundsArray];
+    }
     self.interestingSoundView.delegate = self;
     self.interestingSoundView.soundTitleLabel.text = @"Interesting Sound";
     self.interestingSoundView.soundDescriptionLabel.text = @"An Interesting Sound attracts your attention. It helps shift your attention away from your tinnitus.";
@@ -544,15 +558,16 @@
     [myBackGroundSoundsArray addObjectsFromArray:[self loadMyOwnSounds:3]];
     
    // NSLog(@"BACKGROUND %@",myBackGroundSoundsArray);
-    
-    self.backgroundSoundView = [[SoundTypeView alloc] initWithFrame:CGRectMake(00.0, self.interestingSoundView.frame.origin.y + self.interestingSoundView.frame.size.height +8, self.view.frame.size.width, 216) andData:myBackGroundSoundsArray];
+    if(YES)//self.backgroundSoundView != nil || self.isViewLoaded)
+        self.backgroundSoundView = [[SoundTypeView alloc] initWithFrame:CGRectMake(00.0, self.interestingSoundView.frame.origin.y + self.interestingSoundView.frame.size.height +8, self.view.frame.size.width, 216) andData:myBackGroundSoundsArray];
+    else
+        [self.backgroundSoundView reInitializeUIWithFrame:CGRectMake(00.0, self.interestingSoundView.frame.origin.y + self.interestingSoundView.frame.size.height +8, self.view.frame.size.width, 216) andData:myBackGroundSoundsArray];
     self.backgroundSoundView.delegate = self;
     self.backgroundSoundView.soundTitleLabel.text = @"Background Sound";
     self.backgroundSoundView.soundDescriptionLabel.text = @"Most people notice their tinnitus more when they are in a quiet place. You are less likely to notice your tinnitus if you add a Background Sound.";
     
     self.backgroundSoundView.exploreAndAddButton.tag =3;
     [self.backgroundSoundView.exploreAndAddButton addTarget:self action:@selector(addSoundsClicked:) forControlEvents:UIControlEventTouchUpInside];
-    
     
     [self.scrollView addSubview:self.soothingSoundView];
     [self.scrollView addSubview:self.interestingSoundView];
@@ -561,9 +576,9 @@
     
     //[self.scrollView setNeedsUpdateConstraints];
     [self.scrollView setFrame:CGRectMake(0.0, 0.0, self.view.frame.size.width, self.view.frame.size.height)];
-    [self.scrollView setContentSize:CGSizeMake(self.view.frame.size.width, self.backgroundSoundView.frame.size.height + self.backgroundSoundView.frame.origin.y-100)];
+    [self.scrollView setContentSize:CGSizeMake(self.view.frame.size.width, self.backgroundSoundView.frame.size.height + self.backgroundSoundView.frame.origin.y -100)];
 
-
+    self.isViewLoaded = NO;
 
 }
 
@@ -945,25 +960,41 @@
 
 
 
-
-
-
-
-
-
--(void)tableViewCellDeleted:(NSDictionary *)soundDict
-{
-     //    if ([soundDict valueForKey:@"deviceID"] != nil) {
-    //    }
-    //    else if ([soundDict valueForKey:@"websiteID"] != nil)
-    //    {
-    //    }
-    //    else
-    //    {
-    //
-    //    }
-    [self.view setNeedsLayout];
+- (void) tableViewCellDeleted:(NSDictionary *)soundDict fromView:(UIView*)view{
     
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark.png"] ];
+    
+    hud.mode = MBProgressHUDModeCustomView;
+    
+    hud.labelText = @"Removed";
+    
+    [hud show:YES];
+    [hud hide:YES afterDelay:1];
+    
+    // here check for the view and try to readjust the remaining view
+    float heightAdjust  = [self getHeightForTableItem:soundDict];
+    if(view == self.soothingSoundView){
+        // need to adjust followiing two views
+        self.interestingSoundView.frame = CGRectMake(0.0, self.soothingSoundView.frame.origin.y + self.soothingSoundView.frame.size.height +8, self.view.frame.size.width,self.interestingSoundView.frame.size.height);
+        self.backgroundSoundView.frame = CGRectMake(00.0, self.interestingSoundView.frame.origin.y + self.interestingSoundView.frame.size.height +8, self.view.frame.size.width, self.backgroundSoundView.frame.size.height);
+        //self.view.frame = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y, self.view.frame.size.width, self.view.frame.size.height - heightAdjust);
+       // [self.scrollView setFrame:CGRectMake(0.0, 0.0, self.view.frame.size.width, self.view.frame.size.height)];
+        [self.scrollView setContentSize:CGSizeMake(self.view.frame.size.width, self.backgroundSoundView.frame.size.height + self.backgroundSoundView.frame.origin.y)];
+    }else if (view == self.interestingSoundView){
+        //need to adjust one following class
+        self.backgroundSoundView.frame = CGRectMake(00.0, self.interestingSoundView.frame.origin.y + self.interestingSoundView.frame.size.height +8, self.view.frame.size.width, self.backgroundSoundView.frame.size.height);
+        //self.view.frame = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y, self.view.frame.size.width, self.view.frame.size.height - heightAdjust);
+        //[self.scrollView setFrame:CGRectMake(0.0, 0.0, self.view.frame.size.width, self.view.frame.size.height)];
+        [self.scrollView setContentSize:CGSizeMake(self.view.frame.size.width, self.backgroundSoundView.frame.size.height + self.backgroundSoundView.frame.origin.y)];
+    }else if(view == self.backgroundSoundView){
+        //nothing to do, just adjust scroll size
+        //self.view.frame = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y, self.view.frame.size.width, self.view.frame.size.height - heightAdjust);
+        //[self.scrollView setFrame:CGRectMake(0.0, 0.0, self.view.frame.size.width, self.view.frame.size.height)];
+        [self.scrollView setContentSize:CGSizeMake(self.view.frame.size.width, self.backgroundSoundView.frame.size.height + self.backgroundSoundView.frame.origin.y)];
+    }
+    
+    [self.view setNeedsDisplay];
 }
 
 
@@ -1105,8 +1136,56 @@
     
 }
 
+-(float)getHeightForTableView:(NSArray*)recordsArray
+{
+    float heightForTableView = 0;
+    
+    for (NSDictionary *dict in recordsArray) {
+        if ([dict valueForKey:@"websiteID"]) {
+            heightForTableView = heightForTableView + 100;
+        }
+        else if ([dict valueForKey:@"deviceID"])
+        {
+            heightForTableView = heightForTableView + 90;
+            
+        }
+        else if ([dict valueForKey:@"MyOwnSoundID"])
+        {
+            heightForTableView = heightForTableView + 44;
+            
+        }
+        else
+            heightForTableView = heightForTableView + 44;
+    }
+    
+    return heightForTableView;
+    
+}
 
 
+-(float)getHeightForTableItem:(NSDictionary*)dict
+{
+    float heightForItem = 0;
+    
+    if ([dict valueForKey:@"websiteID"]) {
+        heightForItem = 100;
+    }
+    else if ([dict valueForKey:@"deviceID"])
+    {
+        heightForItem =  90;
+        
+    }
+    else if ([dict valueForKey:@"MyOwnSoundID"])
+    {
+        heightForItem = 44;
+        
+    }
+    else
+        heightForItem =  44;
+    
+    return heightForItem;
+    
+}
 
 /*
  #pragma mark - Navigation
@@ -1117,5 +1196,6 @@
  // Pass the selected object to the new view controller.
  }
  */
+
 
 @end
