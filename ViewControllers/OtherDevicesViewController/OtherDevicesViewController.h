@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "OtherDevicesWithCommentsCell.h"
 
-@interface OtherDevicesViewController : UIViewController<UITableViewDelegate, UITableViewDataSource>
+@interface OtherDevicesViewController : UIViewController<UITableViewDelegate, UITableViewDataSource, AddDeviceCaptureCommentsDelegate>
 @property (nonatomic, strong) NSString *soundType;
 
 @end

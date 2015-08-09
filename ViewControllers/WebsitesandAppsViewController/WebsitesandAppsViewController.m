@@ -425,35 +425,25 @@
 
     if([[self.checkFlagArray objectAtIndex:indexPath.row]boolValue]) {
         
-        WebsitesandAppsWithCommentsCell *cell;
-        if (cell == nil) {
-            cell =  [tableView dequeueReusableCellWithIdentifier:@"WebsitesandAppsWithCommentsCell" forIndexPath:indexPath];
-        }
-        
+        WebsitesandAppsWithCommentsCell *cell = [tableView dequeueReusableCellWithIdentifier:@"WebsitesandAppsWithCommentsCell" forIndexPath:indexPath];
         cell.nameLabel.text = [[websitesandAppsSoundsArray objectAtIndex:indexPath.row] valueForKey:@"waName"];
         
         cell.descriptionLabel.text =[[websitesandAppsSoundsArray objectAtIndex:indexPath.row] valueForKey:@"waDetail"];
         //cell.index = indexPath.row;
-        
+        cell.commentsTextField.text = [self.commentsArray objectAtIndex:indexPath.row];
         
         cell.checkBoxButton.tag = indexPath.row;
         [cell.checkBoxButton addTarget:self action:@selector(checkBoxButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+        cell.delegate = self;
         return cell;
     }
     else
     {
-        WebsitesandAppsCell *cell;
-        if (cell == nil) {
-            cell =  [tableView dequeueReusableCellWithIdentifier:@"WebsitesandAppsCell" forIndexPath:indexPath];
-        }
-        
-        
-        
+        WebsitesandAppsCell *cell= [tableView dequeueReusableCellWithIdentifier:@"WebsitesandAppsCell" forIndexPath:indexPath];
+
         cell.nameLabel.text = [[websitesandAppsSoundsArray objectAtIndex:indexPath.row] valueForKey:@"waName"];
         
         cell.descriptionLabel.text =[[websitesandAppsSoundsArray objectAtIndex:indexPath.row] valueForKey:@"waDetail"];
-        
-        //cell.index = indexPath.row;
 
         
         cell.checkBoxButton.tag = indexPath.row;
@@ -506,5 +496,16 @@
     // Pass the selected object to the new view controller.
 }
 */
+
+#pragma mark - WebSiteCaptureCommentsDelegate
+
+-(void)captureComments:(UITableViewCell*)cell{
+    // to capture the comments
+    // get the index
+    WebsitesandAppsWithCommentsCell* argCell = (WebsitesandAppsWithCommentsCell*)cell;
+    NSIndexPath* indexPath = [self.websitesandAppsSoundTableView indexPathForCell:cell];
+    [self.commentsArray replaceObjectAtIndex:indexPath.row withObject:argCell.commentsTextField.text];
+    
+}
 
 @end

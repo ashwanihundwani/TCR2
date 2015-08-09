@@ -21,6 +21,7 @@
 @property (nonatomic, strong) DBManager *dbManagerSoundsList;
 
 @property (nonatomic, strong) NSMutableArray *checkFlagArray;
+@property (nonatomic, strong) NSMutableArray *commentsArray;
 @end
 
 @implementation OtherDevicesViewController
@@ -268,9 +269,11 @@
     otherDevicesSoundsArray = [[NSArray alloc] initWithArray:[self.dbManagerSoundsList loadDataFromDB:query]];
     
     self.checkFlagArray = [[NSMutableArray alloc] init];
+    self.commentsArray =  [[NSMutableArray alloc] initWithCapacity:[otherDevicesSoundsArray count]];
     
     for (int i = 0; i<[otherDevicesSoundsArray count]; i++) {
         [self.checkFlagArray addObject:[NSNumber numberWithBool:0]];
+        [self.commentsArray addObject:@""];
     }
     
     // Reload the table view.
@@ -299,10 +302,11 @@
         }
         
         cell.nameLabel.text = [[otherDevicesSoundsArray objectAtIndex:indexPath.row] valueForKey:@"deviceName"];
-        
+        cell.commentsTextField.text = [self.commentsArray objectAtIndex:indexPath.row];
         
         cell.checkBoxButton.tag = indexPath.row;
         [cell.checkBoxButton addTarget:self action:@selector(checkBoxButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+        cell.delegate = self;
         return cell;
     }
     else
@@ -409,6 +413,17 @@
     [self dismissViewControllerAnimated:YES completion:^{
         
     }];
+}
+
+#pragma mark - AddDeviceCaptureCommentsDelegate
+
+-(void)captureDeviceComments:(UITableViewCell*)cell{
+    // to capture the comments
+    // get the index
+    OtherDevicesWithCommentsCell* argCell = (OtherDevicesWithCommentsCell*)cell;
+    NSIndexPath* indexPath = [self.otherDevicesSoundTableView indexPathForCell:cell];
+    [self.commentsArray replaceObjectAtIndex:indexPath.row withObject:argCell.commentsTextField.text];
+    
 }
 
 @end

@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "WebsitesandAppsWithCommentsCell.h"
 
-@interface WebsitesandAppsViewController : UIViewController<UITableViewDelegate, UITableViewDataSource>
+@interface WebsitesandAppsViewController : UIViewController<UITableViewDelegate, UITableViewDataSource, WebSiteCaptureCommentsDelegate>
 @property (nonatomic, strong) NSString *soundType;
 - (IBAction)addTapped:(id)sender;
 - (IBAction)cancelTapped:(id)sender;

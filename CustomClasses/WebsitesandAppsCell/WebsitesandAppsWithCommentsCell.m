@@ -12,12 +12,20 @@
 
 - (void)awakeFromNib {
     // Initialization code
+    self.commentsTextField.delegate = self;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
 
     // Configure the view for the selected state
+}
+
+
+
+#pragma  mark - UITextFieldDelegate
+- (void)textFieldDidEndEditing:(UITextField *)textField{
+    [self.delegate captureComments:self];
 }
 
 @end

@@ -8,9 +8,18 @@
 
 #import <UIKit/UIKit.h>
 
-@interface OtherDevicesWithCommentsCell : UITableViewCell
+@protocol AddDeviceCaptureCommentsDelegate <NSObject>
+
+@optional
+
+-(void)captureDeviceComments:(UITableViewCell*)cell;
+
+@end
+
+@interface OtherDevicesWithCommentsCell : UITableViewCell<UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UIButton *checkBoxButton;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UITextField *commentsTextField;
+@property (weak, nonatomic) id<AddDeviceCaptureCommentsDelegate> delegate;
 
 @end
