@@ -15,7 +15,8 @@
 @interface TinnitusCoachSoundViewController ()<TinnitusCoachSoundCellProtocol>
 {
     NSArray *tinnitusSoundsArray;
-    TinnitusCoachSoundCell *selectedCell;
+    //TinnitusCoachSoundCell *selectedCell;
+    NSInteger currentPlayingIndex;
 }
 
 
@@ -33,7 +34,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    
+    currentPlayingIndex = -1;
     UINavigationBar *myBar = [[UINavigationBar alloc]initWithFrame:CGRectMake(0, 0, 320, 50)];
     [self.view addSubview:myBar];
     
@@ -142,14 +143,14 @@
 
 -(void)viewWillDisappear:(BOOL)animated
 {
-    [selectedCell.audioPlayer stop];
+    [self.audioPlayer stop];
     [self.tabBarController.tabBar setHidden:NO];
 
 }
 
 -(void)viewDidDisappear:(BOOL)animated
 {
-    [selectedCell.audioPlayer stop];
+    [self.audioPlayer stop];
 
 }
 
@@ -253,21 +254,23 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    TinnitusCoachSoundCell *cell;
-    if (cell == nil) {
-        cell =  [tableView dequeueReusableCellWithIdentifier:@"TinnitusCoachSoundCell" forIndexPath:indexPath];
-        cell.delegate = self;
-        
-    }
-    
-    
+    TinnitusCoachSoundCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TinnitusCoachSoundCell" forIndexPath:indexPath];
+    [cell resetView];
+    cell.delegate = self;
     cell.soundURL = [[tinnitusSoundsArray objectAtIndex:indexPath.row] valueForKey:@"soundURL"];
     
     cell.songTitleLabel.text =[[tinnitusSoundsArray objectAtIndex:indexPath.row] valueForKey:@"soundName"];
     
     [cell.addToPlanButton addTarget:self action:@selector(addToPlanButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-    cell.addToPlanButton.tag = indexPath.row;
+    if(currentPlayingIndex == indexPath.row){
+        cell.audioPlayer = self.audioPlayer;
+        [cell.player play];
+        if ([self.audioPlayer isPlaying]) {
+            cell.playPauseButton.selected = YES;
+        }
+    }
     
+    cell.addToPlanButton.tag = indexPath.row;
     return cell;
     
     
@@ -324,82 +327,69 @@
     //  [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
+-(void)playFile:(NSString*)filePath{
+    NSString *path = [[NSBundle mainBundle]pathForResource:filePath ofType:nil];
+    self.audioPlayer = [[AVAudioPlayer alloc]initWithContentsOfURL:[NSURL URLWithString:path] error:NULL];
+    [self.audioPlayer play];
+}
+
+-(void)pausePlay{
+    [self.audioPlayer pause];
+}
+
+-(void)stopPlay{
+    [self.audioPlayer stop];
+}
 
 
-
+-(void)resumePlay{
+    [self.audioPlayer play];
+}
 
 #pragma mark - TinnitusCoachCell Delegates
 
 -(void)didSelectPlayPauseButton:(id)cell
 {
-    
-    //    if(sender.selected) // Shows the Pause symbol
-    //    {
-    //        sender.selected = NO;
-    //        [self.player pause];
-    //        [audioPlayer pause];
-    //
-    //    }
-    //    else    // Shows the Play symbol
-    //    {
-    //        NSString *path = [[NSBundle mainBundle]pathForResource:self.soundURL ofType:nil];
-    //        audioPlayer = [[AVAudioPlayer alloc]initWithContentsOfURL:[NSURL URLWithString:path] error:NULL];
-    //
-    //
-    //        sender.selected = YES;
-    //        [self.player play];
-    //        [audioPlayer play];
-    //
-    //    }
-    
-    
-    
-    
-    if (selectedCell == nil){
-        
-        [[(TinnitusCoachSoundCell *)cell player] play];
-        [[(TinnitusCoachSoundCell *)cell audioPlayer] play];
-        [(TinnitusCoachSoundCell *)cell playPauseButton].selected = YES;
+    TinnitusCoachSoundCell* argCell = (TinnitusCoachSoundCell*)cell;
+    if (currentPlayingIndex == -1){
+        [self playFile:argCell.soundURL];
+        argCell.audioPlayer = self.audioPlayer;
+        [[argCell player] play];
+        argCell.playPauseButton.selected = YES;
         
         
     }
     else
     {
-        //        sender.selected = NO;
-        //        [selectedCell.player pause];
-        //        [audioPlayer pause];
-        //        [(TinnitusCoachSoundCell *)cell playPauseButton].selected = NO;
-        
-        if (![selectedCell.soundURL isEqualToString:[(TinnitusCoachSoundCell *)cell soundURL]]) {
-            [selectedCell.player pause];
-            [selectedCell.audioPlayer pause];
+        TinnitusCoachSoundCell* selectedCell = (TinnitusCoachSoundCell*)[self.tinnitusCoachSoundTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:currentPlayingIndex inSection:0]];
+        if (![selectedCell.soundURL isEqualToString:[argCell soundURL]]) {
+            [selectedCell resetView];
+            selectedCell.audioPlayer = nil;
+            [self.audioPlayer stop];
             [selectedCell playPauseButton].selected = NO;
             
             
             //            selectedCell.progressView.progress = 0.0;
-            
-            [[(TinnitusCoachSoundCell *)cell player]  play];
-            [[(TinnitusCoachSoundCell *)cell audioPlayer] play];
-            [(TinnitusCoachSoundCell *)cell playPauseButton].selected = YES;
+            [self playFile:argCell.soundURL];
+            argCell.audioPlayer = self.audioPlayer;
+            [[argCell player]  play];
+            [argCell playPauseButton].selected = YES;
             
         }
         else
         {
-            if([(TinnitusCoachSoundCell *)cell playPauseButton].selected) // Shows the Pause symbol
+            if([self.audioPlayer isPlaying]) // Shows the Pause symbol
             {
-                [(TinnitusCoachSoundCell *)cell playPauseButton].selected = NO;
-                [[(TinnitusCoachSoundCell *)cell player] pause];
-                [[(TinnitusCoachSoundCell *)cell audioPlayer] pause];
+                [argCell playPauseButton].selected = NO;
+                [[argCell player] pause];
+                [self pausePlay];
                 
             }
             else    // Shows the Play symbol
             {
-                
-                
-                
-                [(TinnitusCoachSoundCell *)cell playPauseButton].selected = YES;
-                [[(TinnitusCoachSoundCell *)cell player] play];
-                [[(TinnitusCoachSoundCell *)cell audioPlayer] play];
+                [argCell playPauseButton].selected = YES;
+                [self resumePlay];
+                [[argCell player] play];
                 
             }
             
@@ -408,9 +398,11 @@
     
     
     
-selectedCell = (TinnitusCoachSoundCell *)cell;
+currentPlayingIndex = argCell.addToPlanButton.tag;
     
 }
+
+
 
 
 @end

@@ -23,12 +23,14 @@
 - (IBAction)playPauseButton:(UIButton *)sender;
 @property (weak, nonatomic) IBOutlet UIButton *playPauseButton;
 @property (nonatomic, weak) IBOutlet UILabel *songTitleLabel;
-@property (nonatomic, strong) AVAudioPlayer *audioPlayer;
+@property (nonatomic, weak) AVAudioPlayer *audioPlayer;
 
 @property (nonatomic, strong) NSString *soundURL;
 
 @property (retain, nonatomic)  CEPlayer *player;
 
 @property(weak,nonatomic)id <TinnitusCoachSoundCellProtocol> delegate;
+
+-(void)resetView;
 
 @end

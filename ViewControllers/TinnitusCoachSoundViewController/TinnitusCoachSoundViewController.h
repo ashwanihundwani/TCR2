@@ -10,4 +10,5 @@
 
 @interface TinnitusCoachSoundViewController : UIViewController<UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, strong) NSString *soundType;
+@property (nonatomic, strong) AVAudioPlayer *audioPlayer;
 @end

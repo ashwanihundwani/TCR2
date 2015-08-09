@@ -29,13 +29,21 @@
     self.progressView.startAngle = (3.0*M_PI)/2.0;
 }
 
+-(void)resetView{
+    self.playPauseButton.selected = NO;
+    [self.player pause];
+    self.player.position = 0.0;
+    self.progressView.progress = 0.0;
+}
+
 - (IBAction)playPauseButton:(UIButton *)sender
 {
-    
+ /*
     if (!_audioPlayer) {
         NSString *path = [[NSBundle mainBundle]pathForResource:self.soundURL ofType:nil];
         _audioPlayer = [[AVAudioPlayer alloc]initWithContentsOfURL:[NSURL URLWithString:path] error:NULL];
     }
+  */
     if ([self.delegate respondsToSelector:@selector(didSelectPlayPauseButton:)]) {
         [self.delegate didSelectPlayPauseButton:self];
     }
@@ -67,8 +75,8 @@
 
 - (void) player:(CEPlayer *)player didReachPosition:(float)position
 {
-    self.player.position = [_audioPlayer currentTime]/[_audioPlayer duration];
-    self.progressView.progress = [_audioPlayer currentTime]/[_audioPlayer duration];
+    self.player.position = [self.audioPlayer currentTime]/[self.audioPlayer duration];
+    self.progressView.progress = [self.audioPlayer currentTime]/[self.audioPlayer duration];
 }
 
 - (void) playerDidStop:(CEPlayer *)player
