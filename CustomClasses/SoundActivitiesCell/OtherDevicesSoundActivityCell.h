@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SoundsActivityCell.h"
 
 @interface OtherDevicesSoundActivityCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UIImageView *otherDevicesImage;
@@ -14,6 +15,9 @@
 @property (weak, nonatomic) IBOutlet UITextField *commentsTextField;
 @property(nonatomic, strong)IBOutlet UIButton *infoImageView;
 @property(nonatomic, strong)IBOutlet UIButton *deleteButton;
+@property (weak, nonatomic) id<SoundActivityCellDelegate> delegate;
+
+-(IBAction)onDeletePressed:(id)sender;
 
 @end
 

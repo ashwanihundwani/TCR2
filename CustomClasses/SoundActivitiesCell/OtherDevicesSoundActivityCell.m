@@ -30,4 +30,9 @@
 //    }
 //}
 
+
+-(IBAction)onDeletePressed:(id)sender{
+    [self.delegate onDeleteSoundItem:self];
+}
+
 @end

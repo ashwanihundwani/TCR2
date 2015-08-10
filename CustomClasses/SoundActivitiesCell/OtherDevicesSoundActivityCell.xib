@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6250" systemVersion="14A389" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
@@ -22,7 +22,7 @@
                         </constraints>
                     </view>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="uOp-1j-VgJ">
-                        <rect key="frame" x="67" y="14" width="208" height="21"/>
+                        <rect key="frame" x="80" y="14" width="208" height="21"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="25" id="aWE-M7-XEn"/>
                         </constraints>
@@ -41,10 +41,10 @@
                         <textInputTraits key="textInputTraits" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                     </textField>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="Devices.png" translatesAutoresizingMaskIntoConstraints="NO" id="acN-o5-HY1">
-                        <rect key="frame" x="8" y="5" width="27" height="27"/>
+                        <rect key="frame" x="43" y="5" width="27" height="27"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="30" id="5bg-L2-Ccf"/>
-                            <constraint firstAttribute="width" constant="30" id="UA9-dy-WIm"/>
+                            <constraint firstAttribute="height" constant="27" id="5bg-L2-Ccf"/>
+                            <constraint firstAttribute="width" constant="27" id="UA9-dy-WIm"/>
                         </constraints>
                     </imageView>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="Active_Information_icon.png" translatesAutoresizingMaskIntoConstraints="NO" id="4FM-L9-RLg">
@@ -63,11 +63,25 @@
                         <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         <state key="normal" backgroundImage="Active_Information_icon.png"/>
                     </button>
+                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ojU-yu-yaP">
+                        <rect key="frame" x="0.0" y="5" width="27" height="27"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="27" id="ugL-SJ-uNk"/>
+                            <constraint firstAttribute="width" constant="27" id="yhw-o3-87q"/>
+                        </constraints>
+                        <state key="normal" image="Active_Trash_Button.png">
+                            <attributedString key="attributedTitle"/>
+                        </state>
+                        <connections>
+                            <action selector="onDeletePressed:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="vPq-zd-vvZ"/>
+                        </connections>
+                    </button>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="acN-o5-HY1" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="3Wh-XL-U6o"/>
                     <constraint firstAttribute="trailing" secondItem="1B5-sv-mST" secondAttribute="trailing" constant="8" id="4sQ-hB-sMb"/>
                     <constraint firstItem="uOp-1j-VgJ" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="13" id="69M-cE-c8k"/>
+                    <constraint firstItem="ojU-yu-yaP" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="-6" id="6Qa-R8-j0c"/>
+                    <constraint firstItem="1B5-sv-mST" firstAttribute="leading" secondItem="uOp-1j-VgJ" secondAttribute="trailing" constant="2" id="9am-T3-Vgw"/>
                     <constraint firstAttribute="trailing" secondItem="Cjb-Iy-CON" secondAttribute="trailing" constant="8" id="C29-Kd-T1y"/>
                     <constraint firstItem="UfM-oZ-h7g" firstAttribute="top" secondItem="acN-o5-HY1" secondAttribute="bottom" constant="4" id="LCE-2B-5gK"/>
                     <constraint firstItem="1B5-sv-mST" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="6" id="MV3-6O-8S0"/>
@@ -75,15 +89,16 @@
                     <constraint firstItem="uOp-1j-VgJ" firstAttribute="leading" secondItem="acN-o5-HY1" secondAttribute="trailing" constant="9" id="QfP-os-6CZ"/>
                     <constraint firstItem="Cjb-Iy-CON" firstAttribute="top" secondItem="UfM-oZ-h7g" secondAttribute="bottom" constant="4" id="ZQV-9d-ekb"/>
                     <constraint firstItem="4FM-L9-RLg" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="-4" id="c8V-cI-dEF"/>
-                    <constraint firstItem="1B5-sv-mST" firstAttribute="leading" secondItem="uOp-1j-VgJ" secondAttribute="trailing" constant="7" id="dRU-M7-uo2"/>
                     <constraint firstAttribute="trailing" secondItem="UfM-oZ-h7g" secondAttribute="trailing" id="fpJ-OF-u8b"/>
                     <constraint firstAttribute="trailingMargin" secondItem="4FM-L9-RLg" secondAttribute="trailing" id="lTX-lw-TdL"/>
                     <constraint firstItem="Cjb-Iy-CON" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="43" id="pQt-io-QqV"/>
                     <constraint firstItem="UfM-oZ-h7g" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="42" id="yWy-gE-6Kg"/>
+                    <constraint firstItem="acN-o5-HY1" firstAttribute="leading" secondItem="ojU-yu-yaP" secondAttribute="trailing" constant="8" id="zPZ-K7-Fsp"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
                 <outlet property="commentsTextField" destination="Cjb-Iy-CON" id="cIZ-mq-2yV"/>
+                <outlet property="deleteButton" destination="ojU-yu-yaP" id="RhE-O9-reu"/>
                 <outlet property="nameLabel" destination="uOp-1j-VgJ" id="PZk-CL-67q"/>
                 <outlet property="otherDevicesImage" destination="acN-o5-HY1" id="HsK-Us-Stk"/>
             </connections>
@@ -92,6 +107,7 @@
     </objects>
     <resources>
         <image name="Active_Information_icon.png" width="50" height="50"/>
+        <image name="Active_Trash_Button.png" width="55" height="55"/>
         <image name="Devices.png" width="55" height="55"/>
     </resources>
 </document>

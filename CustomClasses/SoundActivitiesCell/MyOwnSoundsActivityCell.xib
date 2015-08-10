@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6250" systemVersion="14A389" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" restorationIdentifier="OtherDevicesSoundActivityCell" selectionStyle="default" indentationWidth="10" rowHeight="44" id="KGk-i7-Jjw" customClass="OtherDevicesSoundActivityCell">
+        <tableViewCell contentMode="scaleToFill" restorationIdentifier="OtherDevicesSoundActivityCell" selectionStyle="default" indentationWidth="10" rowHeight="44" id="KGk-i7-Jjw" customClass="MyOwnSoundsActivityCell">
             <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
@@ -19,8 +19,8 @@
                             <constraint firstAttribute="height" constant="1" id="hhe-xL-rJ1"/>
                         </constraints>
                     </view>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uOp-1j-VgJ">
-                        <rect key="frame" x="45" y="14" width="230" height="21"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uOp-1j-VgJ">
+                        <rect key="frame" x="80" y="14" width="230" height="21"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="21" id="aWE-M7-XEn"/>
                             <constraint firstAttribute="width" constant="230" id="kk0-Uu-LQ7"/>
@@ -37,16 +37,28 @@
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <textInputTraits key="textInputTraits" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                     </textField>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="MyOwn.png" translatesAutoresizingMaskIntoConstraints="NO" id="acN-o5-HY1">
-                        <rect key="frame" x="8" y="5" width="28" height="28"/>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="MyOwn.png" translatesAutoresizingMaskIntoConstraints="NO" id="acN-o5-HY1">
+                        <rect key="frame" x="43" y="5" width="28" height="28"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="28" id="5bg-L2-Ccf"/>
                             <constraint firstAttribute="width" constant="28" id="UA9-dy-WIm"/>
                         </constraints>
                     </imageView>
+                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qVI-hX-eDE">
+                        <rect key="frame" x="10" y="5" width="27" height="27"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="27" id="LXC-wS-HX6"/>
+                            <constraint firstAttribute="height" constant="27" id="MO5-9a-xvd"/>
+                        </constraints>
+                        <state key="normal" image="Active_Trash_Button.png">
+                            <attributedString key="attributedTitle"/>
+                        </state>
+                        <connections>
+                            <action selector="onDeletePressed:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="wv1-Jr-uF4"/>
+                        </connections>
+                    </button>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="acN-o5-HY1" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="3Wh-XL-U6o"/>
                     <constraint firstItem="uOp-1j-VgJ" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="13" id="69M-cE-c8k"/>
                     <constraint firstAttribute="trailing" secondItem="Cjb-Iy-CON" secondAttribute="trailing" constant="8" id="C29-Kd-T1y"/>
                     <constraint firstItem="UfM-oZ-h7g" firstAttribute="top" secondItem="acN-o5-HY1" secondAttribute="bottom" constant="4" id="LCE-2B-5gK"/>
@@ -60,6 +72,7 @@
             </tableViewCellContentView>
             <connections>
                 <outlet property="commentsTextField" destination="Cjb-Iy-CON" id="cIZ-mq-2yV"/>
+                <outlet property="deleteButton" destination="qVI-hX-eDE" id="Igm-hp-Lbw"/>
                 <outlet property="nameLabel" destination="uOp-1j-VgJ" id="PZk-CL-67q"/>
                 <outlet property="otherDevicesImage" destination="acN-o5-HY1" id="HsK-Us-Stk"/>
             </connections>
@@ -67,6 +80,7 @@
         </tableViewCell>
     </objects>
     <resources>
+        <image name="Active_Trash_Button.png" width="55" height="55"/>
         <image name="MyOwn.png" width="55" height="55"/>
     </resources>
 </document>

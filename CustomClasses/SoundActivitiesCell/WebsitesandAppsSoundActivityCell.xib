@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6250" systemVersion="14A389" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -13,8 +13,8 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z0d-Hg-OJj">
-                        <rect key="frame" x="46" y="6" width="230" height="21"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z0d-Hg-OJj">
+                        <rect key="frame" x="80" y="6" width="230" height="21"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="21" id="OTG-71-atw"/>
                         </constraints>
@@ -29,8 +29,8 @@
                             <constraint firstAttribute="height" constant="1" id="8nk-2Q-3Fe"/>
                         </constraints>
                     </view>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kaq-NR-3bx">
-                        <rect key="frame" x="46" y="28" width="266" height="30"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kaq-NR-3bx">
+                        <rect key="frame" x="80" y="28" width="266" height="30"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="265" id="6Uk-CN-i9M"/>
                             <constraint firstAttribute="height" constant="30" id="wPm-5E-fGL"/>
@@ -39,11 +39,11 @@
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="Website.png" translatesAutoresizingMaskIntoConstraints="NO" id="qmE-Q8-prv">
-                        <rect key="frame" x="8" y="6" width="30" height="30"/>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="Website.png" translatesAutoresizingMaskIntoConstraints="NO" id="qmE-Q8-prv">
+                        <rect key="frame" x="43" y="5" width="28" height="28"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="30" id="P1F-QB-Tnd"/>
-                            <constraint firstAttribute="width" constant="30" id="lXm-Bb-Xta"/>
+                            <constraint firstAttribute="height" constant="28" id="P1F-QB-Tnd"/>
+                            <constraint firstAttribute="width" constant="28" id="lXm-Bb-Xta"/>
                         </constraints>
                     </imageView>
                     <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="J77-zv-zF3">
@@ -56,13 +56,24 @@
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <textInputTraits key="textInputTraits"/>
                     </textField>
+                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Vho-sv-5ZR">
+                        <rect key="frame" x="8" y="5" width="27" height="27"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="27" id="CyR-c9-tgC"/>
+                            <constraint firstAttribute="width" constant="27" id="rH5-4q-eFN"/>
+                        </constraints>
+                        <state key="normal" image="Active_Trash_Button.png">
+                            <attributedString key="attributedTitle"/>
+                        </state>
+                        <connections>
+                            <action selector="onDeletePressed:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="bQ7-XK-7fU"/>
+                        </connections>
+                    </button>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="qmE-Q8-prv" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="8nh-Mj-GQQ"/>
                     <constraint firstItem="J77-zv-zF3" firstAttribute="top" secondItem="lcn-En-G4M" secondAttribute="bottom" constant="4" id="Rnn-1W-UX6"/>
                     <constraint firstItem="J77-zv-zF3" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="43" id="Sft-iy-9i8"/>
                     <constraint firstItem="Kaq-NR-3bx" firstAttribute="leading" secondItem="qmE-Q8-prv" secondAttribute="trailing" constant="3" id="Szn-24-eRe"/>
-                    <constraint firstItem="qmE-Q8-prv" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="Z2p-gw-Nwi"/>
                     <constraint firstItem="z0d-Hg-OJj" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="4" id="bFt-CB-P59"/>
                     <constraint firstAttribute="trailing" secondItem="lcn-En-G4M" secondAttribute="trailing" id="eRw-i1-lZk"/>
                     <constraint firstItem="z0d-Hg-OJj" firstAttribute="leading" secondItem="qmE-Q8-prv" secondAttribute="trailing" constant="4" id="hFc-qe-YyO"/>
@@ -74,6 +85,7 @@
             </tableViewCellContentView>
             <connections>
                 <outlet property="commentsTextField" destination="J77-zv-zF3" id="Gnh-15-fDG"/>
+                <outlet property="deleteButton" destination="Vho-sv-5ZR" id="lZs-Zl-FpU"/>
                 <outlet property="descriptionLabel" destination="Kaq-NR-3bx" id="yU2-6b-RiU"/>
                 <outlet property="nameLabel" destination="z0d-Hg-OJj" id="oXQ-c2-rRL"/>
                 <outlet property="websiteAppsImage" destination="qmE-Q8-prv" id="d0E-93-bfM"/>
@@ -82,6 +94,7 @@
         </tableViewCell>
     </objects>
     <resources>
+        <image name="Active_Trash_Button.png" width="55" height="55"/>
         <image name="Website.png" width="55" height="55"/>
     </resources>
 </document>

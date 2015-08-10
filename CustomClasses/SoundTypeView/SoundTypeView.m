@@ -70,7 +70,7 @@
         
         self.frame = CGRectMake(frame.origin.x, frame.origin.y, frame.size.width, frame.size.height + heightForTable);
         if ([self.tempSoundsArray count]>0) {
-            self.soundActivityTableStatus.text = @"Below are the activities under this plan";
+            self.soundActivityTableStatus.text = @"Below are the sounds you have added to your plan.";
             
         }
         [self.soundActivitiesTableView registerNib:[UINib nibWithNibName:@"OtherDevicesSoundActivityCell" bundle:nil] forCellReuseIdentifier:@"OtherDevicesSoundActivityCell"];
@@ -93,7 +93,7 @@
     
     self.frame = CGRectMake(frame.origin.x, frame.origin.y, frame.size.width, frame.size.height + heightForTable);
     if ([self.tempSoundsArray count]>0) {
-        self.soundActivityTableStatus.text = @"Below are the activities under this plan";
+        self.soundActivityTableStatus.text = @"Below are the sounds you have added to your plan.";
         
     }
     [self setNeedsDisplay];
@@ -455,25 +455,7 @@
             cell =  [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
         }
         
-        
-        UIImageView *deleteButton = [[UIImageView alloc]initWithFrame:CGRectMake(8, 48, 27, 27)];
-        
-        [deleteButton setImage:[UIImage imageNamed:@"Active_Trash_Button.png"]];
-        
-        deleteButton.tag = indexPath.row;
-        
         cell.tag = indexPath.row;
-        
-        [Utils addTapGestureToView:deleteButton target:self selector:@selector(onDelete:)];
-        
-        [cell addSubview:deleteButton];
-
-        
-        
-      //  cell.deleteButton.tag = indexPath.row;
-        //[Utils addTapGestureToView:cell.deleteButton target:self selector:@selector(onDelete:)];
-//[cell addSubview:deleteButton];
-
         
         cell.nameLabel.text = [[self.tempSoundsArray objectAtIndex:indexPath.row] valueForKey:@"deviceName"];
         
@@ -483,7 +465,7 @@
         cell.commentsTextField.text = [[self.tempSoundsArray objectAtIndex:indexPath.row] valueForKey:@"comments"];
         }
         
-        
+        cell.delegate = self;
         return cell;
     }
     else if ([[self.tempSoundsArray objectAtIndex:indexPath.row] valueForKey:@"websiteID"] != nil) {
@@ -494,19 +476,7 @@
             cell =  [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
         }
    
-        
-        UIImageView *deleteButton = [[UIImageView alloc]initWithFrame:CGRectMake(12, 65, 27, 27)];
-        
-        [deleteButton setImage:[UIImage imageNamed:@"Active_Trash_Button.png"]];
-        
-        deleteButton.tag = indexPath.row;
-                cell.tag = indexPath.row;
-        
-        [Utils addTapGestureToView:deleteButton target:self selector:@selector(onDelete:)];
-        
-        [cell addSubview:deleteButton];
-
-        
+        cell.tag = indexPath.row;
         cell.nameLabel.text = [[self.tempSoundsArray objectAtIndex:indexPath.row] valueForKey:@"waName"];
         
         cell.descriptionLabel.text =[[self.tempSoundsArray objectAtIndex:indexPath.row] valueForKey:@"waDetail"];
@@ -519,10 +489,7 @@
             cell.commentsTextField.text = [[self.tempSoundsArray objectAtIndex:indexPath.row] valueForKey:@"comments"];
         }
         
-        
-        
-        
-        
+        cell.delegate = self;
         return cell;
     }
     else if ([[self.tempSoundsArray objectAtIndex:indexPath.row] valueForKey:@"MyOwnSoundID"] != nil) {
@@ -545,28 +512,12 @@
             cell.nameLabel.text = [[self.tempSoundsArray objectAtIndex:indexPath.row] valueForKey:@"comments"];
         }
         
-        UIImageView *deleteButton = [[UIImageView alloc]initWithFrame:CGRectMake(12, 65, 27, 27)];
-        
-        [deleteButton setImage:[UIImage imageNamed:@"Active_Trash_Button.png"]];
-        
-        deleteButton.tag = indexPath.row;
         cell.tag = indexPath.row;
-        
-        
-        
-        
-        
-        
-        
-        
-     //   cell.descriptionLabel.text =[[self.tempSoundsArray objectAtIndex:indexPath.row] valueForKey:@"URL"];
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
 
         cell.commentsTextField.text = [[self.tempSoundsArray objectAtIndex:indexPath.row] valueForKey:@"URL"];
-        [Utils addTapGestureToView:deleteButton target:self selector:@selector(onDelete:)];
-        
-        [cell addSubview:deleteButton];
+        cell.delegate = self;
         return cell;
     }
     
@@ -627,6 +578,7 @@
         return 44;
     }
 }
+
 
 -(NSArray *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewRowAction *button = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault title:@"X" handler:^(UITableViewRowAction *action, NSIndexPath *indexPath)
@@ -791,7 +743,7 @@
 }
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return YES;
+    return NO;
 }
 
 
