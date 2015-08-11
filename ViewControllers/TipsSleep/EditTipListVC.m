@@ -389,6 +389,7 @@
     CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tableViewOutlet];
     NSIndexPath *indexPath = [self.tableViewOutlet indexPathForRowAtPoint:buttonPosition];
     EditTipsCell *cell = (EditTipsCell *)[self.tableViewOutlet cellForRowAtIndexPath:indexPath];
+    [cell.btnToggleCategory setImage:[UIImage imageNamed:@"Selected_Checkbox.png"] forState:UIControlStateSelected | UIControlStateHighlighted];
     if (indexPath != nil)
     {
         [self toggleCategoryImage:YES andCell:cell];
