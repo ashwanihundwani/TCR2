@@ -380,7 +380,8 @@
     
     
     
-    if ([[PersistenceStorage getObjectForKey:@"Referer"] isEqual: @"SkillRatingsViewController"]) {
+    if ([[PersistenceStorage getObjectForKey:@"Referer"] isEqual: @"SkillRatingsViewController"] ||
+        [[PersistenceStorage getObjectForKey:@"Referer"] isEqual: @"RatingsVC"]) {
         
         
         /* MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];

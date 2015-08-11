@@ -202,6 +202,8 @@
     
     NSString *query1 = [NSString stringWithFormat:@"delete from MySounds where SkillID=%@ and planID = %ld",[skillDict valueForKey:@"ID"],(long)[PersistenceStorage getIntegerForKey:@"currentPlanID"]];
     
+    NSString *query1_1 = [NSString stringWithFormat:@"delete from MyOwnSounds where SkillID=%@ and planID = %ld",[skillDict valueForKey:@"ID"],(long)[PersistenceStorage getIntegerForKey:@"currentPlanID"]];
+    
     NSString *query2 = [NSString stringWithFormat:@"delete from MyWebsites where SkillID=%@ and planID = %ld",[skillDict valueForKey:@"ID"],(long)[PersistenceStorage getIntegerForKey:@"currentPlanID"]];
     
     NSString *query3 = [NSString stringWithFormat:@"delete from MyActivities where SkillID=%@ and planID = %ld",[skillDict valueForKey:@"ID"],(long)[PersistenceStorage getIntegerForKey:@"currentPlanID"]];
@@ -211,6 +213,7 @@
     
     [self.dbManagerMySkills executeQuery:query01];
     [self.dbManagerMySkills executeQuery:query1];
+    [self.dbManagerMySkills executeQuery:query1_1];
     [self.dbManagerMySkills executeQuery:query2];
     [self.dbManagerMySkills executeQuery:query3];
     [self.dbManagerMySkills executeQuery:query4];
