@@ -373,6 +373,8 @@
 		15A2E8CC1ACDC39300587F23 /* SoundTypeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 15A2E8CA1ACDC39300587F23 /* SoundTypeView.xib */; };
 		15A5E4C71ACB116800639FA4 /* imagery.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 15A5E4C61ACB116800639FA4 /* imagery.mp4 */; };
 		15A5E4C81ACB118F00639FA4 /* deep_breathing.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 4A4A3B491AC73A5800F2AEF6 /* deep_breathing.mp4 */; };
+		39953FC81B7A5D66004F4990 /* ThoughtErrorCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 39953FC61B7A5D66004F4990 /* ThoughtErrorCell.m */; };
+		39953FC91B7A5D66004F4990 /* ThoughtErrorCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 39953FC71B7A5D66004F4990 /* ThoughtErrorCell.xib */; };
 		4A4A3AC31ABEE9CD00F2AEF6 /* circlingSleep.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A4A3ABF1ABEE9CD00F2AEF6 /* circlingSleep.png */; };
 		4A4A3AC41ABEE9CD00F2AEF6 /* deepBreathing.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A4A3AC01ABEE9CD00F2AEF6 /* deepBreathing.png */; };
 		4A4A3AC51ABEE9CD00F2AEF6 /* Ears.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A4A3AC11ABEE9CD00F2AEF6 /* Ears.png */; };
@@ -927,6 +929,9 @@
 		15A2E8C91ACDC39300587F23 /* SoundTypeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SoundTypeView.m; sourceTree = "<group>"; };
 		15A2E8CA1ACDC39300587F23 /* SoundTypeView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SoundTypeView.xib; sourceTree = "<group>"; };
 		15A5E4C61ACB116800639FA4 /* imagery.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = imagery.mp4; sourceTree = "<group>"; };
+		39953FC51B7A5D66004F4990 /* ThoughtErrorCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThoughtErrorCell.h; sourceTree = "<group>"; };
+		39953FC61B7A5D66004F4990 /* ThoughtErrorCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThoughtErrorCell.m; sourceTree = "<group>"; };
+		39953FC71B7A5D66004F4990 /* ThoughtErrorCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ThoughtErrorCell.xib; sourceTree = "<group>"; };
 		4A4A3ABF1ABEE9CD00F2AEF6 /* circlingSleep.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = circlingSleep.png; sourceTree = "<group>"; };
 		4A4A3AC01ABEE9CD00F2AEF6 /* deepBreathing.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = deepBreathing.png; sourceTree = "<group>"; };
 		4A4A3AC11ABEE9CD00F2AEF6 /* Ears.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Ears.png; sourceTree = "<group>"; };
@@ -1609,6 +1614,9 @@
 				04D5B18D1B107B3F00BA1C14 /* MyTFHeaderView.h */,
 				04D5B18E1B107B3F00BA1C14 /* MyTFHeaderView.m */,
 				04D5B18F1B107B3F00BA1C14 /* MyTFHeaderView.xib */,
+				39953FC51B7A5D66004F4990 /* ThoughtErrorCell.h */,
+				39953FC61B7A5D66004F4990 /* ThoughtErrorCell.m */,
+				39953FC71B7A5D66004F4990 /* ThoughtErrorCell.xib */,
 			);
 			path = ChangingTF;
 			sourceTree = "<group>";
@@ -2698,6 +2706,7 @@
 				0436A2931B2AE65E002AAE63 /* ctf02.png in Resources */,
 				049DD9EE1AF3C9890068BCEC /* trashcan.png in Resources */,
 				043BC3CE1AF4E055001FD5F1 /* FavoriteActivityCell.xib in Resources */,
+				39953FC91B7A5D66004F4990 /* ThoughtErrorCell.xib in Resources */,
 				04B0F1C51AEF8EB4005BCEA5 /* 37x-Checkmark.png in Resources */,
 				043DA2321B1A88CD009A0480 /* af.css3animate.js in Resources */,
 				4A4A3ACE1ABEEE7E00F2AEF6 /* home.png in Resources */,
@@ -2996,6 +3005,7 @@
 				04DF9A981B3C64A600989E2B /* InfoPopup.m in Sources */,
 				048EF9051AEA64CA001D70C6 /* PleasantIntroDetailViewController.m in Sources */,
 				1550E5841AC7E8D300E36C90 /* SoundActivitiesViewController.m in Sources */,
+				39953FC81B7A5D66004F4990 /* ThoughtErrorCell.m in Sources */,
 				04B8F7AA1B13A57B008D54D0 /* NookDB.m in Sources */,
 				04B0F1B31AEF1138005BCEA5 /* AddressBookJsonResponse.m in Sources */,
 				043F0D711B3508430050D909 /* CTFPrevEntries.m in Sources */,

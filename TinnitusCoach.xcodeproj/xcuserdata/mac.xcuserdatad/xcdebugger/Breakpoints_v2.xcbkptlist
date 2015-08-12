@@ -1343,7 +1343,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "662"
             endingLineNumber = "662"
-            landmarkName = "-onDelete"
+            landmarkName = "-addSoundsClicked:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1359,7 +1359,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "171"
             endingLineNumber = "171"
-            landmarkName = "-deleteSoundFromDB:andCompletion:"
+            landmarkName = "-setData:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1375,7 +1375,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "165"
             endingLineNumber = "165"
-            landmarkName = "-deleteSoundFromDB:andCompletion:"
+            landmarkName = "-setData:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1469,7 +1469,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "663"
             endingLineNumber = "663"
-            landmarkName = "-onDelete"
+            landmarkName = "-addSoundsClicked:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1517,7 +1517,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "687"
             endingLineNumber = "687"
-            landmarkName = "-tableViewCellClicked:"
+            landmarkName = "-onDelete"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1549,7 +1549,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "123"
             endingLineNumber = "123"
-            landmarkName = "-setData:"
+            landmarkName = "-getHeightForTableView:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1725,7 +1725,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "680"
             endingLineNumber = "680"
-            landmarkName = "-tableViewCellClicked:"
+            landmarkName = "-onDelete"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1741,8 +1741,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "675"
             endingLineNumber = "675"
-            landmarkName = "-onDelete"
-            landmarkType = "5">
+            landmarkName = "@implementation SoundActivitiesViewController"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1837,7 +1837,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "685"
             endingLineNumber = "685"
-            landmarkName = "-tableViewCellClicked:"
+            landmarkName = "-onDelete"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1853,7 +1853,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "669"
             endingLineNumber = "669"
-            landmarkName = "-onDelete"
+            landmarkName = "-addSoundsClicked:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

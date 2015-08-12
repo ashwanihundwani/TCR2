@@ -12,6 +12,7 @@
 #import "CTF04.h"
 #import "CTF05.h"
 #import "ChangingThoughtsViewController.h"
+#import "ThoughtErrorCell.h"
 
 
 @interface CTF04 ()<UITableViewDataSource,UITableViewDelegate>{
@@ -28,7 +29,7 @@
     [super viewDidLoad];
     self.title = @"Add New Entry";
     // Do any additional setup after loading the view.
-    
+    [self.scheduleTableView setContentInset:UIEdgeInsetsMake(-50,0,0,0)];
 }
 
 
@@ -117,83 +118,92 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    UITableViewCell *cell;
-    cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];
-    if (cell==nil) {
-        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Cell"];
+    static NSString *cellIdentifier = @"CellIdentifier";
+    ThoughtErrorCell *cell = (ThoughtErrorCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    if(cell == nil)
+    {
+        NSArray *nibs = [[NSBundle mainBundle] loadNibNamed:@"ThoughtErrorCell" owner:nil options:nil];
+        cell = [nibs lastObject];
     }
-    cell.textLabel.text = [paArray objectAtIndex:indexPath.row];
-    cell.textLabel.font = [UIFont fontWithName:@"Helvetica Neue" size:15.0];
     
-     NSString *path = [[NSBundle mainBundle] pathForResource:@"Active_Information_icon_28px" ofType:@"png"];
+    cell.lblTitle.text  = [paArray objectAtIndex:indexPath.row];
+    cell.lblTitle.font = [UIFont fontWithName:@"Helvetica Neue" size:15.0];
+    
+    cell.btnInfoCategory.tag = indexPath.row;
+    /*
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"Active_Information_icon_28px" ofType:@"png"];
     UIImage *theImage = [UIImage imageWithContentsOfFile:path];
     cell.imageView.image = theImage;
     cell.imageView.frame = CGRectMake(0,0,32,32);
     
     cell.imageView.userInteractionEnabled = YES;
-    cell.imageView.tag = indexPath.row;
+    
+     cell.imageView.tag = indexPath.row;
     
     UITapGestureRecognizer *tapped = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(myFunction:)];
     tapped.numberOfTapsRequired = 1;
     [cell.imageView addGestureRecognizer:tapped];
+    */
+    /*
 // cell.accessoryView = cell.imageView;
     cell.accessoryView = [[ UIImageView alloc ] initWithImage:[UIImage imageNamed:@"Active_Information_icon28px.png"]];;
     [cell.accessoryView setFrame:CGRectMake(0, 0, 24, 24)];
+     */
     return cell;
 }
 
 
--(void)myFunction :(id) sender
+-(IBAction)myFunction :(id) sender
 {
-    UITapGestureRecognizer *gesture = (UITapGestureRecognizer *) sender;
-    NSInteger *tgesture= gesture.view.tag;
-    
-    if (tgesture ==0)
+    //UITapGestureRecognizer *gesture = (UITapGestureRecognizer *) sender;
+    //NSInteger *tgesture= gesture.view.tag;
+    UIButton *infoButton = (UIButton *) sender;
+    if (infoButton.tag ==0)
     { [PersistenceStorage setObject:@"thoughterror0.html" andKey:@"infopopupfile"];
         [self viewedInfo:@"All-or-nothing Thinking"];}
 
-    if (tgesture ==1)
+    if (infoButton.tag ==1)
     { [PersistenceStorage setObject:@"thoughterror1.html" andKey:@"infopopupfile"];
         //Assuming the Worst ("Catastrophizing")
         [self viewedInfo:@"Assuming the Worst ('Catastrophizing')"];}
 
-    if (tgesture ==2)
+    if (infoButton.tag ==2)
     { [PersistenceStorage setObject:@"thoughterror2.html" andKey:@"infopopupfile"];
         [self viewedInfo:@"Blaming"];}
 
     
-    if (tgesture ==3)
+    if (infoButton.tag ==3)
     { [PersistenceStorage setObject:@"thoughterror3.html" andKey:@"infopopupfile"];
         [self viewedInfo:@"Emotional Thoughts"];}
 
-    if (tgesture ==4)
+    if (infoButton.tag ==4)
     { [PersistenceStorage setObject:@"thoughterror4.html" andKey:@"infopopupfile"];
         [self viewedInfo:@"Focusing on Wrong Details"];}
 
-    if (tgesture ==5)
+    if (infoButton.tag ==5)
     { [PersistenceStorage setObject:@"thoughterror5.html" andKey:@"infopopupfile"];
         [self viewedInfo:@"Jumping to Conclusions"];}
 
-    if (tgesture ==6)
+    if (infoButton.tag ==6)
     { [PersistenceStorage setObject:@"thoughterror6.html" andKey:@"infopopupfile"];
         [self viewedInfo:@"Labeling"];}
 
-    if (tgesture ==7)
+    if (infoButton.tag ==7)
     { [PersistenceStorage setObject:@"thoughterror7.html" andKey:@"infopopupfile"];
         [self viewedInfo:@"Making Things Personal"];}
-    if (tgesture ==8)
+    if (infoButton.tag ==8)
     { [PersistenceStorage setObject:@"thoughterror8.html" andKey:@"infopopupfile"];
         [self viewedInfo:@"Over-simplifying"];}
 
-    if (tgesture ==9)
+    if (infoButton.tag ==9)
     { [PersistenceStorage setObject:@"thoughterror9.html" andKey:@"infopopupfile"];
         [self viewedInfo:@"'Should' Statements"];}
 
-    if (tgesture ==10)
+    if (infoButton.tag ==10)
     { [PersistenceStorage setObject:@"thoughterror10.html" andKey:@"infopopupfile"];
         [self viewedInfo:@"All-or-nothing Thinking"];}
 
-    if (tgesture ==11)
+    if (infoButton.tag ==11)
     { [PersistenceStorage setObject:@"thoughterror11.html" andKey:@"infopopupfile"];
         [self viewedInfo:@"All-or-nothing Thinking"];}
 
@@ -246,14 +256,14 @@
 }
 
 
-
+/*
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     UILabel *label = [[UILabel alloc]init];
     label.text = @"";
     label.font = [UIFont fontWithName:@"Helvetica Neue-Bold" size:15.0];
     return label;
 }
-
+*/
 #pragma mark UITableViewDelegate
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
 /*if (indexPath.row == 0) {

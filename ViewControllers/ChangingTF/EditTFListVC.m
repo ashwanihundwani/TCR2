@@ -333,6 +333,7 @@
 
 -(IBAction)onClickToggleHeader:(id)sender
 {
+    NSLog(@"I am here");
     UIButton *btnHeader = (UIButton *)sender;
     
     UIView *view = [btnHeader superview];
@@ -520,9 +521,7 @@
 
 -(void)onClickToggleCategory:(id)sender
 {
-
-  
-    
+    NSLog(@"Inside onClickToggleCategory");
     CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tableViewOutlet];
     NSIndexPath *indexPath = [self.tableViewOutlet indexPathForRowAtPoint:buttonPosition];
     EditTFCell *cell = (EditTFCell *)[self.tableViewOutlet cellForRowAtIndexPath:indexPath];
