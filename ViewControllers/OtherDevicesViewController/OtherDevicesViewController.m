@@ -108,7 +108,7 @@
 
 -(void)addTapped
 {
-    
+    NSLog(@"Comments array:%@",self.commentsArray);
     NSInteger soundTypeID = 0;
     if ([self.soundType isEqualToString:@"Soothing Sound"]) {
         soundTypeID = 1;
@@ -125,36 +125,16 @@
 
     
     NSOrderedSet *orderedSet = [NSOrderedSet orderedSetWithArray:otherDevicesSoundsArray];
-    NSArray *arrayWithoutDuplicates = [orderedSet array];
-   
-    
     if ((countForSoundType + [filter countForObject:@"1"])<=100) {
         NSMutableString *query = [NSMutableString stringWithFormat:@"insert into MyDevices ('planID', 'groupID', 'skillID', 'soundTypeID', 'deviceID', 'comments') values "];
         
         for (int i = 0; i<[self.checkFlagArray count]; i++) {
             if ([[self.checkFlagArray objectAtIndex:i] boolValue] == 1) {
                 
-                OtherDevicesWithCommentsCell *cell = (OtherDevicesWithCommentsCell*)[self.otherDevicesSoundTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0]];
-                
-                
-        /*          NSString *selectQuery = [NSString stringWithFormat:@"select Count(*) from MyDevices  where soundTypeID = %ld and planID = %@ and deviceID = %@", soundTypeID, [PersistenceStorage getObjectForKey:@"currentPlanID"],[[otherDevicesSoundsArray objectAtIndex:i] valueForKey:@"ID"]];
-       
-               
-                
-                selectCountArray = [[NSArray alloc] initWithArray:[self.dbManagerSoundsList loadDataFromDB:selectQuery]]; */
-
-                
-               // [selectCountArray addObjectsFromArray:[self.dbManagerSoundsList loadDataFromDB:selectQuery]];
-
-                
-                
-//                if ([[selectCountArray valueForKey:@"Count(*)"] isEqual:@"0"] )
-  //               {
-                
-                [query appendFormat:@"(%ld, %ld, %ld, %ld, %ld, '%@'),",[PersistenceStorage getIntegerForKey:@"currentPlanID"], (long)[PersistenceStorage getIntegerForKey:@"currentGroupID"], [PersistenceStorage getIntegerForKey:@"currentSkillID"], soundTypeID, (long)[[[otherDevicesSoundsArray objectAtIndex:i] valueForKey:@"ID"] integerValue], cell.commentsTextField.text];
+                [query appendFormat:@"(%ld, %ld, %ld, %ld, %ld, '%@'),",[PersistenceStorage getIntegerForKey:@"currentPlanID"], (long)[PersistenceStorage getIntegerForKey:@"currentGroupID"], [PersistenceStorage getIntegerForKey:@"currentSkillID"], soundTypeID, (long)[[[otherDevicesSoundsArray objectAtIndex:i] valueForKey:@"ID"] integerValue], [self getCommentsAtIndex:i]];
             
                  }
-    //            }
+
         }
         NSString *newQuery = [query substringToIndex:[query length]-1];
         
@@ -232,6 +212,20 @@
         [alert show];
     }
     
+}
+
+-(NSString*)getCommentsAtIndex:(int) index{
+    NSString* retString = @"";
+    NSString* commentStringFromArray = [self.commentsArray objectAtIndex:index];
+    NSIndexPath* indexPath = [NSIndexPath indexPathForRow:index inSection:0];
+    NSString* commentsStringFromCell = ((OtherDevicesWithCommentsCell *)[self.otherDevicesSoundTableView cellForRowAtIndexPath:indexPath]).commentsTextField.text;
+    if (commentStringFromArray.length > 0) {
+        return commentStringFromArray;
+    }else if (commentsStringFromCell.length > 0){
+        return commentsStringFromCell;
+    }else{
+        return retString;
+    }
 }
 
 -(void)viewDidAppear:(BOOL)animated
