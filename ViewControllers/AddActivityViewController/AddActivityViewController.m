@@ -115,49 +115,53 @@
 - (IBAction)addButtonTapped:(id)sender {
     
     if ([self.nameTextField.text length]>0)
-    
+        
     {
-    
-    NSDate *date = [NSDate date];
-    NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
-    formatter.dateFormat = @"yyyy-MM-dd";
-     
-    NSTimeInterval  today = [[NSDate date] timeIntervalSince1970];
-    NSString *CurrentTime = [NSString stringWithFormat:@"%d", today];
-    
-     
-//double *CurrentTime = [[NSDate date] timeIntervalSince1970];
-    
-    
-    NSString *query = [NSString stringWithFormat:@"insert into Plan_Activities (valueName,activityName,isActive,createdDate) values('%@','%@',%i,'%@')",[PersistenceStorage getObjectForKey:@"valueName"],self.nameTextField.text,YES,CurrentTime];
-
- 
-    
-    
-    // Execute the query.
-    [self.manager executeQuery:query];
-    
-    // If the query was successfully executed then pop the view controller.
-    if (self.manager.affectedRows != 0) {
-        
-        
-        [self dismissViewControllerAnimated:YES completion:^{
+        if(![self activityExists]){
             
-        }];
+            NSDate *date = [NSDate date];
+            NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
+            formatter.dateFormat = @"yyyy-MM-dd";
+            
+            NSTimeInterval  today = [[NSDate date] timeIntervalSince1970];
+            NSString *CurrentTime = [NSString stringWithFormat:@"%d", today];
+            NSString *query = [NSString stringWithFormat:@"insert into Plan_Activities (valueName,activityName,isActive,createdDate) values('%@','%@',%i,'%@')",[PersistenceStorage getObjectForKey:@"valueName"],self.nameTextField.text,YES,CurrentTime];
+            
+            [self.manager executeQuery:query];
+            
+            // If the query was successfully executed then pop the view controller.
+            if (self.manager.affectedRows != 0) {
+                
+                
+                [self dismissViewControllerAnimated:YES completion:^{
+                    
+                }];
+                
+                
+                
+                
+                // Pop the view controller.
+                //    [self.navigationController popViewControllerAnimated:YES];
+            }
+            else{
+                NSLog(@"Could not execute the query.");
+            }
+        }else{
+            UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:@"Sorry,cannot add this activity" message:@"The activity that you are trying to add already exists." delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+            [alertView show];
+        }
+    }
     
-        
-        
-        
-        // Pop the view controller.
-    //    [self.navigationController popViewControllerAnimated:YES];
-    }
-    else{
-        NSLog(@"Could not execute the query.");
-    }
+    
 }
 
-}
+-(BOOL)activityExists{
+   NSString* queryString = [NSString stringWithFormat:@"select count(*) from Plan_Activities where valueName =\"%@\" and activityName =\"%@\"",[PersistenceStorage getObjectForKey:@"valueName"],self.nameTextField.text];
+    NSDictionary* dict = [[self.manager loadDataFromDB:queryString] objectAtIndex:0];
+    int val = [(NSString*)[dict valueForKey:@"count(*)"] intValue];
+    return  val > 0 ? YES:NO;
     
+}
 
 /*
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {

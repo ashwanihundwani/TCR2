@@ -83,7 +83,7 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    [self setUpView];
+    //[self setUpView];
 
   //  [self.activityTableView reloadData];
 //[self loadData];
@@ -251,36 +251,32 @@ if ([[PersistenceStorage getObjectForKey:@"Referer"] isEqual: @"DoingActivityVC"
     return [activityArray count];
 }
 
+-(CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return 120;
+}
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
     NSDictionary *dict = [activityArray objectAtIndex:indexPath.row];
-
+    
     ActivityCell *activityCell;
-
+    
     if (activityCell==nil) {
         activityCell = [tableView dequeueReusableCellWithIdentifier:@"ActivityCell"];
-
+        
     }
-     activityCell.initialImageView.layer.borderColor = [UIColor whiteColor].CGColor;
+    activityCell.initialImageView.layer.borderColor = [UIColor whiteColor].CGColor;
     activityCell.initialImageView.layer.borderWidth = 0.2f;
     activityCell.layer.borderColor = [UIColor grayColor].CGColor;
     activityCell.layer.borderWidth = 0.5f;
-[activityCell setBackgroundColor:[UIColor whiteColor]];
-//    [activityCell.initialImageView.layer setBorderColor:[UIColor blackColor].CGColor] ;
-//    [activityCell.initialImageView.layer setBorderWidth:0.5f];
-  
-    
-    
-    
+    [activityCell setBackgroundColor:[UIColor whiteColor]];
     activityCell.activityNameButton.titleLabel.numberOfLines = 1;
-   activityCell.activityNameButton.titleLabel.adjustsFontSizeToFitWidth = YES;
+    activityCell.activityNameButton.titleLabel.adjustsFontSizeToFitWidth = YES;
     activityCell.activityNameButton.titleLabel.lineBreakMode = NSLineBreakByClipping;
-    
     
     [activityCell.activityNameButton setTitle:[dict valueForKey:@"activityName"] forState:UIControlStateNormal];
     [activityCell.activityNameButton addTarget:self action:@selector(buttonTapped:) forControlEvents:UIControlEventTouchUpInside];
     if ([[dict valueForKey:@"ScheduledDate"] length]>5)
-    
+        
     {
         activityCell.dateLabel.text =[dict valueForKey:@"ScheduledDate"];
     }
@@ -291,55 +287,38 @@ if ([[PersistenceStorage getObjectForKey:@"Referer"] isEqual: @"DoingActivityVC"
     
     
     for (NSDictionary *tFavs in favoritesArray)
-    if ([[tFavs valueForKey:@"activityName"] isEqualToString:[dict valueForKey:@"activityName"]])
-    {
-        [activityCell.favoriteButton setTitle:@"✓ Favorite" forState:UIControlStateNormal];
-             activityCell.favoriteButton.backgroundColor = [UIColor grayColor];
-        
-        break;
-    }
+        if ([[tFavs valueForKey:@"activityName"] isEqualToString:[dict valueForKey:@"activityName"]])
+        {
+            [activityCell.favoriteButton setTitle:@"✓ Favorite" forState:UIControlStateNormal];
+            activityCell.favoriteButton.backgroundColor = [UIColor grayColor];
+            [activityCell.favoriteButton removeTarget:self action:@selector(addToFavorites:) forControlEvents:UIControlEventTouchUpInside];
+            break;
+        }else{
+            [activityCell.favoriteButton setTitle:@"+ Favorite" forState:UIControlStateNormal];
+            [activityCell.favoriteButton setBackgroundColor:[UIColor colorWithRed:0.0 green:0.47843137254901963 blue:1 alpha:1]];
+            activityCell.favoriteButton.tintColor =[UIColor colorWithRed:0.0 green:0.47843137254901963 blue:1 alpha:1];
+            [activityCell.favoriteButton addTarget:self action:@selector(addToFavorites:) forControlEvents:UIControlEventTouchUpInside];
+            
+        }
     
     
-    
-    
-    
-        
-    [activityCell.favoriteButton addTarget:self action:@selector(addToFavorites:) forControlEvents:UIControlEventTouchUpInside];
     [activityCell.initialImageView setBackgroundColor:[UIColor whiteColor]];
     
-[activityCell.deleteButton addTarget:self action:@selector(onDelete:) forControlEvents:UIControlEventTouchUpInside];
+    [activityCell.deleteButton addTarget:self action:@selector(onDelete:) forControlEvents:UIControlEventTouchUpInside];
     
-        NSString *cantDel = [dict valueForKey:@"cantDelete"];
+    NSString *cantDel = [dict valueForKey:@"cantDelete"];
     
-  if ([cantDel isEqual:@"1"])
-  {
-  
+    if ([cantDel isEqual:@"1"])
+    {
+        
         [activityCell.deleteButton setHidden:YES];
-  
-  }
-    
-    
-    
-    
-    
-    
-//    if [dict valueForKey:@"CreatedDate"]>10
-  //  {
-//        activityCell.deleteButton.hi
-    // }
-    
-    //else
-    
-    //{
-    
-//    }
-    
+        
+    }
     activityCell.initialImageView.layer.borderWidth = 0.2f;
-
     
     activityCell.secondView.backgroundColor = [UIColor whiteColor];
-//activityCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-     return activityCell;
+    //activityCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    return activityCell;
 }
 
 
@@ -569,6 +548,9 @@ if ([[PersistenceStorage getObjectForKey:@"Referer"] isEqual: @"DoingActivityVC"
             
             [activity stopAnimating];
             // Pop the view controller.
+            NSString *queryFav = [NSString stringWithFormat:@"SELECT * FROM Plan_Activities  LEFT OUTER  JOIN myReminders ON Plan_Activities.ActivityName = MyReminders.ActName  inner join MyActivities on Plan_Activities.ID=MyActivities.activityID order by  CreatedDate DESC"];
+            favoritesArray = [[NSArray alloc] initWithArray:[self.manager loadDataFromDB:queryFav]];
+            [self.activityTableView reloadData];
         }
         else{
             NSLog(@"Could not execute the query.");
