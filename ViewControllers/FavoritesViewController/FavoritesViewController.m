@@ -45,43 +45,44 @@
 }
 
 -(void) viewDidAppear:(BOOL)animated
-{if ([[PersistenceStorage getObjectForKey:@"Referer"] isEqual: @"DoingActivityVC"]) {
-    ActivityRatingsViewController *ratingsView = [[UIStoryboard storyboardWithName:@"Main"bundle:nil]instantiateViewControllerWithIdentifier:@"ActivityRatingsViewController"];
-    
-    //ratingsView.skillSection = @"Sounds";
-    //  ratingsView.skillDetail = self.name;
-    
-    //[self.navigationController pushViewController:ratingsView animated:YES];
-    [self.navigationController presentModalViewController:ratingsView animated:YES];
-}
-    
-    
-    
-    if ([[PersistenceStorage getObjectForKey:@"Referer"] isEqual: @"ActivityRatingsVC"]) {
-        NSString *actionSheetTitle = @"Where would you like to go now?"; //Action Sheet Title
-        NSString *other0 = @"Repeat This Skill"; //Action Sheet Button Titles
-        NSString *other1 = @"Learn About This Skill";
-        NSString *other2 = @"Try Another Skill";
-        NSString *other3 = @"Return Home";
-        //   NSString *other4 = @"Return Home";
-        NSString *cancelTitle = @"Cancel";
-        UIActionSheet *actionSheet = [[UIActionSheet alloc]
-                                      initWithTitle:actionSheetTitle
-                                      delegate:self
-                                      cancelButtonTitle:nil
-                                      destructiveButtonTitle:nil
-                                      otherButtonTitles:other0, other1, other2, other3, nil];
+{
+    if ([[PersistenceStorage getObjectForKey:@"Referer"] isEqual: @"DoingActivityVC"]) {
+        ActivityRatingsViewController *ratingsView = [[UIStoryboard storyboardWithName:@"Main"bundle:nil]instantiateViewControllerWithIdentifier:@"ActivityRatingsViewController"];
         
-        [actionSheet showInView:self.view];
+        //ratingsView.skillSection = @"Sounds";
+        //  ratingsView.skillDetail = self.name;
         
+        //[self.navigationController pushViewController:ratingsView animated:YES];
+        [self.navigationController presentModalViewController:ratingsView animated:YES];
+    } else{
         
+        [self loadData];
         
-        
-        [PersistenceStorage setObject:@"OK" andKey:@"Referer"];
+        if ([[PersistenceStorage getObjectForKey:@"Referer"] isEqual: @"ActivityRatingsVC"]) {
+            NSString *actionSheetTitle = @"Where would you like to go now?"; //Action Sheet Title
+            NSString *other0 = @"Repeat This Skill"; //Action Sheet Button Titles
+            NSString *other1 = @"Learn About This Skill";
+            NSString *other2 = @"Try Another Skill";
+            NSString *other3 = @"Return Home";
+            //   NSString *other4 = @"Return Home";
+            NSString *cancelTitle = @"Cancel";
+            UIActionSheet *actionSheet = [[UIActionSheet alloc]
+                                          initWithTitle:actionSheetTitle
+                                          delegate:self
+                                          cancelButtonTitle:nil
+                                          destructiveButtonTitle:nil
+                                          otherButtonTitles:other0, other1, other2, other3, nil];
+            
+            [actionSheet showInView:self.view];
+            
+            
+            
+            
+            [PersistenceStorage setObject:@"OK" andKey:@"Referer"];
+            
+        }
         
     }
-
-    
     
     
 }
@@ -402,7 +403,7 @@
 }
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return YES;
+    return NO;
 }
 
 #pragma mark activity button tapped
