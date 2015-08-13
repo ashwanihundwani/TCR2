@@ -116,8 +116,22 @@
 -(void)writeToMyPlans:(NSString *)planName
 {
     
-    //  NSString *query = [NSString stringWithFormat:@"insert into MyPlans ('planName', 'isActive', 'situationName', 'timeStamp') values ('%@', 1, '%@')",planName, sitName,[NSDate date]];
     
+    
+    NSString *duplicateCheck = [NSString stringWithFormat:@"SELECT * from MyPlans  where planName = '%@'", planName];
+    
+    
+    
+     NSArray *allMyPlan = [NSArray arrayWithArray:[dbManager loadDataFromDB:queryForMyPlan]];
+    
+    
+    NSString *rowCount = [self.dbManagerPlansList loadDataFromDB:duplicateCheck];
+    
+		  NSLog(@"THE VALUE OF PLAN NAMES %@", [rowCount objectAtIndex:0]);//[rowCount valueForKey:@"count(*)"]);
+		  
+     if ([rowCount objectAtIndex:0]==0)
+     {
+         
     NSString *query = [NSString stringWithFormat:@"insert into MyPlans ('planName', 'isActive', 'situationName','timeStamp') values ('%@', 1, '%@','%@')",planName,[PersistenceStorage getObjectForKey:@"sitName"],[NSDate date]];
     
     [PersistenceStorage setObject:planName andKey:@"newPlanName"];
@@ -167,6 +181,7 @@
     }
 }
 
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -263,6 +278,14 @@
         
    //     PlansViewController *npav = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"PlansViewController"];
         npav.planName = [[alertView textFieldAtIndex:0] text];
+        
+        
+        
+        
+        
+        
+        
+        
         [self writeToMyPlans:npav.planName];
         [self.navigationController pushViewController:npav animated:NO];
         

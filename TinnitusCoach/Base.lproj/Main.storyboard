@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6245" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="49e-Tb-3d3">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="14A389" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="49e-Tb-3d3">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -3271,7 +3271,7 @@
                                 <constraints>
                                     <constraint firstAttribute="width" constant="299" id="b1j-oG-s1P"/>
                                 </constraints>
-                                <string key="text">You can add up to 3 plans in the app.
+                                <string key="text">You can add up to 3 plans.
 </string>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -4880,7 +4880,7 @@ With this app, you can make plans for using sound when your tinnitus is botherin
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <webView contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Qov-NP-Vb1">
+                            <webView contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Qov-NP-Vb1">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -11509,7 +11509,7 @@ With this app, you can make plans for using sound when your tinnitus is botherin
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <webView contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="THM-Bn-5cC">
+                            <webView contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="THM-Bn-5cC">
                                 <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -12145,23 +12145,23 @@ With this app, you can make plans for using sound when your tinnitus is botherin
                                 <exclude reference="2sW-eB-AIY"/>
                             </mask>
                             <mask key="constraints">
+                                <exclude reference="aME-rs-6aD"/>
+                                <exclude reference="v9r-WS-YBx"/>
                                 <exclude reference="8Nm-9I-M9T"/>
                                 <exclude reference="ocj-Mc-4Qs"/>
                                 <exclude reference="wag-bE-cya"/>
-                                <exclude reference="aME-rs-6aD"/>
-                                <exclude reference="v9r-WS-YBx"/>
-                                <exclude reference="Pn4-r6-Qdr"/>
-                                <exclude reference="reH-j5-mdZ"/>
                                 <exclude reference="ATe-3p-qe9"/>
                                 <exclude reference="bxM-TB-aWp"/>
                                 <exclude reference="qV7-Ud-IEU"/>
                                 <exclude reference="z29-7T-gds"/>
+                                <exclude reference="Hp6-Ea-OBj"/>
+                                <exclude reference="xkg-3N-lWq"/>
+                                <exclude reference="Pn4-r6-Qdr"/>
+                                <exclude reference="reH-j5-mdZ"/>
                                 <exclude reference="Cf1-fL-Dki"/>
                                 <exclude reference="ar7-ci-JJc"/>
                                 <exclude reference="0Sg-NX-Ffr"/>
                                 <exclude reference="BU7-k1-GtG"/>
-                                <exclude reference="Hp6-Ea-OBj"/>
-                                <exclude reference="xkg-3N-lWq"/>
                             </mask>
                         </variation>
                         <variation key="widthClass=compact">
@@ -12173,13 +12173,11 @@ With this app, you can make plans for using sound when your tinnitus is botherin
                                 <include reference="2sW-eB-AIY"/>
                             </mask>
                             <mask key="constraints">
+                                <include reference="aME-rs-6aD"/>
+                                <include reference="v9r-WS-YBx"/>
                                 <include reference="8Nm-9I-M9T"/>
                                 <include reference="ocj-Mc-4Qs"/>
                                 <exclude reference="wag-bE-cya"/>
-                                <include reference="aME-rs-6aD"/>
-                                <include reference="v9r-WS-YBx"/>
-                                <include reference="Pn4-r6-Qdr"/>
-                                <include reference="reH-j5-mdZ"/>
                                 <include reference="ATe-3p-qe9"/>
                                 <exclude reference="NO5-wf-3QC"/>
                                 <exclude reference="TVI-Of-HFD"/>
@@ -12188,12 +12186,14 @@ With this app, you can make plans for using sound when your tinnitus is botherin
                                 <exclude reference="qV7-Ud-IEU"/>
                                 <exclude reference="rM0-jy-5ba"/>
                                 <include reference="z29-7T-gds"/>
+                                <include reference="Hp6-Ea-OBj"/>
+                                <include reference="xkg-3N-lWq"/>
+                                <include reference="Pn4-r6-Qdr"/>
+                                <include reference="reH-j5-mdZ"/>
                                 <exclude reference="Cf1-fL-Dki"/>
                                 <include reference="ar7-ci-JJc"/>
                                 <exclude reference="0Sg-NX-Ffr"/>
                                 <include reference="BU7-k1-GtG"/>
-                                <include reference="Hp6-Ea-OBj"/>
-                                <include reference="xkg-3N-lWq"/>
                             </mask>
                         </variation>
                     </view>
@@ -15820,7 +15820,7 @@ With this app, you can make plans for using sound when your tinnitus is botherin
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <webView contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="AfP-Xq-QxN">
+                            <webView contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="AfP-Xq-QxN">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>

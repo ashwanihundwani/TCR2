@@ -494,7 +494,9 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "280"
-            endingLineNumber = "280">
+            endingLineNumber = "280"
+            landmarkName = "-loadMyDevices:"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -860,7 +862,9 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "890"
-            endingLineNumber = "890">
+            endingLineNumber = "890"
+            landmarkName = "-tableViewCellClicked:"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -874,7 +878,9 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "844"
-            endingLineNumber = "844">
+            endingLineNumber = "844"
+            landmarkName = "-tableViewCellClicked:"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -888,7 +894,9 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "845"
-            endingLineNumber = "845">
+            endingLineNumber = "845"
+            landmarkName = "-tableViewCellClicked:"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -902,7 +910,9 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "839"
-            endingLineNumber = "839">
+            endingLineNumber = "839"
+            landmarkName = "-tableViewCellClicked:"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1332,7 +1342,9 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "662"
-            endingLineNumber = "662">
+            endingLineNumber = "662"
+            landmarkName = "-addSoundsClicked:"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1394,7 +1406,9 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "328"
-            endingLineNumber = "328">
+            endingLineNumber = "328"
+            landmarkName = "-sayHello:"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1454,7 +1468,9 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "663"
-            endingLineNumber = "663">
+            endingLineNumber = "663"
+            landmarkName = "-addSoundsClicked:"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1500,7 +1516,9 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "687"
-            endingLineNumber = "687">
+            endingLineNumber = "687"
+            landmarkName = "-onDelete"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1514,7 +1532,9 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "234"
-            endingLineNumber = "234">
+            endingLineNumber = "234"
+            landmarkName = "-getSoundDetailForTypeID:andSoundID:"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1544,7 +1564,9 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "699"
-            endingLineNumber = "699">
+            endingLineNumber = "699"
+            landmarkName = "-tableViewCellClicked:"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1558,7 +1580,9 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "287"
-            endingLineNumber = "287">
+            endingLineNumber = "287"
+            landmarkName = "-loadMyDevices:"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1572,7 +1596,9 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "293"
-            endingLineNumber = "293">
+            endingLineNumber = "293"
+            landmarkName = "-loadMyDevices:"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1656,7 +1682,9 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "703"
-            endingLineNumber = "703">
+            endingLineNumber = "703"
+            landmarkName = "-tableViewCellClicked:"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1670,7 +1698,9 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "702"
-            endingLineNumber = "702">
+            endingLineNumber = "702"
+            landmarkName = "-tableViewCellClicked:"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1684,7 +1714,9 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "680"
-            endingLineNumber = "680">
+            endingLineNumber = "680"
+            landmarkName = "-onDelete"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1698,7 +1730,9 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "675"
-            endingLineNumber = "675">
+            endingLineNumber = "675"
+            landmarkName = "@implementation SoundActivitiesViewController"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1712,7 +1746,9 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "812"
-            endingLineNumber = "812">
+            endingLineNumber = "812"
+            landmarkName = "-tableViewCellClicked:"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1726,7 +1762,9 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "803"
-            endingLineNumber = "803">
+            endingLineNumber = "803"
+            landmarkName = "-tableViewCellClicked:"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1740,7 +1778,9 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "797"
-            endingLineNumber = "797">
+            endingLineNumber = "797"
+            landmarkName = "-tableViewCellClicked:"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1754,7 +1794,9 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "833"
-            endingLineNumber = "833">
+            endingLineNumber = "833"
+            landmarkName = "-tableViewCellClicked:"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1768,7 +1810,9 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "322"
-            endingLineNumber = "322">
+            endingLineNumber = "322"
+            landmarkName = "-sayHello:"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1782,7 +1826,9 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "685"
-            endingLineNumber = "685">
+            endingLineNumber = "685"
+            landmarkName = "-onDelete"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1796,7 +1842,9 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "669"
-            endingLineNumber = "669">
+            endingLineNumber = "669"
+            landmarkName = "-addSoundsClicked:"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -2360,6 +2408,22 @@
             startingLineNumber = "142"
             endingLineNumber = "142"
             landmarkName = "-tableView:viewForHeaderInSection:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ViewControllers/AddActivityViewController/AddActivityViewController.m"
+            timestampString = "461130486.784814"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "125"
+            endingLineNumber = "125"
+            landmarkName = "-addButtonTapped:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

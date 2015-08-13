@@ -179,7 +179,7 @@
     }
     else
     {
-        firstLabel.text = @"You can add up to 3 plans in the app.";
+        firstLabel.text = @"You can add up to 3 plans.";
         [[self.view viewWithTag:3] setHidden:NO];
     }
     
