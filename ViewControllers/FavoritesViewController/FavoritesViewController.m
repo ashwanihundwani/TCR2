@@ -29,7 +29,10 @@
 @interface FavoritesViewController ()<UITableViewDataSource,UITableViewDelegate>{
     NSArray *favoritesArray;
     NSString *strAct;
-
+    CGRect viewRect;
+    CGRect tableRect;
+    BOOL isLoad;
+    
 }
 
 @end
@@ -38,14 +41,31 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-     self.title = @"Favorites";
+    self.title = @"Favorites";
     // Do any additional setup after loading the view.
     [self loadData];
+    isLoad = YES;
     
+}
+
+-(void)viewWillAppear:(BOOL)animated{
+    if(!isLoad){
+        self.view.frame = viewRect;
+        self.view.bounds = viewRect;
+        self.favoriteTableView.frame = tableRect;
+        self.favoriteTableView.bounds = CGRectMake(tableRect.origin.x -25, tableRect.origin.y-40, tableRect.size.width, tableRect.size.height);
+        
+    }else{
+        isLoad = NO;
+    }
 }
 
 -(void) viewDidAppear:(BOOL)animated
 {
+    viewRect = self.view.frame;
+    tableRect = self.favoriteTableView.frame;
+    [self.view setNeedsDisplay];// = YES;
+    
     if ([[PersistenceStorage getObjectForKey:@"Referer"] isEqual: @"DoingActivityVC"]) {
         ActivityRatingsViewController *ratingsView = [[UIStoryboard storyboardWithName:@"Main"bundle:nil]instantiateViewControllerWithIdentifier:@"ActivityRatingsViewController"];
         
@@ -85,12 +105,14 @@
     }
     
     
+    
 }
 
 
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
+    [actionSheet dismissWithClickedButtonIndex:buttonIndex animated:YES];
     //Get the name of the current pressed button
     NSString *buttonTitle = [actionSheet buttonTitleAtIndex:buttonIndex];
     
@@ -136,9 +158,9 @@
     
     if ([buttonTitle isEqualToString:@"Do Activity Now"]) {
         DoingActivityViewController *svc1 = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"DoingActivityViewController"];
-        //[self.navigationController pushViewController:svc1 animated:YES];
+        [self.navigationController pushViewController:svc1 animated:YES];
         
-        [self.navigationController presentModalViewController:svc1 animated:NO];
+        //[self.navigationController presentModalViewController:svc1 animated:NO];
     }
     
     
@@ -178,19 +200,19 @@
     [self.favoriteTableView setDelegate:self];
     [self.favoriteTableView registerNib:[UINib nibWithNibName:@"FavoriteActivityCell" bundle:nil] forCellReuseIdentifier:@"FavoriteActivityCell"];
     self.manager = [[DBManager alloc]initWithDatabaseFileName:@"GNResoundDB.sqlite"];
-   // NSString *query = @" select Plan_Activities.activityName,Plan_Activities.ID From Plan_Activities inner join MyActivities on Plan_Activities.ID=MyActivities.activityID";
+    // NSString *query = @" select Plan_Activities.activityName,Plan_Activities.ID From Plan_Activities inner join MyActivities on Plan_Activities.ID=MyActivities.activityID";
     
     
-  //  NSString *query = @" select Plan_Activities.activityName,Plan_Activities.ID From Plan_Activities inner join MyActivities on Plan_Activities.ID=MyActivities.activityID";
+    //  NSString *query = @" select Plan_Activities.activityName,Plan_Activities.ID From Plan_Activities inner join MyActivities on Plan_Activities.ID=MyActivities.activityID";
     
-//    NSString *query = [NSString stringWithFormat:@"SELECT * FROM Plan_Activities  LEFT OUTER  JOIN myReminders ON Plan_Activities.ActivityName = MyReminders.ActName  where valueName IS '%@' order by  CreatedDate DESC",[PersistenceStorage getObjectForKey:@"valueName"]];
+    //    NSString *query = [NSString stringWithFormat:@"SELECT * FROM Plan_Activities  LEFT OUTER  JOIN myReminders ON Plan_Activities.ActivityName = MyReminders.ActName  where valueName IS '%@' order by  CreatedDate DESC",[PersistenceStorage getObjectForKey:@"valueName"]];
     
     
     NSString *query = [NSString stringWithFormat:@"SELECT * FROM Plan_Activities  LEFT OUTER  JOIN myReminders ON Plan_Activities.ActivityName = MyReminders.ActName  inner join MyActivities on Plan_Activities.ID=MyActivities.activityID order by  CreatedDate DESC"];
     
-
     
-  //  LEFT OUTER  JOIN myReminders ON Plan_Activities.ActivityName = MyReminders.ActName  where valueName IS '%@' order by  CreatedDate DESC",[PersistenceStorage getObjectForKey:@"valueName"]
+    
+    //  LEFT OUTER  JOIN myReminders ON Plan_Activities.ActivityName = MyReminders.ActName  where valueName IS '%@' order by  CreatedDate DESC",[PersistenceStorage getObjectForKey:@"valueName"]
     
     
     // Get the results.
@@ -198,7 +220,7 @@
         favoritesArray = nil;
     }
     favoritesArray = [[NSArray alloc] initWithArray:[self.manager loadDataFromDB:query]];
-     // Reload the table view.
+    // Reload the table view.
     
     
     NSLog(@"FAV ARRAY %@",favoritesArray);
@@ -213,7 +235,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     NSDictionary *dict = [favoritesArray objectAtIndex:indexPath.row];
-
+    
     FavoriteActivityCell *FavoriteActivityCell;
     if (FavoriteActivityCell==nil) {
         FavoriteActivityCell = [tableView dequeueReusableCellWithIdentifier:@"FavoriteActivityCell"];
@@ -226,11 +248,11 @@
     [FavoriteActivityCell.secondView setBackgroundColor:[UIColor whiteColor]];
     [FavoriteActivityCell.activityNameButton setTitle:str forState:UIControlStateNormal ] ;
     FavoriteActivityCell.activityNameButton.titleLabel.textColor = [UIColor blackColor];
-   // FavoriteActivityCell.dateLabel.text =[dict valueForKey:@"ScheduledDate"];
+    // FavoriteActivityCell.dateLabel.text =[dict valueForKey:@"ScheduledDate"];
     
     
     if ([[dict valueForKey:@"ScheduledDate"] length]>5)
-    
+        
     {
         FavoriteActivityCell.dateLabel.text =[dict valueForKey:@"ScheduledDate"];
     }
@@ -247,11 +269,11 @@
     FavoriteActivityCell.activityNameButton.titleLabel.lineBreakMode = NSLineBreakByClipping;
     
     [FavoriteActivityCell.activityNameButton addTarget:self action:@selector(buttonTapped:) forControlEvents:UIControlEventTouchUpInside];
-     [FavoriteActivityCell.removeFavoriteButton addTarget:self action:@selector(removeFromFavorites:) forControlEvents:UIControlEventTouchUpInside];
-    FavoriteActivityCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    [FavoriteActivityCell.removeFavoriteButton addTarget:self action:@selector(removeFromFavorites:) forControlEvents:UIControlEventTouchUpInside];
+//    FavoriteActivityCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     return FavoriteActivityCell;
     
- 
+    
     
     
     
@@ -301,9 +323,9 @@
 //        NSDictionary *dict = [favoritesArray objectAtIndex:indexPath.row];
 //        strAct = [dict valueForKey:@"activityName"];
 //        [PersistenceStorage setObject:strAct andKey:@"activityName"];
-//        
+//
 //        NSLog(@"%@",strAct);
-//        
+//
 //        UIActionSheet *sheet = [[UIActionSheet alloc]initWithTitle:[dict valueForKey:@"activityName"] delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Do Activity Now",@"Schedule Later", nil];
 //        [sheet showInView:self.view];
 //    }
@@ -313,59 +335,59 @@
 
 
 /*- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    //Get the name of the current pressed button
-    NSString *buttonTitle = [actionSheet buttonTitleAtIndex:buttonIndex];
-    
-    //   NSString * theValue = [(UILabel*)[self viewWithTag:t200] text];
-    
-    
-    
-    
-     
-    
-    if ([buttonTitle isEqualToString:@"Return Home"]) {
-        [[self tabBarController] setSelectedIndex:0];
-        
-    }
-    
-    
-    
-    if ([buttonTitle isEqualToString:@"Do Activity Now"]) {
-        DoingActivityViewController *svc1 = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"DoingActivityViewController"];
-        //[self.navigationController pushViewController:svc1 animated:YES];
-        
-        [self.navigationController presentModalViewController:svc1 animated:NO];
-    }
-    
-    
-    
-    if ([buttonTitle isEqualToString:@"Schedule Later"]) {
-        ScheduleViewController *svc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"ScheduleViewController"];
-        svc.name = strAct;
-        [self.navigationController pushViewController:svc animated:YES];
-    }
-    
-    
-    
-    
-    
-    
-    
-    
-}
-
-
-
-
-*/
+ {
+ //Get the name of the current pressed button
+ NSString *buttonTitle = [actionSheet buttonTitleAtIndex:buttonIndex];
+ 
+ //   NSString * theValue = [(UILabel*)[self viewWithTag:t200] text];
+ 
+ 
+ 
+ 
+ 
+ 
+ if ([buttonTitle isEqualToString:@"Return Home"]) {
+ [[self tabBarController] setSelectedIndex:0];
+ 
+ }
+ 
+ 
+ 
+ if ([buttonTitle isEqualToString:@"Do Activity Now"]) {
+ DoingActivityViewController *svc1 = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"DoingActivityViewController"];
+ //[self.navigationController pushViewController:svc1 animated:YES];
+ 
+ [self.navigationController presentModalViewController:svc1 animated:NO];
+ }
+ 
+ 
+ 
+ if ([buttonTitle isEqualToString:@"Schedule Later"]) {
+ ScheduleViewController *svc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"ScheduleViewController"];
+ svc.name = strAct;
+ [self.navigationController pushViewController:svc animated:YES];
+ }
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ }
+ 
+ 
+ 
+ 
+ */
 
 
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
     if (buttonIndex == 1) {
         
- //       HomeViewController *svc1 = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"HomeViewController"];
-   //     [self.navigationController pushViewController:svc1 animated:YES];
+        //       HomeViewController *svc1 = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"HomeViewController"];
+        //     [self.navigationController pushViewController:svc1 animated:YES];
         
         //  [self.navigationController pushViewController:viewControllerToPush animated:YES];
         //
@@ -376,14 +398,14 @@
 
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 
 -(NSArray *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -413,49 +435,49 @@
 -(void)removeFromFavorites:(UIButton *)sender{
     CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.favoriteTableView];
     NSIndexPath *indexPath = [self.favoriteTableView indexPathForRowAtPoint:buttonPosition];
-
-   
-         if (indexPath != nil)
-        {
-            NSDictionary *dict = [favoritesArray objectAtIndex:indexPath.row];
- 
+    
+    
+    if (indexPath != nil)
+    {
+        NSDictionary *dict = [favoritesArray objectAtIndex:indexPath.row];
+        
+        
+        
+        NSString *query = [NSString stringWithFormat:@"delete from  MyActivities where ActivityID = '%@'",[dict valueForKey:@"ID"]];
+        
+        // Execute the query.
+        [self.manager executeQuery:query];
+        [self.favoriteTableView reloadData];
+        
+        
+        // If the query was successfully executed then pop the view controller.
+        if (self.manager.affectedRows != 0) {
+            MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+            hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark.png"] ];
             
+            hud.mode = MBProgressHUDModeCustomView;
             
-            NSString *query = [NSString stringWithFormat:@"delete from  MyActivities where ActivityID = '%@'",[dict valueForKey:@"ID"]];
+            hud.labelText = @"Removed";
             
-            // Execute the query.
-            [self.manager executeQuery:query];
-            [self.favoriteTableView reloadData];
+            [hud show:YES];
+            [hud hide:YES afterDelay:1];
             
-            
-            // If the query was successfully executed then pop the view controller.
-            if (self.manager.affectedRows != 0) {
-                MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-                hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark.png"] ];
-                
-                hud.mode = MBProgressHUDModeCustomView;
-                
-                hud.labelText = @"Removed";
-                
-                [hud show:YES];
-                [hud hide:YES afterDelay:1];
-                
-                
-            }
-            else{
-                NSLog(@"Could not execute the query.");
-            }
             
         }
-    [self loadData];
-
-    
+        else{
+            NSLog(@"Could not execute the query.");
+        }
+        
     }
+    [self loadData];
     
     
-    
-    
-    
+}
+
+
+
+
+
 
 
 @end

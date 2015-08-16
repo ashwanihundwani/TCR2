@@ -37,7 +37,7 @@
     [self.activityTableView registerNib:[UINib nibWithNibName:@"ActivityCell" bundle:nil] forCellReuseIdentifier:@"ActivityCell"];
     [self.activityTableView setDataSource:self];
     [self.activityTableView setDelegate:self];
-//    [self.activityTableView setBackgroundColor:[UIColor lightGrayColor]];
+    //    [self.activityTableView setBackgroundColor:[UIColor lightGrayColor]];
     [self loadData];
 }
 
@@ -45,7 +45,7 @@
     self.manager = [[DBManager alloc]initWithDatabaseFileName:@"GNResoundDB.sqlite"];
     
     NSString *query = [NSString stringWithFormat:@"SELECT * FROM Plan_Activities LEFT OUTER  JOIN myReminders ON Plan_Activities.ActivityName = MyReminders.ActName  where valueName IS '%@' order by  CreatedDate DESC",[PersistenceStorage getObjectForKey:@"valueName"]];
-
+    
     
     
     
@@ -74,8 +74,8 @@
     // Reload the table view.
     
     
-   // NSLog(@"FAV ARRAY %@",favoritesArray);
-     //   NSLog(@"FAV ARRAY %@",activityArray);
+    // NSLog(@"FAV ARRAY %@",favoritesArray);
+    //   NSLog(@"FAV ARRAY %@",activityArray);
     
     // Reload the table view.
     [self.activityTableView reloadData];
@@ -84,9 +84,9 @@
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     //[self setUpView];
-
-  //  [self.activityTableView reloadData];
-//[self loadData];
+    
+    //  [self.activityTableView reloadData];
+    //[self loadData];
 }
 
 
@@ -95,8 +95,8 @@
 
 
 -(void)viewWillDisAppear:(BOOL)animated{
-   
-
+    
+    
     
     
 }
@@ -104,13 +104,13 @@
 
 -(void)viewDidAppear:(BOOL)animated{
     [self setUpView];
- //  [self.activityTableView reloadData];
-
-   // [self loadData];
-
-   // NSLog(@"Did appear");
+    //  [self.activityTableView reloadData];
     
-     
+    // [self loadData];
+    
+    // NSLog(@"Did appear");
+    
+    
     UILabel *firstLabel = (UILabel *)[self.view viewWithTag:200];
     
     firstLabel.text = [PersistenceStorage getObjectForKey:@"valueDescription"];
@@ -118,15 +118,15 @@
     
     
     self.title = [PersistenceStorage getObjectForKey:@"valueName"];
-if ([[PersistenceStorage getObjectForKey:@"Referer"] isEqual: @"DoingActivityVC"]) {
-    ActivityRatingsViewController *ratingsView = [[UIStoryboard storyboardWithName:@"Main"bundle:nil]instantiateViewControllerWithIdentifier:@"ActivityRatingsViewController"];
-    
-    //ratingsView.skillSection = @"Sounds";
-    //  ratingsView.skillDetail = self.name;
-    
-    //[self.navigationController pushViewController:ratingsView animated:YES];
-    [self.navigationController presentModalViewController:ratingsView animated:YES];
-}
+    if ([[PersistenceStorage getObjectForKey:@"Referer"] isEqual: @"DoingActivityVC"]) {
+        ActivityRatingsViewController *ratingsView = [[UIStoryboard storyboardWithName:@"Main"bundle:nil]instantiateViewControllerWithIdentifier:@"ActivityRatingsViewController"];
+        
+        //ratingsView.skillSection = @"Sounds";
+        //  ratingsView.skillDetail = self.name;
+        
+        //[self.navigationController pushViewController:ratingsView animated:YES];
+        [self.navigationController presentModalViewController:ratingsView animated:YES];
+    }
     
     
     if ([[PersistenceStorage getObjectForKey:@"Referer"] isEqual: @"ActivityRatingsVC"]) {
@@ -155,7 +155,7 @@ if ([[PersistenceStorage getObjectForKey:@"Referer"] isEqual: @"DoingActivityVC"
     
     
     
-
+    
 }
 
 
@@ -203,7 +203,7 @@ if ([[PersistenceStorage getObjectForKey:@"Referer"] isEqual: @"DoingActivityVC"
         
     }
     
- 
+    
     
     if ([buttonTitle isEqualToString:@"Do Activity Now"]) {
         DoingActivityViewController *svc1 = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"DoingActivityViewController"];
@@ -212,18 +212,18 @@ if ([[PersistenceStorage getObjectForKey:@"Referer"] isEqual: @"DoingActivityVC"
         [self.navigationController presentModalViewController:svc1 animated:NO];
     }
     
-
+    
     
     if ([buttonTitle isEqualToString:@"Schedule Activity"]) {
-      //  [PersistenceStorage setObject:@"Yes" andKey:@"showCancelActivityButton"];
- ScheduleViewController *svc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"ScheduleViewController"];
+        //  [PersistenceStorage setObject:@"Yes" andKey:@"showCancelActivityButton"];
+        ScheduleViewController *svc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"ScheduleViewController"];
         svc.name = strAct;
         [self.navigationController pushViewController:svc animated:YES];
     }
     
     if ([buttonTitle isEqualToString:@"Cancel Scheduled Activity"]) {
         [PersistenceStorage setObject:@"Yes" andKey:@"showCancelActivityButton"];
-  ScheduleViewController *svc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"ScheduleViewController"];
+        ScheduleViewController *svc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"ScheduleViewController"];
         svc.name = strAct;
         [self.navigationController pushViewController:svc animated:YES];
     }
@@ -247,13 +247,11 @@ if ([[PersistenceStorage getObjectForKey:@"Referer"] isEqual: @"DoingActivityVC"
 }
 
 #pragma mark UITableViewDataSource
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return [activityArray count];
 }
 
--(CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 120;
-}
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
     NSDictionary *dict = [activityArray objectAtIndex:indexPath.row];
@@ -286,21 +284,18 @@ if ([[PersistenceStorage getObjectForKey:@"Referer"] isEqual: @"DoingActivityVC"
     }
     
     
-    for (NSDictionary *tFavs in favoritesArray)
-        if ([[tFavs valueForKey:@"activityName"] isEqualToString:[dict valueForKey:@"activityName"]])
-        {
-            [activityCell.favoriteButton setTitle:@"✓ Favorite" forState:UIControlStateNormal];
-            activityCell.favoriteButton.backgroundColor = [UIColor grayColor];
-            [activityCell.favoriteButton removeTarget:self action:@selector(addToFavorites:) forControlEvents:UIControlEventTouchUpInside];
-            break;
-        }else{
-            [activityCell.favoriteButton setTitle:@"+ Favorite" forState:UIControlStateNormal];
-            [activityCell.favoriteButton setBackgroundColor:[UIColor colorWithRed:0.0 green:0.47843137254901963 blue:1 alpha:1]];
-            activityCell.favoriteButton.tintColor =[UIColor colorWithRed:0.0 green:0.47843137254901963 blue:1 alpha:1];
-            [activityCell.favoriteButton addTarget:self action:@selector(addToFavorites:) forControlEvents:UIControlEventTouchUpInside];
-            
-        }
-    
+    if ( [self isActivityFavorite:[dict valueForKey:@"activityName"]] )
+    {
+        [activityCell.favoriteButton setTitle:@"✓ Favorite" forState:UIControlStateNormal];
+        activityCell.favoriteButton.backgroundColor = [UIColor grayColor];
+        [activityCell.favoriteButton removeTarget:self action:@selector(addToFavorites:) forControlEvents:UIControlEventTouchUpInside];
+    }else{
+        [activityCell.favoriteButton setTitle:@"+ Favorite" forState:UIControlStateNormal];
+        [activityCell.favoriteButton setBackgroundColor:[UIColor colorWithRed:0.0 green:0.47843137254901963 blue:1 alpha:1]];
+        activityCell.favoriteButton.tintColor =[UIColor colorWithRed:0.0 green:0.47843137254901963 blue:1 alpha:1];
+        [activityCell.favoriteButton addTarget:self action:@selector(addToFavorites:) forControlEvents:UIControlEventTouchUpInside];
+        
+    }
     
     [activityCell.initialImageView setBackgroundColor:[UIColor whiteColor]];
     
@@ -322,11 +317,23 @@ if ([[PersistenceStorage getObjectForKey:@"Referer"] isEqual: @"DoingActivityVC"
 }
 
 
+-(BOOL)isActivityFavorite:(NSString*) activityName{
+    BOOL retVal = NO;
+    for (NSDictionary *tFavs in favoritesArray){
+        if([[tFavs valueForKey:@"activityName"] isEqualToString:activityName]){
+            retVal = YES;
+            break;
+        }
+    }
+    return retVal;
+}
+
+
 
 -(void)refreshList
 {
     [self.activityTableView reloadData];
-
+    
 }
 
 
@@ -377,7 +384,7 @@ if ([[PersistenceStorage getObjectForKey:@"Referer"] isEqual: @"DoingActivityVC"
         
         [self loadData];
         
-
+        
         
         
         
@@ -399,7 +406,7 @@ if ([[PersistenceStorage getObjectForKey:@"Referer"] isEqual: @"DoingActivityVC"
     NSString *dateString = [formatter stringFromDate:date];
     
     
-     CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.activityTableView];
+    CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.activityTableView];
     NSIndexPath *indexPath = [self.activityTableView indexPathForRowAtPoint:buttonPosition];
     if (indexPath != nil)
     {
@@ -410,30 +417,30 @@ if ([[PersistenceStorage getObjectForKey:@"Referer"] isEqual: @"DoingActivityVC"
         NSString *query = [NSString stringWithFormat:@"delete from  Plan_Activities where ActivityName = '%@' and cantDelete is not 1",[dict valueForKey:@"activityName"]];
         
         // Execute the query.
-       [self.manager executeQuery:query];
+        [self.manager executeQuery:query];
         [self.activityTableView reloadData];
- 
+        
         // If the query was successfully executed then pop the view controller.
-    //    if (self.manager.affectedRows != 0) {
-            MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-            hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark.png"] ];
-            
-            hud.mode = MBProgressHUDModeCustomView;
-            
-            hud.labelText = @"Removed";
-            
-            [hud show:YES];
-            [hud hide:YES afterDelay:1];
-            
-            
+        //    if (self.manager.affectedRows != 0) {
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark.png"] ];
+        
+        hud.mode = MBProgressHUDModeCustomView;
+        
+        hud.labelText = @"Removed";
+        
+        [hud show:YES];
+        [hud hide:YES afterDelay:1];
+        
+        
         
     }
     
-  //  [self.activityTableView reloadData];
-
+    //  [self.activityTableView reloadData];
+    
     
     [self loadData];
-
+    
     
 }
 
@@ -457,24 +464,24 @@ if ([[PersistenceStorage getObjectForKey:@"Referer"] isEqual: @"DoingActivityVC"
     if (indexPath != nil)
     {
         NSDictionary *dict = [activityArray objectAtIndex:indexPath.row];
-         strAct = [dict valueForKey:@"activityName"];
+        strAct = [dict valueForKey:@"activityName"];
         [PersistenceStorage setObject:strAct andKey:@"activityName"];
-
-         NSUInteger characterCount = [[dict valueForKey:@"ScheduledDate"] length];
-        if (characterCount == 0)
-         
-        {
         
-       UIActionSheet *sheet = [[UIActionSheet alloc]initWithTitle:[dict valueForKey:@"activityName"] delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Do Activity Now",@"Schedule Activity", nil];
-        [sheet showInView:self.view];
+        NSUInteger characterCount = [[dict valueForKey:@"ScheduledDate"] length];
+        if (characterCount == 0)
+            
+        {
+            
+            UIActionSheet *sheet = [[UIActionSheet alloc]initWithTitle:[dict valueForKey:@"activityName"] delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Do Activity Now",@"Schedule Activity", nil];
+            [sheet showInView:self.view];
         }
         else
         {
             UIActionSheet *sheet = [[UIActionSheet alloc]initWithTitle:[dict valueForKey:@"activityName"] delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Do Activity Now",@"Cancel Scheduled Activity", nil];
-        [sheet showInView:self.view];
+            [sheet showInView:self.view];
         }
         
-       
+        
     }
 }
 
@@ -484,25 +491,25 @@ if ([[PersistenceStorage getObjectForKey:@"Referer"] isEqual: @"DoingActivityVC"
 
 
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
-  if (buttonIndex == 1) {
+    if (buttonIndex == 1) {
         
         HomeViewController *svc1 = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"HomeViewController"];
         [self.navigationController pushViewController:svc1 animated:YES];
-     
-   //  [self.navigationController pushViewController:viewControllerToPush animated:YES];
-//
+        
+        //  [self.navigationController pushViewController:viewControllerToPush animated:YES];
+        //
     }
 }
 
 
 
 #pragma mark UIActionSheetDelegate
- 
+
 #pragma mark Add to favorites method
 -(void)addToFavorites:(UIButton *)sender{
     NSDate *date = [NSDate date];
     NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
-   formatter.dateFormat = @"yyyy-MM-dd";
+    formatter.dateFormat = @"yyyy-MM-dd";
     NSString *dateString = [formatter stringFromDate:date];
     
     
@@ -520,11 +527,11 @@ if ([[PersistenceStorage getObjectForKey:@"Referer"] isEqual: @"DoingActivityVC"
         
         // Execute the query.
         [self.manager executeQuery:query];
-  
+        
         // If the query was successfully executed then pop the view controller.
         if (self.manager.affectedRows != 0) {
             NSLog(@"Query was executed successfully. Affected rows = %d", self.manager.affectedRows);
-           
+            
             
             if (self.manager.affectedRows != 0) {
                 MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
@@ -555,7 +562,7 @@ if ([[PersistenceStorage getObjectForKey:@"Referer"] isEqual: @"DoingActivityVC"
         else{
             NSLog(@"Could not execute the query.");
         }
-
+        
     }
     
 }
@@ -569,14 +576,14 @@ if ([[PersistenceStorage getObjectForKey:@"Referer"] isEqual: @"DoingActivityVC"
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 
 -(NSArray *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -601,29 +608,6 @@ if ([[PersistenceStorage getObjectForKey:@"Referer"] isEqual: @"DoingActivityVC"
 
 - (IBAction)addActivityTapped:(id)sender {
     AddActivityViewController *addvc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"AddActivityViewController"];
-
-    //UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:addvc];
-   // nav.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
-    //[self presentViewController:nav animated:YES completion:^{
-        
-   // }];
-    
-    [self.navigationController presentModalViewController:addvc animated:YES];
-
-    
-    
-    
-//    AddActivityViewController *controller = [[AddActivityViewController alloc] init];
-//    controller.onCompletion = ^(id result) {
-//        [self setUpView]
-//        [self dismissViewControllerAnimated:YES completion:nil];
-    }
-
-
-/*
-
-- (IBAction)addActivityTapped:(id)sender {
-    AddActivityViewController *addvc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"AddActivityViewController"];
     
     //UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:addvc];
     // nav.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
@@ -635,8 +619,31 @@ if ([[PersistenceStorage getObjectForKey:@"Referer"] isEqual: @"DoingActivityVC"
     
     
     
+    
+    //    AddActivityViewController *controller = [[AddActivityViewController alloc] init];
+    //    controller.onCompletion = ^(id result) {
+    //        [self setUpView]
+    //        [self dismissViewControllerAnimated:YES completion:nil];
 }
-*/
+
+
+/*
+ 
+ - (IBAction)addActivityTapped:(id)sender {
+ AddActivityViewController *addvc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"AddActivityViewController"];
+ 
+ //UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:addvc];
+ // nav.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+ //[self presentViewController:nav animated:YES completion:^{
+ 
+ // }];
+ 
+ [self.navigationController presentModalViewController:addvc animated:YES];
+ 
+ 
+ 
+ }
+ */
 
 
 @end
