@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6250" systemVersion="14A389" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="sbl-WI-ut2" customClass="MyTipsHeaderView">
+            <rect key="frame" x="0.0" y="0.0" width="317" height="140"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Provide feedback for your sleeping tips used yesterday" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Y1V-F4-XGs">
+                    <rect key="frame" x="19" y="177" width="514" height="54"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="320" id="UbY-wk-jSX"/>
+                        <constraint firstAttribute="height" constant="54" id="Vnf-s5-823"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="UbY-wk-jSX"/>
+                            <exclude reference="Vnf-s5-823"/>
+                        </mask>
+                    </variation>
+                    <variation key="heightClass=regular-widthClass=compact">
+                        <mask key="constraints">
+                            <include reference="UbY-wk-jSX"/>
+                            <include reference="Vnf-s5-823"/>
+                        </mask>
+                    </variation>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Feedback for Sleeping Tips" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oOV-mN-DpU">
+                    <rect key="frame" x="128" y="80" width="42" height="21"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="21" id="CDV-bN-rCI"/>
+                        <constraint firstAttribute="width" constant="289" id="SBe-3g-MHW"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="19"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="CDV-bN-rCI"/>
+                            <exclude reference="SBe-3g-MHW"/>
+                        </mask>
+                    </variation>
+                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                        <rect key="frame" x="14" y="49" width="289" height="21"/>
+                        <mask key="constraints">
+                            <include reference="CDV-bN-rCI"/>
+                            <include reference="SBe-3g-MHW"/>
+                        </mask>
+                    </variation>
+                </label>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="Y1V-F4-XGs" secondAttribute="trailing" constant="-6" id="0HG-8d-c5R"/>
+                <constraint firstItem="Y1V-F4-XGs" firstAttribute="leading" secondItem="sbl-WI-ut2" secondAttribute="leading" constant="8" id="1KB-En-oqc"/>
+                <constraint firstItem="Y1V-F4-XGs" firstAttribute="top" secondItem="sbl-WI-ut2" secondAttribute="top" constant="8" id="2ss-Xb-TAo"/>
+                <constraint firstItem="Y1V-F4-XGs" firstAttribute="top" secondItem="oOV-mN-DpU" secondAttribute="bottom" constant="8" id="3cp-HP-JAH"/>
+                <constraint firstAttribute="centerX" secondItem="oOV-mN-DpU" secondAttribute="centerX" constant="2.5" id="HWE-14-6So">
+                    <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
+                </constraint>
+                <constraint firstItem="oOV-mN-DpU" firstAttribute="top" secondItem="Y1V-F4-XGs" secondAttribute="bottom" constant="18" id="K7L-tx-jX0"/>
+                <constraint firstAttribute="trailing" secondItem="oOV-mN-DpU" secondAttribute="trailing" constant="152" id="OUp-kv-gIR"/>
+                <constraint firstAttribute="centerX" secondItem="Y1V-F4-XGs" secondAttribute="centerX" constant="-7" id="OnM-KP-N9S"/>
+                <constraint firstAttribute="bottom" secondItem="oOV-mN-DpU" secondAttribute="bottom" constant="39" id="S0E-dU-iNW"/>
+                <constraint firstItem="oOV-mN-DpU" firstAttribute="top" secondItem="sbl-WI-ut2" secondAttribute="top" constant="49" id="bEs-aq-abE">
+                    <variation key="heightClass=regular-widthClass=compact" constant="75"/>
+                </constraint>
+                <constraint firstItem="oOV-mN-DpU" firstAttribute="leading" secondItem="sbl-WI-ut2" secondAttribute="leading" constant="128" id="dje-Sk-BfS">
+                    <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
+                </constraint>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <variation key="default">
+                <mask key="subviews">
+                    <exclude reference="Y1V-F4-XGs"/>
+                </mask>
+                <mask key="constraints">
+                    <exclude reference="HWE-14-6So"/>
+                    <exclude reference="K7L-tx-jX0"/>
+                    <exclude reference="OUp-kv-gIR"/>
+                    <exclude reference="S0E-dU-iNW"/>
+                    <exclude reference="bEs-aq-abE"/>
+                    <exclude reference="dje-Sk-BfS"/>
+                    <exclude reference="0HG-8d-c5R"/>
+                    <exclude reference="1KB-En-oqc"/>
+                    <exclude reference="2ss-Xb-TAo"/>
+                    <exclude reference="3cp-HP-JAH"/>
+                    <exclude reference="OnM-KP-N9S"/>
+                </mask>
+            </variation>
+            <variation key="heightClass=regular-widthClass=compact">
+                <mask key="subviews">
+                    <include reference="Y1V-F4-XGs"/>
+                </mask>
+                <mask key="constraints">
+                    <include reference="HWE-14-6So"/>
+                    <exclude reference="K7L-tx-jX0"/>
+                    <exclude reference="OUp-kv-gIR"/>
+                    <exclude reference="S0E-dU-iNW"/>
+                    <include reference="bEs-aq-abE"/>
+                    <exclude reference="dje-Sk-BfS"/>
+                    <exclude reference="0HG-8d-c5R"/>
+                    <exclude reference="1KB-En-oqc"/>
+                    <exclude reference="2ss-Xb-TAo"/>
+                    <include reference="3cp-HP-JAH"/>
+                    <include reference="OnM-KP-N9S"/>
+                </mask>
+            </variation>
+            <point key="canvasLocation" x="265" y="277"/>
+        </view>
+    </objects>
+</document>

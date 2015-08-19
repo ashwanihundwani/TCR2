@@ -206,6 +206,15 @@
 - (IBAction)SupportButtonTapped:(id)sender {
     [[self tabBarController] setSelectedIndex:4];
     
+
+//    UIStoryboard *storyBoard = [ UIStoryboard storyboardWithName:@"Main" bundle:nil];
+//    UIViewController *mySleepsViewCotroller = [storyBoard instantiateViewControllerWithIdentifier:@"WeeklyViewController"];
+//    UIWindow *currentWindow = [[UIApplication sharedApplication].windows firstObject];
+//    [currentWindow.rootViewController presentViewController:mySleepsViewCotroller animated:YES completion:nil];
+//    
+
+
+
 }
 
 

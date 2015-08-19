@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>List View App template</title>
+<!--
+    This template can be used for simple list view application that has a main view with list and detail view for each list item, for applications like Mail app, Messages App or Twitter app.
+-->  
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0;" />
+    
+    <link rel="stylesheet" type="text/css" href="appframework/af.ui.css" />
+    <link rel="stylesheet" type="text/css" href="appframework/icons.css" />
+    <script type="text/javascript" charset="utf-8" src="appframework/appframework.ui.min.js"></script>
+
+    <!-- phantom library, needed for XDK "legacy" container api calls -->
+    <script src="intelxdk.js"></script>
+    <!-- phantom library, needed for Cordova api calls -->
+    <script src="cordova.js"></script>
+    <!-- phantom library, needed for XDK "legacy" container CORS -->
+    <script src="xhr.js"></script>
+    
+    <script>
+        var onDeviceReady=function(){                             // called when Cordova is ready
+           if( window.Cordova && navigator.splashscreen ) {     // Cordova API detected
+               $.ui.launch(); 
+               navigator.splashscreen.hide() ;                 // hide splash screen
+            }
+        } ;
+        document.addEventListener("deviceready", onDeviceReady, false) ;
+    </script>
+    
+    <script>   
+        $.ui.autoLaunch = false; 
+        $.ui.backButtonText = "Back";
+                
+        $(document).ready(function(){
+            $.ui.launch();
+        });
+    </script>
+</head>
+<body> 
+<div id="afui">
+    <div id="content" style="">
+        
+    <!--List View Page-->
+        <div class="panel" title="Title" id="listview" data-footer="none" selected="true">
+            <ul class="list">
+                <li><a href="#item1">Tinnitus basics</a></li>
+                <li><a href="#item2">What causes tinnitus?</a></li>
+                <li><a href="#item3">Living with tinnitus</a></li>
+                <li><a href="#item4">How can I manage my reactions to tinnitus?</a></li>
+                <li><a href="#item5">Can medications help?</a></li>
+                <li><a href="#item6">Can over-the-counter dietary supplements help?</a></li>
+                <li><a href="#item7">What methods have good research evidence?</a></li>
+                <li><a href="#item8">Does my tinnitus make it harder for me to hear?</a></li>
+               <li><a href="#item10">What should I do about my tinnitus?</a></li>
+               
+			    <li><a href="#item9">What if I need more help?</a></li>
+                <li><a href="#item11">What is Progressive Tinnitus Management (PTM)?</a></li>
+             </ul>
+        </div>
+        
+    <!--Detail View Pages for each list items-->
+        <div class="panel" title="Item 1" id="item1" data-footer="none">
+			<p><b>  What is tinnitus?  </b></p>
+			<p></p>
+			<p>  Tinnitus is humming, ringing, buzzing, or other sounds in the ears or head.  </p>
+			<p><br>
+				<img src="images/4.1.1image1.png"></p>
+			 <p></p>
+			<p><b> How do you pronounce &ldquo;tinnitus&rdquo;?  </b></p>
+			<p></p>
+			<p> &ldquo;ti-night-us&rdquo; or &ldquo;tin-uh-tus&rdquo;  either is correct.  </p>
+			<p>
+				<br>
+				<img src="images/4.1.1image2.png">
+				
+			</p>
+            
+        </div>
+        
+        <div class="panel" title="Item 2" id="item2" data-footer="none">
+            <p>The most common cause of tinnitus is exposure to loud sound. Tinnitus can also be caused by head injury, medications, ear wax  and many other causes. For many people it is impossible to know the exact cause of tinnitus.</p>
+		<br>
+		<img src="images/4.1.2image1.png">
+        </div>
+        
+        <div class="panel" title="Item 3" id="item3" data-footer="none">
+		<p><b>  Is there a cure for tinnitus?  </b></p>
+		<p></p>
+		<p>  A &ldquo;cure&rdquo; would be some way to make the tinnitus sound stop. Right now, there is no safe and consistent way to quiet tinnitus. However, there are many ways to feel better without making tinnitus quieter.  </p>
+		<p></p>
+		<p></p>
+		<p><b>  How can I feel better without making my tinnitus quieter?  </b></p>
+		<p></p>
+		<p>  You can feel better by learning how to manage your reactions to tinnitus.   </p>
+        
+        </div>
+        
+        <div class="panel" title="Item 4" id="item4" data-footer="none">
+            <p>This is detail view for Item 4</p>
+        </div>
+        
+        <div class="panel" title="Item 5" id="item5" data-footer="none">
+            <p>Medications used for tinnitus were developed for other problems like depression, anxiety, and trouble sleeping. Some of these medications can improve your mood. A better mood can help to make tinnitus less of a problem. In rare cases medications may make tinnitus quieter. However, medications can also make tinnitus louder. Because of possible side effects, the use caution with medications.<br>
+ 		<img src="images/4.1.5image1.png"></p>
+        </div>
+        
+        <div class="panel" title="Item 6" id="item6" data-footer="none">
+            <p>This is detail view for Item 6</p>
+        </div>
+        
+        <div class="panel" title="Item 7" id="item7" data-footer="none">
+            <p>This is detail view for Item 7</p>
+        </div>
+        
+        <div class="panel" title="Item 8" id="item8" data-footer="none">
+<b> Does my tinnitus make it harder for me to hear?</font></b></p>
+<p></p>
+<p> Many people have hearing problems along with tinnitus. Some people think hat the tinnitus causes their hearing problems  which is not true. </font></p>
+<p></p>
+<p> Hearing problems are caused by hearing loss or problems processing sound. If you have tinnitus or hearing problems, you should have a hearing test.</font></p>
+<p></p>
+        </div>
+        
+        <div class="panel" title="Item 9" id="item9" data-footer="none">
+            <p>This is detail view for Item 9</p>
+        </div>
+        
+        <div class="panel" title="Item 10" id="item10" data-footer="none">
+            <p>This is detail view for Item 10</p>          <br>
+ 		<img src="images/4.1.10image1.png">
+        </div>
+
+        </div>
+        
+        <div class="panel" title="Item 11" id="item11" data-footer="none">
+		 <p> PTM is designed to help people with different levels of need. Some people with tinnitus only need a hearing test and answers to their questions. For people who need more help PTM teaches ways to use sound to manage reactions to tinnitus. </p>
+		 <p></p>
+		 <p> PTM also teaches how to change thoughts and feelings to cope with tinnitus.  Audiologists and mental health providers teach these skills.</font></p>
+ 		<br>
+ 		<img src="images/4.1.10image1.png">
+        </div>
+        
+                
+    </div>
+</div>
+</body>
+</html>    

@@ -114,7 +114,7 @@
     [button setTitle:@"Cancel" forState:UIControlStateNormal];
     button.titleLabel.textColor = [UIColor whiteColor];
     button.font = [UIFont fontWithName:@"Helvetica Neue" size:15.0];
-    [button addTarget:self action:@selector(cancelTapped) forControlEvents:UIControlEventTouchUpInside];
+    [button addTarget:self action:@selector(cancelTappedCTF) forControlEvents:UIControlEventTouchUpInside];
     [button setBackgroundColor:[UIColor colorWithRed:0.0/255.0 green:122.0/255.0 blue:255.0/255.0 alpha:1]];
     
     button.layer.cornerRadius = 5.0f;
@@ -168,7 +168,7 @@
 }
 
 
--(void)cancelTapped{
+-(void)cancelTappedCTF{
     
     
     

@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>List View App template</title>
+<!--
+    This template can be used for simple list view application that has a main view with list and detail view for each list item, for applications like Mail app, Messages App or Twitter app.
+-->
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0;" />
+
+    <link rel="stylesheet" type="text/css" href="af.ui.css" />
+    <link rel="stylesheet" type="text/css" href="icons.css" />
+    <script type="text/javascript" charset="utf-8" src="appframework.ui.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="style.css" />
+
+    <!-- phantom library, needed for XDK "legacy" container api calls -->
+    <script src="intelxdk.js"></script>
+    <!-- phantom library, needed for Cordova api calls -->
+    <script src="cordova.js"></script>
+    <!-- phantom library, needed for XDK "legacy" container CORS -->
+    <script src="xhr.js"></script>
+
+    <script>
+        var onDeviceReady=function(){                             // called when Cordova is ready
+           if( window.Cordova && navigator.splashscreen ) {     // Cordova API detected
+               $.ui.launch();
+               navigator.splashscreen.hide() ;                 // hide splash screen
+            }
+        } ;
+        document.addEventListener("deviceready", onDeviceReady, false) ;
+    </script>
+
+    <script>
+        $.ui.autoLaunch = false;
+        $.ui.backButtonText = "Tips for Better Sleep";
+
+        $(document).ready(function(){
+            $.ui.launch();
+        });
+    </script>
+</head>
+<body vlink="black" link="black" bgcolor="white">
+    <font size="3">
+
+<div id="afui">
+ <div id="content" style="">
+
+    <!--List View Page-->
+        <div class="panel" title="Tips for Better Sleep" id="listview" data-footer="none" selected="true">
+            <ul class="list">
+               <a href="#item1">
+                 <div class="list-div" id="tin-basics">
+                 <li>Introduction to 'Tips for Better Sleep'</li>
+                 <img class="next-chevron" align="right" src="Next-Arrow.png"></img>
+               </div>
+               </a>
+                <a href="#item2">
+                  <div class="list-div" id="tin-basics">
+                  <li>Sleep timing</li>
+                  <img class="next-chevron" align="right" src="Next-Arrow.png"></img>
+                </div>
+                </a>
+                <a href="#item3">
+                  <div class="list-div" id="tin-basics">
+                  <li>Sleep behavior</li>
+                  <img class="next-chevron" align="right" src="Next-Arrow.png"></img>
+                </div>
+                </a>
+                <a href="#item4">
+                  <div class="list-div" id="tin-basics">
+                  <li>Sleeping environment</li>
+                  <img class="next-chevron" align="right" src="Next-Arrow.png"></img>
+                </div>
+                </a>
+                <a href="#item5">
+                  <div class="list-div" id="tin-basics">
+                  <li>Relaxing before bedtime</li>
+                  <img class="next-chevron" align="right" src="Next-Arrow.png"></img>
+                </div>
+                </a>
+                <a href="#item6">
+                  <div class="list-div" id="tin-basics">
+                  <li>Food, nicotine, alcohol and caffeine</li>
+                  <img class="next-chevron" align="right" src="Next-Arrow.png"></img>
+                </div>
+                </a>
+             </ul>
+        </div>
+
+    <!--Detail View Pages for each list items-->
+        <div class="panel" title=" " id="item1" data-footer="none">
+          <br />
+            <p>Sleep is essential to good health. Sleep helps your body to repair itself, both physically and emotionally. Your tinnitus may seem worse when you are tired. When you get enough sleep, you are ready to handle problems and you won't get frustrated as easily.</p>
+        <br><b> What happens if you don't get enough sleep? </b><br>
+         <p></p>
+         <ul type="disc" class="bullet-lists">
+            <li>
+               Your tinnitus may seem louder.
+            </li>
+            <li>
+              Problems seem more difficult to handle.
+            </li>
+            <li>
+              Your body feels weak.
+            </li>
+            <li>
+              You don't feel good or enjoy activities.
+            </li>
+            <li>
+              You have difficulty concentrating.
+            </li>
+          </ul>
+            <br>
+
+            <p>'Tips for Getting Better Sleep' offers advice on how you can improve your sleep. This information is supported by research. The tips are organized in 5 separate articles for your review:   </p>
+            <p></p>
+            <ul type="disc" class="bullet-lists">
+                <li>
+                    Sleep timing
+                </li>
+                <li>
+                     Sleep behavior
+                </li>
+                <li>
+                     Sleeping environment
+                </li>
+                <li>
+                     Relaxing before bedtime
+                </li>
+                <li>
+                     Food, nicotine, alcohol and caffeine
+          </div>
+
+
+        <div class="panel" title=" " id="item6" data-footer="none">
+            <p></p>
+            <p> Before bed, avoid substances that can interfere with sleep.   </p>
+            <p></p>
+            <ul type="disc">
+                <li>
+                     Avoid heavy meals close to bedtime
+                </li>
+                <li>
+                     Avoid nicotine before bedtime or when you wake up at night
+                </li>
+                <li>
+                     Avoid alcohol just before bedtime. Alcohol can cause you to wake up during the night even though it might have helped you fall asleep.
+                </li>
+                <li>
+                     Stop drinking beverages with caffeine at least 4-6 hours before bedtime
+                </li>
+            </ul><p></p>
+            <b> Why?</b><br> <p>Alcohol may seem like it will help you sleep. However, research has shown that alcohol before bed can make you wake up later in the night. It is much better to have herbal tea, warm milk, or another soothing beverage before bed.  </p>
+            <p></p>
+            <p> A light snack can ease nighttime hunger but be careful to avoid large meals. Large meals before bed can make you feel uncomfortably full or cause heartburn or gas. These discomforts can keep you awake. Nicotine and caffeine are stimulants that can also keep you awake. </p>
+
+        </div>
+
+        <div class="panel" title=" " id="item3" data-footer="none">
+             <p>Sleep behavior is teaching your body to associate the bed with sleep, not frustration.  </p>
+
+            <ul type="disc" class="bullet-lists">
+                <li>
+                  Go to bed only when sleepy
+                </li>
+                <li>
+                Use the bed and bedroom only for sleep
+                </li>
+                <li>
+                  Avoid reading, eating, or watching TV in bed
+                </li>
+                <li>
+                  If unable to fall asleep within 20 minutes, get out of bed and engage in a quiet activity. Return to bed when sleepy. <u>Note</u>: It is normal to wake up a few times during the night. Very few people sleep through the night without interruptions.
+                </li>
+            </ul><p></p>
+            <p><b> Why?   </b></p>
+            <p></p>
+            <p> You can teach your body to associate the bed with sleep. If you eat, watch TV, and play video games while in bed you start to associate the bed with these wakeful activities. Then you tend to stay awake when you are in bed. If you associate your bed with sleep, then getting into bed will tell your body and mind that it is time to sleep. Then you are more likely to sleep when you are in bed.
+        </div>
+
+        <div class="panel" title=" " id="item2" data-footer="none">
+          <br />
+             <p>Sleep timing is setting your body to a consistent sleep schedule.     </p>
+            <p></p>
+            <ul type="disc" class="bullet-lists">
+                <li>
+                   Go to bed at the same time each day
+                </li>
+                <li>
+                   Get up at the same time every day no matter how long you slept
+                </li>
+                <li>
+                  Avoid napping during the day
+                </li>
+                  <p>Why?</p>
+                  <br />
+              </ul>
+                    <p> The body and brain adapt to a regular sleep schedule.  People who work swing shift or who travel a lot change their sleep and wake times often. </p>
+                    <br />
+                    <p>This disrupts the biological clock. When your biological clock is disrupted your body tells you it's time to move around when you want to sleep. And when you want to be awake your body tells you it's time to sleep. Setting these sleep and wake times and sticking to them regardless of what is going on in your life will help you to sleep better.</p>
+        </div>
+
+        <div class="panel" title=" " id="item4" data-footer="none">
+             Sleeping environment is controlling light and temperature in your bedroom.     </p>
+            <p></p>
+            <ul type="disc">
+                <li>
+                    Keep the room a constant, cool temperature throughout the night   </p>
+                </li>
+                <li>
+                    Keep the room dark   </p>
+                </li>
+                <li>
+                     Remove, cover, or replace brightly lit clocks and other electronic devices   </p>
+                </li>
+                <li>
+                     Develop a "sound plan" to learn how to use sound to manage your reactions to tinnitus at night   </p>
+                </li>
+                <li>
+                     Use constant low-level sound all night (helps keep other sounds from waking you up)   </p>
+                </li>
+            </ul><p></p>
+            <p><b> Why?   </b></p>
+            <p></p>
+            <ul type="disc">
+                <li>
+                     Temperature. Body temperature fluctuates during the night. Keeping the room cool can help keep you from overheating.    </p>
+                </li>
+                <li>
+                     Light. Light naturally tells the brain it is time to wake up.  In our modern world, many things produce artificial light that can disturb sleep. TV, iPads, phones and electric lights are all culprits in keeping us awake. Limiting these light sources or wearing an eye mask to block the light can improve your sleep.    </p>
+                </li>
+                <li>
+                     Sound. Constant low level background sound can keep other sounds from waking you up. Sound can also be used in specific ways to manage reactions to tinnitus.
+        </div>
+
+  <div class="panel" title=" " id="item5" data-footer="none">
+      Prepare your body for sleep by getting relaxed before going to bed.
+      <p></p>
+      <ul type="disc">
+          <li>
+               Don't exercise too close to bedtime   </p>
+          </li>
+          <li>
+                Do things that are quiet and relaxing (light reading, listen to soothing music, etc.)   </p>
+          </li>
+          <li>
+               Use relaxation techniques like deep breathing and imagery   </p>
+          </li>
+          <li>
+               Avoid mentally stimulating activity   </p>
+          </li>
+          <li>
+               Take a warm bath or shower   </p>
+          </li>
+          <li>
+               Don't 'make an effort' to fall asleep   </p>
+          </li>
+      </ul><p></p>
+      <p><b> Why?   </b></p>
+      <p></p>
+      <p>Often we have a lot of things to take care of before we go to bed.  Sometimes there is work, laundry or chores to do before morning. This can be very stimulating and cause our minds to continue processing things while we try to relax and settle down to sleep.  Therefore, these suggestions invite you to do something relaxing before bed to allow the mind to calm before you settle in for the night.<b>  </b>     </div>
+
+
+</div>
+</body>
+</html>

@@ -270,7 +270,7 @@
     
     [FavoriteActivityCell.activityNameButton addTarget:self action:@selector(buttonTapped:) forControlEvents:UIControlEventTouchUpInside];
     [FavoriteActivityCell.removeFavoriteButton addTarget:self action:@selector(removeFromFavorites:) forControlEvents:UIControlEventTouchUpInside];
-//    FavoriteActivityCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    FavoriteActivityCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     return FavoriteActivityCell;
     
     

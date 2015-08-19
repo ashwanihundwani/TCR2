@@ -73,7 +73,11 @@
     [labelThree setText:[PersistenceStorage getObjectForKey:@"ctf03text"]];
     [labelFour setText:[PersistenceStorage getObjectForKey:@"ctf04text"]];
     [labelFive setText:[PersistenceStorage getObjectForKey:@"ctf05text"]];
-    [labelSix setText:[PersistenceStorage getObjectForKey:@"ctf06text"]];
+[labelSix setText:[PersistenceStorage getObjectForKey:@"ctf06text"]];
+    
+//    [labelSix setText:[@"Step 6 - " stringByAppendingString:[PersistenceStorage getObjectForKey:@"ctf06text"]]];
+    
+    
     
     //((UILabel*)[self.view viewWithTag:2]).text = [PersistenceStorage getObjectForKey:@"ctf01text"];
     

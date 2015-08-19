@@ -42,8 +42,8 @@
     //  [self.navigationController pushViewController:samplerView animated:NO];}
     
     [PersistenceStorage setObject:@" " andKey:@"Referer"];
-    //[self dismissModalViewControllerAnimated:NO];
-    [self.navigationController popViewControllerAnimated:YES];
+    [self dismissModalViewControllerAnimated:NO];
+    //[self.navigationController popViewControllerAnimated:YES];
     
     
     //[self.navigationController popToRootViewControllerAnimated:YES];
@@ -52,7 +52,8 @@
 
 - (IBAction)doneActivityClicked:(id)sender {
     ActivityRatingsViewController *svc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"ActivityRatingsViewController"];
-    [self.navigationController pushViewController:svc animated:YES];
+ //   [self.navigationController pushViewController:svc animated:YES];
+    [self dismissModalViewControllerAnimated:NO];
     
 }
 
