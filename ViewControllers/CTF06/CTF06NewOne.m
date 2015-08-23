@@ -17,7 +17,8 @@
 
 @interface CTF06NewOne ()
 {
-    NSArray *allTFArray, *allTFCategoriesArray,*allMyTF, *emotionsArray;
+    NSArray *allTFArray, *allTFCategoriesArray,*allMyTF;
+    NSMutableArray  *emotionsArray;
  
     //DBManager *dbManager;
     
@@ -234,9 +235,17 @@
     //  [thoughtList appendString:[[emotionsArray objectAtIndex:indexPath.row] valueForKey:@"rating"]];
     
     
+    UIButton* deleteBtn = [[UIButton alloc] initWithFrame:CGRectMake(4, cell.frame.origin.y+8, 25, 25)];
+    [deleteBtn setBackgroundImage:[UIImage imageNamed:@"Active_Trash_Button.png"] forState:UIControlStateNormal];
+    deleteBtn.tag = indexPath.row;
+    [deleteBtn addTarget:self action:@selector(deleteBtnPressed:) forControlEvents:UIControlEventTouchUpInside];
+    [cell addSubview:deleteBtn];
+    UILabel* emotioTextLabel = [[UILabel alloc] initWithFrame:CGRectMake(35, cell.frame.origin.y+5, 200, 35)];
+    emotioTextLabel.textColor = [UIColor blackColor];
+    emotioTextLabel.text = [[emotionsArray objectAtIndex:indexPath.row] valueForKey:@"thoughtText"];
+    [cell addSubview:emotioTextLabel];
     
-    
-    cell.textLabel.text = [[emotionsArray objectAtIndex:indexPath.row] valueForKey:@"thoughtText"];
+    //cell.textLabel.text = [[emotionsArray objectAtIndex:indexPath.row] valueForKey:@"thoughtText"];
     cell.detailTextLabel.text = [[emotionsArray objectAtIndex:indexPath.row] valueForKey:@"rating"];
     
     
@@ -412,6 +421,11 @@
 }
 
 
+-(void)deleteBtnPressed:(UIView*)sender{
+    NSInteger rowIndex = sender.tag;
+    [emotionsArray removeObjectAtIndex:rowIndex];
+    [self.EmotionsTableView reloadData];
+}
 
 
 

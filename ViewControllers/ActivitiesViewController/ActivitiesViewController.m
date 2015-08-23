@@ -153,6 +153,20 @@
         
     }
     
+    if([PersistenceStorage getBoolForKey:@"NewUserDefinedActivityAdded"]){
+        [PersistenceStorage setBool:NO andKey:@"NewUserDefinedActivityAdded"];
+        //show hUD
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark.png"] ];
+        
+        hud.mode = MBProgressHUDModeCustomView;
+        
+        hud.labelText = @"Added Activity";
+        
+        [hud show:YES];
+        [hud hide:YES afterDelay:1];
+    }
+    
     
     
     
@@ -172,18 +186,21 @@
     
     if  ([buttonTitle isEqualToString:@"Repeat This Skill"]) {
         
-        PleasantActivityViewController *pa = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"PleasantActivityViewController"];
+        PleasantActivityViewController *pa = nil;//[[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"PleasantActivityViewController"];
         //   audioPanning.url = [dict valueForKey:@"soundURL"];
         // audioPanning.name = [dict valueForKey:@"soundName"];
         // audioPanning.panning = audio;
-        
-        [self.navigationController pushViewController:pa animated:YES];
-        
-        //       [self.navigationController presentModalViewController:audioPanning animated:NO];
-        
-        
-        
-        
+        for (UIViewController* controller in [self.navigationController viewControllers]) {
+            if([controller isKindOfClass:[PleasantActivityViewController class]]){
+                pa = (PleasantActivityViewController*)controller;
+                break;
+            }
+        }
+        if(pa != nil){
+            [self.navigationController popToViewController:pa animated:YES];
+        }else{
+            [self.navigationController popViewControllerAnimated:YES];
+        }
         
     }
     if ([buttonTitle isEqualToString:@"Learn About This Skill"]) {
@@ -207,9 +224,9 @@
     
     if ([buttonTitle isEqualToString:@"Do Activity Now"]) {
         DoingActivityViewController *svc1 = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"DoingActivityViewController"];
-        //[self.navigationController pushViewController:svc1 animated:YES];
+        [self.navigationController pushViewController:svc1 animated:YES];
         
-        [self.navigationController presentModalViewController:svc1 animated:NO];
+        //[self.navigationController presentModalViewController:svc1 animated:NO];
     }
     
     

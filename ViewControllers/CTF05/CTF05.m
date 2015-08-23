@@ -41,6 +41,7 @@
     
     
     [self setUpView];
+    self.nameTextField.delegate = self;
 }
 
 
@@ -189,6 +190,13 @@
 
 
 
+#pragma mark - UITextFieldDelegate
+
+-(BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [textField resignFirstResponder];
+    return YES;
+}
 
 
 

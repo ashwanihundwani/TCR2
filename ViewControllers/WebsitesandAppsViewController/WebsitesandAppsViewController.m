@@ -10,6 +10,7 @@
 #import "WebsitesandAppsCell.h"
 #import "WebsitesandAppsWithCommentsCell.h"
 #import "SoundActivitiesViewController.h"
+#import "MBProgressHUD.h"
 
 @interface WebsitesandAppsViewController ()<UITableViewDelegate, UITableViewDataSource>
 {
@@ -333,19 +334,29 @@
         
         [self writeModifiedResource];
         
+        [self performSelector:@selector(navigateBack) withObject:nil afterDelay:1.1];
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark.png"] ];
+        
+        hud.mode = MBProgressHUDModeCustomView;
+        
+        hud.labelText = @"Added";
+        
+        [hud show:YES];
+        [hud hide:YES afterDelay:1];
+
         
         
         
         
         
-        
-        [self dismissViewControllerAnimated:YES completion:^{
+        //[self dismissViewControllerAnimated:YES completion:^{
             
             
             //    [[NSNotificationCenter defaultCenter] postNotificationName: @"sayHelloNotification"; object: nil;];
             
             
-        }];
+        //}];
         
         //}
         //else
@@ -357,6 +368,10 @@
         
         
     }
+}
+
+-(void)navigateBack{
+    [self dismissViewControllerAnimated:YES completion:^{}];
 }
 
 -(NSString*)getCommentsAtIndex:(int) index{

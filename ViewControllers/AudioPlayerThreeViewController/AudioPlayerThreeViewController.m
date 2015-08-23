@@ -300,10 +300,10 @@ else{
 
 - (IBAction)sliderChanged:(id)sender {
     // Fast skip the music when user scroll the UISlider
-    [self.audioPlayer stop];
+    //[self.audioPlayer stop];
     [self.audioPlayer setCurrentTime:self.audioSeekSlider.value];
-    [self.audioPlayer prepareToPlay];
-    [self.audioPlayer play];
+    //[self.audioPlayer prepareToPlay];
+    //[self.audioPlayer play];
 }
 
 

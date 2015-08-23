@@ -42,11 +42,8 @@
     //  [self.navigationController pushViewController:samplerView animated:NO];}
     
     [PersistenceStorage setObject:@" " andKey:@"Referer"];
-    [self dismissModalViewControllerAnimated:NO];
-    //[self.navigationController popViewControllerAnimated:YES];
-    
-    
-    //[self.navigationController popToRootViewControllerAnimated:YES];
+    //[self dismissModalViewControllerAnimated:NO];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 

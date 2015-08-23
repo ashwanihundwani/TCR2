@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-@interface CTF02 : UIViewController
+@interface CTF02 : UIViewController <UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *nameTextField;
 @property (weak, nonatomic) IBOutlet UIButton *addButton;
 @property (weak, nonatomic) IBOutlet UILabel *textInfo;

@@ -128,10 +128,13 @@
 -(IBAction)addSkillToPlan:(id)sender
 {
     [self writeToMySkills];
-    [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:[self.navigationController.viewControllers count]-3] animated:YES];
-
+    [self performSelector:@selector(navigateBacktoPlan) withObject:nil afterDelay:1.2];
+    
 }
 
+-(void)navigateBacktoPlan{
+    [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:[self.navigationController.viewControllers count]-3] animated:YES];
+}
 /*
 #pragma mark - Navigation
 

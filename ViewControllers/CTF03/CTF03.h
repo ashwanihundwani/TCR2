@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "EmotionsCell.h"
 
-@interface CTF03 : UIViewController <UITableViewDataSource, UITableViewDelegate>
+@interface CTF03 : UIViewController <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *nameTextField;
 @property (weak, nonatomic) IBOutlet UIButton *addButton;
 @property (weak, nonatomic) IBOutlet UILabel *lblEmotionName;
