@@ -357,13 +357,6 @@ if (self.datePicker.hidden==0)
             
         }];
         
-        
-        NSArray *skillListArray = [NSArray arrayWithObjects:@{@"name":@"Using Sound", @"description":@"Listening to sound can reduce your stress and help you cope with your tinnitus."}, @{@"name":@"Deep Breathing", @"description":@"This breathing exercise can reduce your stress and help you cope with your tinnitus."}, @{@"name":@"Imagery", @"description":@"Imagining a peaceful place can reduce your stress and help you cope with your tinnitus."}, @{@"name":@"Guided Meditation", @"description":@"Try several other guided relaxation exercises."}, @{@"name":@"Pleasant Activities", @"description":@"Make a list of activities that will help you take your mind off of tinnitus."}, @{@"name":@"Changing Thoughts & Feelings", @"description":@"Changing the way you think about tinnitus can improve how you feel."}, @{@"name":@"Tips for Better Sleeping", @"description":@"Following these suggestions can help you sleep better."}, nil];
-        
-        
-        
-        
-        
         // Schedule the notification
         
         UILocalNotification* localNotification = [[UILocalNotification alloc] init];
@@ -602,7 +595,7 @@ NSDictionary* dict = @{@"total": @"Test"};
             NSString *queryClear = [NSString stringWithFormat:@"delete from MySkillReminders where SkillName = 'Guided Meditation' and PlanName = '%@'",[PersistenceStorage getObjectForKey:@"planName"]];;
             
             
-            NSString *query = [NSString stringWithFormat:@"insert into MySkillReminders ('ID','SkillName','ScheduledDate','CalendarEventID') values(1,'%@','%@','%@','%@')",@"Guided Meditation",[PersistenceStorage getObjectForKey:@"localScheduledDate"],[PersistenceStorage getObjectForKey:@"lastEventIdentifer"],[PersistenceStorage getObjectForKey:@"planName"]];
+            NSString *query = [NSString stringWithFormat:@"insert into MySkillReminders ('ID','SkillName','ScheduledDate','CalendarEventID','PlanName') values(1,'%@','%@','%@','%@')",@"Guided Meditation",[PersistenceStorage getObjectForKey:@"localScheduledDate"],[PersistenceStorage getObjectForKey:@"lastEventIdentifer"],[PersistenceStorage getObjectForKey:@"planName"]];
             
             [self.manager executeQuery:queryClear];
             [self.manager executeQuery:query];
@@ -808,6 +801,9 @@ NSDictionary* dict = @{@"total": @"Test"};
             
             
             [store saveEvent:event span:EKSpanThisEvent commit:YES error:&err];
+            if(err != nil) {
+                NSLog(@"Error in saving:%@:",[err localizedDescription]);
+            }
             //      [store saveEvent:event span:EKSpanFutureEvents commit:YES error:&err];
             NSString *savedEventId = event.eventIdentifier;  //save the event id if you want to access this later
             

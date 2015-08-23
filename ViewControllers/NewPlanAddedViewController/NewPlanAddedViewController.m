@@ -20,11 +20,13 @@
 #import "TipsViewController.h"
 #import "DeleteCormationManager.h"
 #import "MBProgressHUD.h"
- 
+#import <EventKitUI/EventKitUI.h>
 
 @interface NewPlanAddedViewController ()<UITableViewDataSource, UITableViewDelegate>
 {
     NSMutableArray *skillListArray, *groupListArray;
+    NSString* CalEventIDString;
+    BOOL isTBSDeleted;
 }
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 
@@ -211,12 +213,15 @@
     
     NSString *query4 = [NSString stringWithFormat:@"delete from MyReminders where SkillID=%@ and planID = %ld",[skillDict valueForKey:@"ID"],(long)[PersistenceStorage getIntegerForKey:@"currentPlanID"]];
     
+    NSString *query4_1 = [NSString stringWithFormat:@"delete from MySkillReminders where SkillName=\"%@\" and PlanName = \"%@\"",[skillDict valueForKey:@"skillName"],self.planName];
+    
     [self.dbManagerMySkills executeQuery:query01];
     [self.dbManagerMySkills executeQuery:query1];
     [self.dbManagerMySkills executeQuery:query1_1];
     [self.dbManagerMySkills executeQuery:query2];
     [self.dbManagerMySkills executeQuery:query3];
     [self.dbManagerMySkills executeQuery:query4];
+    [self.dbManagerMySkills executeQuery:query4_1];
     
     
     BOOL isDone = [self.dbManagerMySkills executeQuery:query];
@@ -297,7 +302,18 @@
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF.groupID == %@",[[groupListArray objectAtIndex:indexPath.section]valueForKey:@"ID"]];
     NSArray *filteredArray = [skillListArray filteredArrayUsingPredicate:predicate];
         [self writeDeletedSkill];
-
+        
+     //before deleting lets fetch the calender even, if any
+        NSString* reminderQuery = [NSString stringWithFormat:@"select CalendarEventID from MySkillReminders where SkillName = \"%@\" and  PlanName = \"%@\"",[[skillListArray objectAtIndex:indexPath.section]valueForKey:@"skillName"],self.planName ];
+        NSArray* calenderEventsArray = [self.dbManagerMySkills loadDataFromDB:reminderQuery];
+        if(calenderEventsArray.count > 0){
+            CalEventIDString = [[calenderEventsArray objectAtIndex:0] valueForKey:@"CalendarEventID"];
+        }
+        if([[[skillListArray objectAtIndex:indexPath.section]valueForKey:@"skillName"]  isEqualToString:@"Tips for Better Sleep"]){
+            isTBSDeleted = YES;
+        }else{
+            isTBSDeleted = NO;
+        }
     [self deleteSkillFromDB:[filteredArray objectAtIndex:indexPath.row] andCompletion:^(BOOL success)
      {
          if (success) {
@@ -314,7 +330,13 @@
               [self.skillsListTableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationRight];
               }
               [self.skillsListTableView reloadData];*/
+             //remove the corresponding calender events
+             if(CalEventIDString != nil)
+                 [self removeEventFromCalender:CalEventIDString];
              [self loadMySkillsData];
+             if(isTBSDeleted)
+                 [self checkAndDeleteTBSReminders];
+
              
          }
          
@@ -324,6 +346,45 @@
         //DO nothing
     }];
 
+}
+
+-(void)removeEventFromCalender:(NSString*)eventID{
+    EKEventStore *store = [[EKEventStore alloc] init];
+    [store requestAccessToEntityType:EKEntityTypeEvent completion:^(BOOL granted, NSError *error) {
+        if (!granted) return;
+        EKEvent* eventToRemove = [store eventWithIdentifier:eventID];
+        if (eventToRemove) {
+            NSError* err = nil;
+            //    [store removeEvent:eventToRemove span:EKSpanThisEvent commit:YES error:&err];
+            [store removeEvent:eventToRemove span:EKSpanFutureEvents commit:YES error:&err];
+            if(err == nil){
+                CalEventIDString = nil;
+            }
+        }
+    }
+     
+     ];
+    
+}
+
+-(void)checkAndDeleteTBSReminders{
+    //check if no TBS is left in DB
+    NSString* queryforTBS = @"select * from MySkills where skillID = 7";
+    NSArray* TBSArray = [self.dbManagerMySkills loadDataFromDB:queryforTBS];
+    if (TBSArray.count == 0) {
+        [PersistenceStorage setObject:@"No" andKey:@"TipsActivated"];
+        // remove the reminders if any
+        NSArray *notificationArray = [[UIApplication sharedApplication] scheduledLocalNotifications];
+        for(UILocalNotification *notification in notificationArray){
+            if ([notification.alertBody isEqualToString:@"Tips for Sleep Feedback"]) {
+                [[UIApplication sharedApplication] cancelLocalNotification:notification] ;
+                 NSLog(@"!!!!!!!!!!!!TBS notifocation Cancelled!!!!!!!!!!!!!!!");
+            }
+            
+            
+        }
+
+    }
 }
 
 - (void)didReceiveMemoryWarning {

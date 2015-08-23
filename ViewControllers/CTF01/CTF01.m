@@ -32,6 +32,7 @@
     
     
     [self setUpView];
+    self.nameTextField.delegate = self;
 }
 
 
@@ -149,6 +150,14 @@
     else{
         NSLog(@"Could not execute the query.");
     }
+}
+
+#pragma mark - UITextFieldDelegate
+
+-(BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [textField resignFirstResponder];
+    return YES;
 }
 
 /*

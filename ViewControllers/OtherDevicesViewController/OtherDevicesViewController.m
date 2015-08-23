@@ -10,6 +10,7 @@
 #import "OtherDevicesCell.h"
 #import "OtherDevicesWithCommentsCell.h"
 #import "SoundActivitiesViewController.h"
+#import "MBProgressHUD.h"
 
 @interface OtherDevicesViewController ()
 {
@@ -189,6 +190,16 @@
             
             
                         [self writeModifiedResource];
+            [self performSelector:@selector(navigateBack) withObject:nil afterDelay:1.1];
+            MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+            hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark.png"] ];
+            
+            hud.mode = MBProgressHUDModeCustomView;
+            
+            hud.labelText = @"Added";
+            
+            [hud show:YES];
+            [hud hide:YES afterDelay:1];
             
             
             
@@ -197,11 +208,6 @@
         else{
             NSLog(@"Error");
         }
-   
-        [self dismissViewControllerAnimated:YES completion:^{
-            
-        }];
-    
     
     
     
@@ -212,6 +218,10 @@
         [alert show];
     }
     
+}
+
+-(void)navigateBack{
+    [self dismissViewControllerAnimated:YES completion:^{}];
 }
 
 -(NSString*)getCommentsAtIndex:(int) index{

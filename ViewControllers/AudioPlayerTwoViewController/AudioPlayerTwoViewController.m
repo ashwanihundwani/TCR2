@@ -318,4 +318,11 @@ else{
     [self.videoPlayer stop];
 }
 
+#pragma mark - AVAudioPlayerDelegate
+
+- (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag{
+    [self.playPauseButton setTitle:@"Play" forState:UIControlStateNormal];
+    self.updateTimer = nil;
+}
+
 @end

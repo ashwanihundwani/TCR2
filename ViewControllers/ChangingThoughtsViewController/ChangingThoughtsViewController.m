@@ -104,7 +104,7 @@
 
 -(void)popToSkillsView
 {
-    [self.navigationController popToRootViewControllerAnimated:YES];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 

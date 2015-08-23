@@ -12,9 +12,10 @@
 #import "NewPlanAddedViewController.h"
 #import "DeleteCormationManager.h"
 #import "MBProgressHUD.h"
+#import <EventKitUI/EventKitUI.h>
 @interface PlansViewController ()<UITableViewDataSource, UITableViewDelegate>
 {
-    NSMutableArray *userPlansArray;
+    NSMutableArray *userPlansArray, *calenderEventsArray;
 }
 
 
@@ -241,7 +242,7 @@
     
     NSString *query3 = [NSString stringWithFormat:@"delete from MyReminders where planID = '%@'",[PersistenceStorage getObjectForKey:@"currentPlanID"] ];
     
-    NSString *query4 = [NSString stringWithFormat:@"delete from MySkillReminders where planID = '%@'",[PersistenceStorage getObjectForKey:@"currentPlanID"]];
+    NSString *query4 = [NSString stringWithFormat:@"delete from MySkillReminders where PlanName = '%@'",[PersistenceStorage getObjectForKey:@"planName"]];
     
     NSString *query6 = [NSString stringWithFormat:@"delete from MyActivities where planID = '%@'",[PersistenceStorage getObjectForKey:@"currentPlanID"]];
     
@@ -366,7 +367,13 @@
   //     [PersistenceStorage setObject:[[userPlansArray objectAtIndex:tag] valueForKey:@"planName"] andKey:@"deletingPlanName"];
      //    [PersistenceStorage setObject:[[userPlansArray objectAtIndex:tag] valueForKey:@"situationName"] andKey:@"deletingSituationName"];
 
-        
+         NSString* reminderQuery = [NSString stringWithFormat:@"select CalendarEventID from MySkillReminders where PlanName = \"%@\"",[[userPlansArray objectAtIndex:tag] valueForKey:@"planName"]  ];
+        NSArray* caleventsArray = [self.dbManagerMyPlans loadDataFromDB:reminderQuery];
+        if(caleventsArray.count > 0){
+            calenderEventsArray = [NSMutableArray arrayWithArray:caleventsArray];
+        }else{
+            calenderEventsArray = nil;
+        }
 
         [self deletePlanFromDB:[userPlansArray objectAtIndex:tag] andCompletion:^(BOOL success)
          {
@@ -379,6 +386,9 @@
                  [self.plansTableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationNone];
                  [self.plansTableView reloadData];
                  
+                 // remove the calender events for this plan
+                 [self removeEventsFromCalender];
+                 [self checkAndDeleteTBSReminders];
                  
              }
              
@@ -392,6 +402,49 @@
 }
 
 
+-(void)removeEventsFromCalender{
+    
+    EKEventStore *store = [[EKEventStore alloc] init];
+    [store requestAccessToEntityType:EKEntityTypeEvent completion:^(BOOL granted, NSError *error) {
+        if (!granted) return;
+        NSMutableArray* eventList = [[NSMutableArray alloc] initWithCapacity:calenderEventsArray.count];
+        for (NSDictionary* eventDict in calenderEventsArray) {
+            EKEvent* eventToRemove = [store eventWithIdentifier:[eventDict valueForKey:@"CalendarEventID"]];
+            if(eventToRemove != nil)
+                [eventList addObject:eventToRemove];
+        }
+        
+        for (EKEvent* eventToRemove in eventList) {
+            NSError* err = nil;
+            [store removeEvent:eventToRemove span:EKSpanFutureEvents commit:YES error:&err];
+            if(err != nil){
+                NSLog(@"Error in deletining event from calender:%@", [eventToRemove description]);
+            }
+        }
+    }
+     
+     ];
+}
+
+-(void)checkAndDeleteTBSReminders{
+    //check if no TBS is left in DB
+    NSString* queryforTBS = @"select * from MySkills where skillID = 7";
+    NSArray* TBSArray = [self.dbManagerMyPlans loadDataFromDB:queryforTBS];
+    if (TBSArray.count == 0) {
+        [PersistenceStorage setObject:@"No" andKey:@"TipsActivated"];
+        // remove the reminders if any
+        NSArray *notificationArray = [[UIApplication sharedApplication] scheduledLocalNotifications];
+        for(UILocalNotification *notification in notificationArray){
+            if ([notification.alertBody isEqualToString:@"Tips for Sleep Feedback"]) {
+                [[UIApplication sharedApplication] cancelLocalNotification:notification] ;
+                NSLog(@"!!!!!!!!!!!!TBS notifocation Cancelled!!!!!!!!!!!!!!!");
+            }
+            
+            
+        }
+        
+    }
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

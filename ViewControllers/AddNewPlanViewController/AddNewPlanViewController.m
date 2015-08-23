@@ -120,66 +120,60 @@
     
     NSString *duplicateCheck = [NSString stringWithFormat:@"SELECT * from MyPlans  where planName = '%@'", planName];
     
-    
-//    
-//     NSArray *allMyPlan = [NSArray arrayWithArray:[dbManager loadDataFromDB:queryForMyPlan]];
-//    
-//    
-//    NSString *rowCount = [self.dbManagerPlansList loadDataFromDB:duplicateCheck];
-//    
-//		  NSLog(@"THE VALUE OF PLAN NAMES %@", [rowCount objectAtIndex:0]);//[rowCount valueForKey:@"count(*)"]);
-//		  
-//     if ([rowCount objectAtIndex:0]==0)
-//     {
-    
-    NSString *query = [NSString stringWithFormat:@"insert into MyPlans ('planName', 'isActive', 'situationName','timeStamp') values ('%@', 1, '%@','%@')",planName,[PersistenceStorage getObjectForKey:@"sitName"],[NSDate date]];
-    
-    [PersistenceStorage setObject:planName andKey:@"newPlanName"];
-    [PersistenceStorage setObject:planName andKey:@"planName"];
+    NSArray* duplicatePlanaArray = [self.dbManagerPlansList loadDataFromDB:duplicateCheck];
+    if (duplicatePlanaArray.count > 0) {
+        NSLog(@"duplicate plan");
+    }else{
+        NSString *query = [NSString stringWithFormat:@"insert into MyPlans ('planName', 'isActive', 'situationName','timeStamp') values ('%@', 1, '%@','%@')",planName,[PersistenceStorage getObjectForKey:@"sitName"],[NSDate date]];
+        
+        [PersistenceStorage setObject:planName andKey:@"newPlanName"];
+        [PersistenceStorage setObject:planName andKey:@"planName"];
+        
+        
+        NSString *queryaa = [NSString stringWithFormat: @"select ID from MyPlans where planName == '%@'", planName];
+        
+        
+        [self writeAddedPlan];
+        
+        
+        BOOL isDone = [self.dbManagerPlansList executeQuery:query];
+        
+        NSString *planID = [[[self.dbManagerPlansList loadDataFromDB:queryaa]objectAtIndex:0] valueForKey:@"ID"];
+        [PersistenceStorage setObject:planID andKey:@"currentPlanID"];
+        
+        [PersistenceStorage setObject:[PersistenceStorage getObjectForKey:@"sitName"] andKey:@"situationName"];
+        
+        
+        
+        
+        if (isDone == YES)
+        {
+            
+            
+            MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+            hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark.png"] ];
+            
+            hud.mode = MBProgressHUDModeCustomView;
+            
+            hud.labelText = @"Added";
+            
+            [hud show:YES];
+            [hud hide:YES afterDelay:1];
+            
+            
+            
+            //   [[planListArray objectAtIndex:indexPath.row] valueForKey:@"situationName"];
+            
+            
+            
+            
+        }
+        else{
+            NSLog(@"Error");
+        }
 
-    
-    NSString *queryaa = [NSString stringWithFormat: @"select ID from MyPlans where planName == '%@'", planName];
-    
-    
-    [self writeAddedPlan];
-
-    
-    BOOL isDone = [self.dbManagerPlansList executeQuery:query];
-    
-    NSString *planID = [[[self.dbManagerPlansList loadDataFromDB:queryaa]objectAtIndex:0] valueForKey:@"ID"];
-    [PersistenceStorage setObject:planID andKey:@"currentPlanID"];
-    
-    [PersistenceStorage setObject:[PersistenceStorage getObjectForKey:@"sitName"] andKey:@"situationName"];
-
-
-    
-    
-    if (isDone == YES)
-    {
-        
-        
-        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-        hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark.png"] ];
-        
-        hud.mode = MBProgressHUDModeCustomView;
-        
-        hud.labelText = @"Added";
-        
-        [hud show:YES];
-        [hud hide:YES afterDelay:1];
-
-        
-        
-        //   [[planListArray objectAtIndex:indexPath.row] valueForKey:@"situationName"];
-        
-        
-        
-        
     }
-    else{
-        NSLog(@"Error");
-    }
-}
+   }
 
 //}
 - (void)didReceiveMemoryWarning {
@@ -272,22 +266,23 @@
 
         
         
-        NewPlanAddedViewController *npav = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"NewPlanAddedViewController"];
+      //  NewPlanAddedViewController *npav = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"NewPlanAddedViewController"];
 
         
         
    //     PlansViewController *npav = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"PlansViewController"];
-        npav.planName = [[alertView textFieldAtIndex:0] text];
+       // npav.planName = [[alertView textFieldAtIndex:0] text];
         
         
         
         
         
         
+        NSString* planName = [[alertView textFieldAtIndex:0] text];
         
-        
-        [self writeToMyPlans:npav.planName];
-        [self.navigationController pushViewController:npav animated:NO];
+        [self writeToMyPlans:planName];
+        [self performSelector:@selector(navigateToNewPlanAdded:) withObject:planName afterDelay:1.1];
+        //[self.navigationController pushViewController:npav animated:NO];
         
         //[self writeAddedPlan];
         
@@ -298,6 +293,12 @@
         
         
     }
+}
+
+-(void)navigateToNewPlanAdded:(NSString*)planName{
+    NewPlanAddedViewController *npav = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"NewPlanAddedViewController"];
+    npav.planName = planName;
+    [self.navigationController pushViewController:npav animated:NO];
 }
 
 

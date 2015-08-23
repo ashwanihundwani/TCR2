@@ -15,6 +15,7 @@
 #import "SoundIntroDetailViewController.h"
 #import "NookUsingSoundViewControllerOne.h"
 #import <MediaPlayer/MPMediaPickerController.h>
+#import "MBProgressHUD.h"
 
 @interface SoundsCategoryViewController ()
 {
@@ -22,6 +23,7 @@
 }
 @property (weak, nonatomic) IBOutlet UITableView *soundCategoryTableView;
 @property (nonatomic, strong) DBManager *dbManager;
+@property (nonatomic) BOOL isNewOwnSoundAdded;
 @end
 
 @implementation SoundsCategoryViewController
@@ -49,6 +51,7 @@
     
     //[self.soundCategoryTableView reloadData];
     // Do any additional setup after loading the view.
+    self.isNewOwnSoundAdded = NO;
 }
 
 
@@ -68,6 +71,21 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [self.tabBarController.tabBar setHidden:YES];
+}
+
+-(void) viewDidAppear:(BOOL)animated{
+    if(self.isNewOwnSoundAdded){
+        self.isNewOwnSoundAdded = NO;
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark.png"] ];
+        
+        hud.mode = MBProgressHUDModeCustomView;
+        
+        hud.labelText = @"Added";
+        
+        [hud show:YES];
+        [hud hide:YES afterDelay:1];
+    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -292,9 +310,20 @@
     
       //    }
           
-
-
+/*
+    [self performSelector:@selector(navigateBack) withObject:nil afterDelay:1.1];
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark.png"] ];
+    
+    hud.mode = MBProgressHUDModeCustomView;
+    
+    hud.labelText = @"Added";
+    
+    [hud show:YES];
+    [hud hide:YES afterDelay:1];
+ */
     [self dismissModalViewControllerAnimated: YES];
+    self.isNewOwnSoundAdded = YES;
  //   NSLog(@"Collection %@",url);
     
     
@@ -317,12 +346,6 @@
 {
     [self dismissModalViewControllerAnimated: YES];
 }
-
-
-
-
-
-
 
 
 

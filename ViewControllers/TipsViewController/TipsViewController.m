@@ -151,13 +151,16 @@
     [self.scrollView setContentSize:CGSizeMake(320,600)];
 
     UISwitch *mySwitch = (UISwitch *)[self.view viewWithTag:669];
+    UILabel *label = (UILabel *)[self.view viewWithTag:700];
   if ([[PersistenceStorage getObjectForKey:@"TipsActivated"]  isEqualToString:@"Yes"])
   {
 mySwitch.on = YES;
+      label.text = @"Skill Reminder Activated";
+      
   }else
   {
       mySwitch.on = NO;
-
+      label.text = @"Activate Skill Reminder";
   }
 }
     
@@ -255,8 +258,8 @@ else
        }
        
        
-       NSArray *notificationArray1 = [[UIApplication sharedApplication] scheduledLocalNotifications];
-       NSLog(@"notify array  new %@",notificationArray1);
+       //NSArray *notificationArray1 = [[UIApplication sharedApplication] scheduledLocalNotifications];
+      // NSLog(@"notify array  new %@",notificationArray1);
 
        
 //       

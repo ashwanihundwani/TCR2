@@ -296,15 +296,23 @@
     NSInteger index = ((UIButton *)sender).tag;
     [self writeToMySounds:[[tinnitusSoundsArray objectAtIndex:index] valueForKey:@"ID"] type:[[tinnitusSoundsArray objectAtIndex:index] valueForKey:@"soundTypeID"]];
     
+    [self performSelector:@selector(navigateBack) withObject:nil afterDelay:1.1];
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark.png"] ];
+    
+    hud.mode = MBProgressHUDModeCustomView;
+    
+    hud.labelText = @"Added";
+    
+    [hud show:YES];
+    [hud hide:YES afterDelay:1];
     
     
-    
-    
-    SoundActivitiesViewController *npsv = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"SoundActivitiesViewController"];
+   // SoundActivitiesViewController *npsv = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"SoundActivitiesViewController"];
     
 //    [self.navigationController pushViewController:npsv animated:YES];
     
-    [self dismissViewControllerAnimated:YES completion:^{
+   /* [self dismissViewControllerAnimated:YES completion:^{
         
         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark.png"] ];
@@ -323,8 +331,12 @@
         
         
     }];
-
+*/
     //  [self.navigationController popToRootViewControllerAnimated:YES];
+}
+
+-(void)navigateBack{
+    [self dismissViewControllerAnimated:YES completion:^{}];
 }
 
 -(void)playFile:(NSString*)filePath{
