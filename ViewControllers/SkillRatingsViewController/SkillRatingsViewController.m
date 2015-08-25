@@ -172,7 +172,8 @@
     if ([[PersistenceStorage getObjectForKey:@"ItsMondayShowWR"] isEqualToString:@"SomeOtherDay"])
         
         
-    {    [PersistenceStorage setObject:@"SkillRatingsViewController" andKey:@"Referer"];
+    {    [PersistenceStorage setObject:@"" andKey:@"Referer"];
+        [PersistenceStorage setObject:@"No" andKey:@"ItsMondayShowWR"];
         
         [self dismissViewControllerAnimated:YES completion:^{}];
         
