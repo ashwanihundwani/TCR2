@@ -15,6 +15,9 @@
 #import "DBManager.h"
 #import <EventKitUI/EventKitUI.h>
 
+#import "SwiperViewController.h"
+#import "IntroPageInfo.h"
+
 
 @interface TipsViewController ()
 {NSArray *remindersArray;
@@ -443,8 +446,29 @@ else
 
 -(IBAction)viewIntroductionAgainClicked:(id)sender{
     [self writeViewedIntroduction];
+    
+    /*
     TipsIntroDetailViewController *siv = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"TipsIntroDetailViewController"];
     [self.navigationController pushViewController:siv animated:YES];
+     */
+    
+    NSMutableArray *pageInfos = [NSMutableArray array];
+    
+    IntroPageInfo *info = [[IntroPageInfo alloc] initWithimage:[UIImage imageNamed:@"Intro7image1.png"] title: @"How can \"Tips for Better Sleep\" help me cope with my Tinnitus?" description:@"Your tinnitus may seem worse when you are tired. When you get enough sleep, you are ready to handle problems, and you won’t get frustrated as easily. A good night’s sleep will give you energy to practice skills from this app."];
+    
+    [pageInfos addObject:info];
+    
+    IntroPageInfo *info2 = [[IntroPageInfo alloc] initWithimage:[UIImage imageNamed:@"Intro7image2.png"] title: @"What does \"Tips for Better Sleep\" involve?" description:@"Tips for Better Sleep is a list of things you can try to improve your sleep. You can select the tips you want to use and set a reminder. "];
+    
+    [pageInfos addObject:info2];
+    
+    SwiperViewController *swiper = [[SwiperViewController alloc]init];
+    
+    swiper.pageInfos = pageInfos;
+    
+    swiper.header = @"Welcome to Sleep Tips";
+    
+    [self.navigationController pushViewController:swiper animated:YES];
     
 }
 

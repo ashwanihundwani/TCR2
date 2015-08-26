@@ -421,6 +421,12 @@
 		4AF9E8C71AB415E100C73A45 /* SamplerCustomCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AF9E8C51AB415E100C73A45 /* SamplerCustomCell.m */; };
 		4AF9E8CA1AB4346000C73A45 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4AF9E8C91AB4346000C73A45 /* libsqlite3.dylib */; };
 		4AF9E8CE1AB434DB00C73A45 /* DBManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AF9E8CD1AB434DB00C73A45 /* DBManager.m */; };
+		CD39CDC21B8DBC6000E61F51 /* IntroPageInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = CD39CDBA1B8DBC6000E61F51 /* IntroPageInfo.m */; };
+		CD39CDC31B8DBC6000E61F51 /* IntroPageView.m in Sources */ = {isa = PBXBuildFile; fileRef = CD39CDBC1B8DBC6000E61F51 /* IntroPageView.m */; };
+		CD39CDC41B8DBC6000E61F51 /* IntroPageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CD39CDBD1B8DBC6000E61F51 /* IntroPageView.xib */; };
+		CD39CDC51B8DBC6000E61F51 /* SwiperViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD39CDBF1B8DBC6000E61F51 /* SwiperViewController.m */; };
+		CD39CDC61B8DBC6000E61F51 /* DDPageControl.m in Sources */ = {isa = PBXBuildFile; fileRef = CD39CDC11B8DBC6000E61F51 /* DDPageControl.m */; };
+		CD39CDD21B8DD3F200E61F51 /* UIView+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = CD39CDD11B8DD3F200E61F51 /* UIView+Extensions.m */; };
 		CDE963FE1B8D8B8F00B84E57 /* AddUsePlansSelected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CDE963FA1B8D8B8F00B84E57 /* AddUsePlansSelected@2x.png */; };
 		CDE963FF1B8D8B8F00B84E57 /* LearnSelected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CDE963FB1B8D8B8F00B84E57 /* LearnSelected@2x.png */; };
 		CDE964001B8D8B8F00B84E57 /* SamplerSelected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CDE963FC1B8D8B8F00B84E57 /* SamplerSelected@2x.png */; };
@@ -964,7 +970,6 @@
 		4A6922F91ACB1BE100744CCD /* ScheduleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScheduleViewController.m; sourceTree = "<group>"; };
 		4A6922FB1ACC703D00744CCD /* cellImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cellImage.png; sourceTree = "<group>"; };
 		4A6922FD1ACC721000744CCD /* Dashes.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Dashes.png; sourceTree = "<group>"; };
-		4A6922FF1ACC816500744CCD /* deep_breathing.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; name = deep_breathing.mp4; path = Resources/SampleAudioVideo/deep_breathing.mp4; sourceTree = "<group>"; };
 		4A8C5E7C1AB3524F001FC7F4 /* TinnitusCoach.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TinnitusCoach.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4A8C5E801AB35250001FC7F4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4A8C5E811AB35250001FC7F4 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -997,6 +1002,17 @@
 		4AF9E8C91AB4346000C73A45 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		4AF9E8CC1AB434DB00C73A45 /* DBManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBManager.h; sourceTree = "<group>"; };
 		4AF9E8CD1AB434DB00C73A45 /* DBManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBManager.m; sourceTree = "<group>"; };
+		CD39CDB91B8DBC6000E61F51 /* IntroPageInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IntroPageInfo.h; sourceTree = "<group>"; };
+		CD39CDBA1B8DBC6000E61F51 /* IntroPageInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IntroPageInfo.m; sourceTree = "<group>"; };
+		CD39CDBB1B8DBC6000E61F51 /* IntroPageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IntroPageView.h; sourceTree = "<group>"; };
+		CD39CDBC1B8DBC6000E61F51 /* IntroPageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IntroPageView.m; sourceTree = "<group>"; };
+		CD39CDBD1B8DBC6000E61F51 /* IntroPageView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IntroPageView.xib; sourceTree = "<group>"; };
+		CD39CDBE1B8DBC6000E61F51 /* SwiperViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwiperViewController.h; sourceTree = "<group>"; };
+		CD39CDBF1B8DBC6000E61F51 /* SwiperViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SwiperViewController.m; sourceTree = "<group>"; };
+		CD39CDC01B8DBC6000E61F51 /* DDPageControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDPageControl.h; sourceTree = "<group>"; };
+		CD39CDC11B8DBC6000E61F51 /* DDPageControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDPageControl.m; sourceTree = "<group>"; };
+		CD39CDD01B8DD3F200E61F51 /* UIView+Extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIView+Extensions.h"; path = "Extensions/UIView+Extensions.h"; sourceTree = "<group>"; };
+		CD39CDD11B8DD3F200E61F51 /* UIView+Extensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIView+Extensions.m"; path = "Extensions/UIView+Extensions.m"; sourceTree = "<group>"; };
 		CDE963FA1B8D8B8F00B84E57 /* AddUsePlansSelected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AddUsePlansSelected@2x.png"; sourceTree = "<group>"; };
 		CDE963FB1B8D8B8F00B84E57 /* LearnSelected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "LearnSelected@2x.png"; sourceTree = "<group>"; };
 		CDE963FC1B8D8B8F00B84E57 /* SamplerSelected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SamplerSelected@2x.png"; sourceTree = "<group>"; };
@@ -1826,6 +1842,15 @@
 		15156B341ABEFD1D009F4489 /* MYIntroduction */ = {
 			isa = PBXGroup;
 			children = (
+				CD39CDB91B8DBC6000E61F51 /* IntroPageInfo.h */,
+				CD39CDBA1B8DBC6000E61F51 /* IntroPageInfo.m */,
+				CD39CDBB1B8DBC6000E61F51 /* IntroPageView.h */,
+				CD39CDBC1B8DBC6000E61F51 /* IntroPageView.m */,
+				CD39CDBD1B8DBC6000E61F51 /* IntroPageView.xib */,
+				CD39CDBE1B8DBC6000E61F51 /* SwiperViewController.h */,
+				CD39CDBF1B8DBC6000E61F51 /* SwiperViewController.m */,
+				CD39CDC01B8DBC6000E61F51 /* DDPageControl.h */,
+				CD39CDC11B8DBC6000E61F51 /* DDPageControl.m */,
 				15156B351ABEFD1D009F4489 /* MYIntroductionPanel.h */,
 				15156B361ABEFD1D009F4489 /* MYIntroductionPanel.m */,
 				15156B371ABEFD1D009F4489 /* MYIntroductionView.h */,
@@ -2077,7 +2102,7 @@
 		4A8C5E731AB3524F001FC7F4 = {
 			isa = PBXGroup;
 			children = (
-				4A6922FF1ACC816500744CCD /* deep_breathing.mp4 */,
+				CD39CDCF1B8DD3E300E61F51 /* Extensions */,
 				04841D6E1AF8F54200BA4725 /* TCAppIcon.png */,
 				4A4A3B471AC736B500F2AEF6 /* GNResoundDB.sqlite */,
 				1550E5781AC7E20800E36C90 /* Utils */,
@@ -2594,6 +2619,15 @@
 			path = ThirdPartyClasses;
 			sourceTree = "<group>";
 		};
+		CD39CDCF1B8DD3E300E61F51 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				CD39CDD01B8DD3F200E61F51 /* UIView+Extensions.h */,
+				CD39CDD11B8DD3F200E61F51 /* UIView+Extensions.m */,
+			);
+			name = Extensions;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -2689,6 +2723,7 @@
 				043DA2361B1A88CD009A0480 /* af.popup.js in Resources */,
 				0432626D1AE4E94400C4C47A /* nook.png in Resources */,
 				1550E5B21AC93C6B00E36C90 /* BabblingBrook.mp3 in Resources */,
+				CD39CDC41B8DBC6000E61F51 /* IntroPageView.xib in Resources */,
 				1550E5B41AC93C6B00E36C90 /* Crickets.mp3 in Resources */,
 				0436A2871B2AC9CB002AAE63 /* PlainLanguageSummaryTinnitus.pdf in Resources */,
 				04C3D1C81B046ABF00BFD575 /* 1ProgressiveMuscleRelaxation.mp3 in Resources */,
@@ -2992,6 +3027,7 @@
 				04AB4BC01B16ABF200446EC4 /* CTF03.m in Sources */,
 				1550E5E11AC9ACE200E36C90 /* WebsitesandAppsWithCommentsCell.m in Sources */,
 				048EF8E61AEA6497001D70C6 /* TipsSkillDetailViewController.m in Sources */,
+				CD39CDC51B8DBC6000E61F51 /* SwiperViewController.m in Sources */,
 				04E044EF1B186E1600F4DBD1 /* CTF06NewOne.m in Sources */,
 				04AB4BC41B16E3FF00446EC4 /* CTF04.m in Sources */,
 				1550E5CE1AC94C5100E36C90 /* WebsitesandAppsViewController.m in Sources */,
@@ -3001,6 +3037,7 @@
 				04B0F1C31AEF74A0005BCEA5 /* MBProgressHUD.m in Sources */,
 				15156B391ABEFD1D009F4489 /* MYIntroductionPanel.m in Sources */,
 				15156B331ABEFC52009F4489 /* SoundsViewController.m in Sources */,
+				CD39CDD21B8DD3F200E61F51 /* UIView+Extensions.m in Sources */,
 				04B8F7AB1B13A57B008D54D0 /* NookImg.m in Sources */,
 				04DF9A981B3C64A600989E2B /* InfoPopup.m in Sources */,
 				048EF9051AEA64CA001D70C6 /* PleasantIntroDetailViewController.m in Sources */,
@@ -3014,6 +3051,7 @@
 				04B0F1B51AEF1138005BCEA5 /* ContactListViewController.m in Sources */,
 				04E044EB1B1868E300F4DBD1 /* CTF05.m in Sources */,
 				042DDC891AEC13A50023910B /* SamplerVideoViewController.m in Sources */,
+				CD39CDC21B8DBC6000E61F51 /* IntroPageInfo.m in Sources */,
 				048EF8E71AEA6497001D70C6 /* ThoughtsSkillDetailViewController.m in Sources */,
 				048EF9041AEA64CA001D70C6 /* SoundIntroDetailViewController.m in Sources */,
 				15156B291ABEFC52009F4489 /* MixerHostViewController.m in Sources */,
@@ -3028,6 +3066,8 @@
 				04B8F7AF1B13A57B008D54D0 /* NookTBS.m in Sources */,
 				15156B231ABEFC52009F4489 /* AddSkillsToPlanViewController.m in Sources */,
 				048EF8BD1AE9F492001D70C6 /* ChangingThoughtsViewController.m in Sources */,
+				CD39CDC31B8DBC6000E61F51 /* IntroPageView.m in Sources */,
+				CD39CDC61B8DBC6000E61F51 /* DDPageControl.m in Sources */,
 				4A8C5E851AB35250001FC7F4 /* AppDelegate.m in Sources */,
 				1550E5D31AC9526900E36C90 /* WebsitesandAppsCell.m in Sources */,
 				043F8EA31B2E967600595D38 /* DeleteCormationManager.m in Sources */,

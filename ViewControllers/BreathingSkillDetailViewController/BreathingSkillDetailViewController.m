@@ -11,6 +11,9 @@
 #import "NookDB.h"
 #import "MBProgressHUD.h"
 
+#import "SwiperViewController.h"
+#import "IntroPageInfo.h"
+
 
 @interface BreathingSkillDetailViewController ()
 
@@ -51,9 +54,32 @@
 }
 
 -(IBAction)viewIntroductionAgainClicked:(id)sender{
+    
+    NSMutableArray *pageInfos = [NSMutableArray array];
+    
+    IntroPageInfo *info = [[IntroPageInfo alloc] initWithimage:[UIImage imageNamed:@"Intro2image1.png"] title: @"Why is \"Deep Breathing\" helpful?" description:DEEP_BREATHING_INTRO_PAGE1_TEXT];
+    
+    [pageInfos addObject:info];
+    
+    IntroPageInfo *info2 = [[IntroPageInfo alloc] initWithimage:[UIImage imageNamed:@"Intro2image2.png"] title: @"How can  \"Deep Breathing\" help me with my tinnitus?" description:DEEP_BREATHING_INTRO_PAGE2_TEXT];
+    
+    [pageInfos addObject:info2];
+    IntroPageInfo *info3 = [[IntroPageInfo alloc] initWithimage:[UIImage imageNamed:@"Intro2image3.png"] title: @"How do I do \"Deep Breathing\"?" description:DEEP_BREATHING_INTRO_PAGE3_TEXT];
+    
+    [pageInfos addObject:info3];
+    
+    SwiperViewController *swiper = [[SwiperViewController alloc]init];
+    
+    swiper.pageInfos = pageInfos;
+    
+    swiper.header = @"Welcome to Deep Breathing";
+    
+    [self.navigationController pushViewController:swiper animated:YES];
+    
+    /*
     BreathingIntroDetailViewController *siv = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"BreathingIntroDetailViewController"];
     [self.navigationController pushViewController:siv animated:YES];
-
+     */
 }
 
 -(void)writeToMySkills

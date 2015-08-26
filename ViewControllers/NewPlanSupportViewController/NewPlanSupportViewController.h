@@ -10,4 +10,7 @@
 
 @interface NewPlanSupportViewController : UIViewController
 
+@property(nonatomic, strong)NSMutableArray *pageInfos;
+@property(nonatomic, strong)NSString* header;
+
 @end

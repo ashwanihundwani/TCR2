@@ -12,6 +12,9 @@
 #import "MBProgressHUD.h"
 
 
+#import "SwiperViewController.h"
+#import "IntroPageInfo.h"
+
 @interface MeditationSkillDetailViewController ()
 
 @property (nonatomic, strong) DBManager *dbManagerMySkills;
@@ -54,8 +57,29 @@
 }
 
 -(IBAction)viewIntroductionAgainClicked:(id)sender{
+    
+    NSMutableArray *pageInfos = [NSMutableArray array];
+    
+    IntroPageInfo *info = [[IntroPageInfo alloc] initWithimage:[UIImage imageNamed:@"Intro4image1.png"] title: @"What is \"Guided Meditation\"?" description:@"In Guided Meditation, a voice leads you through ways to relax your body and mind. You can choose from five different exercises."];
+    
+    [pageInfos addObject:info];
+    
+    IntroPageInfo *info2 = [[IntroPageInfo alloc] initWithimage:[UIImage imageNamed:@"Intro4image2.png"] title: G_M_INTRO_PAGE_2];
+    
+    [pageInfos addObject:info2];
+    
+    SwiperViewController *swiper = [[SwiperViewController alloc]init];
+    
+    swiper.pageInfos = pageInfos;
+    
+    swiper.header = @"Welcome to Guided Meditation";
+    
+    [self.navigationController pushViewController:swiper animated:YES];
+    
+    /*
     MeditationIntroDetailViewController *siv = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"MeditationIntroDetailViewController"];
     [self.navigationController pushViewController:siv animated:YES];
+     */
 
 }
 
