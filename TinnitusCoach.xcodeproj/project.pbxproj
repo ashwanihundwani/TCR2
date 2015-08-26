@@ -156,11 +156,6 @@
 		047C9A5F1AE530EC00352B7A /* lightbulb32.png in Resources */ = {isa = PBXBuildFile; fileRef = 047C9A5E1AE530EC00352B7A /* lightbulb32.png */; };
 		04841D6F1AF8F54200BA4725 /* TCAppIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 04841D6E1AF8F54200BA4725 /* TCAppIcon.png */; };
 		0487A58F1AED4C5900A3CCE1 /* SkillRatingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0487A58E1AED4C5900A3CCE1 /* SkillRatingsViewController.m */; };
-		048EBD891AF0D40800E3B38B /* HomeSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = 048EBD881AF0D40800E3B38B /* HomeSelected.png */; };
-		048EBD8B1AF0D4EC00E3B38B /* AddUsePlansSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = 048EBD8A1AF0D4EC00E3B38B /* AddUsePlansSelected.png */; };
-		048EBD8D1AF0D4FB00E3B38B /* LearnSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = 048EBD8C1AF0D4FB00E3B38B /* LearnSelected.png */; };
-		048EBD8F1AF0D50A00E3B38B /* SupportSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = 048EBD8E1AF0D50A00E3B38B /* SupportSelected.png */; };
-		048EBD911AF0D51700E3B38B /* SamplerSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = 048EBD901AF0D51700E3B38B /* SamplerSelected.png */; };
 		048EF8AD1AE9ED8E001D70C6 /* 2DeepBreathing.png in Resources */ = {isa = PBXBuildFile; fileRef = 048EF8AC1AE9ED8E001D70C6 /* 2DeepBreathing.png */; };
 		048EF8B21AE9F035001D70C6 /* 6ChangingThoughts&Feelings.png in Resources */ = {isa = PBXBuildFile; fileRef = 048EF8AE1AE9F035001D70C6 /* 6ChangingThoughts&Feelings.png */; };
 		048EF8B31AE9F035001D70C6 /* 7TipsforBetterSleep.png in Resources */ = {isa = PBXBuildFile; fileRef = 048EF8AF1AE9F035001D70C6 /* 7TipsforBetterSleep.png */; };
@@ -426,6 +421,11 @@
 		4AF9E8C71AB415E100C73A45 /* SamplerCustomCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AF9E8C51AB415E100C73A45 /* SamplerCustomCell.m */; };
 		4AF9E8CA1AB4346000C73A45 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4AF9E8C91AB4346000C73A45 /* libsqlite3.dylib */; };
 		4AF9E8CE1AB434DB00C73A45 /* DBManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AF9E8CD1AB434DB00C73A45 /* DBManager.m */; };
+		CDE963FE1B8D8B8F00B84E57 /* AddUsePlansSelected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CDE963FA1B8D8B8F00B84E57 /* AddUsePlansSelected@2x.png */; };
+		CDE963FF1B8D8B8F00B84E57 /* LearnSelected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CDE963FB1B8D8B8F00B84E57 /* LearnSelected@2x.png */; };
+		CDE964001B8D8B8F00B84E57 /* SamplerSelected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CDE963FC1B8D8B8F00B84E57 /* SamplerSelected@2x.png */; };
+		CDE964011B8D8B8F00B84E57 /* SupportSelected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CDE963FD1B8D8B8F00B84E57 /* SupportSelected@2x.png */; };
+		CDE964031B8D8BC700B84E57 /* HomeSelected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CDE964021B8D8BC700B84E57 /* HomeSelected@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -621,11 +621,6 @@
 		04841D6E1AF8F54200BA4725 /* TCAppIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TCAppIcon.png; sourceTree = "<group>"; };
 		0487A58D1AED4C5900A3CCE1 /* SkillRatingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SkillRatingsViewController.h; sourceTree = "<group>"; };
 		0487A58E1AED4C5900A3CCE1 /* SkillRatingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SkillRatingsViewController.m; sourceTree = "<group>"; };
-		048EBD881AF0D40800E3B38B /* HomeSelected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = HomeSelected.png; sourceTree = "<group>"; };
-		048EBD8A1AF0D4EC00E3B38B /* AddUsePlansSelected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AddUsePlansSelected.png; sourceTree = "<group>"; };
-		048EBD8C1AF0D4FB00E3B38B /* LearnSelected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LearnSelected.png; sourceTree = "<group>"; };
-		048EBD8E1AF0D50A00E3B38B /* SupportSelected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SupportSelected.png; sourceTree = "<group>"; };
-		048EBD901AF0D51700E3B38B /* SamplerSelected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = SamplerSelected.png; path = images/SamplerSelected.png; sourceTree = "<group>"; };
 		048EF8AC1AE9ED8E001D70C6 /* 2DeepBreathing.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 2DeepBreathing.png; sourceTree = "<group>"; };
 		048EF8AE1AE9F035001D70C6 /* 6ChangingThoughts&Feelings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "6ChangingThoughts&Feelings.png"; sourceTree = "<group>"; };
 		048EF8AF1AE9F035001D70C6 /* 7TipsforBetterSleep.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 7TipsforBetterSleep.png; sourceTree = "<group>"; };
@@ -1002,6 +997,11 @@
 		4AF9E8C91AB4346000C73A45 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		4AF9E8CC1AB434DB00C73A45 /* DBManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBManager.h; sourceTree = "<group>"; };
 		4AF9E8CD1AB434DB00C73A45 /* DBManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBManager.m; sourceTree = "<group>"; };
+		CDE963FA1B8D8B8F00B84E57 /* AddUsePlansSelected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AddUsePlansSelected@2x.png"; sourceTree = "<group>"; };
+		CDE963FB1B8D8B8F00B84E57 /* LearnSelected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "LearnSelected@2x.png"; sourceTree = "<group>"; };
+		CDE963FC1B8D8B8F00B84E57 /* SamplerSelected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SamplerSelected@2x.png"; sourceTree = "<group>"; };
+		CDE963FD1B8D8B8F00B84E57 /* SupportSelected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SupportSelected@2x.png"; sourceTree = "<group>"; };
+		CDE964021B8D8BC700B84E57 /* HomeSelected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "HomeSelected@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -2183,7 +2183,6 @@
 				043DA21E1B1A88CD009A0480 /* NookResNew.html */,
 				043DA21F1B1A88CD009A0480 /* NookTBS.html */,
 				043DA2201B1A88CD009A0480 /* NookUS.html */,
-				048EBD901AF0D51700E3B38B /* SamplerSelected.png */,
 				4A9017191AB8AC3200AE4B9D /* images */,
 				4A4A3B2E1AC6C85000F2AEF6 /* PleasantActivities */,
 				4A4A3AD91AC3109400F2AEF6 /* SplashScreen */,
@@ -2218,6 +2217,11 @@
 		4A9017191AB8AC3200AE4B9D /* images */ = {
 			isa = PBXGroup;
 			children = (
+				CDE964021B8D8BC700B84E57 /* HomeSelected@2x.png */,
+				CDE963FA1B8D8B8F00B84E57 /* AddUsePlansSelected@2x.png */,
+				CDE963FB1B8D8B8F00B84E57 /* LearnSelected@2x.png */,
+				CDE963FC1B8D8B8F00B84E57 /* SamplerSelected@2x.png */,
+				CDE963FD1B8D8B8F00B84E57 /* SupportSelected@2x.png */,
 				04DF9A7B1B3C5AD800989E2B /* Active_Information_icon_28px.png */,
 				043BAA5B1B2BF1E90041F1EA /* BabblingBrook.png */,
 				043BAA5C1B2BF1E90041F1EA /* Fire.png */,
@@ -2244,10 +2248,6 @@
 				04C286001AF79D7A002E3347 /* upArrow.png */,
 				04C286011AF79D7B002E3347 /* downArrow.png */,
 				049DD9ED1AF3C9890068BCEC /* trashcan.png */,
-				048EBD8E1AF0D50A00E3B38B /* SupportSelected.png */,
-				048EBD8C1AF0D4FB00E3B38B /* LearnSelected.png */,
-				048EBD8A1AF0D4EC00E3B38B /* AddUsePlansSelected.png */,
-				048EBD881AF0D40800E3B38B /* HomeSelected.png */,
 				04B0F1C41AEF8EB4005BCEA5 /* 37x-Checkmark.png */,
 				04B0F1BC1AEF4474005BCEA5 /* deleteContact_removed.png */,
 				04B0F1BD1AEF4474005BCEA5 /* deleteContact.png */,
@@ -2693,13 +2693,11 @@
 				0436A2871B2AC9CB002AAE63 /* PlainLanguageSummaryTinnitus.pdf in Resources */,
 				04C3D1C81B046ABF00BFD575 /* 1ProgressiveMuscleRelaxation.mp3 in Resources */,
 				048EF9231AEA7971001D70C6 /* Intro2image1.png in Resources */,
-				048EBD891AF0D40800E3B38B /* HomeSelected.png in Resources */,
 				04412E5F1B12F89B0028A2CB /* www in Resources */,
 				043BC3CF1AF4E055001FD5F1 /* ll.xib in Resources */,
 				048EF8AD1AE9ED8E001D70C6 /* 2DeepBreathing.png in Resources */,
 				153A474B1AD6D5840011B6A1 /* WebsitesandAppsSoundActivityCell.xib in Resources */,
 				1550E5B31AC93C6B00E36C90 /* CracklingFire.mp3 in Resources */,
-				048EBD911AF0D51700E3B38B /* SamplerSelected.png in Resources */,
 				0432628E1AE50E1B00C4C47A /* faqs.png in Resources */,
 				1550E5B81AC93C6B00E36C90 /* WindInTrees.mp3 in Resources */,
 				4A4A3AC41ABEE9CD00F2AEF6 /* deepBreathing.png in Resources */,
@@ -2709,6 +2707,7 @@
 				39953FC91B7A5D66004F4990 /* ThoughtErrorCell.xib in Resources */,
 				04B0F1C51AEF8EB4005BCEA5 /* 37x-Checkmark.png in Resources */,
 				043DA2321B1A88CD009A0480 /* af.css3animate.js in Resources */,
+				CDE964031B8D8BC700B84E57 /* HomeSelected@2x.png in Resources */,
 				4A4A3ACE1ABEEE7E00F2AEF6 /* home.png in Resources */,
 				04712A4C1B1AC20F009953D3 /* 4.1.2image1.png in Resources */,
 				1550E58C1AC816D500E36C90 /* globe.png in Resources */,
@@ -2725,7 +2724,6 @@
 				4A4A3AC61ABEE9CD00F2AEF6 /* imagery.png in Resources */,
 				1550E58A1AC815EA00E36C90 /* iphone.png in Resources */,
 				0432627B1AE5051A00C4C47A /* EarRightGray.png in Resources */,
-				048EBD8D1AF0D4FB00E3B38B /* LearnSelected.png in Resources */,
 				04336E051AF762E7001A5F99 /* MyTipsHeaderView.xib in Resources */,
 				043BAA601B2BF1EA0041F1EA /* BabblingBrook.png in Resources */,
 				1550E5AA1AC89A3300E36C90 /* bs_addtoplan_u270.png in Resources */,
@@ -2805,7 +2803,6 @@
 				0432627C1AE5051A00C4C47A /* Mute.png in Resources */,
 				043F8E9A1B2E391F00595D38 /* FeedbackTableViewCell.xib in Resources */,
 				0436A2911B2AE65E002AAE63 /* ctf04.png in Resources */,
-				048EBD8B1AF0D4EC00E3B38B /* AddUsePlansSelected.png in Resources */,
 				4A9017BC1ABEC4DD00AE4B9D /* Tinnitus.csv in Resources */,
 				04DF9A8C1B3C61B600989E2B /* thoughterror3.html in Resources */,
 				04AF417F1AECAC8700C294BA /* DeepBreathingLesson.mp4 in Resources */,
@@ -2816,7 +2813,6 @@
 				4A4A3B301AC6C85000F2AEF6 /* 5PleasantActivities.png in Resources */,
 				04712A401B1A8F02009953D3 /* af.ui.css in Resources */,
 				043625C91AE6836B00078F6A /* globe64.png in Resources */,
-				048EBD8F1AF0D50A00E3B38B /* SupportSelected.png in Resources */,
 				4A4A3AE21AC3147E00F2AEF6 /* home32.png in Resources */,
 				1550E5C11AC9403100E36C90 /* fan.mp3 in Resources */,
 				043C2DA91AE542F20040BF2D /* homeplans.png in Resources */,
@@ -2831,12 +2827,14 @@
 				15156B601ABEFE9F009F4489 /* u261.png in Resources */,
 				0436A2921B2AE65E002AAE63 /* ctf03.png in Resources */,
 				048EF91B1AEA7971001D70C6 /* Intro1image1.png in Resources */,
+				CDE963FE1B8D8B8F00B84E57 /* AddUsePlansSelected@2x.png in Resources */,
 				04508BD81AEB7A60008B6F1C /* samplersounds.png in Resources */,
 				15156B581ABEFE9F009F4489 /* bs_continue_u12.png in Resources */,
 				15156B6F1ABEFE9F009F4489 /* u306.png in Resources */,
 				4A8C5E8E1AB35250001FC7F4 /* Main.storyboard in Resources */,
 				15156B631ABEFE9F009F4489 /* u267.png in Resources */,
 				15156B591ABEFE9F009F4489 /* circle.png in Resources */,
+				CDE963FF1B8D8B8F00B84E57 /* LearnSelected@2x.png in Resources */,
 				043625C11AE6699F00078F6A /* tabplans.png in Resources */,
 				04712A4F1B1AC20F009953D3 /* 4.1.8image1.png in Resources */,
 				4A8C5E931AB35250001FC7F4 /* LaunchScreen.xib in Resources */,
@@ -2900,6 +2898,7 @@
 				15156B561ABEFE9F009F4489 /* bs_addnewcontact_u319.png in Resources */,
 				4A4A3ACD1ABEEE7E00F2AEF6 /* book.png in Resources */,
 				043262881AE50E1B00C4C47A /* guided.png in Resources */,
+				CDE964011B8D8B8F00B84E57 /* SupportSelected@2x.png in Resources */,
 				1550E5C41AC9403100E36C90 /* Waterfall.mp3 in Resources */,
 				043DA22F1B1A88CD009A0480 /* icons.css in Resources */,
 				043DA2331B1A88CD009A0480 /* af.desktopBrowsers.js in Resources */,
@@ -2935,6 +2934,7 @@
 				15156B571ABEFE9F009F4489 /* bs_addtoplan_u8.png in Resources */,
 				043DA2211B1A88CD009A0480 /* NookImg.html in Resources */,
 				043625CB1AE6839100078F6A /* headphones64.png in Resources */,
+				CDE964001B8D8B8F00B84E57 /* SamplerSelected@2x.png in Resources */,
 				049C740F1B249F7700AE984E /* Active_Play_button.png in Resources */,
 				043262931AE51C1C00C4C47A /* samplersleep.png in Resources */,
 				0442CC281B23445D00E77746 /* MyOwnSoundsActivityCell.xib in Resources */,
