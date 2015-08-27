@@ -20,6 +20,10 @@
 #define SUB_TITLE_LABEL_FONT_SIZE 14
 #define SUB_TITLE_LABEL_FONT [Utils helveticaNueueFontWithSize:14]
 
+#define SEPARATOR_TAG 345
+#define ACCESSORY_IMAGE_TAG 2345
+#define TITLE_LABEL_TAG 1007
+
 #define DEEP_BREATHING_INTRO_PAGE1_TEXT @"Deep Breathing is a special way to breathe that helps you relax. When people are stressed, their breathing is often shallow and rapid. Breathing deeply tells the body to relax. It counteracts the stress response. You can combine Deep Breathing with Imagery to feel even more relaxed."
 
 #define DEEP_BREATHING_INTRO_PAGE2_TEXT @"Deep Breathing can reduce tension and stress caused by tinnitus. Using Deep Breathing won't change your tinnitus but it can help you relax. Being relaxed can help you cope with your tinnitus."

@@ -22,7 +22,7 @@
 #import "MBProgressHUD.h"
 #import <EventKitUI/EventKitUI.h>
 
-@interface NewPlanAddedViewController ()<UITableViewDataSource, UITableViewDelegate>
+@interface NewPlanAddedViewController ()<UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate>
 {
     NSMutableArray *skillListArray, *groupListArray;
     NSString* CalEventIDString;
@@ -32,16 +32,159 @@
 
 @property(nonatomic, weak) IBOutlet UITableView *skillsListTableView;
 @property (nonatomic, strong) DBManager *dbManagerMySkills;
-@property (weak, nonatomic) IBOutlet UITextField *planNameTextField;
+@property (strong, nonatomic)UITextField *planNameTextField;
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *addSkillBtnTopConst;
 @end
 
 @implementation NewPlanAddedViewController
+-(UIView *)tableHeaderView
+{
+    UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 30)];
+    
+    
+    UILabel *planNameLabel = [[UILabel alloc]initWithFrame:CGRectMake(22, 13, 276, 21)];
+    
+    planNameLabel.text = @"Plan Name:";
+    
+    planNameLabel.font = [Utils helveticaNueueMediumFontWithSize:17];
+    
+    view.backgroundColor = [Utils colorWithHexValue:@"EFEFF4"];
+    
+    [view addSubview:planNameLabel];
+    
+    self.planNameTextField = [[UITextField alloc]initWithFrame:CGRectMake(22, planNameLabel.y + planNameLabel.height + 5, 276, 25)];
+    
+    self.planNameTextField.borderStyle = UITextBorderStyleNone;
+    
+    self.planNameTextField.font = [UIFont boldSystemFontOfSize:18];
+    self.planNameTextField.textAlignment = NSTextAlignmentLeft;
+    
+    self.planNameTextField.leftView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 5, self.planNameTextField.frame.size.height)];
+    
+    self.planNameTextField.leftViewMode = UITextFieldViewModeAlways;
+    
+    self.planNameTextField.delegate = self;
+    
+    self.planNameTextField.textColor = [UIColor grayColor];
+    
+    self.planNameTextField.backgroundColor = [Utils colorWithHexValue:@"EFEFF4"];
+    
+    self.planNameTextField.userInteractionEnabled = NO;
+    
+    self.planNameTextField.text = self.planName;
+    
+    [view addSubview:self.planNameTextField];
+    
+    NSString *query = [NSString stringWithFormat:@"select * from Plan_Skills where ID NOT IN (select skillID from MySkills where planID==%@) and ID NOT IN (select skillID from Skills_Situation where situationName=='%@') ",[PersistenceStorage getObjectForKey:@"currentPlanID"],[PersistenceStorage getObjectForKey:@"situationName"]];
+
+    
+    NSArray *array = [self.dbManagerMySkills loadDataFromDB:query];
+    
+    if(array.count <= 0)
+    {
+        
+        UILabel *textLabel = [[UILabel alloc]initWithFrame:CGRectMake(320 / 2 - 218 / 2, self.planNameTextField.y + self.planNameTextField.height + 10, 218, 40)];
+        
+        textLabel.text = @"All skills Added";
+        
+        textLabel.backgroundColor = [UIColor clearColor];
+        
+        textLabel.textAlignment = NSTextAlignmentCenter;
+        
+        textLabel.font = [UIFont boldSystemFontOfSize:17];
+        
+        [view addSubview:textLabel];
+        
+        view.height = textLabel.height + textLabel.y;
+        
+        return view;
+        
+    }
+    
+    else
+    {
+        UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(22, self.planNameTextField.y + self.planNameTextField.height + 10, 276, 20)
+                               ];
+        
+        if ([skillListArray count]==0)
+        {
+            titleLabel.numberOfLines = 1000;
+            
+            titleLabel.backgroundColor = [UIColor clearColor];
+            titleLabel.text = @"You have no skills added to your plan. Please add at least one skill to proceed!";;
+            
+            Pair *pallete = [Utils getColorFontPair:eCFS_PALLETE_2];
+            
+            titleLabel.font = pallete.secondObj;
+            titleLabel.textColor = pallete.firstObj;
+            
+            CGFloat height = [Utils heightForLabelForString:titleLabel.text width:276 font:pallete.secondObj];
+            
+            titleLabel.height = height;
+            
+            view.height += height;
+        }
+        else
+        {
+            //equivalent to hidden
+            titleLabel.height = 0;
+        }
+        
+        [view addSubview:titleLabel];
+        
+        UILabel *addButton = [[UILabel alloc]initWithFrame:CGRectMake(320 / 2 - 218 / 2, titleLabel.y+ titleLabel.height + 10, 218, 40)];
+        
+        addButton.layer.cornerRadius = 5;
+        addButton.layer.masksToBounds = YES;
+        addButton.font = [UIFont boldSystemFontOfSize:17];
+        addButton.text = @"+ Add a New Skill to Plan";
+        addButton.textAlignment = NSTextAlignmentCenter;
+        addButton.textColor = [UIColor whiteColor];
+        addButton.backgroundColor = [Utils colorWithHexValue:BUTTON_BLUE_COLOR_HEX_VALUE];
+        
+        [Utils addTapGestureToView:addButton target:self selector:@selector(addSkillToPlansClicked:)];
+        
+        [view addSubview:addButton];
+        
+        view.height = addButton.y + addButton.height + 10;
+        
+        return view;
+    }
+}
+
+-(CGFloat)heightForIndexPath:(NSIndexPath *)indexPath
+{
+    CGFloat constant = 27;
+    
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF.groupID == %@",[[groupListArray objectAtIndex:indexPath.section]valueForKey:@"ID"]];
+    NSArray *filteredArray = [skillListArray filteredArrayUsingPredicate:predicate];
+    
+    NSString *skillName = [[filteredArray objectAtIndex:indexPath.row] valueForKey:@"skillName"];
+    
+    
+    CGFloat labelHeight = [Utils heightForLabelForString:skillName width:200 font:TITLE_LABEL_FONT];
+    
+    constant += labelHeight;
+    
+    return constant;
+    
+}
+
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [self.planNameTextField resignFirstResponder];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.dbManagerMySkills = [[DBManager alloc]initWithDatabaseFileName:@"GNResoundDB.sqlite"];
+    
+    self.skillsListTableView.backgroundColor = [UIColor whiteColor];
+    
+    self.skillsListTableView.tableHeaderView = [self tableHeaderView];
     
     self.planNameTextField.leftView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 5, self.planNameTextField.frame.size.height)];
     
@@ -57,11 +200,11 @@
         [self.navigationController pushViewController:npsv animated:NO];
     }
     
-    UIView *titleView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 100, 44)];
+    UIView *titleView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 230, 44)];
     
     titleView.backgroundColor = [Utils colorWithHexValue:NAV_BAR_BLACK_COLOR];
     
-    UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 100, 44)];
+    UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 230, 44)];
     
     Pair *pallete = [Utils getColorFontPair:eCFS_PALLETE_1];
     
@@ -70,21 +213,15 @@
     
     titleLabel.textAlignment = NSTextAlignmentCenter;
     
-    
-    
-    titleLabel.adjustsFontSizeToFitWidth = YES;
- 
-    
-    
     //titleLabel.textColor = [UIColor colorWithHexValue:@"797979"];
     titleLabel.backgroundColor = [UIColor clearColor];
-    titleLabel.text = @"Skills Plan";
+    titleLabel.text = self.planName;
     
     [titleView addSubview:titleLabel];
     
     self.navigationItem.titleView = titleView;
     
-    UIImageView *backLabel = [[UIImageView alloc]initWithFrame:CGRectMake(20, 10, 15, 20)];
+    UIImageView *backLabel = [[UIImageView alloc]initWithFrame:CGRectMake(10, 10, 15, 20)];
     
     backLabel.image = [UIImage imageNamed:@"Active_Back-Arrow.png"];
     
@@ -99,14 +236,6 @@
     negativeSpacer.width = -8;
     
     self.navigationItem.leftBarButtonItems = [NSArray arrayWithObjects:negativeSpacer, item, nil];
-    
-//    skillListArray = [NSArray arrayWithObjects:@{@"name":@"Sound Skill", @"subSkill":@[@"Using Sound"]}, @{@"name":@"Relaxation Skills", @"subSkill":@[@"Deep Breathing", @"Imagery"]}, @{@"name":@"Other Skills", @"subSkill":@[@"Other Guided Relaxation Exercises", @"Pleasant Activities",@"Changing Thoughts & Feelings",@"Tips for Better Sleep"]}, nil];
-    
-    self.dbManagerMySkills = [[DBManager alloc]initWithDatabaseFileName:@"GNResoundDB.sqlite"];
-    
-
-    self.planNameTextField.userInteractionEnabled = NO;
-    // Do any additional setup after loading the view.
 }
 
 
@@ -150,6 +279,7 @@
     skillListArray = [[NSMutableArray alloc] initWithArray:[self.dbManagerMySkills loadDataFromDB:query]];
 
 
+    self.skillsListTableView.tableHeaderView = [self tableHeaderView];
     
     
       // Get the results.
@@ -518,16 +648,20 @@
 
 #pragma mark - UITableViewDelegate
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 44.0f;
+    
+    return [self heightForIndexPath:indexPath];
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
     return 56.0f;
 }
 
+
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     
     UIView *videoHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, 300.0, 56.0)];
+    
+    videoHeaderView.backgroundColor = [UIColor whiteColor];
     UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(20.0, 24.0, 200.0, 20.0)];
     label.text = [[groupListArray objectAtIndex:section] valueForKey:@"groupName"];
     Pair *pallete = [Utils getColorFontPair:eCFS_PALLETE_3];
@@ -542,6 +676,7 @@
     
     [videoHeaderView addSubview:label];
     return videoHeaderView;
+
     
 }
 

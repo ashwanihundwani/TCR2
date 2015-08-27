@@ -53,7 +53,7 @@
     
     UIView *titleView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 100, 44)];
     
-    titleView.backgroundColor = [Utils colorWithHexValue:NAV_BAR_BLACK_COLOR];
+    titleView.backgroundColor = [UIColor clearColor];
     
     UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 100, 44)];
     

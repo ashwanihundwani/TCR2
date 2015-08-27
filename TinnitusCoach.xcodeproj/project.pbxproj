@@ -427,6 +427,15 @@
 		CD39CDC51B8DBC6000E61F51 /* SwiperViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD39CDBF1B8DBC6000E61F51 /* SwiperViewController.m */; };
 		CD39CDC61B8DBC6000E61F51 /* DDPageControl.m in Sources */ = {isa = PBXBuildFile; fileRef = CD39CDC11B8DBC6000E61F51 /* DDPageControl.m */; };
 		CD39CDD21B8DD3F200E61F51 /* UIView+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = CD39CDD11B8DD3F200E61F51 /* UIView+Extensions.m */; };
+		CD39CDD51B8E14E700E61F51 /* SkillCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CD39CDD41B8E14E700E61F51 /* SkillCell.m */; };
+		CD39CDE51B8E438C00E61F51 /* SkillIntroductionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CD39CDDC1B8E438C00E61F51 /* SkillIntroductionCell.m */; };
+		CD39CDE61B8E438C00E61F51 /* SkillIntroductionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CD39CDDD1B8E438C00E61F51 /* SkillIntroductionCell.xib */; };
+		CD39CDE71B8E438C00E61F51 /* SkillIntroInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = CD39CDDF1B8E438C00E61F51 /* SkillIntroInfo.m */; };
+		CD39CDE81B8E438C00E61F51 /* SkillReminderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CD39CDE11B8E438C00E61F51 /* SkillReminderCell.m */; };
+		CD39CDE91B8E438C00E61F51 /* SkillReminderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CD39CDE21B8E438C00E61F51 /* SkillReminderCell.xib */; };
+		CD39CDEA1B8E438C00E61F51 /* SkillReminderInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = CD39CDE41B8E438C00E61F51 /* SkillReminderInfo.m */; };
+		CD39CDEE1B8E44B400E61F51 /* BaseSkilDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD39CDED1B8E44B400E61F51 /* BaseSkilDetailViewController.m */; };
+		CD39CDF41B8EF05C00E61F51 /* DeepBreathingViewController+Table.m in Sources */ = {isa = PBXBuildFile; fileRef = CD39CDF31B8EF05C00E61F51 /* DeepBreathingViewController+Table.m */; };
 		CDE963FE1B8D8B8F00B84E57 /* AddUsePlansSelected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CDE963FA1B8D8B8F00B84E57 /* AddUsePlansSelected@2x.png */; };
 		CDE963FF1B8D8B8F00B84E57 /* LearnSelected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CDE963FB1B8D8B8F00B84E57 /* LearnSelected@2x.png */; };
 		CDE964001B8D8B8F00B84E57 /* SamplerSelected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CDE963FC1B8D8B8F00B84E57 /* SamplerSelected@2x.png */; };
@@ -1013,6 +1022,22 @@
 		CD39CDC11B8DBC6000E61F51 /* DDPageControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDPageControl.m; sourceTree = "<group>"; };
 		CD39CDD01B8DD3F200E61F51 /* UIView+Extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIView+Extensions.h"; path = "Extensions/UIView+Extensions.h"; sourceTree = "<group>"; };
 		CD39CDD11B8DD3F200E61F51 /* UIView+Extensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIView+Extensions.m"; path = "Extensions/UIView+Extensions.m"; sourceTree = "<group>"; };
+		CD39CDD31B8E14E700E61F51 /* SkillCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SkillCell.h; sourceTree = "<group>"; };
+		CD39CDD41B8E14E700E61F51 /* SkillCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SkillCell.m; sourceTree = "<group>"; };
+		CD39CDDB1B8E438C00E61F51 /* SkillIntroductionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SkillIntroductionCell.h; path = SkillDetailCells/SkillIntroductionCell.h; sourceTree = "<group>"; };
+		CD39CDDC1B8E438C00E61F51 /* SkillIntroductionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SkillIntroductionCell.m; path = SkillDetailCells/SkillIntroductionCell.m; sourceTree = "<group>"; };
+		CD39CDDD1B8E438C00E61F51 /* SkillIntroductionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SkillIntroductionCell.xib; path = SkillDetailCells/SkillIntroductionCell.xib; sourceTree = "<group>"; };
+		CD39CDDE1B8E438C00E61F51 /* SkillIntroInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SkillIntroInfo.h; path = SkillDetailCells/SkillIntroInfo.h; sourceTree = "<group>"; };
+		CD39CDDF1B8E438C00E61F51 /* SkillIntroInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SkillIntroInfo.m; path = SkillDetailCells/SkillIntroInfo.m; sourceTree = "<group>"; };
+		CD39CDE01B8E438C00E61F51 /* SkillReminderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SkillReminderCell.h; path = SkillDetailCells/SkillReminderCell.h; sourceTree = "<group>"; };
+		CD39CDE11B8E438C00E61F51 /* SkillReminderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SkillReminderCell.m; path = SkillDetailCells/SkillReminderCell.m; sourceTree = "<group>"; };
+		CD39CDE21B8E438C00E61F51 /* SkillReminderCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SkillReminderCell.xib; path = SkillDetailCells/SkillReminderCell.xib; sourceTree = "<group>"; };
+		CD39CDE31B8E438C00E61F51 /* SkillReminderInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SkillReminderInfo.h; path = SkillDetailCells/SkillReminderInfo.h; sourceTree = "<group>"; };
+		CD39CDE41B8E438C00E61F51 /* SkillReminderInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SkillReminderInfo.m; path = SkillDetailCells/SkillReminderInfo.m; sourceTree = "<group>"; };
+		CD39CDEC1B8E44B400E61F51 /* BaseSkilDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseSkilDetailViewController.h; sourceTree = "<group>"; };
+		CD39CDED1B8E44B400E61F51 /* BaseSkilDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseSkilDetailViewController.m; sourceTree = "<group>"; };
+		CD39CDF21B8EF05C00E61F51 /* DeepBreathingViewController+Table.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "DeepBreathingViewController+Table.h"; path = "Extensions/DeepBreathingViewController+Table.h"; sourceTree = "<group>"; };
+		CD39CDF31B8EF05C00E61F51 /* DeepBreathingViewController+Table.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "DeepBreathingViewController+Table.m"; path = "Extensions/DeepBreathingViewController+Table.m"; sourceTree = "<group>"; };
 		CDE963FA1B8D8B8F00B84E57 /* AddUsePlansSelected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AddUsePlansSelected@2x.png"; sourceTree = "<group>"; };
 		CDE963FB1B8D8B8F00B84E57 /* LearnSelected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "LearnSelected@2x.png"; sourceTree = "<group>"; };
 		CDE963FC1B8D8B8F00B84E57 /* SamplerSelected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SamplerSelected@2x.png"; sourceTree = "<group>"; };
@@ -2444,6 +2469,7 @@
 		4AF9E8B31AB365E600C73A45 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				CD39CDEB1B8E449000E61F51 /* BaseSkillDetailViewController */,
 				04DF9A951B3C64A600989E2B /* InfoPopup */,
 				043F0D6E1B3508430050D909 /* CTFPrevEntries */,
 				043F8E9C1B2E8C7300595D38 /* TipsReminder.xib */,
@@ -2538,6 +2564,8 @@
 		4AF9E8C21AB4159C00C73A45 /* CustomClasses */ = {
 			isa = PBXGroup;
 			children = (
+				CD39CDDA1B8E435E00E61F51 /* Skill Detail Cells */,
+				CD39CDD61B8E14F400E61F51 /* Skill Cells */,
 				043F8EA21B2E967600595D38 /* DeleteCormationManager.m */,
 				043F8EA11B2E966000595D38 /* DeleteCormationManager.h */,
 				046D598A1B1E034200041FCE /* EmotionsCell */,
@@ -2622,10 +2650,47 @@
 		CD39CDCF1B8DD3E300E61F51 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				CD39CDF21B8EF05C00E61F51 /* DeepBreathingViewController+Table.h */,
+				CD39CDF31B8EF05C00E61F51 /* DeepBreathingViewController+Table.m */,
 				CD39CDD01B8DD3F200E61F51 /* UIView+Extensions.h */,
 				CD39CDD11B8DD3F200E61F51 /* UIView+Extensions.m */,
 			);
 			name = Extensions;
+			sourceTree = "<group>";
+		};
+		CD39CDD61B8E14F400E61F51 /* Skill Cells */ = {
+			isa = PBXGroup;
+			children = (
+				CD39CDD31B8E14E700E61F51 /* SkillCell.h */,
+				CD39CDD41B8E14E700E61F51 /* SkillCell.m */,
+			);
+			name = "Skill Cells";
+			sourceTree = "<group>";
+		};
+		CD39CDDA1B8E435E00E61F51 /* Skill Detail Cells */ = {
+			isa = PBXGroup;
+			children = (
+				CD39CDDB1B8E438C00E61F51 /* SkillIntroductionCell.h */,
+				CD39CDDC1B8E438C00E61F51 /* SkillIntroductionCell.m */,
+				CD39CDDD1B8E438C00E61F51 /* SkillIntroductionCell.xib */,
+				CD39CDDE1B8E438C00E61F51 /* SkillIntroInfo.h */,
+				CD39CDDF1B8E438C00E61F51 /* SkillIntroInfo.m */,
+				CD39CDE01B8E438C00E61F51 /* SkillReminderCell.h */,
+				CD39CDE11B8E438C00E61F51 /* SkillReminderCell.m */,
+				CD39CDE21B8E438C00E61F51 /* SkillReminderCell.xib */,
+				CD39CDE31B8E438C00E61F51 /* SkillReminderInfo.h */,
+				CD39CDE41B8E438C00E61F51 /* SkillReminderInfo.m */,
+			);
+			name = "Skill Detail Cells";
+			sourceTree = "<group>";
+		};
+		CD39CDEB1B8E449000E61F51 /* BaseSkillDetailViewController */ = {
+			isa = PBXGroup;
+			children = (
+				CD39CDEC1B8E44B400E61F51 /* BaseSkilDetailViewController.h */,
+				CD39CDED1B8E44B400E61F51 /* BaseSkilDetailViewController.m */,
+			);
+			name = BaseSkillDetailViewController;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -2801,6 +2866,7 @@
 				04DF9A8D1B3C61B600989E2B /* thoughterror4.html in Resources */,
 				04C2585F1B7293E1006156AB /* rejectWebsitesandAppsSoundActivityCell.xib in Resources */,
 				04EC5F691AFDB405004132B3 /* line.png in Resources */,
+				CD39CDE61B8E438C00E61F51 /* SkillIntroductionCell.xib in Resources */,
 				4A90176F1AB8B87F00AE4B9D /* not_selected_star@2x.png in Resources */,
 				04DF9A8B1B3C61B600989E2B /* thoughterror2.html in Resources */,
 				043DA2341B1A88CD009A0480 /* af.msPointerEvents.js in Resources */,
@@ -2831,6 +2897,7 @@
 				048EF9201AEA7971001D70C6 /* Intro6image4.png in Resources */,
 				04C286021AF79D7B002E3347 /* upArrow.png in Resources */,
 				1550E5F11AC9C7ED00E36C90 /* OtherDevicesCell.xib in Resources */,
+				CD39CDE91B8E438C00E61F51 /* SkillReminderCell.xib in Resources */,
 				043C2DA81AE542F20040BF2D /* homefindsupport.png in Resources */,
 				048EF9241AEA7971001D70C6 /* Intro2image2.png in Resources */,
 				153A474D1AD6D70F0011B6A1 /* info.png in Resources */,
@@ -3046,6 +3113,8 @@
 				04B8F7AA1B13A57B008D54D0 /* NookDB.m in Sources */,
 				04B0F1B31AEF1138005BCEA5 /* AddressBookJsonResponse.m in Sources */,
 				043F0D711B3508430050D909 /* CTFPrevEntries.m in Sources */,
+				CD39CDF41B8EF05C00E61F51 /* DeepBreathingViewController+Table.m in Sources */,
+				CD39CDE71B8E438C00E61F51 /* SkillIntroInfo.m in Sources */,
 				1550E57F1AC7E20800E36C90 /* PersistenceStorage.m in Sources */,
 				04B8F7941B13930F008D54D0 /* NookCTF.m in Sources */,
 				04B0F1B51AEF1138005BCEA5 /* ContactListViewController.m in Sources */,
@@ -3059,6 +3128,7 @@
 				04B0F1BA1AEF1138005BCEA5 /* SupportTableViewCell.m in Sources */,
 				04B0F1B81AEF1138005BCEA5 /* ProfessionalSupportView.m in Sources */,
 				04EC5F631AFD7993004132B3 /* ImageryTimerViewController.m in Sources */,
+				CD39CDE81B8E438C00E61F51 /* SkillReminderCell.m in Sources */,
 				15156B2D1ABEFC52009F4489 /* PlansViewController.m in Sources */,
 				1550E5881AC7FFEB00E36C90 /* SoundsCategoryViewController.m in Sources */,
 				048EF8C11AE9F7BE001D70C6 /* TipsViewController.m in Sources */,
@@ -3095,6 +3165,7 @@
 				04336E001AF762E7001A5F99 /* EditTipsCell.m in Sources */,
 				042DDC8A1AEC13A50023910B /* AudioPlayerViewController.m in Sources */,
 				048EF9061AEA64CA001D70C6 /* MeditationIntroDetailViewController.m in Sources */,
+				CD39CDEA1B8E438C00E61F51 /* SkillReminderInfo.m in Sources */,
 				04B0F1BB1AEF1138005BCEA5 /* SupportViewController.m in Sources */,
 				04AF41871AECC32E00C294BA /* AudioPlayerOneViewController.m in Sources */,
 				048EF9071AEA64CA001D70C6 /* ImageryIntroDetailViewController.m in Sources */,
@@ -3107,9 +3178,11 @@
 				049C74181B24A21500AE984E /* Pair.m in Sources */,
 				15156B241ABEFC52009F4489 /* AudioPanningViewController.m in Sources */,
 				1550E5991AC8914B00E36C90 /* TinnitusCoachSoundCell.m in Sources */,
+				CD39CDEE1B8E44B400E61F51 /* BaseSkilDetailViewController.m in Sources */,
 				15156B3A1ABEFD1D009F4489 /* MYIntroductionView.m in Sources */,
 				04B8F7B01B13A57B008D54D0 /* NookUS.m in Sources */,
 				04401B011B15F7B700B3C6A3 /* CTF02.m in Sources */,
+				CD39CDE51B8E438C00E61F51 /* SkillIntroductionCell.m in Sources */,
 				043895581B261686005B74B1 /* SamplerSoundsCell.m in Sources */,
 				0440D6061AEB4808006096AA /* HomeNewViewController.m in Sources */,
 				4A8C5E821AB35250001FC7F4 /* main.m in Sources */,
@@ -3139,6 +3212,7 @@
 				04B0F1B61AEF1138005BCEA5 /* FamilyFriendsView.m in Sources */,
 				043FCB601B22E633008043DF /* AudioPlayerThreeViewController.m in Sources */,
 				4A4A3B2B1AC6BCB900F2AEF6 /* ActivityCell.m in Sources */,
+				CD39CDD51B8E14E700E61F51 /* SkillCell.m in Sources */,
 				1550E5801AC7E20800E36C90 /* Utils.m in Sources */,
 				1550E5A31AC894D200E36C90 /* CERoundProgressLayer.m in Sources */,
 				048EF8E81AEA6497001D70C6 /* SoundSkillDetailViewController.m in Sources */,
