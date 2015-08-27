@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface ActivityCell : UITableViewCell
-@property (weak, nonatomic) IBOutlet UIButton *activityNameButton;
+@property (weak, nonatomic) IBOutlet UILabel *activityNameButton;
 @property (weak, nonatomic) IBOutlet UIImageView *initialImageView;
 @property (weak, nonatomic) IBOutlet UIButton *favoriteButton;
 @property (weak, nonatomic) IBOutlet UIButton *deleteButton;

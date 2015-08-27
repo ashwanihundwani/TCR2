@@ -620,7 +620,7 @@
         titleLabel.textColor = pallete.firstObj;
         
         
-          titleLabel.adjustsFontSizeToFitWidth = YES;
+        titleLabel.adjustsFontSizeToFitWidth = YES;
         
         
         

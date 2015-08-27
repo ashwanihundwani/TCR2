@@ -25,7 +25,6 @@
 {NSArray *remindersArray;
 }
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
-@property (nonatomic, strong) DBManager *manager;
 
 @end
 
@@ -34,45 +33,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    // Do any additional setup after loading the view.
     
-    UIView *titleView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 170, 44)];
-    
-    titleView.backgroundColor = [Utils colorWithHexValue:NAV_BAR_BLACK_COLOR];
-    
-    UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 170, 25)];
-    
-    Pair *pallete = [Utils getColorFontPair:eCFS_PALLETE_1];
-    
-    titleLabel.font = pallete.secondObj;
-    titleLabel.textColor = pallete.firstObj;
-    
-    titleLabel.textAlignment = NSTextAlignmentCenter;
-    
-    //titleLabel.textColor = [UIColor colorWithHexValue:@"797979"];
-    titleLabel.backgroundColor = [UIColor clearColor];
-    // titleLabel.text = @"Add New Plan";
-    
-    titleLabel.text= [NSString stringWithFormat:@"Plan for %@ ",[PersistenceStorage getObjectForKey:@"planName"]];
-    titleLabel.adjustsFontSizeToFitWidth=YES;
-    titleLabel.minimumScaleFactor=0.5;
-    
-    UILabel *situationLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 23, 170, 19)];
-    
-    pallete = [Utils getColorFontPair:eCFS_PALLETE_2];
-    
-    situationLabel.font = pallete.secondObj;
-    situationLabel.textColor = pallete.firstObj;
-    
-    situationLabel.textAlignment = NSTextAlignmentCenter;
-    
-    //titleLabel.textColor = [UIColor colorWithHexValue:@"797979"];
-    situationLabel.backgroundColor = [UIColor clearColor];
-    situationLabel.text = [PersistenceStorage getObjectForKey:@"skillName"];//@"Your Situation";
-    
-    [titleView addSubview:titleLabel];
-    [titleView addSubview:situationLabel];
-    
-    self.navigationItem.titleView = titleView;
+    self.exercises = @[@"Progressive Muscle Relaxation", @"Passive Muscle Relaxation", @"Body Scan", @"Mountain Stream Strategy", @"Mindful Breathing"];
     
     
     
@@ -101,6 +65,16 @@
     
     
     // Do any additional setup after loading the view.
+}
+
+-(NSString *)planText
+{
+    return [NSString stringWithFormat:@"Plan for %@ ",[PersistenceStorage getObjectForKey:@"planName"]];
+}
+
+-(NSString *)activityText{
+    
+    return [PersistenceStorage getObjectForKey:@"skillName"];
 }
 
 

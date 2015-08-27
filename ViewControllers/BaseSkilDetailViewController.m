@@ -24,11 +24,11 @@
     
     // Do any additional setup after loading the view.
     
-    UIView *titleView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 150, 44)];
+    UIView *titleView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 180, 44)];
     
     titleView.backgroundColor = [UIColor clearColor];
     
-    UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 150, 25)];
+    UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 180, 25)];
     
     Pair *pallete = [Utils getColorFontPair:eCFS_PALLETE_1];
     
@@ -44,7 +44,7 @@
     titleLabel.text = [self planText];
     
     UILabel *situationLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 20
-                                                                    , 150, 20)];
+                                                                    , 180, 20)];
     
     pallete = [Utils getColorFontPair:eCFS_PALLETE_2];
     

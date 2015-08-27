@@ -7,7 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BaseSkilDetailViewController.h"
 
-@interface GuidedMeditationViewController : UIViewController
+@interface GuidedMeditationViewController : BaseSkilDetailViewController
+
+
+@property (nonatomic,strong) DBManager *manager;
+@property(nonatomic, strong)NSArray *exercises;
+@property(weak, nonatomic)IBOutlet UITableView *tableView;
 
 @end

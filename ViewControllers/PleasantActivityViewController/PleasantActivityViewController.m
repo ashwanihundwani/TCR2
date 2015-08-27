@@ -28,6 +28,11 @@
      [self setUpView];
     [super viewDidLoad];
     
+    self.activties = @[@"Favorites", @"Values and Activities"];
+    
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    
+    /*
     UIView *titleView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 170, 44)];
     
     titleView.backgroundColor = [Utils colorWithHexValue:NAV_BAR_BLACK_COLOR];
@@ -72,6 +77,7 @@
     self.title = @"Pleasant Activities";
         // Do any additional setup after loading the view.
   
+     */
 }
 
 -(void)setUpView{
@@ -135,6 +141,18 @@
     [self.navigationController pushViewController:swiper animated:YES];
     
 }
+
+-(NSString *)planText
+{
+    return [NSString stringWithFormat:@"Plan for %@ ",[PersistenceStorage getObjectForKey:@"planName"]];
+}
+
+-(NSString *)activityText{
+    
+    return [PersistenceStorage getObjectForKey:@"skillName"];
+}
+
+
 -(IBAction)learnMoreClicked:(id)sender{
     NookPA *siv = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"NookPA"];
     [self.navigationController pushViewController:siv animated:YES];

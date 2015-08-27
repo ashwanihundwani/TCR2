@@ -26,11 +26,162 @@
 @end
 
 @implementation ActivitiesViewController
+-(CGFloat)heightForIndexPath:(NSIndexPath *)indexPath
+{
+    CGFloat constant = 90;
+    
+    NSDictionary *dict = [activityArray objectAtIndex:indexPath.row];
+    
+    NSString *actName = [dict valueForKey:@"activityName"];
+    
+    CGFloat labelHeight = [Utils heightForLabelForString:actName width:229 font:TITLE_LABEL_FONT];
+    
+    constant += labelHeight;
+    
+    return constant;
+    
+}
+
+-(void)onAddActivity:(id)sender
+{
+    [self addActivityTapped:self];
+}
+
+-(UIView *)tableHeaderView
+{
+    UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 196)];
+    
+    UIView *backView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 60)];
+    
+    backView.backgroundColor = [Utils colorWithHexValue:@"EFEFF4"];
+    
+    [view addSubview:backView];
+    
+    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(22, 10, 276, 40)];
+    
+    label.text= [PersistenceStorage getObjectForKey:@"valueDescription"];
+    
+    label.numberOfLines = 2;
+    
+    Pair *pallete = [Utils getColorFontPair:eCFS_PALLETE_2];
+    
+    label.textColor = pallete.firstObj;
+    label.font = pallete.secondObj;
+    
+    [view addSubview:label];
+    
+    UILabel *activityLabel = [[UILabel alloc]initWithFrame:CGRectMake(70, 70, 180, 35)];
+    
+    activityLabel.textAlignment = NSTextAlignmentCenter;
+    
+    activityLabel.text= @"Add a Favourite Activity";
+    
+    
+    activityLabel.textColor = [UIColor whiteColor];
+    activityLabel.font = [UIFont boldSystemFontOfSize:15];
+    activityLabel.layer.cornerRadius = 5;
+    activityLabel.layer.masksToBounds = YES;
+    
+    activityLabel.backgroundColor = [Utils colorWithHexValue:@"007AFF"];
+    
+    [Utils addTapGestureToView:activityLabel target:self selector:@selector(onAddActivity:)];
+    
+    [view addSubview:activityLabel];
+    
+    UIView *topSeparator = [[UIView alloc]initWithFrame:CGRectMake(22, 110, 300, 1)];
+    
+    topSeparator.backgroundColor = [Utils colorWithHexValue:@"EEEEEE"];
+    
+    [view addSubview:topSeparator];
+    
+    UILabel *actLabel = [[UILabel alloc]initWithFrame:CGRectMake(22, 120, 200, 21)];
+    
+    actLabel.text = @"Activities";
+    
+    pallete = [Utils getColorFontPair:eCFS_PALLETE_3];
+    
+    actLabel.font = pallete.secondObj;
+    
+    actLabel.textColor = pallete.firstObj;
+    
+    [view addSubview:actLabel];
+    
+    UILabel *actLabelDesc = [[UILabel alloc]initWithFrame:CGRectMake(22, 145, 276, 40)];
+    
+    actLabelDesc.numberOfLines = 2;
+    
+    actLabelDesc.text = @"Schedule one of the activities below, or add a new activity to the list.";
+    
+    pallete = [Utils getColorFontPair:eCFS_PALLETE_4];
+    
+    actLabelDesc.font = pallete.secondObj;
+    
+    actLabelDesc.textColor = pallete.firstObj;
+    
+    [view addSubview:actLabelDesc];
+    
+    UIView *bottomSeparator = [[UIView alloc]initWithFrame:CGRectMake(22, 195, 300, 1)];
+    
+    bottomSeparator.backgroundColor = [Utils colorWithHexValue:@"EEEEEE"];
+    
+    [view addSubview:bottomSeparator];
+    
+    
+    
+    return view;
+}
+
+-(void)cancel
+{
+    [self.navigationController popViewControllerAnimated:YES];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     [self setUpView];
+    
+    UIView *titleView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 100, 44)];
+    
+    titleView.backgroundColor = [Utils colorWithHexValue:NAV_BAR_BLACK_COLOR];
+    
+    UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 100, 44)];
+    
+    Pair *pallete = [Utils getColorFontPair:eCFS_PALLETE_1];
+    
+    titleLabel.font = pallete.secondObj;
+    titleLabel.textColor = pallete.firstObj;
+    
+    titleLabel.textAlignment = NSTextAlignmentCenter;
+    
+    //titleLabel.textColor = [UIColor colorWithHexValue:@"797979"];
+    titleLabel.backgroundColor = [UIColor clearColor];
+    titleLabel.text = [PersistenceStorage getObjectForKey:@"valueName"];
+    
+    [titleView addSubview:titleLabel];
+    
+    self.navigationItem.titleView = titleView;
+    
+    UIImageView *backLabel = [[UIImageView alloc]initWithFrame:CGRectMake(10, 10, 15, 20)];
+    
+    backLabel.image = [UIImage imageNamed:@"Active_Back-Arrow.png"];
+    
+    [Utils addTapGestureToView:backLabel target:self
+                      selector:@selector(cancel)];
+    
+    UIBarButtonItem *item = [[UIBarButtonItem alloc]initWithCustomView:backLabel];
+    
+    UIBarButtonItem *negativeSpacer = [[UIBarButtonItem alloc]
+                                       initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace
+                                       target:nil action:nil];
+    negativeSpacer.width = -8;
+    
+    self.navigationItem.leftBarButtonItems = [NSArray arrayWithObjects:negativeSpacer, item, nil];
+    
+    self.activityTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    
+    self.activityTableView.tableHeaderView = [self tableHeaderView];
+
 }
 
 -(void)setUpView{
@@ -269,6 +420,11 @@
     return [activityArray count];
 }
 
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return [self heightForIndexPath:indexPath];
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
     NSDictionary *dict = [activityArray objectAtIndex:indexPath.row];
@@ -284,12 +440,11 @@
     activityCell.layer.borderColor = [UIColor grayColor].CGColor;
     activityCell.layer.borderWidth = 0.5f;
     [activityCell setBackgroundColor:[UIColor whiteColor]];
-    activityCell.activityNameButton.titleLabel.numberOfLines = 1;
-    activityCell.activityNameButton.titleLabel.adjustsFontSizeToFitWidth = YES;
-    activityCell.activityNameButton.titleLabel.lineBreakMode = NSLineBreakByClipping;
+    activityCell.activityNameButton.numberOfLines = 1000;
+    activityCell.activityNameButton.text = [dict valueForKey:@"activityName"];
     
-    [activityCell.activityNameButton setTitle:[dict valueForKey:@"activityName"] forState:UIControlStateNormal];
-    [activityCell.activityNameButton addTarget:self action:@selector(buttonTapped:) forControlEvents:UIControlEventTouchUpInside];
+    [Utils addTapGestureToView:activityCell.activityNameButton target:self selector:@selector(buttonTapped:)];
+    
     if ([[dict valueForKey:@"ScheduledDate"] length]>5)
         
     {
@@ -297,7 +452,7 @@
     }
     else
     {
-        activityCell.dateLabel.text =@"Not Scheduled";
+        activityCell.dateLabel.text = @"Not Scheduled";
     }
     
     
@@ -473,10 +628,10 @@
 
 
 #pragma mark Button clicked
--(void)buttonTapped:(UIButton *)sender{
+-(void)buttonTapped:(id)sender{
     
     
-    CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.activityTableView];
+    CGPoint buttonPosition = [[sender view] convertPoint:CGPointZero toView:self.activityTableView];
     NSIndexPath *indexPath = [self.activityTableView indexPathForRowAtPoint:buttonPosition];
     if (indexPath != nil)
     {

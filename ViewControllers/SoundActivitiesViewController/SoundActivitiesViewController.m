@@ -22,6 +22,10 @@
 
 #import "SwiperViewController.h"
 #import "IntroPageInfo.h"
+#import "TinnitusSoundInfo.h"
+#import "WebsiteSoundInfo.h"
+#import "OtherSoundInfo.h"
+#import "SoundIntroInfo.h"
 
 
 @interface SoundActivitiesViewController ()<SoundTypeViewProtocol>
@@ -38,7 +42,6 @@
 @property (nonatomic, strong) SoundTypeView *interestingSoundView;
 @property (nonatomic, strong) SoundTypeView *backgroundSoundView;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
-@property (nonatomic, strong) DBManager *dbManagerMySounds;
 @property (nonatomic) BOOL isViewLoaded;
 @end
 
@@ -47,47 +50,53 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.isViewLoaded = YES;
-    UIView *titleView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 170, 44)];
-    
-    titleView.backgroundColor = [Utils colorWithHexValue:NAV_BAR_BLACK_COLOR];
-    
-    UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 170, 25)];
-    
-    Pair *pallete = [Utils getColorFontPair:eCFS_PALLETE_1];
-    
-    titleLabel.font = pallete.secondObj;
-    titleLabel.textColor = pallete.firstObj;
-    
-    titleLabel.textAlignment = NSTextAlignmentCenter;
-    
-    //titleLabel.textColor = [UIColor colorWithHexValue:@"797979"];
-    titleLabel.backgroundColor = [UIColor clearColor];
-    // titleLabel.text = @"Add New Plan";
     
     
-    titleLabel.adjustsFontSizeToFitWidth=YES;
-    titleLabel.minimumScaleFactor=0.5;
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
+    self.soundUICompleteInfo = [NSMutableArray array];
     
-    titleLabel.text= [NSString stringWithFormat:@"Plan for %@ ",[PersistenceStorage getObjectForKey:@"planName"]];
-    
-    UILabel *situationLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 23, 170, 19)];
-    
-    pallete = [Utils getColorFontPair:eCFS_PALLETE_2];
-    
-    situationLabel.font = pallete.secondObj;
-    situationLabel.textColor = pallete.firstObj;
-    
-    situationLabel.textAlignment = NSTextAlignmentCenter;
-    
-    //titleLabel.textColor = [UIColor colorWithHexValue:@"797979"];
-    situationLabel.backgroundColor = [UIColor clearColor];
-    situationLabel.text = [PersistenceStorage getObjectForKey:@"skillName"];//@"Your Situation";
-    
-    [titleView addSubview:titleLabel];
-    [titleView addSubview:situationLabel];
-    
-    self.navigationItem.titleView = titleView;
+//    UIView *titleView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 170, 44)];
+//    
+//    titleView.backgroundColor = [Utils colorWithHexValue:NAV_BAR_BLACK_COLOR];
+//    
+//    UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 170, 25)];
+//    
+//    Pair *pallete = [Utils getColorFontPair:eCFS_PALLETE_1];
+//    
+//    titleLabel.font = pallete.secondObj;
+//    titleLabel.textColor = pallete.firstObj;
+//    
+//    titleLabel.textAlignment = NSTextAlignmentCenter;
+//    
+//    //titleLabel.textColor = [UIColor colorWithHexValue:@"797979"];
+//    titleLabel.backgroundColor = [UIColor clearColor];
+//    // titleLabel.text = @"Add New Plan";
+//    
+//    
+//    titleLabel.adjustsFontSizeToFitWidth=YES;
+//    titleLabel.minimumScaleFactor=0.5;
+//    
+//    
+//    titleLabel.text= [NSString stringWithFormat:@"Plan for %@ ",[PersistenceStorage getObjectForKey:@"planName"]];
+//    
+//    UILabel *situationLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 23, 170, 19)];
+//    
+//    pallete = [Utils getColorFontPair:eCFS_PALLETE_2];
+//    
+//    situationLabel.font = pallete.secondObj;
+//    situationLabel.textColor = pallete.firstObj;
+//    
+//    situationLabel.textAlignment = NSTextAlignmentCenter;
+//    
+//    //titleLabel.textColor = [UIColor colorWithHexValue:@"797979"];
+//    situationLabel.backgroundColor = [UIColor clearColor];
+//    situationLabel.text = [PersistenceStorage getObjectForKey:@"skillName"];//@"Your Situation";
+//    
+//    [titleView addSubview:titleLabel];
+//    [titleView addSubview:situationLabel];
+//    
+//    self.navigationItem.titleView = titleView;
 
     self.dbManagerMySounds = [[DBManager alloc]initWithDatabaseFileName:@"GNResoundDB.sqlite"];
    
@@ -98,6 +107,253 @@
     
     // Do any additional setup after loading the view.
 }
+
+-(void)prepareData
+{
+    
+    [self.soundUICompleteInfo removeAllObjects];
+    
+    {
+        NSArray *sounds = [self loadMySounds:1];
+        NSArray *devices = [self loadMyDevices:1];
+        NSArray *webAndApps = [self loadMyWebsitesAndApps:1];
+        
+        NSMutableArray *soothingSounds = [NSMutableArray array];
+        
+        SoundIntroInfo *introInfo = [[SoundIntroInfo alloc]init];
+        
+        introInfo.title = @"Soothing Sound";
+        introInfo.subTitle = @"This type of sound makes you feel better as soon as you hear it.";
+        
+        [soothingSounds addObject:introInfo];
+        
+        NSString *query = nil;
+        
+        if(sounds.count > 0)
+        {
+            NSString *query = [NSString stringWithFormat: @"select ID, soundName from Plan_Sound_List where soundTypeID = %@ AND ID IN(select soundID from MySounds where planID = %@)", [[sounds objectAtIndex:0] valueForKey:@"soundTypeID"], [PersistenceStorage getObjectForKey:@"currentPlanID"]];
+            
+            
+            NSString *soundTypeId = [[sounds objectAtIndex:0] valueForKey:@"soundTypeID"];
+            
+            
+            sounds = [self.dbManagerMySounds loadDataFromDB:query];
+            
+            
+            
+            for(NSDictionary *dict in sounds)
+            {
+                TinnitusSoundInfo *info = [[TinnitusSoundInfo alloc]initWithDict:dict];
+                
+                info.typeId = soundTypeId;
+                
+                [soothingSounds addObject:info];
+            }
+        }
+        
+        
+        if(webAndApps.count > 0)
+        {
+            query = [NSString stringWithFormat: @"select waName , waDetail,websiteID, comments,MyWebsites.URL from MyWebsites Inner JOIN Plan_Website_Apps on MyWebsites.websiteId = Plan_Website_Apps.ID where MyWebsites.soundTypeID = %ld and planID = %@", (long)[[[webAndApps objectAtIndex:0] valueForKey:@"soundTypeID"]integerValue],[PersistenceStorage getObjectForKey:@"currentPlanID"]];
+            
+            NSString *soundTypeId = [[webAndApps objectAtIndex:0] valueForKey:@"soundTypeID"];
+            
+            
+            webAndApps = [self.dbManagerMySounds loadDataFromDB:query];
+            
+            
+            for(NSDictionary *dict in webAndApps)
+            {
+                WebsiteSoundInfo *info = [[WebsiteSoundInfo alloc]initWithDict:dict];
+                
+                info.typeId = soundTypeId;
+                
+                [soothingSounds addObject:info];
+            }
+        }
+        
+        
+        if(devices.count > 0)
+        {
+            query = [NSString stringWithFormat: @"select deviceName,deviceID, comments from MyDevices Inner JOIN Plan_Devices on MyDevices.deviceID = Plan_Devices.ID where myDevices.soundTypeID = %ld and planID = %@", [[[devices objectAtIndex:0] valueForKey:@"soundTypeID"] integerValue]
+                     , [PersistenceStorage getObjectForKey:@"currentPlanID"]          ];;
+            
+            NSString *typeId = [[devices objectAtIndex:0] valueForKey:@"soundTypeID"];
+            
+            devices = [self.dbManagerMySounds loadDataFromDB:query];
+            
+            for(NSDictionary *dict in devices)
+            {
+                OtherSoundInfo *info = [[OtherSoundInfo alloc]initWithDict:dict];
+                
+                info.typeId = typeId;
+                
+                [soothingSounds addObject:info];
+            }
+        }
+        
+        
+        [self.soundUICompleteInfo addObject:soothingSounds];
+    }
+    
+    {
+        NSArray *sounds = [self loadMySounds:2];
+        NSArray *devices = [self loadMyDevices:2];
+        NSArray *webAndApps = [self loadMyWebsitesAndApps:2];
+        
+        NSMutableArray *soothingSounds = [NSMutableArray array];
+        
+        SoundIntroInfo *introInfo = [[SoundIntroInfo alloc]init];
+        
+        introInfo.title = @"Interesting Sound";
+        introInfo.subTitle = @"An interesting Sound attracts your attention. It helps shif your attention awat from your tinnitus.";
+        
+        [soothingSounds addObject:introInfo];
+        
+        NSString *query = nil;
+        
+        if(sounds.count > 0)
+        {
+            NSString *query = [NSString stringWithFormat: @"select ID, soundName from Plan_Sound_List where soundTypeID = %@ AND ID IN(select soundID from MySounds where planID = %@)",[[sounds objectAtIndex:0] valueForKey:@"soundTypeID"], [PersistenceStorage getObjectForKey:@"currentPlanID"]];
+            NSString *typeId = [[sounds objectAtIndex:0] valueForKey:@"soundTypeID"];
+            
+            sounds = [self.dbManagerMySounds loadDataFromDB:query];
+            
+            
+            for(NSDictionary *dict in sounds)
+            {
+                TinnitusSoundInfo *info = [[TinnitusSoundInfo alloc]initWithDict:dict];
+                
+                info.typeId = typeId;
+                [soothingSounds addObject:info];
+                
+            }
+        }
+        
+        
+        if(webAndApps.count > 0)
+        {
+            query = [NSString stringWithFormat: @"select waName , waDetail,websiteID, comments,MyWebsites.URL from MyWebsites Inner JOIN Plan_Website_Apps on MyWebsites.websiteId = Plan_Website_Apps.ID where MyWebsites.soundTypeID = %ld and planID = %@", (long)[[[webAndApps objectAtIndex:0] valueForKey:@"soundTypeID"]integerValue],[PersistenceStorage getObjectForKey:@"currentPlanID"]];
+            
+            NSString *soundTypeId = [[webAndApps objectAtIndex:0] valueForKey:@"soundTypeID"];
+            
+            
+            webAndApps = [self.dbManagerMySounds loadDataFromDB:query];
+            
+            
+            for(NSDictionary *dict in webAndApps)
+            {
+                WebsiteSoundInfo *info = [[WebsiteSoundInfo alloc]initWithDict:dict];
+                
+                info.typeId = soundTypeId;
+                
+                [soothingSounds addObject:info];
+            }
+        }
+        
+        
+        if(devices.count > 0)
+        {
+            query = [NSString stringWithFormat: @"select deviceName,deviceID, comments from MyDevices Inner JOIN Plan_Devices on MyDevices.deviceID = Plan_Devices.ID where myDevices.soundTypeID = %ld and planID = %@", [[[devices objectAtIndex:0] valueForKey:@"soundTypeID"] integerValue]
+                     , [PersistenceStorage getObjectForKey:@"currentPlanID"]          ];;
+            
+            NSString *typeId = [[devices objectAtIndex:0] valueForKey:@"soundTypeID"];
+            devices = [self.dbManagerMySounds loadDataFromDB:query];
+            
+            for(NSDictionary *dict in devices)
+            {
+                OtherSoundInfo *info = [[OtherSoundInfo alloc]initWithDict:dict];
+                
+                info.typeId = typeId;
+                [soothingSounds addObject:info];
+            }
+        }
+        
+        
+        [self.soundUICompleteInfo addObject:soothingSounds];
+    }
+    
+    {
+        NSArray *sounds = [self loadMySounds:3];
+        NSArray *devices = [self loadMyDevices:3];
+        NSArray *webAndApps = [self loadMyWebsitesAndApps:3];
+        
+        NSMutableArray *bgSounds = [NSMutableArray array];
+        
+        SoundIntroInfo *introInfo = [[SoundIntroInfo alloc]init];
+        
+        introInfo.title = @"Background Sound";
+        introInfo.subTitle = @"Most people notice their tinnitus more when they are in a quiet place. You are less likely to notice your tinnitus if you add a Background Sound.";
+        
+        [bgSounds addObject:introInfo];
+        
+        NSString *query;
+        
+        if(sounds.count > 0)
+        {
+            query = [NSString stringWithFormat: @"select ID, soundName from Plan_Sound_List where soundTypeID = %@ AND ID IN(select soundID from MySounds where planID = %@)", [[sounds objectAtIndex:0] valueForKey:@"soundTypeID"], [PersistenceStorage getObjectForKey:@"currentPlanID"]];
+            
+            NSString *typeId = [[sounds objectAtIndex:0] valueForKey:@"soundTypeID"];
+            
+            sounds = [self.dbManagerMySounds loadDataFromDB:query];
+            
+            for(NSDictionary *dict in sounds)
+            {
+                TinnitusSoundInfo *info = [[TinnitusSoundInfo alloc]initWithDict:dict];
+                
+                info.typeId = typeId;
+                [bgSounds addObject:info];
+                
+            }
+        }
+        
+        if(webAndApps.count > 0)
+        {
+            query = [NSString stringWithFormat: @"select waName , waDetail,websiteID, comments,MyWebsites.URL from MyWebsites Inner JOIN Plan_Website_Apps on MyWebsites.websiteId = Plan_Website_Apps.ID where MyWebsites.soundTypeID = %ld and planID = %@", (long)[[[webAndApps objectAtIndex:0] valueForKey:@"soundTypeID"]integerValue],[PersistenceStorage getObjectForKey:@"currentPlanID"]];
+            
+            NSString *soundTypeId = [[webAndApps objectAtIndex:0] valueForKey:@"soundTypeID"];
+            
+            webAndApps = [self.dbManagerMySounds loadDataFromDB:query];
+            
+            
+            
+            for(NSDictionary *dict in webAndApps)
+            {
+                WebsiteSoundInfo *info = [[WebsiteSoundInfo alloc]initWithDict:dict];
+                
+                info.typeId = soundTypeId;
+                
+                [bgSounds addObject:info];
+            }
+        }
+        
+        if(devices.count > 0)
+        {
+            query = [NSString stringWithFormat: @"select deviceName,deviceID, comments from MyDevices Inner JOIN Plan_Devices on MyDevices.deviceID = Plan_Devices.ID where myDevices.soundTypeID = %ld and planID = %@", [[[devices objectAtIndex:0] valueForKey:@"soundTypeID"] integerValue]
+                     , [PersistenceStorage getObjectForKey:@"currentPlanID"]          ];;
+            
+            NSString *typeId = [[devices objectAtIndex:0] valueForKey:@"soundTypeID"];
+            
+            devices = [self.dbManagerMySounds loadDataFromDB:query];
+            
+            for(NSDictionary *dict in devices)
+            {
+                OtherSoundInfo *info = [[OtherSoundInfo alloc]initWithDict:dict];
+                
+                info.typeId = typeId;
+                [bgSounds addObject:info];
+            }
+            
+        }
+        
+        [self.soundUICompleteInfo addObject:bgSounds];
+    }
+    
+    [self.tableView reloadData];
+    
+    
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -374,8 +630,20 @@
     [hud hide:YES afterDelay:1];
     
 }
+-(NSString *)planText
+{
+    return [NSString stringWithFormat:@"Plan for %@ ",[PersistenceStorage getObjectForKey:@"planName"]];
+}
+
+-(NSString *)activityText{
+    
+    return [PersistenceStorage getObjectForKey:@"skillName"];
+}
+
 -(void)viewDidAppear:(BOOL)animated
 {
+    [self prepareData];
+    
     [self setUpSubViews];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sayHello:) name:@"sayHelloNotification" object:nil];
     
@@ -1082,7 +1350,7 @@
 
 -(void)prepareOtherDevicesPopupMessageDict
 {
-   otherDevicesPopupMessageDict = @{@"Record Player" : @"Do you have a collection of vinyl records? Listening to old records can be an especially enjoyable source of sound to help you with your tinnitus.",
+   self.otherDevicesPopupMessageDict = @{@"Record Player" : @"Do you have a collection of vinyl records? Listening to old records can be an especially enjoyable source of sound to help you with your tinnitus.",
                                           
                                           @"Satellite Radio" : @"Satellite radio is a service that offers well over 100 radio stations. Each station offers a different type of music, or a different type of talk show. A special receiver is needed and there is a monthly service fee.",
                                           @"Sound Pillow (Pillow with Speakers)" : @"A sound pillow is a pillow with thin flexible speakers inside. You can connect it to any device with a standard headphone jack. Usually only the person using the pillow hears the sound being played through it.",

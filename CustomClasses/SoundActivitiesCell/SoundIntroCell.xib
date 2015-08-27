@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7702" systemVersion="14A389" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SoundIntroCell" rowHeight="130" id="KGk-i7-Jjw" customClass="SoundIntroCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="130"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cmi-Ln-IXZ">
+                        <rect key="frame" x="22" y="13" width="276" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="21" id="B94-VD-B8i"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="1000" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="J5j-CU-ADW" userLabel="Sub Title">
+                        <rect key="frame" x="22" y="44" width="276" height="17"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="60" id="Xaq-Le-GI0"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
+                        <color key="textColor" red="0.5725490196078431" green="0.5725490196078431" blue="0.5725490196078431" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <nil key="highlightedColor"/>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="Xaq-Le-GI0"/>
+                            </mask>
+                        </variation>
+                    </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4Uw-l1-6Ys">
+                        <rect key="frame" x="178" y="69" width="120" height="30"/>
+                        <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="120" id="MXI-XH-DOd"/>
+                            <constraint firstAttribute="height" constant="30" id="vLy-rO-bQm"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <state key="normal" title="Explore &amp; Add">
+                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                <integer key="value" value="5"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                        <connections>
+                            <action selector="onExplore:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="Eod-h2-e37"/>
+                        </connections>
+                    </button>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Includes Devices" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pMI-e3-4h9">
+                        <rect key="frame" x="198" y="101" width="100" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="100" id="XdX-NT-C9f"/>
+                            <constraint firstAttribute="height" constant="21" id="cBG-KC-B0V"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="12"/>
+                        <color key="textColor" red="0.5725490196078431" green="0.5725490196078431" blue="0.5725490196078431" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="cmi-Ln-IXZ" secondAttribute="trailing" constant="22" id="56u-39-DxN"/>
+                    <constraint firstItem="J5j-CU-ADW" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="22" id="8Iv-6C-JoL"/>
+                    <constraint firstItem="pMI-e3-4h9" firstAttribute="top" secondItem="4Uw-l1-6Ys" secondAttribute="bottom" constant="2" id="9uq-Rp-tut"/>
+                    <constraint firstAttribute="bottom" secondItem="J5j-CU-ADW" secondAttribute="bottom" constant="68" id="M4h-YT-zTC"/>
+                    <constraint firstAttribute="trailing" secondItem="4Uw-l1-6Ys" secondAttribute="trailing" constant="22" id="VIb-OM-SFx"/>
+                    <constraint firstAttribute="trailing" secondItem="J5j-CU-ADW" secondAttribute="trailing" constant="22" id="fUX-q6-3UZ"/>
+                    <constraint firstItem="cmi-Ln-IXZ" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="22" id="fUv-YD-egv"/>
+                    <constraint firstAttribute="trailing" secondItem="pMI-e3-4h9" secondAttribute="trailing" constant="22" id="fjD-HI-E8v"/>
+                    <constraint firstItem="J5j-CU-ADW" firstAttribute="top" secondItem="cmi-Ln-IXZ" secondAttribute="bottom" constant="10" id="fxn-K7-yCg"/>
+                    <constraint firstItem="cmi-Ln-IXZ" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="13" id="go3-eK-BUd"/>
+                    <constraint firstItem="4Uw-l1-6Ys" firstAttribute="top" secondItem="J5j-CU-ADW" secondAttribute="bottom" constant="8" id="lZU-FQ-5Hc"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="descriptionLabel" destination="J5j-CU-ADW" id="ZWz-aE-gRg"/>
+                <outlet property="titleLabel" destination="cmi-Ln-IXZ" id="Ygm-Wd-MdA"/>
+            </connections>
+        </tableViewCell>
+    </objects>
+</document>
