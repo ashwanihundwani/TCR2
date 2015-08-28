@@ -15,7 +15,7 @@
 
 @interface CTF03 ()
 {
-    NSArray *emotionsArray;
+    NSMutableArray *emotionsArray;
 //DBManager *dbManager;
 
 }
@@ -43,6 +43,7 @@ self.dbManager = [[DBManager alloc] initWithDatabaseFileName:@"GNResoundDB.sqlit
     
     [self setUpView];
     [self setData];
+    self.nameTextField.delegate = self;
 
 }
 
@@ -198,9 +199,16 @@ NSLog(@"''%@",emotionsArray);
   //  [thoughtList appendString:[[emotionsArray objectAtIndex:indexPath.row] valueForKey:@"rating"]];
 
     
-    
-    
-    cell.textLabel.text = [[emotionsArray objectAtIndex:indexPath.row] valueForKey:@"thoughtText"];
+    UIButton* deleteBtn = [[UIButton alloc] initWithFrame:CGRectMake(4, cell.frame.origin.y+8, 25, 25)];
+    [deleteBtn setBackgroundImage:[UIImage imageNamed:@"Active_Trash_Button.png"] forState:UIControlStateNormal];
+    deleteBtn.tag = indexPath.row;
+    [deleteBtn addTarget:self action:@selector(deleteBtnPressed:) forControlEvents:UIControlEventTouchUpInside];
+    [cell addSubview:deleteBtn];
+    UILabel* emotioTextLabel = [[UILabel alloc] initWithFrame:CGRectMake(35, cell.frame.origin.y+5, 200, 35)];
+    //cell.textLabel.text = [[emotionsArray objectAtIndex:indexPath.row] valueForKey:@"thoughtText"];
+    emotioTextLabel.textColor = [UIColor blackColor];
+    emotioTextLabel.text = [[emotionsArray objectAtIndex:indexPath.row] valueForKey:@"thoughtText"];
+    [cell addSubview:emotioTextLabel];
     cell.detailTextLabel.text = [[emotionsArray objectAtIndex:indexPath.row] valueForKey:@"rating"];
 
      
@@ -347,9 +355,22 @@ NSLog(@"''%@",emotionsArray);
     // If the query was successfully executed then pop the view controller.
     }
 
+-(void)deleteBtnPressed:(UIView*)sender{
+    NSInteger rowIndex = sender.tag;
+    [emotionsArray removeObjectAtIndex:rowIndex];
+    [self.EmotionsTableView reloadData];
+}
 
 
 
+
+#pragma mark - UITextFieldDelegate
+
+-(BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [textField resignFirstResponder];
+    return YES;
+}
 
 
 

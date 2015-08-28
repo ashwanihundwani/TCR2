@@ -169,7 +169,7 @@ self.navigationItem.hidesBackButton = YES;
     //    if ([labelOne.text isEqual: @"One"]) {
     
     
-    if    ([[PersistenceStorage getObjectForKey:@"skillDetail1"] isEqual:@"Video Introduction"])
+    if    ([[PersistenceStorage getObjectForKey:@"skillDetail1"] isEqual:@"Watched Video Introduction"])
     
     {
 
@@ -354,6 +354,13 @@ else{
     [super viewWillDisappear:animated];
     [self.audioPlayer stop]; // Or pause
     [self.videoPlayer stop];
+}
+
+#pragma mark -
+
+- (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag{
+    
+    NSLog(@"audio player finished playing , Update UI");
 }
 
 @end

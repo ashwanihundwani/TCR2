@@ -15,12 +15,15 @@
 #import "DBManager.h"
 #import <EventKitUI/EventKitUI.h>
 
+#import "SwiperViewController.h"
+#import "IntroPageInfo.h"
+
 
 @interface TipsViewController ()
 {NSArray *remindersArray;
 }
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
-@property (nonatomic, strong) DBManager *manager;
+
 @property (nonatomic, retain) UISwitch *switch1;
 
 @end
@@ -28,46 +31,67 @@
 @implementation TipsViewController
 @synthesize switch1;
 
+-(NSString *)planText
+{
+    return [NSString stringWithFormat:@"Plan for %@ ",[PersistenceStorage getObjectForKey:@"planName"]];
+}
+
+-(NSString *)activityText{
+    
+    return [PersistenceStorage getObjectForKey:@"skillName"];
+}
+
+
+
 - (void)viewDidLoad {
+    
     [super viewDidLoad];
-    UIView *titleView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 170, 44)];
     
-    titleView.backgroundColor = [Utils colorWithHexValue:NAV_BAR_BLACK_COLOR];
+    self.exercises = @[@"View My Sleep Tips"];
     
-    UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 170, 25)];
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
-    Pair *pallete = [Utils getColorFontPair:eCFS_PALLETE_1];
     
-    titleLabel.font = pallete.secondObj;
-    titleLabel.textColor = pallete.firstObj;
+    // Do any additional setup after loading the view.
     
-    titleLabel.textAlignment = NSTextAlignmentCenter;
-    
-    //titleLabel.textColor = [UIColor colorWithHexValue:@"797979"];
-    titleLabel.backgroundColor = [UIColor clearColor];
-    // titleLabel.text = @"Add New Plan";
-    
-    titleLabel.text= [NSString stringWithFormat:@"Plan for %@ ",[PersistenceStorage getObjectForKey:@"planName"]];
-    titleLabel.adjustsFontSizeToFitWidth=YES;
-    titleLabel.minimumScaleFactor=0.5;
-    
-    UILabel *situationLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 23, 170, 19)];
-    
-    pallete = [Utils getColorFontPair:eCFS_PALLETE_2];
-    
-    situationLabel.font = pallete.secondObj;
-    situationLabel.textColor = pallete.firstObj;
-    
-    situationLabel.textAlignment = NSTextAlignmentCenter;
-    
-    //titleLabel.textColor = [UIColor colorWithHexValue:@"797979"];
-    situationLabel.backgroundColor = [UIColor clearColor];
-    situationLabel.text = [PersistenceStorage getObjectForKey:@"skillName"];//@"Your Situation";
-    
-    [titleView addSubview:titleLabel];
-    [titleView addSubview:situationLabel];
-    
-    self.navigationItem.titleView = titleView;
+//    UIView *titleView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 170, 44)];
+//    
+//    titleView.backgroundColor = [Utils colorWithHexValue:NAV_BAR_BLACK_COLOR];
+//    
+//    UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 170, 25)];
+//    
+//    Pair *pallete = [Utils getColorFontPair:eCFS_PALLETE_1];
+//    
+//    titleLabel.font = pallete.secondObj;
+//    titleLabel.textColor = pallete.firstObj;
+//    
+//    titleLabel.textAlignment = NSTextAlignmentCenter;
+//    
+//    //titleLabel.textColor = [UIColor colorWithHexValue:@"797979"];
+//    titleLabel.backgroundColor = [UIColor clearColor];
+//    // titleLabel.text = @"Add New Plan";
+//    
+//    titleLabel.text= [NSString stringWithFormat:@"Plan for %@ ",[PersistenceStorage getObjectForKey:@"planName"]];
+//    titleLabel.adjustsFontSizeToFitWidth=YES;
+//    titleLabel.minimumScaleFactor=0.5;
+//    
+//    UILabel *situationLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 23, 170, 19)];
+//    
+//    pallete = [Utils getColorFontPair:eCFS_PALLETE_2];
+//    
+//    situationLabel.font = pallete.secondObj;
+//    situationLabel.textColor = pallete.firstObj;
+//    
+//    situationLabel.textAlignment = NSTextAlignmentCenter;
+//    
+//    //titleLabel.textColor = [UIColor colorWithHexValue:@"797979"];
+//    situationLabel.backgroundColor = [UIColor clearColor];
+//    situationLabel.text = [PersistenceStorage getObjectForKey:@"skillName"];//@"Your Situation";
+//    
+//    [titleView addSubview:titleLabel];
+//    [titleView addSubview:situationLabel];
+//    
+//    self.navigationItem.titleView = titleView;
     
     
 //    
@@ -151,13 +175,16 @@
     [self.scrollView setContentSize:CGSizeMake(320,600)];
 
     UISwitch *mySwitch = (UISwitch *)[self.view viewWithTag:669];
+    UILabel *label = (UILabel *)[self.view viewWithTag:700];
   if ([[PersistenceStorage getObjectForKey:@"TipsActivated"]  isEqualToString:@"Yes"])
   {
 mySwitch.on = YES;
+      label.text = @"Skill Reminder Activated";
+      
   }else
   {
       mySwitch.on = NO;
-
+      label.text = @"Activate Skill Reminder";
   }
 }
     
@@ -255,8 +282,8 @@ else
        }
        
        
-       NSArray *notificationArray1 = [[UIApplication sharedApplication] scheduledLocalNotifications];
-       NSLog(@"notify array  new %@",notificationArray1);
+       //NSArray *notificationArray1 = [[UIApplication sharedApplication] scheduledLocalNotifications];
+      // NSLog(@"notify array  new %@",notificationArray1);
 
        
 //       
@@ -440,8 +467,29 @@ else
 
 -(IBAction)viewIntroductionAgainClicked:(id)sender{
     [self writeViewedIntroduction];
+    
+    /*
     TipsIntroDetailViewController *siv = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"TipsIntroDetailViewController"];
     [self.navigationController pushViewController:siv animated:YES];
+     */
+    
+    NSMutableArray *pageInfos = [NSMutableArray array];
+    
+    IntroPageInfo *info = [[IntroPageInfo alloc] initWithimage:[UIImage imageNamed:@"Intro7image1.png"] title: @"How can \"Tips for Better Sleep\" help me cope with my Tinnitus?" description:@"Your tinnitus may seem worse when you are tired. When you get enough sleep, you are ready to handle problems, and you won’t get frustrated as easily. A good night’s sleep will give you energy to practice skills from this app."];
+    
+    [pageInfos addObject:info];
+    
+    IntroPageInfo *info2 = [[IntroPageInfo alloc] initWithimage:[UIImage imageNamed:@"Intro7image2.png"] title: @"What does \"Tips for Better Sleep\" involve?" description:@"Tips for Better Sleep is a list of things you can try to improve your sleep. You can select the tips you want to use and set a reminder. "];
+    
+    [pageInfos addObject:info2];
+    
+    SwiperViewController *swiper = [[SwiperViewController alloc]init];
+    
+    swiper.pageInfos = pageInfos;
+    
+    swiper.header = @"Welcome to Sleep Tips";
+    
+    [self.navigationController pushViewController:swiper animated:YES];
     
 }
 

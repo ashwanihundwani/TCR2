@@ -17,11 +17,14 @@
 #import <EventKitUI/EventKitUI.h>
 #import "DBManager.h"
 
+
+#import "SwiperViewController.h"
+#import "IntroPageInfo.h"
+
 @interface GuidedMeditationViewController ()
 {NSArray *remindersArray;
 }
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
-@property (nonatomic, strong) DBManager *manager;
 
 @end
 
@@ -30,45 +33,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    // Do any additional setup after loading the view.
     
-    UIView *titleView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 170, 44)];
-    
-    titleView.backgroundColor = [Utils colorWithHexValue:NAV_BAR_BLACK_COLOR];
-    
-    UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 170, 25)];
-    
-    Pair *pallete = [Utils getColorFontPair:eCFS_PALLETE_1];
-    
-    titleLabel.font = pallete.secondObj;
-    titleLabel.textColor = pallete.firstObj;
-    
-    titleLabel.textAlignment = NSTextAlignmentCenter;
-    
-    //titleLabel.textColor = [UIColor colorWithHexValue:@"797979"];
-    titleLabel.backgroundColor = [UIColor clearColor];
-    // titleLabel.text = @"Add New Plan";
-    
-    titleLabel.text= [NSString stringWithFormat:@"Plan for %@ ",[PersistenceStorage getObjectForKey:@"planName"]];
-    titleLabel.adjustsFontSizeToFitWidth=YES;
-    titleLabel.minimumScaleFactor=0.5;
-    
-    UILabel *situationLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 23, 170, 19)];
-    
-    pallete = [Utils getColorFontPair:eCFS_PALLETE_2];
-    
-    situationLabel.font = pallete.secondObj;
-    situationLabel.textColor = pallete.firstObj;
-    
-    situationLabel.textAlignment = NSTextAlignmentCenter;
-    
-    //titleLabel.textColor = [UIColor colorWithHexValue:@"797979"];
-    situationLabel.backgroundColor = [UIColor clearColor];
-    situationLabel.text = [PersistenceStorage getObjectForKey:@"skillName"];//@"Your Situation";
-    
-    [titleView addSubview:titleLabel];
-    [titleView addSubview:situationLabel];
-    
-    self.navigationItem.titleView = titleView;
+    self.exercises = @[@"Progressive Muscle Relaxation", @"Passive Muscle Relaxation", @"Body Scan", @"Mountain Stream Strategy", @"Mindful Breathing"];
     
     
     
@@ -97,6 +65,16 @@
     
     
     // Do any additional setup after loading the view.
+}
+
+-(NSString *)planText
+{
+    return [NSString stringWithFormat:@"Plan for %@ ",[PersistenceStorage getObjectForKey:@"planName"]];
+}
+
+-(NSString *)activityText{
+    
+    return [PersistenceStorage getObjectForKey:@"skillName"];
 }
 
 
@@ -270,8 +248,28 @@
     
     [self writeViewedIntroduction];
     
+    /*
     MeditationIntroDetailViewController *siv = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"MeditationIntroDetailViewController"];
     [self.navigationController pushViewController:siv animated:YES];
+     */
+    
+    NSMutableArray *pageInfos = [NSMutableArray array];
+    
+    IntroPageInfo *info = [[IntroPageInfo alloc] initWithimage:[UIImage imageNamed:@"Intro4image1.png"] title: @"What is \"Guided Meditation\"?" description:@"In Guided Meditation, a voice leads you through ways to relax your body and mind. You can choose from five different exercises."];
+    
+    [pageInfos addObject:info];
+    
+    IntroPageInfo *info2 = [[IntroPageInfo alloc] initWithimage:[UIImage imageNamed:@"Intro4image2.png"] title: @"What will I be doing in these exercises?" description:@"For three of these exercises you will focus on relaxing different parts of the body where you feel stress. The other two exercises focus on 'mindfulness'. Mindfulness means paying attention to the present moment."];
+    
+    [pageInfos addObject:info2];
+    
+    SwiperViewController *swiper = [[SwiperViewController alloc]init];
+    
+    swiper.pageInfos = pageInfos;
+    
+    swiper.header = @"Welcome to Guided Meditation";
+    
+    [self.navigationController pushViewController:swiper animated:YES];
     
 }
 

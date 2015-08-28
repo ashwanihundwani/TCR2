@@ -53,7 +53,7 @@
         self.view.frame = viewRect;
         self.view.bounds = viewRect;
         self.favoriteTableView.frame = tableRect;
-        self.favoriteTableView.bounds = CGRectMake(tableRect.origin.x -25, tableRect.origin.y-40, tableRect.size.width, tableRect.size.height);
+        self.favoriteTableView.bounds = CGRectMake(tableRect.origin.x, tableRect.origin.y-40, tableRect.size.width, tableRect.size.height);
         
     }else{
         isLoad = NO;
@@ -123,12 +123,12 @@
     
     if  ([buttonTitle isEqualToString:@"Repeat This Skill"]) {
         
-        PleasantActivityViewController *pa = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"PleasantActivityViewController"];
+        //PleasantActivityViewController *pa = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"PleasantActivityViewController"];
         //   audioPanning.url = [dict valueForKey:@"soundURL"];
         // audioPanning.name = [dict valueForKey:@"soundName"];
         // audioPanning.panning = audio;
         
-        [self.navigationController pushViewController:pa animated:YES];
+        [self.navigationController popViewControllerAnimated:YES];
         
         //       [self.navigationController presentModalViewController:audioPanning animated:NO];
         

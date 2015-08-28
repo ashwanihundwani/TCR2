@@ -72,6 +72,8 @@ typedef enum
 
 +(UIFont *)helveticaNueueFontWithSize:(NSInteger)size;
 
++(UIFont *)helveticaNueueMediumFontWithSize:(NSInteger)size;
+
 +(Pair *)getColorFontPair:(EPallete)pallete;
 
 

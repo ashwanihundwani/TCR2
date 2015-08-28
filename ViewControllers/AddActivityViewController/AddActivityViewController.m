@@ -10,6 +10,7 @@
 
 @interface AddActivityViewController ()
 @property (nonatomic, strong) void (^onCompletion)(id result);
+@property (nonatomic, strong) UIButton* favoriteButton;
 
 
 @end
@@ -19,7 +20,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 //    self.title = @"Add New Activity";
-    UINavigationBar *myBar = [[UINavigationBar alloc]initWithFrame:CGRectMake(0, 0, 320, 50)];
+    UINavigationBar *myBar = [[UINavigationBar alloc]initWithFrame:CGRectMake(0, 15, 320, 50)];
     [self.view addSubview:myBar];
     
     
@@ -42,13 +43,22 @@
 
     UILabel *firstLabel = (UILabel *)[self.view viewWithTag:200];
     
+    firstLabel.font = [Utils helveticaNueueFontWithSize:17];
+    
     NSString *ttext = [NSString stringWithFormat:@"You are adding this activity to the '%@' value",[PersistenceStorage getObjectForKey:@"valueName"]];
 
     firstLabel.text = ttext;
 
-    
-    
-    
+    UILabel* favLabel = [[UILabel alloc] initWithFrame:CGRectMake(70, 200, 200, 30)];
+    favLabel.text = @"Also Add to Favorites";
+    [self.view addSubview:favLabel];
+    UIButton* favbtn = [[UIButton alloc] initWithFrame:CGRectMake(30, 200, 30, 30)];
+    [favbtn setBackgroundImage:[UIImage imageNamed:@"u630.png"] forState:UIControlStateNormal];
+    [favbtn setBackgroundImage:[UIImage imageNamed:@"u648.png"] forState:UIControlStateSelected];
+    [favbtn addTarget:self action:@selector(favbtnPressed:) forControlEvents:UIControlEventTouchUpInside];
+    favbtn.selected = NO;
+    [self.view addSubview:favbtn];
+    self.favoriteButton = favbtn;
     // Do any additional setup after loading the view.
    self.manager = [[DBManager alloc] initWithDatabaseFileName:@"GNResoundDB.sqlite"];
     
@@ -122,6 +132,7 @@
             NSDate *date = [NSDate date];
             NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
             formatter.dateFormat = @"yyyy-MM-dd";
+            NSString *dateString = [formatter stringFromDate:date];
             
             NSTimeInterval  today = [[NSDate date] timeIntervalSince1970];
             NSString *CurrentTime = [NSString stringWithFormat:@"%d", today];
@@ -132,7 +143,15 @@
             // If the query was successfully executed then pop the view controller.
             if (self.manager.affectedRows != 0) {
                 
-                
+                // check for fav and add it
+                if(self.favoriteButton.selected){
+                    NSString *query = [NSString stringWithFormat:@"insert into MyActivities (valueID,activityID,isFavourite,isSchedule,timeStamp,valueName,activityName) values(%i,%lld,'%d',%i,'%@','%@','%@')",[PersistenceStorage getObjectForKey:@"valueID"],self.manager.lastInsertedRowID,1,YES,dateString,[PersistenceStorage getObjectForKey:@"valueName"],self.nameTextField.text];
+                    
+                    // Execute the query.
+                    [self.manager executeQuery:query];
+                    
+                }
+                [PersistenceStorage setBool:YES andKey:@"NewUserDefinedActivityAdded"];
                 [self dismissViewControllerAnimated:YES completion:^{
                     
                 }];
@@ -161,6 +180,16 @@
     int val = [(NSString*)[dict valueForKey:@"count(*)"] intValue];
     return  val > 0 ? YES:NO;
     
+}
+
+-(void)favbtnPressed:(UIView*)sender{
+    UIButton* favBtn = (UIButton*)sender;
+    if(favBtn.selected){
+        favBtn.selected = NO;
+    }else{
+        favBtn.selected = YES;
+    }
+    [favBtn setNeedsDisplay];
 }
 
 /*

@@ -40,7 +40,35 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = @"Your Thoughts";
+    
+    UIView *titleView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 64)];
+    
+    titleView.backgroundColor = [Utils colorWithHexValue:NAV_BAR_BLACK_COLOR];
+    
+    UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 10, 320, 64)];
+    
+    Pair *pallete = [Utils getColorFontPair:eCFS_PALLETE_1];
+    
+    titleLabel.font = pallete.secondObj;
+    titleLabel.textColor = pallete.firstObj;
+    
+    
+    titleLabel.textAlignment = NSTextAlignmentCenter;
+    
+    //titleLabel.textColor = [UIColor colorWithHexValue:@"797979"];
+    titleLabel.backgroundColor = [UIColor clearColor];
+    titleLabel.text = @"Your Thoughts";
+    
+    
+    UIView *line = [[UIView alloc]initWithFrame:CGRectMake(0, titleView.frame.size.height - 1, 320, 1)];
+    
+    line.backgroundColor = [UIColor colorWithRed:0.0/255.0 green:0.0/255.0 blue:0.098/255.0 alpha:0.22];;
+    
+    [titleView addSubview:line];
+    
+    [titleView addSubview:titleLabel];
+    
+    [self.view addSubview:titleView];
     
     
     
@@ -66,8 +94,7 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {//[super viewWillAppear:animated];
-    self.title = @"Your Thoughts";
-    
+
     [self.tabBarController.tabBar setHidden:YES];
 }
 
@@ -97,9 +124,9 @@
     [self.table registerClass:[UITableViewCell class] forCellReuseIdentifier:@"Cell"];
     tableArray = @[@{@"name":@"Repeat this skill",@"image":@"refresh37"},@{@"name":@"Learn about this skill",@"image":@"archive32"},@{@"name":@"Try another skill",@"image":@"archive32"},@{@"name":@"Return Home",@"image":@"home32"}];
     
-    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(24, 85, self.view.frame.size.width -20, 45)];
+    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(24, 85, self.view.frame.size.width -20, 65)];
     label.text = @"How helpful was the skill you just completed? \n(select one)";
-    label.numberOfLines = 2;
+    label.numberOfLines = 3;
     
     Pair *pallete = [Utils getColorFontPair:eCFS_PALLETE_3];
     
@@ -108,18 +135,18 @@
     
     [self.view addSubview:label];
     
-    ratingView = [[ASStarRatingView alloc]initWithFrame:CGRectMake(5, 130, 315, 80)];
+    ratingView = [[ASStarRatingView alloc]initWithFrame:CGRectMake(5, 150, 315, 80)];
     [ratingView setMaxAllowedRating:5.0];
     [ratingView setMinAllowedRating:0.0];
     [ratingView setDelegate:self];
     [self.view addSubview:ratingView];
     
     
-    UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(24, 224, 300, 1)];
+    UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(24, 244, 300, 1)];
     lineView.backgroundColor = [UIColor colorWithRed:0.0/255.0 green:0.0/255.0 blue:0.098/255.0 alpha:0.22];
     [self.view addSubview:lineView];
     
-    UILabel *addlabel = [[UILabel alloc]initWithFrame:CGRectMake(24, 243, self.view.frame.size.width -20, 45)];
+    UILabel *addlabel = [[UILabel alloc]initWithFrame:CGRectMake(24, 263, self.view.frame.size.width -20, 45)];
     addlabel.text = @"Additional comments or thoughts \n(optional):";
     
     
@@ -146,13 +173,12 @@
     button.titleLabel.textColor = [UIColor whiteColor];
     button.titleLabel.font = [UIFont fontWithName:@"Helvetica Neue" size:16.0];
     [button addTarget:self action:@selector(buttonTapped) forControlEvents:UIControlEventTouchUpInside];
-    [button setBackgroundColor:[UIColor colorWithRed:0.0/255.0 green:122.0/255.0 blue:255.0/255.0 alpha:1]];
+    [button setBackgroundColor:[Utils colorWithHexValue:BUTTON_GRAY_COLOR_HEX_VALUE]];
     
     button.layer.cornerRadius = 3.0f;
     [button setUserInteractionEnabled:NO];
     [self.navigationItem setHidesBackButton:YES];
-    [button setBackgroundColor:[Utils colorWithHexValue:LABEL_BLUE_TEXT_COLOR_HEX_VALUE]];
-    
+
     [self.view addSubview:button];
     
 }
@@ -347,6 +373,8 @@
 
 #pragma mark StarratingDelegate
 -(void)ratingAdded{
+    
+    [button setBackgroundColor:[Utils colorWithHexValue:BUTTON_BLUE_COLOR_HEX_VALUE]];
     [button setUserInteractionEnabled:YES];
 }
 

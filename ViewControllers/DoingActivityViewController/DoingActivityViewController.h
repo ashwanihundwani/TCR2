@@ -11,4 +11,8 @@
 
 @interface DoingActivityViewController : UIViewController
 
+@property(nonatomic, weak)IBOutlet NSLayoutConstraint *textLabelHeightConst;
+
+
+
  @end

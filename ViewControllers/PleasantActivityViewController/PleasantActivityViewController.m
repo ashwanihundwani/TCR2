@@ -12,6 +12,8 @@
 #import "NookPA.h"
 #import "ValueAndActivitiesViewController.h"
 #import "FavoritesViewController.h"
+#import "SwiperViewController.h"
+#import "IntroPageInfo.h"
 
 @interface PleasantActivityViewController ()<UITableViewDataSource,UITableViewDelegate>{
     NSArray *paArray;
@@ -26,6 +28,11 @@
      [self setUpView];
     [super viewDidLoad];
     
+    self.activties = @[@"Favorites", @"Values and Activities"];
+    
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    
+    /*
     UIView *titleView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 170, 44)];
     
     titleView.backgroundColor = [Utils colorWithHexValue:NAV_BAR_BLACK_COLOR];
@@ -70,6 +77,7 @@
     self.title = @"Pleasant Activities";
         // Do any additional setup after loading the view.
   
+     */
 }
 
 -(void)setUpView{
@@ -102,11 +110,49 @@
 
 
 -(IBAction)viewIntroductionAgainClicked:(id)sender{
+    
     [self writeViewedIntroduction];
+    
+    /*
     PleasantIntroDetailViewController *siv = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"PleasantIntroDetailViewController"];
     [self.navigationController pushViewController:siv animated:YES];
+     */
+    
+    NSMutableArray *pageInfos = [NSMutableArray array];
+    
+    IntroPageInfo *info = [[IntroPageInfo alloc] initWithimage:[UIImage imageNamed:@"Intro5image1.png"] title: P_A_PAGE1_TITLE description:@"Working and doing chores are important. It is also important to do some things just because you enjoy them. Pleasant activities are activities you enjoy."];
+    
+    [pageInfos addObject:info];
+    
+    IntroPageInfo *info2 = [[IntroPageInfo alloc] initWithimage:[UIImage imageNamed:@"Intro5image2.png"] title: @"How can \"Pleasant Activities\" help me?" description:P_A_INTRO_PAGE2];
+    
+    [pageInfos addObject:info2];
+    
+    IntroPageInfo *info3 = [[IntroPageInfo alloc] initWithimage:[UIImage imageNamed:@"Intro5image3.png"] title: P_A_PAGE3_TITLE description:P_A_INTRO_PAGE3];
+    
+    [pageInfos addObject:info3];
+    
+    SwiperViewController *swiper = [[SwiperViewController alloc]init];
+    
+    swiper.pageInfos = pageInfos;
+    
+    swiper.header = @"Welcome to Pleasant Activities";
+    
+    [self.navigationController pushViewController:swiper animated:YES];
     
 }
+
+-(NSString *)planText
+{
+    return [NSString stringWithFormat:@"Plan for %@ ",[PersistenceStorage getObjectForKey:@"planName"]];
+}
+
+-(NSString *)activityText{
+    
+    return [PersistenceStorage getObjectForKey:@"skillName"];
+}
+
+
 -(IBAction)learnMoreClicked:(id)sender{
     NookPA *siv = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"NookPA"];
     [self.navigationController pushViewController:siv animated:YES];

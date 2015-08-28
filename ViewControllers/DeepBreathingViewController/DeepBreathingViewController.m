@@ -21,6 +21,10 @@
 #import "DBManager.h"
 #import "MBProgressHUD.h"
 
+#import "SwiperViewController.h"
+#import "IntroPageInfo.h"
+
+
 
 @interface DeepBreathingViewController ()
 {NSArray *remindersArray;
@@ -35,49 +39,65 @@
 - (void)viewDidLoad {
 
     [super viewDidLoad];
-    UIView *titleView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 170, 44)];
     
-    titleView.backgroundColor = [Utils colorWithHexValue:NAV_BAR_BLACK_COLOR];
+    self.exercises = @[@"Video Introduction", @"Video lessons", @"Timer for Practice"];
     
-    UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 170, 25)];
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
-    Pair *pallete = [Utils getColorFontPair:eCFS_PALLETE_1];
-    
-    titleLabel.font = pallete.secondObj;
-    titleLabel.textColor = pallete.firstObj;
-    
-    titleLabel.textAlignment = NSTextAlignmentCenter;
-    
-    //titleLabel.textColor = [UIColor colorWithHexValue:@"797979"];
-    titleLabel.backgroundColor = [UIColor clearColor];
-    // titleLabel.text = @"Add New Plan";
-    
-    titleLabel.text= [NSString stringWithFormat:@"Plan for %@ ",[PersistenceStorage getObjectForKey:@"planName"]];
-    titleLabel.adjustsFontSizeToFitWidth=YES;
-    titleLabel.minimumScaleFactor=0.5;
-    
-    UILabel *situationLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 23, 170, 19)];
-    
-    pallete = [Utils getColorFontPair:eCFS_PALLETE_2];
-    
-    situationLabel.font = pallete.secondObj;
-    situationLabel.textColor = pallete.firstObj;
-    
-    situationLabel.textAlignment = NSTextAlignmentCenter;
-    
-    //titleLabel.textColor = [UIColor colorWithHexValue:@"797979"];
-    situationLabel.backgroundColor = [UIColor clearColor];
-    situationLabel.text = [PersistenceStorage getObjectForKey:@"skillName"];//@"Your Situation";
-    
-    [titleView addSubview:titleLabel];
-    [titleView addSubview:situationLabel];
-    
-    self.navigationItem.titleView = titleView;
+//    UIView *titleView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 170, 44)];
+//    
+//    titleView.backgroundColor = [Utils colorWithHexValue:NAV_BAR_BLACK_COLOR];
+//    
+//    UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 170, 25)];
+//    
+//    Pair *pallete = [Utils getColorFontPair:eCFS_PALLETE_1];
+//    
+//    titleLabel.font = pallete.secondObj;
+//    titleLabel.textColor = pallete.firstObj;
+//    
+//    titleLabel.textAlignment = NSTextAlignmentCenter;
+//    
+//    //titleLabel.textColor = [UIColor colorWithHexValue:@"797979"];
+//    titleLabel.backgroundColor = [UIColor clearColor];
+//    // titleLabel.text = @"Add New Plan";
+//    
+//    titleLabel.text= [NSString stringWithFormat:@"Plan for %@ ",[PersistenceStorage getObjectForKey:@"planName"]];
+//    titleLabel.adjustsFontSizeToFitWidth=YES;
+//    titleLabel.minimumScaleFactor=0.5;
+//    
+//    UILabel *situationLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 23, 170, 19)];
+//    
+//    pallete = [Utils getColorFontPair:eCFS_PALLETE_2];
+//    
+//    situationLabel.font = pallete.secondObj;
+//    situationLabel.textColor = pallete.firstObj;
+//    
+//    situationLabel.textAlignment = NSTextAlignmentCenter;
+//    
+//    //titleLabel.textColor = [UIColor colorWithHexValue:@"797979"];
+//    situationLabel.backgroundColor = [UIColor clearColor];
+//    situationLabel.text = [PersistenceStorage getObjectForKey:@"skillName"];//@"Your Situation";
+//    
+//    [titleView addSubview:titleLabel];
+//    [titleView addSubview:situationLabel];
+//    
+//    self.navigationItem.titleView = titleView;
     
  //   [self addLabel];
     
     // Do any additional setup after loading the view.
 }
+
+-(NSString *)planText
+{
+   return [NSString stringWithFormat:@"Plan for %@ ",[PersistenceStorage getObjectForKey:@"planName"]];
+}
+
+-(NSString *)activityText{
+    
+    return [PersistenceStorage getObjectForKey:@"skillName"];
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -407,9 +427,32 @@
     
     [self writeViewedIntroduction];
     
+    
+    /*
     BreathingIntroDetailViewController *siv = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"BreathingIntroDetailViewController"];
     [self.navigationController pushViewController:siv animated:YES];
+     */
     
+    NSMutableArray *pageInfos = [NSMutableArray array];
+    
+    IntroPageInfo *info = [[IntroPageInfo alloc] initWithimage:[UIImage imageNamed:@"Intro2image1.png"] title: @"Why is \"Deep Breathing\" helpful?" description:DEEP_BREATHING_INTRO_PAGE1_TEXT];
+    
+    [pageInfos addObject:info];
+    
+    IntroPageInfo *info2 = [[IntroPageInfo alloc] initWithimage:[UIImage imageNamed:@"Intro2image2.png"] title: @"How can  \"Deep Breathing\" help me with my tinnitus?" description:DEEP_BREATHING_INTRO_PAGE2_TEXT];
+    
+    [pageInfos addObject:info2];
+    IntroPageInfo *info3 = [[IntroPageInfo alloc] initWithimage:[UIImage imageNamed:@"Intro2image3.png"] title: @"How do I do \"Deep Breathing\"?" description:DEEP_BREATHING_INTRO_PAGE3_TEXT];
+    
+    [pageInfos addObject:info3];
+    
+    SwiperViewController *swiper = [[SwiperViewController alloc]init];
+    
+    swiper.pageInfos = pageInfos;
+    
+    swiper.header = @"Welcome to Deep Breathing";
+    
+    [self.navigationController pushViewController:swiper animated:YES];
 }
 
 

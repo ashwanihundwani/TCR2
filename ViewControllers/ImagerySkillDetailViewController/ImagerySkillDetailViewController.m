@@ -11,7 +11,8 @@
 #import "NookImg.h"
 #import "MBProgressHUD.h"
 
-
+#import "SwiperViewController.h"
+#import "IntroPageInfo.h"
 
 @interface ImagerySkillDetailViewController ()
 
@@ -53,8 +54,32 @@
 }
 
 -(IBAction)viewIntroductionAgainClicked:(id)sender{
+    
+    /*
     ImageryIntroDetailViewController *siv = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"ImageryIntroDetailViewController"];
     [self.navigationController pushViewController:siv animated:YES];
+     */
+    
+    NSMutableArray *pageInfos = [NSMutableArray array];
+    
+    IntroPageInfo *info = [[IntroPageInfo alloc] initWithimage:[UIImage imageNamed:@"Intro3image1.png"] title: @"Why is \"Imagery\" helpful?" description:@"Imagery is imagining a calm and peaceful place. Imagining the sights, sounds, and smells of the place can help you relax. You can combine Imagery with Deep Breathing  to feel even more relaxed."];
+    
+    [pageInfos addObject:info];
+    
+    IntroPageInfo *info2 = [[IntroPageInfo alloc] initWithimage:[UIImage imageNamed:@"Intro3image2.png"] title: @"How can  \"Imagery\" help me with my tinnitus?" description:@"Imagery can reduce the tension and stress caused by tinnitus. Using imagery won’t change your tinnitus, but it can help you relax. Being relaxed can help you cope with your tinnitus. "];
+    
+    [pageInfos addObject:info2];
+    IntroPageInfo *info3 = [[IntroPageInfo alloc] initWithimage:[UIImage imageNamed:@"Intro3image3.png"] title: @"How do I do \"Imagery\"?" description:@"A video will show you how to do Imagery. After you watch the video you will have access to a timer that will help you practice on your own. "];
+    
+    [pageInfos addObject:info3];
+    
+    SwiperViewController *swiper = [[SwiperViewController alloc]init];
+    
+    swiper.pageInfos = pageInfos;
+    
+    swiper.header = @"Welcome to Imagery";
+    
+    [self.navigationController pushViewController:swiper animated:YES];
 
 }
 
@@ -128,10 +153,13 @@
 -(IBAction)addSkillToPlan:(id)sender
 {
     [self writeToMySkills];
-    [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:[self.navigationController.viewControllers count]-3] animated:YES];
-
+    [self performSelector:@selector(navigateBacktoPlan) withObject:nil afterDelay:1.2];
+    
 }
 
+-(void)navigateBacktoPlan{
+    [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:[self.navigationController.viewControllers count]-3] animated:YES];
+}
 /*
 #pragma mark - Navigation
 

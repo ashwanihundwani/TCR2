@@ -494,10 +494,11 @@ self.navigationItem.hidesBackButton = YES;
 
 - (IBAction)sliderChanged:(id)sender {
     // Fast skip the music when user scroll the UISlider
-    [self.audioPlayer stop];
+    //[self.audioPlayer stop];
     [self.audioPlayer setCurrentTime:self.audioSeekSlider.value];
-    [self.audioPlayer prepareToPlay];
-    [self.audioPlayer play];
+    //[self.audioPlayer prepareToPlay];
+    //if(self.audioPlayer.isPlaying)
+    //[self.audioPlayer play];
 }
 
 
@@ -552,6 +553,13 @@ self.navigationItem.hidesBackButton = YES;
 
     [self.audioPlayer stop]; // Or pause
     [self.videoPlayer stop];
+}
+
+#pragma mark - AVAudioPlayerDelegate
+
+- (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag{
+    [self.playPauseButton setTitle:@"Play" forState:UIControlStateNormal];
+    self.updateTimer = nil;
 }
 
 @end

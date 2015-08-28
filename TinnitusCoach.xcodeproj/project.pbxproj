@@ -156,11 +156,6 @@
 		047C9A5F1AE530EC00352B7A /* lightbulb32.png in Resources */ = {isa = PBXBuildFile; fileRef = 047C9A5E1AE530EC00352B7A /* lightbulb32.png */; };
 		04841D6F1AF8F54200BA4725 /* TCAppIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 04841D6E1AF8F54200BA4725 /* TCAppIcon.png */; };
 		0487A58F1AED4C5900A3CCE1 /* SkillRatingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0487A58E1AED4C5900A3CCE1 /* SkillRatingsViewController.m */; };
-		048EBD891AF0D40800E3B38B /* HomeSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = 048EBD881AF0D40800E3B38B /* HomeSelected.png */; };
-		048EBD8B1AF0D4EC00E3B38B /* AddUsePlansSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = 048EBD8A1AF0D4EC00E3B38B /* AddUsePlansSelected.png */; };
-		048EBD8D1AF0D4FB00E3B38B /* LearnSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = 048EBD8C1AF0D4FB00E3B38B /* LearnSelected.png */; };
-		048EBD8F1AF0D50A00E3B38B /* SupportSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = 048EBD8E1AF0D50A00E3B38B /* SupportSelected.png */; };
-		048EBD911AF0D51700E3B38B /* SamplerSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = 048EBD901AF0D51700E3B38B /* SamplerSelected.png */; };
 		048EF8AD1AE9ED8E001D70C6 /* 2DeepBreathing.png in Resources */ = {isa = PBXBuildFile; fileRef = 048EF8AC1AE9ED8E001D70C6 /* 2DeepBreathing.png */; };
 		048EF8B21AE9F035001D70C6 /* 6ChangingThoughts&Feelings.png in Resources */ = {isa = PBXBuildFile; fileRef = 048EF8AE1AE9F035001D70C6 /* 6ChangingThoughts&Feelings.png */; };
 		048EF8B31AE9F035001D70C6 /* 7TipsforBetterSleep.png in Resources */ = {isa = PBXBuildFile; fileRef = 048EF8AF1AE9F035001D70C6 /* 7TipsforBetterSleep.png */; };
@@ -394,7 +389,6 @@
 		4A4A3B221AC68A5500F2AEF6 /* ValueAndActivitiesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A4A3B211AC68A5500F2AEF6 /* ValueAndActivitiesViewController.m */; };
 		4A4A3B261AC6BA7D00F2AEF6 /* ActivitiesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A4A3B251AC6BA7D00F2AEF6 /* ActivitiesViewController.m */; };
 		4A4A3B2B1AC6BCB900F2AEF6 /* ActivityCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A4A3B291AC6BCB900F2AEF6 /* ActivityCell.m */; };
-		4A4A3B2C1AC6BCB900F2AEF6 /* ActivityCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A4A3B2A1AC6BCB900F2AEF6 /* ActivityCell.xib */; };
 		4A4A3B301AC6C85000F2AEF6 /* 5PleasantActivities.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A4A3B2F1AC6C85000F2AEF6 /* 5PleasantActivities.png */; };
 		4A4A3B381AC6E11E00F2AEF6 /* AddActivityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A4A3B371AC6E11E00F2AEF6 /* AddActivityViewController.m */; };
 		4A4A3B3C1AC6FE1200F2AEF6 /* FavoritesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A4A3B3B1AC6FE1200F2AEF6 /* FavoritesViewController.m */; };
@@ -426,6 +420,45 @@
 		4AF9E8C71AB415E100C73A45 /* SamplerCustomCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AF9E8C51AB415E100C73A45 /* SamplerCustomCell.m */; };
 		4AF9E8CA1AB4346000C73A45 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4AF9E8C91AB4346000C73A45 /* libsqlite3.dylib */; };
 		4AF9E8CE1AB434DB00C73A45 /* DBManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AF9E8CD1AB434DB00C73A45 /* DBManager.m */; };
+		CD39CDC21B8DBC6000E61F51 /* IntroPageInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = CD39CDBA1B8DBC6000E61F51 /* IntroPageInfo.m */; };
+		CD39CDC31B8DBC6000E61F51 /* IntroPageView.m in Sources */ = {isa = PBXBuildFile; fileRef = CD39CDBC1B8DBC6000E61F51 /* IntroPageView.m */; };
+		CD39CDC41B8DBC6000E61F51 /* IntroPageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CD39CDBD1B8DBC6000E61F51 /* IntroPageView.xib */; };
+		CD39CDC51B8DBC6000E61F51 /* SwiperViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD39CDBF1B8DBC6000E61F51 /* SwiperViewController.m */; };
+		CD39CDC61B8DBC6000E61F51 /* DDPageControl.m in Sources */ = {isa = PBXBuildFile; fileRef = CD39CDC11B8DBC6000E61F51 /* DDPageControl.m */; };
+		CD39CDD21B8DD3F200E61F51 /* UIView+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = CD39CDD11B8DD3F200E61F51 /* UIView+Extensions.m */; };
+		CD39CDD51B8E14E700E61F51 /* SkillCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CD39CDD41B8E14E700E61F51 /* SkillCell.m */; };
+		CD39CDE51B8E438C00E61F51 /* SkillIntroductionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CD39CDDC1B8E438C00E61F51 /* SkillIntroductionCell.m */; };
+		CD39CDE61B8E438C00E61F51 /* SkillIntroductionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CD39CDDD1B8E438C00E61F51 /* SkillIntroductionCell.xib */; };
+		CD39CDE71B8E438C00E61F51 /* SkillIntroInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = CD39CDDF1B8E438C00E61F51 /* SkillIntroInfo.m */; };
+		CD39CDE81B8E438C00E61F51 /* SkillReminderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CD39CDE11B8E438C00E61F51 /* SkillReminderCell.m */; };
+		CD39CDE91B8E438C00E61F51 /* SkillReminderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CD39CDE21B8E438C00E61F51 /* SkillReminderCell.xib */; };
+		CD39CDEA1B8E438C00E61F51 /* SkillReminderInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = CD39CDE41B8E438C00E61F51 /* SkillReminderInfo.m */; };
+		CD39CDEE1B8E44B400E61F51 /* BaseSkilDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD39CDED1B8E44B400E61F51 /* BaseSkilDetailViewController.m */; };
+		CD39CDF41B8EF05C00E61F51 /* DeepBreathingViewController+Table.m in Sources */ = {isa = PBXBuildFile; fileRef = CD39CDF31B8EF05C00E61F51 /* DeepBreathingViewController+Table.m */; };
+		CD39CDFA1B8EF5F400E61F51 /* ImageryViewController+Table.m in Sources */ = {isa = PBXBuildFile; fileRef = CD39CDF91B8EF5F400E61F51 /* ImageryViewController+Table.m */; };
+		CD7D801B1B8F7EB100D77939 /* OtherSoundInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = CD7D80161B8F7EB100D77939 /* OtherSoundInfo.m */; };
+		CD7D801C1B8F7EB100D77939 /* TinnitusSoundInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = CD7D80181B8F7EB100D77939 /* TinnitusSoundInfo.m */; };
+		CD7D801D1B8F7EB100D77939 /* WebsiteSoundInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = CD7D801A1B8F7EB100D77939 /* WebsiteSoundInfo.m */; };
+		CD7D80201B8F7EF900D77939 /* SoundIntroInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = CD7D801F1B8F7EF900D77939 /* SoundIntroInfo.m */; };
+		CD7D80231B8F7F3100D77939 /* SoundActivitiesViewController+Table.m in Sources */ = {isa = PBXBuildFile; fileRef = CD7D80221B8F7F3100D77939 /* SoundActivitiesViewController+Table.m */; };
+		CD7D80271B8F7F9400D77939 /* SoundIntroCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CD7D80251B8F7F9400D77939 /* SoundIntroCell.m */; };
+		CD7D80281B8F7F9400D77939 /* SoundIntroCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CD7D80261B8F7F9400D77939 /* SoundIntroCell.xib */; };
+		CD7D80321B8F7FB700D77939 /* TinnitusSoundCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CD7D802A1B8F7FB700D77939 /* TinnitusSoundCell.m */; };
+		CD7D80331B8F7FB700D77939 /* TinnitusSoundCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CD7D802B1B8F7FB700D77939 /* TinnitusSoundCell.xib */; };
+		CD7D80341B8F7FB700D77939 /* WebsiteSoundCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CD7D802D1B8F7FB700D77939 /* WebsiteSoundCell.m */; };
+		CD7D80351B8F7FB700D77939 /* WebsiteSoundCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CD7D802E1B8F7FB700D77939 /* WebsiteSoundCell.xib */; };
+		CD7D80361B8F7FB700D77939 /* OtherSoundsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CD7D80301B8F7FB700D77939 /* OtherSoundsCell.m */; };
+		CD7D80371B8F7FB700D77939 /* OtherSoundsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CD7D80311B8F7FB700D77939 /* OtherSoundsCell.xib */; };
+		CD7D803A1B8F7FC900D77939 /* BaseSoundCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CD7D80391B8F7FC900D77939 /* BaseSoundCell.m */; };
+		CD7D803C1B8FA52D00D77939 /* ActivityCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CD7D803B1B8FA52D00D77939 /* ActivityCell.xib */; };
+		CDE963FE1B8D8B8F00B84E57 /* AddUsePlansSelected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CDE963FA1B8D8B8F00B84E57 /* AddUsePlansSelected@2x.png */; };
+		CDE963FF1B8D8B8F00B84E57 /* LearnSelected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CDE963FB1B8D8B8F00B84E57 /* LearnSelected@2x.png */; };
+		CDE964001B8D8B8F00B84E57 /* SamplerSelected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CDE963FC1B8D8B8F00B84E57 /* SamplerSelected@2x.png */; };
+		CDE964011B8D8B8F00B84E57 /* SupportSelected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CDE963FD1B8D8B8F00B84E57 /* SupportSelected@2x.png */; };
+		CDE964031B8D8BC700B84E57 /* HomeSelected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CDE964021B8D8BC700B84E57 /* HomeSelected@2x.png */; };
+		CDF14CF41B8F718A005A0E01 /* TipsViewController+Table.m in Sources */ = {isa = PBXBuildFile; fileRef = CDF14CF31B8F718A005A0E01 /* TipsViewController+Table.m */; };
+		CDFFBFB71B8F660A00BD2445 /* GuidedMeditationViewController+Table.m in Sources */ = {isa = PBXBuildFile; fileRef = CDFFBFB61B8F660A00BD2445 /* GuidedMeditationViewController+Table.m */; };
+		CDFFBFBD1B8F68F600BD2445 /* PleasantActivityViewController+Table.m in Sources */ = {isa = PBXBuildFile; fileRef = CDFFBFBC1B8F68F600BD2445 /* PleasantActivityViewController+Table.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -621,11 +654,6 @@
 		04841D6E1AF8F54200BA4725 /* TCAppIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TCAppIcon.png; sourceTree = "<group>"; };
 		0487A58D1AED4C5900A3CCE1 /* SkillRatingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SkillRatingsViewController.h; sourceTree = "<group>"; };
 		0487A58E1AED4C5900A3CCE1 /* SkillRatingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SkillRatingsViewController.m; sourceTree = "<group>"; };
-		048EBD881AF0D40800E3B38B /* HomeSelected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = HomeSelected.png; sourceTree = "<group>"; };
-		048EBD8A1AF0D4EC00E3B38B /* AddUsePlansSelected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AddUsePlansSelected.png; sourceTree = "<group>"; };
-		048EBD8C1AF0D4FB00E3B38B /* LearnSelected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LearnSelected.png; sourceTree = "<group>"; };
-		048EBD8E1AF0D50A00E3B38B /* SupportSelected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SupportSelected.png; sourceTree = "<group>"; };
-		048EBD901AF0D51700E3B38B /* SamplerSelected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = SamplerSelected.png; path = images/SamplerSelected.png; sourceTree = "<group>"; };
 		048EF8AC1AE9ED8E001D70C6 /* 2DeepBreathing.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 2DeepBreathing.png; sourceTree = "<group>"; };
 		048EF8AE1AE9F035001D70C6 /* 6ChangingThoughts&Feelings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "6ChangingThoughts&Feelings.png"; sourceTree = "<group>"; };
 		048EF8AF1AE9F035001D70C6 /* 7TipsforBetterSleep.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 7TipsforBetterSleep.png; sourceTree = "<group>"; };
@@ -956,7 +984,6 @@
 		4A4A3B251AC6BA7D00F2AEF6 /* ActivitiesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivitiesViewController.m; sourceTree = "<group>"; };
 		4A4A3B281AC6BCB900F2AEF6 /* ActivityCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityCell.h; sourceTree = "<group>"; };
 		4A4A3B291AC6BCB900F2AEF6 /* ActivityCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityCell.m; sourceTree = "<group>"; };
-		4A4A3B2A1AC6BCB900F2AEF6 /* ActivityCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ActivityCell.xib; sourceTree = "<group>"; };
 		4A4A3B2F1AC6C85000F2AEF6 /* 5PleasantActivities.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 5PleasantActivities.png; sourceTree = "<group>"; };
 		4A4A3B361AC6E11E00F2AEF6 /* AddActivityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddActivityViewController.h; sourceTree = "<group>"; };
 		4A4A3B371AC6E11E00F2AEF6 /* AddActivityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddActivityViewController.m; sourceTree = "<group>"; };
@@ -969,7 +996,6 @@
 		4A6922F91ACB1BE100744CCD /* ScheduleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScheduleViewController.m; sourceTree = "<group>"; };
 		4A6922FB1ACC703D00744CCD /* cellImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cellImage.png; sourceTree = "<group>"; };
 		4A6922FD1ACC721000744CCD /* Dashes.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Dashes.png; sourceTree = "<group>"; };
-		4A6922FF1ACC816500744CCD /* deep_breathing.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; name = deep_breathing.mp4; path = Resources/SampleAudioVideo/deep_breathing.mp4; sourceTree = "<group>"; };
 		4A8C5E7C1AB3524F001FC7F4 /* TinnitusCoach.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TinnitusCoach.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4A8C5E801AB35250001FC7F4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4A8C5E811AB35250001FC7F4 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -1002,6 +1028,71 @@
 		4AF9E8C91AB4346000C73A45 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		4AF9E8CC1AB434DB00C73A45 /* DBManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBManager.h; sourceTree = "<group>"; };
 		4AF9E8CD1AB434DB00C73A45 /* DBManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBManager.m; sourceTree = "<group>"; };
+		CD39CDB91B8DBC6000E61F51 /* IntroPageInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IntroPageInfo.h; sourceTree = "<group>"; };
+		CD39CDBA1B8DBC6000E61F51 /* IntroPageInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IntroPageInfo.m; sourceTree = "<group>"; };
+		CD39CDBB1B8DBC6000E61F51 /* IntroPageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IntroPageView.h; sourceTree = "<group>"; };
+		CD39CDBC1B8DBC6000E61F51 /* IntroPageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IntroPageView.m; sourceTree = "<group>"; };
+		CD39CDBD1B8DBC6000E61F51 /* IntroPageView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IntroPageView.xib; sourceTree = "<group>"; };
+		CD39CDBE1B8DBC6000E61F51 /* SwiperViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwiperViewController.h; sourceTree = "<group>"; };
+		CD39CDBF1B8DBC6000E61F51 /* SwiperViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SwiperViewController.m; sourceTree = "<group>"; };
+		CD39CDC01B8DBC6000E61F51 /* DDPageControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDPageControl.h; sourceTree = "<group>"; };
+		CD39CDC11B8DBC6000E61F51 /* DDPageControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDPageControl.m; sourceTree = "<group>"; };
+		CD39CDD01B8DD3F200E61F51 /* UIView+Extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIView+Extensions.h"; path = "Extensions/UIView+Extensions.h"; sourceTree = "<group>"; };
+		CD39CDD11B8DD3F200E61F51 /* UIView+Extensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIView+Extensions.m"; path = "Extensions/UIView+Extensions.m"; sourceTree = "<group>"; };
+		CD39CDD31B8E14E700E61F51 /* SkillCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SkillCell.h; sourceTree = "<group>"; };
+		CD39CDD41B8E14E700E61F51 /* SkillCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SkillCell.m; sourceTree = "<group>"; };
+		CD39CDDB1B8E438C00E61F51 /* SkillIntroductionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SkillIntroductionCell.h; path = SkillDetailCells/SkillIntroductionCell.h; sourceTree = "<group>"; };
+		CD39CDDC1B8E438C00E61F51 /* SkillIntroductionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SkillIntroductionCell.m; path = SkillDetailCells/SkillIntroductionCell.m; sourceTree = "<group>"; };
+		CD39CDDD1B8E438C00E61F51 /* SkillIntroductionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SkillIntroductionCell.xib; path = SkillDetailCells/SkillIntroductionCell.xib; sourceTree = "<group>"; };
+		CD39CDDE1B8E438C00E61F51 /* SkillIntroInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SkillIntroInfo.h; path = SkillDetailCells/SkillIntroInfo.h; sourceTree = "<group>"; };
+		CD39CDDF1B8E438C00E61F51 /* SkillIntroInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SkillIntroInfo.m; path = SkillDetailCells/SkillIntroInfo.m; sourceTree = "<group>"; };
+		CD39CDE01B8E438C00E61F51 /* SkillReminderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SkillReminderCell.h; path = SkillDetailCells/SkillReminderCell.h; sourceTree = "<group>"; };
+		CD39CDE11B8E438C00E61F51 /* SkillReminderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SkillReminderCell.m; path = SkillDetailCells/SkillReminderCell.m; sourceTree = "<group>"; };
+		CD39CDE21B8E438C00E61F51 /* SkillReminderCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SkillReminderCell.xib; path = SkillDetailCells/SkillReminderCell.xib; sourceTree = "<group>"; };
+		CD39CDE31B8E438C00E61F51 /* SkillReminderInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SkillReminderInfo.h; path = SkillDetailCells/SkillReminderInfo.h; sourceTree = "<group>"; };
+		CD39CDE41B8E438C00E61F51 /* SkillReminderInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SkillReminderInfo.m; path = SkillDetailCells/SkillReminderInfo.m; sourceTree = "<group>"; };
+		CD39CDEC1B8E44B400E61F51 /* BaseSkilDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseSkilDetailViewController.h; sourceTree = "<group>"; };
+		CD39CDED1B8E44B400E61F51 /* BaseSkilDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseSkilDetailViewController.m; sourceTree = "<group>"; };
+		CD39CDF21B8EF05C00E61F51 /* DeepBreathingViewController+Table.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "DeepBreathingViewController+Table.h"; path = "Extensions/DeepBreathingViewController+Table.h"; sourceTree = "<group>"; };
+		CD39CDF31B8EF05C00E61F51 /* DeepBreathingViewController+Table.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "DeepBreathingViewController+Table.m"; path = "Extensions/DeepBreathingViewController+Table.m"; sourceTree = "<group>"; };
+		CD39CDF81B8EF5F400E61F51 /* ImageryViewController+Table.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "ImageryViewController+Table.h"; path = "Extensions/ImageryViewController+Table.h"; sourceTree = "<group>"; };
+		CD39CDF91B8EF5F400E61F51 /* ImageryViewController+Table.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "ImageryViewController+Table.m"; path = "Extensions/ImageryViewController+Table.m"; sourceTree = "<group>"; };
+		CD7D80151B8F7EB100D77939 /* OtherSoundInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OtherSoundInfo.h; sourceTree = "<group>"; };
+		CD7D80161B8F7EB100D77939 /* OtherSoundInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OtherSoundInfo.m; sourceTree = "<group>"; };
+		CD7D80171B8F7EB100D77939 /* TinnitusSoundInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TinnitusSoundInfo.h; sourceTree = "<group>"; };
+		CD7D80181B8F7EB100D77939 /* TinnitusSoundInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TinnitusSoundInfo.m; sourceTree = "<group>"; };
+		CD7D80191B8F7EB100D77939 /* WebsiteSoundInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebsiteSoundInfo.h; sourceTree = "<group>"; };
+		CD7D801A1B8F7EB100D77939 /* WebsiteSoundInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebsiteSoundInfo.m; sourceTree = "<group>"; };
+		CD7D801E1B8F7EF900D77939 /* SoundIntroInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoundIntroInfo.h; sourceTree = "<group>"; };
+		CD7D801F1B8F7EF900D77939 /* SoundIntroInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SoundIntroInfo.m; sourceTree = "<group>"; };
+		CD7D80211B8F7F3100D77939 /* SoundActivitiesViewController+Table.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SoundActivitiesViewController+Table.h"; sourceTree = "<group>"; };
+		CD7D80221B8F7F3100D77939 /* SoundActivitiesViewController+Table.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SoundActivitiesViewController+Table.m"; sourceTree = "<group>"; };
+		CD7D80241B8F7F9400D77939 /* SoundIntroCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoundIntroCell.h; sourceTree = "<group>"; };
+		CD7D80251B8F7F9400D77939 /* SoundIntroCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SoundIntroCell.m; sourceTree = "<group>"; };
+		CD7D80261B8F7F9400D77939 /* SoundIntroCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SoundIntroCell.xib; sourceTree = "<group>"; };
+		CD7D80291B8F7FB700D77939 /* TinnitusSoundCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TinnitusSoundCell.h; sourceTree = "<group>"; };
+		CD7D802A1B8F7FB700D77939 /* TinnitusSoundCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TinnitusSoundCell.m; sourceTree = "<group>"; };
+		CD7D802B1B8F7FB700D77939 /* TinnitusSoundCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TinnitusSoundCell.xib; sourceTree = "<group>"; };
+		CD7D802C1B8F7FB700D77939 /* WebsiteSoundCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebsiteSoundCell.h; sourceTree = "<group>"; };
+		CD7D802D1B8F7FB700D77939 /* WebsiteSoundCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebsiteSoundCell.m; sourceTree = "<group>"; };
+		CD7D802E1B8F7FB700D77939 /* WebsiteSoundCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WebsiteSoundCell.xib; sourceTree = "<group>"; };
+		CD7D802F1B8F7FB700D77939 /* OtherSoundsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OtherSoundsCell.h; sourceTree = "<group>"; };
+		CD7D80301B8F7FB700D77939 /* OtherSoundsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OtherSoundsCell.m; sourceTree = "<group>"; };
+		CD7D80311B8F7FB700D77939 /* OtherSoundsCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OtherSoundsCell.xib; sourceTree = "<group>"; };
+		CD7D80381B8F7FC900D77939 /* BaseSoundCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseSoundCell.h; sourceTree = "<group>"; };
+		CD7D80391B8F7FC900D77939 /* BaseSoundCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseSoundCell.m; sourceTree = "<group>"; };
+		CD7D803B1B8FA52D00D77939 /* ActivityCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ActivityCell.xib; sourceTree = "<group>"; };
+		CDE963FA1B8D8B8F00B84E57 /* AddUsePlansSelected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AddUsePlansSelected@2x.png"; sourceTree = "<group>"; };
+		CDE963FB1B8D8B8F00B84E57 /* LearnSelected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "LearnSelected@2x.png"; sourceTree = "<group>"; };
+		CDE963FC1B8D8B8F00B84E57 /* SamplerSelected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SamplerSelected@2x.png"; sourceTree = "<group>"; };
+		CDE963FD1B8D8B8F00B84E57 /* SupportSelected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SupportSelected@2x.png"; sourceTree = "<group>"; };
+		CDE964021B8D8BC700B84E57 /* HomeSelected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "HomeSelected@2x.png"; sourceTree = "<group>"; };
+		CDF14CF21B8F718A005A0E01 /* TipsViewController+Table.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "TipsViewController+Table.h"; path = "Extensions/TipsViewController+Table.h"; sourceTree = "<group>"; };
+		CDF14CF31B8F718A005A0E01 /* TipsViewController+Table.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "TipsViewController+Table.m"; path = "Extensions/TipsViewController+Table.m"; sourceTree = "<group>"; };
+		CDFFBFB51B8F660A00BD2445 /* GuidedMeditationViewController+Table.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "GuidedMeditationViewController+Table.h"; path = "Extensions/GuidedMeditationViewController+Table.h"; sourceTree = "<group>"; };
+		CDFFBFB61B8F660A00BD2445 /* GuidedMeditationViewController+Table.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "GuidedMeditationViewController+Table.m"; path = "Extensions/GuidedMeditationViewController+Table.m"; sourceTree = "<group>"; };
+		CDFFBFBB1B8F68F600BD2445 /* PleasantActivityViewController+Table.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "PleasantActivityViewController+Table.h"; path = "Extensions/PleasantActivityViewController+Table.h"; sourceTree = "<group>"; };
+		CDFFBFBC1B8F68F600BD2445 /* PleasantActivityViewController+Table.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "PleasantActivityViewController+Table.m"; path = "Extensions/PleasantActivityViewController+Table.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1826,6 +1917,15 @@
 		15156B341ABEFD1D009F4489 /* MYIntroduction */ = {
 			isa = PBXGroup;
 			children = (
+				CD39CDB91B8DBC6000E61F51 /* IntroPageInfo.h */,
+				CD39CDBA1B8DBC6000E61F51 /* IntroPageInfo.m */,
+				CD39CDBB1B8DBC6000E61F51 /* IntroPageView.h */,
+				CD39CDBC1B8DBC6000E61F51 /* IntroPageView.m */,
+				CD39CDBD1B8DBC6000E61F51 /* IntroPageView.xib */,
+				CD39CDBE1B8DBC6000E61F51 /* SwiperViewController.h */,
+				CD39CDBF1B8DBC6000E61F51 /* SwiperViewController.m */,
+				CD39CDC01B8DBC6000E61F51 /* DDPageControl.h */,
+				CD39CDC11B8DBC6000E61F51 /* DDPageControl.m */,
 				15156B351ABEFD1D009F4489 /* MYIntroductionPanel.h */,
 				15156B361ABEFD1D009F4489 /* MYIntroductionPanel.m */,
 				15156B371ABEFD1D009F4489 /* MYIntroductionView.h */,
@@ -1837,6 +1937,28 @@
 		153A47411AD6D5840011B6A1 /* SoundActivitiesCell */ = {
 			isa = PBXGroup;
 			children = (
+				CD7D80381B8F7FC900D77939 /* BaseSoundCell.h */,
+				CD7D80391B8F7FC900D77939 /* BaseSoundCell.m */,
+				CD7D80291B8F7FB700D77939 /* TinnitusSoundCell.h */,
+				CD7D802A1B8F7FB700D77939 /* TinnitusSoundCell.m */,
+				CD7D802B1B8F7FB700D77939 /* TinnitusSoundCell.xib */,
+				CD7D802C1B8F7FB700D77939 /* WebsiteSoundCell.h */,
+				CD7D802D1B8F7FB700D77939 /* WebsiteSoundCell.m */,
+				CD7D802E1B8F7FB700D77939 /* WebsiteSoundCell.xib */,
+				CD7D802F1B8F7FB700D77939 /* OtherSoundsCell.h */,
+				CD7D80301B8F7FB700D77939 /* OtherSoundsCell.m */,
+				CD7D80311B8F7FB700D77939 /* OtherSoundsCell.xib */,
+				CD7D80241B8F7F9400D77939 /* SoundIntroCell.h */,
+				CD7D80251B8F7F9400D77939 /* SoundIntroCell.m */,
+				CD7D80261B8F7F9400D77939 /* SoundIntroCell.xib */,
+				CD7D801E1B8F7EF900D77939 /* SoundIntroInfo.h */,
+				CD7D801F1B8F7EF900D77939 /* SoundIntroInfo.m */,
+				CD7D80151B8F7EB100D77939 /* OtherSoundInfo.h */,
+				CD7D80161B8F7EB100D77939 /* OtherSoundInfo.m */,
+				CD7D80171B8F7EB100D77939 /* TinnitusSoundInfo.h */,
+				CD7D80181B8F7EB100D77939 /* TinnitusSoundInfo.m */,
+				CD7D80191B8F7EB100D77939 /* WebsiteSoundInfo.h */,
+				CD7D801A1B8F7EB100D77939 /* WebsiteSoundInfo.m */,
 				04C2585D1B7293E1006156AB /* rejectWebsitesandAppsSoundActivityCell.xib */,
 				04C2585E1B7293E1006156AB /* rejectWebsitesandAppsSoundActivityCell.h */,
 				042B73681B494E8C003DAE03 /* SoundsActivityCell.xib */,
@@ -2032,9 +2154,9 @@
 		4A4A3B271AC6BCA000F2AEF6 /* ActivityCell */ = {
 			isa = PBXGroup;
 			children = (
+				CD7D803B1B8FA52D00D77939 /* ActivityCell.xib */,
 				4A4A3B281AC6BCB900F2AEF6 /* ActivityCell.h */,
 				4A4A3B291AC6BCB900F2AEF6 /* ActivityCell.m */,
-				4A4A3B2A1AC6BCB900F2AEF6 /* ActivityCell.xib */,
 			);
 			path = ActivityCell;
 			sourceTree = "<group>";
@@ -2077,7 +2199,7 @@
 		4A8C5E731AB3524F001FC7F4 = {
 			isa = PBXGroup;
 			children = (
-				4A6922FF1ACC816500744CCD /* deep_breathing.mp4 */,
+				CD39CDCF1B8DD3E300E61F51 /* Extensions */,
 				04841D6E1AF8F54200BA4725 /* TCAppIcon.png */,
 				4A4A3B471AC736B500F2AEF6 /* GNResoundDB.sqlite */,
 				1550E5781AC7E20800E36C90 /* Utils */,
@@ -2183,7 +2305,6 @@
 				043DA21E1B1A88CD009A0480 /* NookResNew.html */,
 				043DA21F1B1A88CD009A0480 /* NookTBS.html */,
 				043DA2201B1A88CD009A0480 /* NookUS.html */,
-				048EBD901AF0D51700E3B38B /* SamplerSelected.png */,
 				4A9017191AB8AC3200AE4B9D /* images */,
 				4A4A3B2E1AC6C85000F2AEF6 /* PleasantActivities */,
 				4A4A3AD91AC3109400F2AEF6 /* SplashScreen */,
@@ -2218,6 +2339,11 @@
 		4A9017191AB8AC3200AE4B9D /* images */ = {
 			isa = PBXGroup;
 			children = (
+				CDE964021B8D8BC700B84E57 /* HomeSelected@2x.png */,
+				CDE963FA1B8D8B8F00B84E57 /* AddUsePlansSelected@2x.png */,
+				CDE963FB1B8D8B8F00B84E57 /* LearnSelected@2x.png */,
+				CDE963FC1B8D8B8F00B84E57 /* SamplerSelected@2x.png */,
+				CDE963FD1B8D8B8F00B84E57 /* SupportSelected@2x.png */,
 				04DF9A7B1B3C5AD800989E2B /* Active_Information_icon_28px.png */,
 				043BAA5B1B2BF1E90041F1EA /* BabblingBrook.png */,
 				043BAA5C1B2BF1E90041F1EA /* Fire.png */,
@@ -2244,10 +2370,6 @@
 				04C286001AF79D7A002E3347 /* upArrow.png */,
 				04C286011AF79D7B002E3347 /* downArrow.png */,
 				049DD9ED1AF3C9890068BCEC /* trashcan.png */,
-				048EBD8E1AF0D50A00E3B38B /* SupportSelected.png */,
-				048EBD8C1AF0D4FB00E3B38B /* LearnSelected.png */,
-				048EBD8A1AF0D4EC00E3B38B /* AddUsePlansSelected.png */,
-				048EBD881AF0D40800E3B38B /* HomeSelected.png */,
 				04B0F1C41AEF8EB4005BCEA5 /* 37x-Checkmark.png */,
 				04B0F1BC1AEF4474005BCEA5 /* deleteContact_removed.png */,
 				04B0F1BD1AEF4474005BCEA5 /* deleteContact.png */,
@@ -2419,6 +2541,7 @@
 		4AF9E8B31AB365E600C73A45 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				CD39CDEB1B8E449000E61F51 /* BaseSkillDetailViewController */,
 				04DF9A951B3C64A600989E2B /* InfoPopup */,
 				043F0D6E1B3508430050D909 /* CTFPrevEntries */,
 				043F8E9C1B2E8C7300595D38 /* TipsReminder.xib */,
@@ -2513,6 +2636,8 @@
 		4AF9E8C21AB4159C00C73A45 /* CustomClasses */ = {
 			isa = PBXGroup;
 			children = (
+				CD39CDDA1B8E435E00E61F51 /* Skill Detail Cells */,
+				CD39CDD61B8E14F400E61F51 /* Skill Cells */,
 				043F8EA21B2E967600595D38 /* DeleteCormationManager.m */,
 				043F8EA11B2E966000595D38 /* DeleteCormationManager.h */,
 				046D598A1B1E034200041FCE /* EmotionsCell */,
@@ -2592,6 +2717,62 @@
 				4A9017511AB8AD7800AE4B9D /* MixerHostAudio */,
 			);
 			path = ThirdPartyClasses;
+			sourceTree = "<group>";
+		};
+		CD39CDCF1B8DD3E300E61F51 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				CD7D80211B8F7F3100D77939 /* SoundActivitiesViewController+Table.h */,
+				CD7D80221B8F7F3100D77939 /* SoundActivitiesViewController+Table.m */,
+				CDF14CF21B8F718A005A0E01 /* TipsViewController+Table.h */,
+				CDF14CF31B8F718A005A0E01 /* TipsViewController+Table.m */,
+				CDFFBFBB1B8F68F600BD2445 /* PleasantActivityViewController+Table.h */,
+				CDFFBFBC1B8F68F600BD2445 /* PleasantActivityViewController+Table.m */,
+				CDFFBFB51B8F660A00BD2445 /* GuidedMeditationViewController+Table.h */,
+				CDFFBFB61B8F660A00BD2445 /* GuidedMeditationViewController+Table.m */,
+				CD39CDF81B8EF5F400E61F51 /* ImageryViewController+Table.h */,
+				CD39CDF91B8EF5F400E61F51 /* ImageryViewController+Table.m */,
+				CD39CDF21B8EF05C00E61F51 /* DeepBreathingViewController+Table.h */,
+				CD39CDF31B8EF05C00E61F51 /* DeepBreathingViewController+Table.m */,
+				CD39CDD01B8DD3F200E61F51 /* UIView+Extensions.h */,
+				CD39CDD11B8DD3F200E61F51 /* UIView+Extensions.m */,
+			);
+			name = Extensions;
+			sourceTree = "<group>";
+		};
+		CD39CDD61B8E14F400E61F51 /* Skill Cells */ = {
+			isa = PBXGroup;
+			children = (
+				CD39CDD31B8E14E700E61F51 /* SkillCell.h */,
+				CD39CDD41B8E14E700E61F51 /* SkillCell.m */,
+			);
+			name = "Skill Cells";
+			sourceTree = "<group>";
+		};
+		CD39CDDA1B8E435E00E61F51 /* Skill Detail Cells */ = {
+			isa = PBXGroup;
+			children = (
+				CD39CDDB1B8E438C00E61F51 /* SkillIntroductionCell.h */,
+				CD39CDDC1B8E438C00E61F51 /* SkillIntroductionCell.m */,
+				CD39CDDD1B8E438C00E61F51 /* SkillIntroductionCell.xib */,
+				CD39CDDE1B8E438C00E61F51 /* SkillIntroInfo.h */,
+				CD39CDDF1B8E438C00E61F51 /* SkillIntroInfo.m */,
+				CD39CDE01B8E438C00E61F51 /* SkillReminderCell.h */,
+				CD39CDE11B8E438C00E61F51 /* SkillReminderCell.m */,
+				CD39CDE21B8E438C00E61F51 /* SkillReminderCell.xib */,
+				CD39CDE31B8E438C00E61F51 /* SkillReminderInfo.h */,
+				CD39CDE41B8E438C00E61F51 /* SkillReminderInfo.m */,
+			);
+			name = "Skill Detail Cells";
+			sourceTree = "<group>";
+		};
+		CD39CDEB1B8E449000E61F51 /* BaseSkillDetailViewController */ = {
+			isa = PBXGroup;
+			children = (
+				CD39CDEC1B8E44B400E61F51 /* BaseSkilDetailViewController.h */,
+				CD39CDED1B8E44B400E61F51 /* BaseSkilDetailViewController.m */,
+			);
+			name = BaseSkillDetailViewController;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -2689,19 +2870,19 @@
 				043DA2361B1A88CD009A0480 /* af.popup.js in Resources */,
 				0432626D1AE4E94400C4C47A /* nook.png in Resources */,
 				1550E5B21AC93C6B00E36C90 /* BabblingBrook.mp3 in Resources */,
+				CD39CDC41B8DBC6000E61F51 /* IntroPageView.xib in Resources */,
 				1550E5B41AC93C6B00E36C90 /* Crickets.mp3 in Resources */,
 				0436A2871B2AC9CB002AAE63 /* PlainLanguageSummaryTinnitus.pdf in Resources */,
 				04C3D1C81B046ABF00BFD575 /* 1ProgressiveMuscleRelaxation.mp3 in Resources */,
 				048EF9231AEA7971001D70C6 /* Intro2image1.png in Resources */,
-				048EBD891AF0D40800E3B38B /* HomeSelected.png in Resources */,
 				04412E5F1B12F89B0028A2CB /* www in Resources */,
 				043BC3CF1AF4E055001FD5F1 /* ll.xib in Resources */,
 				048EF8AD1AE9ED8E001D70C6 /* 2DeepBreathing.png in Resources */,
 				153A474B1AD6D5840011B6A1 /* WebsitesandAppsSoundActivityCell.xib in Resources */,
 				1550E5B31AC93C6B00E36C90 /* CracklingFire.mp3 in Resources */,
-				048EBD911AF0D51700E3B38B /* SamplerSelected.png in Resources */,
 				0432628E1AE50E1B00C4C47A /* faqs.png in Resources */,
 				1550E5B81AC93C6B00E36C90 /* WindInTrees.mp3 in Resources */,
+				CD7D803C1B8FA52D00D77939 /* ActivityCell.xib in Resources */,
 				4A4A3AC41ABEE9CD00F2AEF6 /* deepBreathing.png in Resources */,
 				0436A2931B2AE65E002AAE63 /* ctf02.png in Resources */,
 				049DD9EE1AF3C9890068BCEC /* trashcan.png in Resources */,
@@ -2709,6 +2890,7 @@
 				39953FC91B7A5D66004F4990 /* ThoughtErrorCell.xib in Resources */,
 				04B0F1C51AEF8EB4005BCEA5 /* 37x-Checkmark.png in Resources */,
 				043DA2321B1A88CD009A0480 /* af.css3animate.js in Resources */,
+				CDE964031B8D8BC700B84E57 /* HomeSelected@2x.png in Resources */,
 				4A4A3ACE1ABEEE7E00F2AEF6 /* home.png in Resources */,
 				04712A4C1B1AC20F009953D3 /* 4.1.2image1.png in Resources */,
 				1550E58C1AC816D500E36C90 /* globe.png in Resources */,
@@ -2725,7 +2907,6 @@
 				4A4A3AC61ABEE9CD00F2AEF6 /* imagery.png in Resources */,
 				1550E58A1AC815EA00E36C90 /* iphone.png in Resources */,
 				0432627B1AE5051A00C4C47A /* EarRightGray.png in Resources */,
-				048EBD8D1AF0D4FB00E3B38B /* LearnSelected.png in Resources */,
 				04336E051AF762E7001A5F99 /* MyTipsHeaderView.xib in Resources */,
 				043BAA601B2BF1EA0041F1EA /* BabblingBrook.png in Resources */,
 				1550E5AA1AC89A3300E36C90 /* bs_addtoplan_u270.png in Resources */,
@@ -2747,6 +2928,7 @@
 				15156B6E1ABEFE9F009F4489 /* u304.png in Resources */,
 				4A8C5EBB1AB358F6001FC7F4 /* home64.png in Resources */,
 				0432628B1AE50E1B00C4C47A /* imagery.png in Resources */,
+				CD7D80281B8F7F9400D77939 /* SoundIntroCell.xib in Resources */,
 				04C3D1C41B0455FE00BFD575 /* deep.breathing.png in Resources */,
 				15156B691ABEFE9F009F4489 /* u286.png in Resources */,
 				04EC5F671AFDAF7C004132B3 /* separator.png in Resources */,
@@ -2768,6 +2950,7 @@
 				04DF9A8D1B3C61B600989E2B /* thoughterror4.html in Resources */,
 				04C2585F1B7293E1006156AB /* rejectWebsitesandAppsSoundActivityCell.xib in Resources */,
 				04EC5F691AFDB405004132B3 /* line.png in Resources */,
+				CD39CDE61B8E438C00E61F51 /* SkillIntroductionCell.xib in Resources */,
 				4A90176F1AB8B87F00AE4B9D /* not_selected_star@2x.png in Resources */,
 				04DF9A8B1B3C61B600989E2B /* thoughterror2.html in Resources */,
 				043DA2341B1A88CD009A0480 /* af.msPointerEvents.js in Resources */,
@@ -2798,14 +2981,15 @@
 				048EF9201AEA7971001D70C6 /* Intro6image4.png in Resources */,
 				04C286021AF79D7B002E3347 /* upArrow.png in Resources */,
 				1550E5F11AC9C7ED00E36C90 /* OtherDevicesCell.xib in Resources */,
+				CD39CDE91B8E438C00E61F51 /* SkillReminderCell.xib in Resources */,
 				043C2DA81AE542F20040BF2D /* homefindsupport.png in Resources */,
 				048EF9241AEA7971001D70C6 /* Intro2image2.png in Resources */,
 				153A474D1AD6D70F0011B6A1 /* info.png in Resources */,
 				0467DDD01AEAB8A10021784B /* home_findsupport.png in Resources */,
+				CD7D80351B8F7FB700D77939 /* WebsiteSoundCell.xib in Resources */,
 				0432627C1AE5051A00C4C47A /* Mute.png in Resources */,
 				043F8E9A1B2E391F00595D38 /* FeedbackTableViewCell.xib in Resources */,
 				0436A2911B2AE65E002AAE63 /* ctf04.png in Resources */,
-				048EBD8B1AF0D4EC00E3B38B /* AddUsePlansSelected.png in Resources */,
 				4A9017BC1ABEC4DD00AE4B9D /* Tinnitus.csv in Resources */,
 				04DF9A8C1B3C61B600989E2B /* thoughterror3.html in Resources */,
 				04AF417F1AECAC8700C294BA /* DeepBreathingLesson.mp4 in Resources */,
@@ -2816,7 +3000,6 @@
 				4A4A3B301AC6C85000F2AEF6 /* 5PleasantActivities.png in Resources */,
 				04712A401B1A8F02009953D3 /* af.ui.css in Resources */,
 				043625C91AE6836B00078F6A /* globe64.png in Resources */,
-				048EBD8F1AF0D50A00E3B38B /* SupportSelected.png in Resources */,
 				4A4A3AE21AC3147E00F2AEF6 /* home32.png in Resources */,
 				1550E5C11AC9403100E36C90 /* fan.mp3 in Resources */,
 				043C2DA91AE542F20040BF2D /* homeplans.png in Resources */,
@@ -2831,12 +3014,15 @@
 				15156B601ABEFE9F009F4489 /* u261.png in Resources */,
 				0436A2921B2AE65E002AAE63 /* ctf03.png in Resources */,
 				048EF91B1AEA7971001D70C6 /* Intro1image1.png in Resources */,
+				CDE963FE1B8D8B8F00B84E57 /* AddUsePlansSelected@2x.png in Resources */,
 				04508BD81AEB7A60008B6F1C /* samplersounds.png in Resources */,
 				15156B581ABEFE9F009F4489 /* bs_continue_u12.png in Resources */,
 				15156B6F1ABEFE9F009F4489 /* u306.png in Resources */,
 				4A8C5E8E1AB35250001FC7F4 /* Main.storyboard in Resources */,
+				CD7D80371B8F7FB700D77939 /* OtherSoundsCell.xib in Resources */,
 				15156B631ABEFE9F009F4489 /* u267.png in Resources */,
 				15156B591ABEFE9F009F4489 /* circle.png in Resources */,
+				CDE963FF1B8D8B8F00B84E57 /* LearnSelected@2x.png in Resources */,
 				043625C11AE6699F00078F6A /* tabplans.png in Resources */,
 				04712A4F1B1AC20F009953D3 /* 4.1.8image1.png in Resources */,
 				4A8C5E931AB35250001FC7F4 /* LaunchScreen.xib in Resources */,
@@ -2900,6 +3086,7 @@
 				15156B561ABEFE9F009F4489 /* bs_addnewcontact_u319.png in Resources */,
 				4A4A3ACD1ABEEE7E00F2AEF6 /* book.png in Resources */,
 				043262881AE50E1B00C4C47A /* guided.png in Resources */,
+				CDE964011B8D8B8F00B84E57 /* SupportSelected@2x.png in Resources */,
 				1550E5C41AC9403100E36C90 /* Waterfall.mp3 in Resources */,
 				043DA22F1B1A88CD009A0480 /* icons.css in Resources */,
 				043DA2331B1A88CD009A0480 /* af.desktopBrowsers.js in Resources */,
@@ -2909,6 +3096,7 @@
 				043DA2301B1A88CD009A0480 /* af.8tiles.js in Resources */,
 				15156B5A1ABEFE9F009F4489 /* selectedCircle.png in Resources */,
 				048EF9251AEA7971001D70C6 /* Intro2image3.png in Resources */,
+				CD7D80331B8F7FB700D77939 /* TinnitusSoundCell.xib in Resources */,
 				04508BDE1AEB7AD1008B6F1C /* MyOwn.png in Resources */,
 				4A4A3B421AC72EED00F2AEF6 /* CirclingToSleep.mp3 in Resources */,
 				043DA23F1B1A88CD009A0480 /* NookTBS.html in Resources */,
@@ -2935,6 +3123,7 @@
 				15156B571ABEFE9F009F4489 /* bs_addtoplan_u8.png in Resources */,
 				043DA2211B1A88CD009A0480 /* NookImg.html in Resources */,
 				043625CB1AE6839100078F6A /* headphones64.png in Resources */,
+				CDE964001B8D8B8F00B84E57 /* SamplerSelected@2x.png in Resources */,
 				049C740F1B249F7700AE984E /* Active_Play_button.png in Resources */,
 				043262931AE51C1C00C4C47A /* samplersleep.png in Resources */,
 				0442CC281B23445D00E77746 /* MyOwnSoundsActivityCell.xib in Resources */,
@@ -2954,7 +3143,6 @@
 				4A90176C1AB8B87F00AE4B9D /* half_selected_star.png in Resources */,
 				4A8C5E901AB35250001FC7F4 /* Images.xcassets in Resources */,
 				04508BDD1AEB7AD1008B6F1C /* Devices.png in Resources */,
-				4A4A3B2C1AC6BCB900F2AEF6 /* ActivityCell.xib in Resources */,
 				04C286031AF79D7B002E3347 /* downArrow.png in Resources */,
 				043DA2311B1A88CD009A0480 /* af.actionsheet.js in Resources */,
 				15156B611ABEFE9F009F4489 /* u263.png in Resources */,
@@ -2979,6 +3167,8 @@
 				049C741C1B25A7DC00AE984E /* CTFSummary.m in Sources */,
 				048EF9021AEA64CA001D70C6 /* TipsIntroDetailViewController.m in Sources */,
 				153A474A1AD6D5840011B6A1 /* WebsitesandAppsSoundActivityCell.m in Sources */,
+				CDFFBFB71B8F660A00BD2445 /* GuidedMeditationViewController+Table.m in Sources */,
+				CD39CDFA1B8EF5F400E61F51 /* ImageryViewController+Table.m in Sources */,
 				043D41501AF6520200E8E093 /* DoingActivityViewController.m in Sources */,
 				1550E5F51AC9C82200E36C90 /* OtherDevicesWithCommentsCell.m in Sources */,
 				04401B081B1612CF00B3C6A3 /* CTF01.m in Sources */,
@@ -2992,6 +3182,7 @@
 				04AB4BC01B16ABF200446EC4 /* CTF03.m in Sources */,
 				1550E5E11AC9ACE200E36C90 /* WebsitesandAppsWithCommentsCell.m in Sources */,
 				048EF8E61AEA6497001D70C6 /* TipsSkillDetailViewController.m in Sources */,
+				CD39CDC51B8DBC6000E61F51 /* SwiperViewController.m in Sources */,
 				04E044EF1B186E1600F4DBD1 /* CTF06NewOne.m in Sources */,
 				04AB4BC41B16E3FF00446EC4 /* CTF04.m in Sources */,
 				1550E5CE1AC94C5100E36C90 /* WebsitesandAppsViewController.m in Sources */,
@@ -3001,6 +3192,7 @@
 				04B0F1C31AEF74A0005BCEA5 /* MBProgressHUD.m in Sources */,
 				15156B391ABEFD1D009F4489 /* MYIntroductionPanel.m in Sources */,
 				15156B331ABEFC52009F4489 /* SoundsViewController.m in Sources */,
+				CD39CDD21B8DD3F200E61F51 /* UIView+Extensions.m in Sources */,
 				04B8F7AB1B13A57B008D54D0 /* NookImg.m in Sources */,
 				04DF9A981B3C64A600989E2B /* InfoPopup.m in Sources */,
 				048EF9051AEA64CA001D70C6 /* PleasantIntroDetailViewController.m in Sources */,
@@ -3009,25 +3201,35 @@
 				04B8F7AA1B13A57B008D54D0 /* NookDB.m in Sources */,
 				04B0F1B31AEF1138005BCEA5 /* AddressBookJsonResponse.m in Sources */,
 				043F0D711B3508430050D909 /* CTFPrevEntries.m in Sources */,
+				CD39CDF41B8EF05C00E61F51 /* DeepBreathingViewController+Table.m in Sources */,
+				CD39CDE71B8E438C00E61F51 /* SkillIntroInfo.m in Sources */,
 				1550E57F1AC7E20800E36C90 /* PersistenceStorage.m in Sources */,
 				04B8F7941B13930F008D54D0 /* NookCTF.m in Sources */,
 				04B0F1B51AEF1138005BCEA5 /* ContactListViewController.m in Sources */,
 				04E044EB1B1868E300F4DBD1 /* CTF05.m in Sources */,
 				042DDC891AEC13A50023910B /* SamplerVideoViewController.m in Sources */,
+				CD39CDC21B8DBC6000E61F51 /* IntroPageInfo.m in Sources */,
+				CDFFBFBD1B8F68F600BD2445 /* PleasantActivityViewController+Table.m in Sources */,
 				048EF8E71AEA6497001D70C6 /* ThoughtsSkillDetailViewController.m in Sources */,
 				048EF9041AEA64CA001D70C6 /* SoundIntroDetailViewController.m in Sources */,
+				CD7D801B1B8F7EB100D77939 /* OtherSoundInfo.m in Sources */,
 				15156B291ABEFC52009F4489 /* MixerHostViewController.m in Sources */,
 				4A4A3B3C1AC6FE1200F2AEF6 /* FavoritesViewController.m in Sources */,
 				04B0F1BA1AEF1138005BCEA5 /* SupportTableViewCell.m in Sources */,
 				04B0F1B81AEF1138005BCEA5 /* ProfessionalSupportView.m in Sources */,
 				04EC5F631AFD7993004132B3 /* ImageryTimerViewController.m in Sources */,
+				CD39CDE81B8E438C00E61F51 /* SkillReminderCell.m in Sources */,
 				15156B2D1ABEFC52009F4489 /* PlansViewController.m in Sources */,
 				1550E5881AC7FFEB00E36C90 /* SoundsCategoryViewController.m in Sources */,
 				048EF8C11AE9F7BE001D70C6 /* TipsViewController.m in Sources */,
+				CD7D80341B8F7FB700D77939 /* WebsiteSoundCell.m in Sources */,
 				04336E031AF762E7001A5F99 /* MySleepTipsVC.m in Sources */,
 				04B8F7AF1B13A57B008D54D0 /* NookTBS.m in Sources */,
 				15156B231ABEFC52009F4489 /* AddSkillsToPlanViewController.m in Sources */,
 				048EF8BD1AE9F492001D70C6 /* ChangingThoughtsViewController.m in Sources */,
+				CD39CDC31B8DBC6000E61F51 /* IntroPageView.m in Sources */,
+				CD7D80201B8F7EF900D77939 /* SoundIntroInfo.m in Sources */,
+				CD39CDC61B8DBC6000E61F51 /* DDPageControl.m in Sources */,
 				4A8C5E851AB35250001FC7F4 /* AppDelegate.m in Sources */,
 				1550E5D31AC9526900E36C90 /* WebsitesandAppsCell.m in Sources */,
 				043F8EA31B2E967600595D38 /* DeleteCormationManager.m in Sources */,
@@ -3055,6 +3257,7 @@
 				04336E001AF762E7001A5F99 /* EditTipsCell.m in Sources */,
 				042DDC8A1AEC13A50023910B /* AudioPlayerViewController.m in Sources */,
 				048EF9061AEA64CA001D70C6 /* MeditationIntroDetailViewController.m in Sources */,
+				CD39CDEA1B8E438C00E61F51 /* SkillReminderInfo.m in Sources */,
 				04B0F1BB1AEF1138005BCEA5 /* SupportViewController.m in Sources */,
 				04AF41871AECC32E00C294BA /* AudioPlayerOneViewController.m in Sources */,
 				048EF9071AEA64CA001D70C6 /* ImageryIntroDetailViewController.m in Sources */,
@@ -3067,17 +3270,22 @@
 				049C74181B24A21500AE984E /* Pair.m in Sources */,
 				15156B241ABEFC52009F4489 /* AudioPanningViewController.m in Sources */,
 				1550E5991AC8914B00E36C90 /* TinnitusCoachSoundCell.m in Sources */,
+				CD39CDEE1B8E44B400E61F51 /* BaseSkilDetailViewController.m in Sources */,
 				15156B3A1ABEFD1D009F4489 /* MYIntroductionView.m in Sources */,
 				04B8F7B01B13A57B008D54D0 /* NookUS.m in Sources */,
+				CD7D803A1B8F7FC900D77939 /* BaseSoundCell.m in Sources */,
 				04401B011B15F7B700B3C6A3 /* CTF02.m in Sources */,
+				CD39CDE51B8E438C00E61F51 /* SkillIntroductionCell.m in Sources */,
 				043895581B261686005B74B1 /* SamplerSoundsCell.m in Sources */,
 				0440D6061AEB4808006096AA /* HomeNewViewController.m in Sources */,
 				4A8C5E821AB35250001FC7F4 /* main.m in Sources */,
 				04336E041AF762E7001A5F99 /* MyTipsHeaderView.m in Sources */,
 				04336E021AF762E7001A5F99 /* LastSleepTips.m in Sources */,
+				CD7D80271B8F7F9400D77939 /* SoundIntroCell.m in Sources */,
 				042DDC881AEC13A50023910B /* VideoPlayerViewController.m in Sources */,
 				4A4A3B261AC6BA7D00F2AEF6 /* ActivitiesViewController.m in Sources */,
 				0487A58F1AED4C5900A3CCE1 /* SkillRatingsViewController.m in Sources */,
+				CDF14CF41B8F718A005A0E01 /* TipsViewController+Table.m in Sources */,
 				1550E5A41AC894D200E36C90 /* CERoundProgressView.m in Sources */,
 				15156B2B1ABEFC52009F4489 /* NewPlanAddedViewController.m in Sources */,
 				0442CC291B23445D00E77746 /* MyOwnSoundsActivityCell.m in Sources */,
@@ -3088,8 +3296,11 @@
 				153A47481AD6D5840011B6A1 /* OtherDevicesSoundActivityCell.m in Sources */,
 				048EF8EA1AEA6497001D70C6 /* MeditationSkillDetailViewController.m in Sources */,
 				04B8F7AE1B13A57B008D54D0 /* NookRes.m in Sources */,
+				CD7D801C1B8F7EB100D77939 /* TinnitusSoundInfo.m in Sources */,
 				15156B271ABEFC52009F4489 /* HomeViewController.m in Sources */,
+				CD7D80321B8F7FB700D77939 /* TinnitusSoundCell.m in Sources */,
 				15156B2A1ABEFC52009F4489 /* NavigationTipsViewController.m in Sources */,
+				CD7D801D1B8F7EB100D77939 /* WebsiteSoundInfo.m in Sources */,
 				04336E061AF762E7001A5F99 /* TipsForSleepVC.m in Sources */,
 				04386D4D1B21B71800E82866 /* CTF06New.m in Sources */,
 				4A4A3B1E1AC670F100F2AEF6 /* PleasantActivityViewController.m in Sources */,
@@ -3099,12 +3310,15 @@
 				04B0F1B61AEF1138005BCEA5 /* FamilyFriendsView.m in Sources */,
 				043FCB601B22E633008043DF /* AudioPlayerThreeViewController.m in Sources */,
 				4A4A3B2B1AC6BCB900F2AEF6 /* ActivityCell.m in Sources */,
+				CD39CDD51B8E14E700E61F51 /* SkillCell.m in Sources */,
 				1550E5801AC7E20800E36C90 /* Utils.m in Sources */,
 				1550E5A31AC894D200E36C90 /* CERoundProgressLayer.m in Sources */,
 				048EF8E81AEA6497001D70C6 /* SoundSkillDetailViewController.m in Sources */,
 				043D41551AF6702D00E8E093 /* ActivityRatingsViewController.m in Sources */,
 				04AF41881AECC32E00C294BA /* AudioPlayerTwoViewController.m in Sources */,
 				048EF8C91AEA33AB001D70C6 /* NookUsingSoundViewControllerOne.m in Sources */,
+				CD7D80231B8F7F3100D77939 /* SoundActivitiesViewController+Table.m in Sources */,
+				CD7D80361B8F7FB700D77939 /* OtherSoundsCell.m in Sources */,
 				048EF9011AEA64CA001D70C6 /* BreathingIntroDetailViewController.m in Sources */,
 				15156B2C1ABEFC52009F4489 /* NewPlanSupportViewController.m in Sources */,
 				048EF8E91AEA6497001D70C6 /* PleasantSkillDetailViewController.m in Sources */,

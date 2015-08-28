@@ -12,9 +12,10 @@
 #import "NewPlanAddedViewController.h"
 #import "DeleteCormationManager.h"
 #import "MBProgressHUD.h"
+#import <EventKitUI/EventKitUI.h>
 @interface PlansViewController ()<UITableViewDataSource, UITableViewDelegate>
 {
-    NSMutableArray *userPlansArray;
+    NSMutableArray *userPlansArray, *calenderEventsArray;
 }
 
 
@@ -26,6 +27,19 @@
 
 @implementation PlansViewController
 
+-(CGFloat)heightForIndexPath:(NSIndexPath *)indexPath
+{
+    CGFloat constant = 27;
+    
+    NSString *planName = [[userPlansArray objectAtIndex:indexPath.row] valueForKey:@"planName"];
+    
+    CGFloat labelHeight = [Utils heightForLabelForString:planName width:200 font:TITLE_LABEL_FONT];
+    
+    constant += labelHeight;
+    
+    return constant;
+
+}
 
 -(void)goToHome
 {
@@ -39,9 +53,10 @@
     
     UIView *titleView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 100, 44)];
     
-    titleView.backgroundColor = [Utils colorWithHexValue:NAV_BAR_BLACK_COLOR];
+    titleView.backgroundColor = [UIColor clearColor];
     
     UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 100, 44)];
+    
     
     Pair *pallete = [Utils getColorFontPair:eCFS_PALLETE_1];
     
@@ -58,7 +73,7 @@
     
     self.navigationItem.titleView = titleView;
     
-    UIImageView *backLabel = [[UIImageView alloc]initWithFrame:CGRectMake(20, 10, 15, 20)];
+    UIImageView *backLabel = [[UIImageView alloc]initWithFrame:CGRectMake(10, 10, 15, 20)];
     
     backLabel.image = [UIImage imageNamed:@"Active_Back-Arrow.png"];
     
@@ -154,7 +169,85 @@
 }
 
 
-
+-(UIView *)tableHeaderView
+{
+    if(userPlansArray.count == 3)
+    {
+        UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 30)];
+        
+        UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(22, 15, 276, 20)
+                               ];
+        
+        titleLabel.numberOfLines = 1000;
+        
+        titleLabel.backgroundColor = [UIColor clearColor];
+        view.backgroundColor = [Utils colorWithHexValue:@"EFEFF4"];
+        
+        titleLabel.text = @"To add a new plan, first delete one of the existing three plans.";
+        
+        Pair *pallete = [Utils getColorFontPair:eCFS_PALLETE_2];
+        
+        titleLabel.font = pallete.secondObj;
+        titleLabel.textColor = pallete.firstObj;
+        
+        CGFloat height = [Utils heightForLabelForString:titleLabel.text width:276 font:pallete.secondObj];
+        
+        titleLabel.height = height;
+        
+        view.height += height;
+        
+        [view addSubview:titleLabel];
+        
+        return view;
+        
+    }
+    else
+    {
+        UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 30)];
+        
+        UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(22, 15, 276, 20)
+                               ];
+        
+        titleLabel.numberOfLines = 1000;
+        
+        titleLabel.backgroundColor = [UIColor clearColor];
+        view.backgroundColor = [Utils colorWithHexValue:@"EFEFF4"];
+        
+        titleLabel.text = @"You can add up to 3 plans.";
+        
+        Pair *pallete = [Utils getColorFontPair:eCFS_PALLETE_2];
+        
+        titleLabel.font = pallete.secondObj;
+        titleLabel.textColor = pallete.firstObj;
+        
+        CGFloat height = [Utils heightForLabelForString:titleLabel.text width:276 font:pallete.secondObj];
+        
+        titleLabel.height = height;
+        
+        view.height += height;
+        
+        [view addSubview:titleLabel];
+        
+        UILabel *addButton = [[UILabel alloc]initWithFrame:CGRectMake(320 / 2 - 218 / 2, titleLabel.y+ titleLabel.height + 10, 218, 40)];
+        
+        addButton.layer.cornerRadius = 5;
+        addButton.layer.masksToBounds = YES;
+        addButton.font = [UIFont boldSystemFontOfSize:17];
+        addButton.text = @"+ Add a New Plan";
+        addButton.textAlignment = NSTextAlignmentCenter;
+        addButton.textColor = [UIColor whiteColor];
+        addButton.backgroundColor = [Utils colorWithHexValue:BUTTON_BLUE_COLOR_HEX_VALUE];
+        
+        [Utils addTapGestureToView:addButton target:self selector:@selector(addPlanButtonClicked:)];
+        
+        [view addSubview:addButton];
+        
+        view.height = addButton.y + addButton.height + 10;
+        
+        return view;
+        
+    }
+}
 
 -(void)loadMyPlans{
     NSString *query = @"select * from MyPlans";
@@ -169,22 +262,24 @@
         userPlansArray = nil;
     }
     userPlansArray = [[NSMutableArray alloc] initWithArray:[self.dbManagerMyPlans loadDataFromDB:query]];
-    if ([userPlansArray count]==3) {
-        [self.addNewPlanBtn setUserInteractionEnabled:NO];
-        self.addNewPlanBtn.titleLabel.textColor = [UIColor grayColor];
- 
-            firstLabel.text = @"To add a new plan, first delete one of the existing three plans.";
-        [[self.view viewWithTag:3] setHidden:YES];
-    
-    }
-    else
-    {
-        firstLabel.text = @"You can add up to 3 plans.";
-        [[self.view viewWithTag:3] setHidden:NO];
-    }
+//    if ([userPlansArray count]==3) {
+//        [self.addNewPlanBtn setUserInteractionEnabled:NO];
+//        self.addNewPlanBtn.titleLabel.textColor = [UIColor grayColor];
+// 
+//            firstLabel.text = @"To add a new plan, first delete one of the existing three plans.";
+//        [[self.view viewWithTag:3] setHidden:YES];
+//    
+//    }
+//    else
+//    {
+//        firstLabel.text = @"You can add up to 3 plans.";
+//        [[self.view viewWithTag:3] setHidden:NO];
+//    }
     
         
  //
+    
+    self.plansTableView.tableHeaderView = [self tableHeaderView];
     
     // Reload the table view.
     [self.plansTableView reloadData];
@@ -241,7 +336,7 @@
     
     NSString *query3 = [NSString stringWithFormat:@"delete from MyReminders where planID = '%@'",[PersistenceStorage getObjectForKey:@"currentPlanID"] ];
     
-    NSString *query4 = [NSString stringWithFormat:@"delete from MySkillReminders where planID = '%@'",[PersistenceStorage getObjectForKey:@"currentPlanID"]];
+    NSString *query4 = [NSString stringWithFormat:@"delete from MySkillReminders where PlanName = '%@'",[PersistenceStorage getObjectForKey:@"planName"]];
     
     NSString *query6 = [NSString stringWithFormat:@"delete from MyActivities where planID = '%@'",[PersistenceStorage getObjectForKey:@"currentPlanID"]];
     
@@ -366,7 +461,13 @@
   //     [PersistenceStorage setObject:[[userPlansArray objectAtIndex:tag] valueForKey:@"planName"] andKey:@"deletingPlanName"];
      //    [PersistenceStorage setObject:[[userPlansArray objectAtIndex:tag] valueForKey:@"situationName"] andKey:@"deletingSituationName"];
 
-        
+         NSString* reminderQuery = [NSString stringWithFormat:@"select CalendarEventID from MySkillReminders where PlanName = \"%@\"",[[userPlansArray objectAtIndex:tag] valueForKey:@"planName"]  ];
+        NSArray* caleventsArray = [self.dbManagerMyPlans loadDataFromDB:reminderQuery];
+        if(caleventsArray.count > 0){
+            calenderEventsArray = [NSMutableArray arrayWithArray:caleventsArray];
+        }else{
+            calenderEventsArray = nil;
+        }
 
         [self deletePlanFromDB:[userPlansArray objectAtIndex:tag] andCompletion:^(BOOL success)
          {
@@ -379,6 +480,9 @@
                  [self.plansTableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationNone];
                  [self.plansTableView reloadData];
                  
+                 // remove the calender events for this plan
+                 [self removeEventsFromCalender];
+                 [self checkAndDeleteTBSReminders];
                  
              }
              
@@ -392,6 +496,49 @@
 }
 
 
+-(void)removeEventsFromCalender{
+    
+    EKEventStore *store = [[EKEventStore alloc] init];
+    [store requestAccessToEntityType:EKEntityTypeEvent completion:^(BOOL granted, NSError *error) {
+        if (!granted) return;
+        NSMutableArray* eventList = [[NSMutableArray alloc] initWithCapacity:calenderEventsArray.count];
+        for (NSDictionary* eventDict in calenderEventsArray) {
+            EKEvent* eventToRemove = [store eventWithIdentifier:[eventDict valueForKey:@"CalendarEventID"]];
+            if(eventToRemove != nil)
+                [eventList addObject:eventToRemove];
+        }
+        
+        for (EKEvent* eventToRemove in eventList) {
+            NSError* err = nil;
+            [store removeEvent:eventToRemove span:EKSpanFutureEvents commit:YES error:&err];
+            if(err != nil){
+                NSLog(@"Error in deletining event from calender:%@", [eventToRemove description]);
+            }
+        }
+    }
+     
+     ];
+}
+
+-(void)checkAndDeleteTBSReminders{
+    //check if no TBS is left in DB
+    NSString* queryforTBS = @"select * from MySkills where skillID = 7";
+    NSArray* TBSArray = [self.dbManagerMyPlans loadDataFromDB:queryforTBS];
+    if (TBSArray.count == 0) {
+        [PersistenceStorage setObject:@"No" andKey:@"TipsActivated"];
+        // remove the reminders if any
+        NSArray *notificationArray = [[UIApplication sharedApplication] scheduledLocalNotifications];
+        for(UILocalNotification *notification in notificationArray){
+            if ([notification.alertBody isEqualToString:@"Tips for Sleep Feedback"]) {
+                [[UIApplication sharedApplication] cancelLocalNotification:notification] ;
+                NSLog(@"!!!!!!!!!!!!TBS notifocation Cancelled!!!!!!!!!!!!!!!");
+            }
+            
+            
+        }
+        
+    }
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -431,6 +578,8 @@
         
         UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(55 , 11, 200, 20)];
         
+        titleLabel.numberOfLines = 10;
+        
         titleLabel.tag = 1007;
         
         Pair *pallete = [Utils getColorFontPair:eCFS_PALLETE_4];
@@ -442,6 +591,7 @@
         
         UIView *separator = [[UIView alloc]initWithFrame:CGRectMake(55, 44, 298, 1)];
         
+        separator.tag = 345;
         separator.backgroundColor = [Utils colorWithHexValue:@"EEEEEE"];
         
         [cell addSubview:separator];
@@ -451,8 +601,21 @@
     
     UILabel *titleLabel = (UILabel *)[cell viewWithTag:1007];
     
+    NSString *planName = [[userPlansArray objectAtIndex:indexPath.row] valueForKey:@"planName"];
+    
+    CGFloat labelHeight = [Utils heightForLabelForString:planName width:200 font:TITLE_LABEL_FONT];
+    
+    
+    titleLabel.height = labelHeight;
+    
     //cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     titleLabel.text =[[userPlansArray objectAtIndex:indexPath.row] valueForKey:@"planName"];
+    
+    UIView *separator = [cell viewWithTag:345];
+    
+    CGFloat height = [self heightForIndexPath:indexPath];
+    
+    separator.y = height - 1;
     
     return cell;
     
@@ -461,10 +624,10 @@
 
 #pragma mark - UITableViewDelegate
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 44.0f;
+    
+    return [self heightForIndexPath:indexPath];
+    
 }
-
-
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{ 
     NewPlanAddedViewController *npav = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"NewPlanAddedViewController"];

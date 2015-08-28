@@ -20,7 +20,13 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-       [self writeSystemLogLaunched];
+    // check if it is first time launch after app install
+    if(![PersistenceStorage getBoolForKey:@"isTinnitusCoachAppFirstLaunchDone"]){
+        [PersistenceStorage setBool:YES andKey:@"isTinnitusCoachAppFirstLaunchDone"];
+        [[UIApplication sharedApplication] cancelAllLocalNotifications];
+    }
+    
+    [self writeSystemLogLaunched];
     
    
   //  NSLog(@"00000 %@"[PersistenceStorage getObjectForKey:@"TipsActivated"]);

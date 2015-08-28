@@ -15,6 +15,7 @@
 #import "MeditationSkillDetailViewController.h"
 #import "ThoughtsSkillDetailViewController.h"
 #import "PleasantSkillDetailViewController.h"
+#import "SkillCell.h"
 
 
 
@@ -30,11 +31,105 @@
 
 @implementation AddSkillsToPlanViewController
 
+-(CGFloat)heightForIndexPath:(NSIndexPath *)indexPath
+{
+    CGFloat constant = 27;
+    
+    NSString *skillName = [[skillListArray objectAtIndex:indexPath.row] valueForKey:@"skillName"];
+    
+    NSString *skillDesc = [[skillListArray objectAtIndex:indexPath.row] valueForKey:@"skillDetail"];
+    
+    CGFloat titleLabelHeight = [Utils heightForLabelForString:skillName width:250 font:TITLE_LABEL_FONT];
+    
+    CGFloat subTitleLabelHeight = [Utils heightForLabelForString:skillDesc width:250 font:[Utils helveticaNueueFontWithSize:16]];
+    
+    
+    constant += (titleLabelHeight + subTitleLabelHeight);
+    
+    return constant;
+    
+}
+
+-(void)cancel
+{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+-(UIView *)tableHeaderView
+{
+    UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 30)];
+    
+    UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(22, 15, 276, 20)
+                           ];
+    
+    titleLabel.numberOfLines = 1000;
+    
+    titleLabel.backgroundColor = [UIColor clearColor];
+    view.backgroundColor = [Utils colorWithHexValue:@"EFEFF4"];
+    
+    titleLabel.text = @"Tap a skill to learn more and add it to your plan:";;
+    
+    Pair *pallete = [Utils getColorFontPair:eCFS_PALLETE_2];
+    
+    titleLabel.font = pallete.secondObj;
+    titleLabel.textColor = pallete.firstObj;
+    
+    CGFloat height = [Utils heightForLabelForString:titleLabel.text width:276 font:pallete.secondObj];
+    
+    titleLabel.height = height;
+    
+    view.height += height;
+    
+    [view addSubview:titleLabel];
+    
+    return view;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.title = @"Add Skills To Plan";
-  // skillListArray = [NSArray arrayWithObjects:@{@"name":@"Using Sound", @"description":@"Listening to sound can reduce your stress and help you cope with your tinnitus."}, @{@"name":@"Deep Breathing", @"description":@"This breathing exercise can reduce your stress and help you cope with your tinnitus."}, @{@"name":@"Imagery", @"description":@"Imagining a peaceful place can reduce your stress and help you cope with your tinnitus."}, @{@"name":@"Guided Meditation", @"description":@"Try several other guided relaxation exercises."}, @{@"name":@"Pleasant Activities", @"description":@"Make a list of activities that will help you take your mind off of tinnitus."}, @{@"name":@"Changing Thoughts & Feelings", @"description":@"Changing the way you think about tinnitus can improve how you feel."}, @{@"name":@"Tips for Better Sleeping", @"description":@"Following these suggestions can help you sleep better."}, nil];
+    self.skillsTableView.tableHeaderView = [self tableHeaderView];
+    
+    self.skillsTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    
+    UIView *titleView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 150, 44)];
+    
+    titleView.backgroundColor = [Utils colorWithHexValue:NAV_BAR_BLACK_COLOR];
+    
+    UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 150, 44)];
+    
+    Pair *pallete = [Utils getColorFontPair:eCFS_PALLETE_1];
+    
+    titleLabel.font = pallete.secondObj;
+    titleLabel.textColor = pallete.firstObj;
+    
+    titleLabel.textAlignment = NSTextAlignmentCenter;
+    
+    //titleLabel.textColor = [UIColor colorWithHexValue:@"797979"];
+    titleLabel.backgroundColor = [UIColor clearColor];
+    titleLabel.text = @"Add Skills To Plan";
+    
+    [titleView addSubview:titleLabel];
+    
+    self.navigationItem.titleView = titleView;
+    
+    UIImageView *backLabel = [[UIImageView alloc]initWithFrame:CGRectMake(10, 10, 15, 20)];
+    
+    backLabel.image = [UIImage imageNamed:@"Active_Back-Arrow.png"];
+    
+    [Utils addTapGestureToView:backLabel target:self
+                      selector:@selector(cancel)];
+    
+    UIBarButtonItem *item = [[UIBarButtonItem alloc]initWithCustomView:backLabel];
+    
+    UIBarButtonItem *negativeSpacer = [[UIBarButtonItem alloc]
+                                       initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace
+                                       target:nil action:nil];
+    negativeSpacer.width = -8;
+    
+    self.navigationItem.leftBarButtonItems = [NSArray arrayWithObjects:negativeSpacer, item, nil];
+    
+//    skillListArray = [NSArray arrayWithObjects:@{@"name":@"Using Sound", @"description":@"Listening to sound can reduce your stress and help you cope with your tinnitus."}, @{@"name":@"Deep Breathing", @"description":@"This breathing exercise can reduce your stress and help you cope with your tinnitus."}, @{@"name":@"Imagery", @"description":@"Imagining a peaceful place can reduce your stress and help you cope with your tinnitus."}, @{@"name":@"Guided Meditation", @"description":@"Try several other guided relaxation exercises."}, @{@"name":@"Pleasant Activities", @"description":@"Make a list of activities that will help you take your mind off of tinnitus."}, @{@"name":@"Changing Thoughts & Feelings", @"description":@"Changing the way you think about tinnitus can improve how you feel."}, @{@"name":@"Tips for Better Sleeping", @"description":@"Following these suggestions can help you sleep better."}, nil];
 
     self.dbManagerSkillList = [[DBManager alloc]initWithDatabaseFileName:@"GNResoundDB.sqlite"];
     
@@ -80,17 +175,21 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    UITableViewCell *cell;
+
+    SkillCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SkillCell"];
     
-    if (cell == nil) {
-        cell =  [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"Cell"];
-    }
-    cell.textLabel.text =[[skillListArray objectAtIndex:indexPath.row] valueForKey:@"skillName"];
+    cell.titleLabel.text = [[skillListArray objectAtIndex:indexPath.row] valueForKey:@"skillName"];
     
-    cell.detailTextLabel.text = [[skillListArray objectAtIndex:indexPath.row] valueForKey:@"skillDetail"];
-    cell.detailTextLabel.textColor = [UIColor grayColor];
-    cell.detailTextLabel.numberOfLines = 0;
-    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    cell.descriptionLabel.text = [[skillListArray objectAtIndex:indexPath.row] valueForKey:@"skillDetail"];
+    
+    CGFloat titleLabelHeight = [Utils heightForLabelForString:cell.titleLabel.text width:250 font:TITLE_LABEL_FONT];
+    
+    cell.titleHeightConst.constant = titleLabelHeight;
+    
+    [cell setNeedsLayout];
+    [cell layoutIfNeeded];
+    
+    
     return cell;
     
 }
@@ -98,7 +197,7 @@
 
 #pragma mark - UITableViewDelegate
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 80.0f;
+    return [self heightForIndexPath:indexPath];
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
