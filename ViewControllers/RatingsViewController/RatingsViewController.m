@@ -29,7 +29,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-      self.title = @"Your Thoughts";
+      //self.title = @"Your Thoughts";
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]
                                    initWithTarget:self
                                    action:@selector(dismissKeyboard)];
@@ -37,6 +37,36 @@
  //   [self.view addGestureRecognizer:tap];
     // Do any additional setup after loading the view.
     [self setUpView];
+
+    UIView *titleView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 64)];
+    
+    titleView.backgroundColor = [Utils colorWithHexValue:NAV_BAR_BLACK_COLOR];
+    
+    UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 10, 320, 64)];
+    
+    Pair *pallete = [Utils getColorFontPair:eCFS_PALLETE_1];
+    
+    titleLabel.font = pallete.secondObj;
+    titleLabel.textColor = pallete.firstObj;
+
+    
+    titleLabel.textAlignment = NSTextAlignmentCenter;
+    
+    //titleLabel.textColor = [UIColor colorWithHexValue:@"797979"];
+    titleLabel.backgroundColor = [UIColor clearColor];
+    titleLabel.text = @"Your Thoughts";
+    
+    
+    UIView *line = [[UIView alloc]initWithFrame:CGRectMake(0, titleView.frame.size.height - 1, 320, 1)];
+    
+    line.backgroundColor = [UIColor colorWithRed:0.0/255.0 green:0.0/255.0 blue:0.098/255.0 alpha:0.22];;
+    
+    [titleView addSubview:line];
+    
+    [titleView addSubview:titleLabel];
+    
+    [self.view addSubview:titleView];
+
    
 
 }
@@ -50,8 +80,8 @@
 - (void)viewWillAppear:(BOOL)animated
 {//[super viewWillAppear:animated];
     
-    self.title = @"Your Thoughts";
-[self.navigationItem setTitle:@"Your Thoughts"];
+    //self.title = @"Your Thoughts";
+//[self.navigationItem setTitle:@"Your Thoughts"];
     
     [self.tabBarController.tabBar setHidden:YES];
 }
@@ -69,7 +99,14 @@
     [self.table registerClass:[UITableViewCell class] forCellReuseIdentifier:@"Cell"];
     tableArray = @[@{@"name":@"Repeat this exercise",@"image":@"refresh37"},@{@"name":@"Learn about this exercise",@"image":@"lightbulb32"},@{@"name":@"Try another exercise",@"image":@"archive32"},@{@"name":@"Return Home",@"image":@"home32"}];
     
-    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(10, 60, self.view.frame.size.width -20, 80)];
+    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(24, 85, self.view.frame.size.width -20, 45)];
+   
+ 
+    Pair *pallete = [Utils getColorFontPair:eCFS_PALLETE_3];
+    
+    label.font = pallete.secondObj;
+    label.textColor = pallete.firstObj;
+
     label.text = @"How helpful was the sound? (select one)";
    
     if (![[PersistenceStorage getObjectForKey:@"SamplerType"] isEqual:  @"Sounds"])
@@ -77,7 +114,7 @@
 
     if ([[PersistenceStorage getObjectForKey:@"exerciseName"] isEqual:  @"Deep Breathing"]) {
        
-        label.text = @"How helpful was the exercise? (select one)";
+        label.text = @"How helpful was the exercise? \n(select one)";
         [PersistenceStorage setObject:@"Deep Breathing" andKey:@"skillDetail1"];
 
         
@@ -86,7 +123,7 @@
     
     
     if ([[PersistenceStorage getObjectForKey:@"exerciseName"] isEqual:  @"Imagery"]) {
-        label.text = @"How helpful was the exercise? (select one)";
+        label.text = @"How helpful was the exercise? \n(select one)";
         [PersistenceStorage setObject:@"Imagery" andKey:@"skillDetail1"];
 
     }
@@ -94,7 +131,7 @@
     }
     
 //    if ([[PersistenceStorage getObjectForKey:@"skillName"] isEqual:  @"Using Sound"]) {
-//        label.text = @"How helpful was the skill? (select one)";
+//        label.text = @"How helpful was the skill? \n(select one)";
 //        [PersistenceStorage setObject:@"Using Sound" andKey:@"skillDetail1"];
 //
 //    }
@@ -109,48 +146,58 @@
 
 
     label.numberOfLines = 2;
-    label.font = [UIFont fontWithName:@"Helvetica Neue" size:15.0];
+    /*label.font = [UIFont fontWithName:@"Helvetica Neue" size:15.0];*/
 
     [self.view addSubview:label];
     
-     ratingView = [[ASStarRatingView alloc]initWithFrame:CGRectMake(0, 140, 320, 90)];
+     ratingView = [[ASStarRatingView alloc]initWithFrame:CGRectMake(5, 130, 315, 80)];
     [ratingView setMaxAllowedRating:5.0];
     [ratingView setMinAllowedRating:0.0];
     [ratingView setDelegate:self];
     [self.view addSubview:ratingView];
     
     
-    UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(10, 240, 300, 1)];
+    UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(24, 224, 300, 1)];
     lineView.backgroundColor = [UIColor colorWithRed:0.0/255.0 green:0.0/255.0 blue:0.098/255.0 alpha:0.22];
     [self.view addSubview:lineView];
  
     
     
-    UILabel *addlabel = [[UILabel alloc]initWithFrame:CGRectMake(10, ratingView.frame.origin.y + ratingView.frame.size.height, self.view.frame.size.width -20, 80)];
-    addlabel.text = @"Additional comments or thoughts (optional):";
-    addlabel.font = [UIFont fontWithName:@"Helvetica Neue" size:15.0];
+    UILabel *addlabel = [[UILabel alloc]initWithFrame:CGRectMake(24, 243, self.view.frame.size.width -20, 45)];
+    addlabel.text = @"Additional comments or thoughts \n(optional):";
+    
+    
     addlabel.numberOfLines = 2;
+    
+    pallete = [Utils getColorFontPair:eCFS_PALLETE_3];
+    
+    addlabel.font = pallete.secondObj;
+    addlabel.textColor = pallete.firstObj;
+    
     [self.view addSubview:addlabel];
     
-   self.textView = [[UITextView alloc]initWithFrame:CGRectMake(10, addlabel.frame.origin.y+ addlabel.frame.size.height-15, self.view.frame.size.width -20 , 80 )];
+   self.textView = [[UITextView alloc]initWithFrame:CGRectMake(24, addlabel.frame.origin.y + addlabel.frame.size.height + 22 ,272, 110)];
     self.textView.layer.borderWidth = 1.0;
-    self.textView.layer.borderColor = [UIColor grayColor].CGColor;
+    self.textView.layer.borderColor = [UIColor colorWithRed:0.0/255.0 green:0.0/255.0 blue:0.098/255.0 alpha:0.22].CGColor;
     [self.textView setDelegate:self];
     [self.view addSubview:self.textView];
     
     
     
     
-    button = [[UIButton alloc]initWithFrame:CGRectMake(120, self.textView.frame.origin.y + self.textView.frame.size.height + 10, 100, 30)];
+    button = [[UIButton alloc]initWithFrame:CGRectMake(114, self.textView.frame.origin.y + self.textView.frame.size.height + 20, 84, 38)];
     [button setTitle:@"Submit" forState:UIControlStateNormal];
     button.titleLabel.textColor = [UIColor whiteColor];
-    button.font = [UIFont fontWithName:@"Helvetica Neue" size:15.0];
+    button.titleLabel.font = [UIFont fontWithName:@"Helvetica Neue" size:16.0];
     [button addTarget:self action:@selector(buttonTapped) forControlEvents:UIControlEventTouchUpInside];
-    [button setBackgroundColor:[UIColor colorWithRed:0.0/255.0 green:122.0/255.0 blue:255.0/255.0 alpha:1]];
+    [button setBackgroundColor:[Utils colorWithHexValue:BUTTON_GRAY_COLOR_HEX_VALUE]];
+    
+    
 
-    button.layer.cornerRadius = 5.0f;
+    button.layer.cornerRadius = 3.0f;
     [button setUserInteractionEnabled:NO];
     [self.navigationItem setHidesBackButton:YES];
+    
     [self.view addSubview:button];
     
 }
@@ -388,6 +435,8 @@
 
 #pragma mark StarratingDelegate
 -(void)ratingAdded{
+    
+    [button setBackgroundColor:[Utils colorWithHexValue:BUTTON_BLUE_COLOR_HEX_VALUE]];
     [button setUserInteractionEnabled:YES];
 }
 

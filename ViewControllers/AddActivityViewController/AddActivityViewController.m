@@ -20,7 +20,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 //    self.title = @"Add New Activity";
-    UINavigationBar *myBar = [[UINavigationBar alloc]initWithFrame:CGRectMake(0, 0, 320, 50)];
+    UINavigationBar *myBar = [[UINavigationBar alloc]initWithFrame:CGRectMake(0, 15, 320, 50)];
     [self.view addSubview:myBar];
     
     
@@ -42,6 +42,8 @@
     [myBar pushNavigationItem:item animated:NO];
 
     UILabel *firstLabel = (UILabel *)[self.view viewWithTag:200];
+    
+    firstLabel.font = [Utils helveticaNueueFontWithSize:17];
     
     NSString *ttext = [NSString stringWithFormat:@"You are adding this activity to the '%@' value",[PersistenceStorage getObjectForKey:@"valueName"]];
 

@@ -1627,19 +1627,7 @@
                     <view key="view" contentMode="scaleToFill" id="ivz-pF-vth">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Your Thoughts" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dv2-l6-6SE">
-                                <rect key="frame" x="279" y="50" width="42" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="Dv2-l6-6SE" firstAttribute="top" secondItem="Qqx-d1-873" secondAttribute="bottom" constant="30" id="C32-Of-fxL"/>
-                            <constraint firstAttribute="centerX" secondItem="Dv2-l6-6SE" secondAttribute="centerX" id="pMq-2T-3ge"/>
-                        </constraints>
                     </view>
                     <nil key="simulatedTopBarMetrics"/>
                 </viewController>
@@ -1658,29 +1646,7 @@
                     <view key="view" contentMode="scaleToFill" id="vSV-Is-IXH">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Your Thoughts" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="P3u-Tm-xl1">
-                                <rect key="frame" x="297" y="27" width="42" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstAttribute="centerX" secondItem="P3u-Tm-xl1" secondAttribute="centerX" id="68q-pp-Mab"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="P3u-Tm-xl1" secondAttribute="trailing" constant="245" id="Tbg-jq-8Is"/>
-                            <constraint firstItem="P3u-Tm-xl1" firstAttribute="leading" secondItem="vSV-Is-IXH" secondAttribute="leadingMargin" constant="281" id="boE-K1-7qx"/>
-                            <constraint firstItem="P3u-Tm-xl1" firstAttribute="leading" secondItem="vSV-Is-IXH" secondAttribute="leadingMargin" constant="281" id="vuZ-s0-HP8"/>
-                            <constraint firstItem="P3u-Tm-xl1" firstAttribute="top" secondItem="NUA-Ab-R4C" secondAttribute="bottom" constant="30" id="wal-N3-lTW"/>
-                        </constraints>
-                        <variation key="default">
-                            <mask key="constraints">
-                                <exclude reference="Tbg-jq-8Is"/>
-                                <exclude reference="boE-K1-7qx"/>
-                                <exclude reference="vuZ-s0-HP8"/>
-                            </mask>
-                        </variation>
                     </view>
                     <nil key="simulatedStatusBarMetrics"/>
                     <nil key="simulatedTopBarMetrics"/>
@@ -7552,8 +7518,8 @@ With this app, you can make plans for using sound when your tinnitus is botherin
                                 <nil key="highlightedColor"/>
                                 <variation key="default">
                                     <mask key="constraints">
-                                        <exclude reference="VdF-j3-rX7"/>
                                         <exclude reference="6Vo-ug-dKo"/>
+                                        <exclude reference="VdF-j3-rX7"/>
                                         <exclude reference="msA-3Y-XIg"/>
                                     </mask>
                                 </variation>
@@ -7644,19 +7610,7 @@ With this app, you can make plans for using sound when your tinnitus is botherin
                     <view key="view" contentMode="scaleToFill" id="a7a-Vc-Wz0">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Your Thoughts" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i3Y-vL-z1j">
-                                <rect key="frame" x="279" y="47" width="42" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="i3Y-vL-z1j" firstAttribute="top" secondItem="jlv-Jh-JCv" secondAttribute="bottom" constant="30" id="6e8-ag-0y4"/>
-                            <constraint firstAttribute="centerX" secondItem="i3Y-vL-z1j" secondAttribute="centerX" id="pCQ-Eg-8QN"/>
-                        </constraints>
                     </view>
                     <nil key="simulatedStatusBarMetrics"/>
                     <nil key="simulatedTopBarMetrics"/>
@@ -7680,16 +7634,22 @@ With this app, you can make plans for using sound when your tinnitus is botherin
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jre-q8-IcG">
                                 <rect key="frame" x="-23" y="-15" width="46" height="30"/>
-                                <color key="backgroundColor" white="0.017341382575757576" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="137" id="pCw-Hi-nF3">
                                         <variation key="widthClass=compact" constant="100"/>
                                     </constraint>
                                 </constraints>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="15"/>
                                 <state key="normal" title="Cancel">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="3"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
                                 <variation key="default">
                                     <mask key="constraints">
                                         <exclude reference="pCw-Hi-nF3"/>
@@ -7740,16 +7700,22 @@ With this app, you can make plans for using sound when your tinnitus is botherin
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Ml-so-3oG">
                                 <rect key="frame" x="-23" y="-15" width="46" height="30"/>
-                                <color key="backgroundColor" red="0.1215686275" green="0.37647058820000001" blue="0.97254901959999995" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="137" id="4Yp-vh-FOa">
                                         <variation key="widthClass=compact" constant="100"/>
                                     </constraint>
                                 </constraints>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="15"/>
                                 <state key="normal" title="Add">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="3"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
                                 <variation key="default">
                                     <mask key="constraints">
                                         <exclude reference="4Yp-vh-FOa"/>
@@ -7777,7 +7743,7 @@ With this app, you can make plans for using sound when your tinnitus is botherin
                             <constraint firstAttribute="centerX" secondItem="HGk-Us-8nl" secondAttribute="centerX" constant="21.5" id="Gou-gd-wMX">
                                 <variation key="widthClass=compact" constant="0.0"/>
                             </constraint>
-                            <constraint firstItem="gqW-oF-44Y" firstAttribute="top" secondItem="R3f-7s-Onc" secondAttribute="bottom" constant="30" id="Q5a-9o-saJ"/>
+                            <constraint firstItem="gqW-oF-44Y" firstAttribute="top" secondItem="R3f-7s-Onc" secondAttribute="bottom" constant="60" id="Q5a-9o-saJ"/>
                             <constraint firstItem="2Ml-so-3oG" firstAttribute="leading" secondItem="jre-q8-IcG" secondAttribute="trailing" constant="18" id="TNn-eJ-pNI">
                                 <variation key="widthClass=compact" constant="10"/>
                             </constraint>
