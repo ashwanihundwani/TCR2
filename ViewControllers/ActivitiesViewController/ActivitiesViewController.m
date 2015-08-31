@@ -195,7 +195,7 @@
 -(void)loadData{
     self.manager = [[DBManager alloc]initWithDatabaseFileName:@"GNResoundDB.sqlite"];
     
-    NSString *query = [NSString stringWithFormat:@"SELECT * FROM Plan_Activities LEFT OUTER  JOIN myReminders ON Plan_Activities.ActivityName = MyReminders.ActName  where valueName IS '%@' order by  CreatedDate DESC",[PersistenceStorage getObjectForKey:@"valueName"]];
+    NSString *query = [NSString stringWithFormat:@"SELECT * FROM Plan_Activities LEFT OUTER  JOIN myReminders ON Plan_Activities.ActivityName = MyReminders.ActName and MyReminders.PlanName = '%@' where valueName IS '%@' order by  CreatedDate DESC",[PersistenceStorage getObjectForKey:@"planName"],[PersistenceStorage getObjectForKey:@"valueName"]];
     
     
     
@@ -209,7 +209,7 @@
     activityArray = [[NSArray alloc] initWithArray:[self.manager loadDataFromDB:query]];
     
     
-    NSString *queryFav = [NSString stringWithFormat:@"SELECT * FROM Plan_Activities  LEFT OUTER  JOIN myReminders ON Plan_Activities.ActivityName = MyReminders.ActName  inner join MyActivities on Plan_Activities.ID=MyActivities.activityID order by  CreatedDate DESC"];
+    NSString *queryFav = [NSString stringWithFormat:@"SELECT * FROM Plan_Activities  LEFT OUTER  JOIN myReminders ON Plan_Activities.ActivityName = MyReminders.ActName  inner join MyActivities on Plan_Activities.ID=MyActivities.activityID where MyActivities.planID = %@  order by  CreatedDate DESC",[PersistenceStorage getObjectForKey:@"currentPlanID"]];
     
     
     
@@ -695,7 +695,7 @@
         
         
         
-        NSString *query = [NSString stringWithFormat:@"insert into MyActivities (valueID,activityID,isFavourite,isSchedule,timeStamp,valueName,activityName) values(%i,%i,'%d',%i,'%@','%@','%@')",[PersistenceStorage getObjectForKey:@"valueID"],[[dict valueForKey:@"ID"] integerValue],1,YES,dateString,[PersistenceStorage getObjectForKey:@"valueName"],[PersistenceStorage getObjectForKey:@"activityName"]];
+        NSString *query = [NSString stringWithFormat:@"insert into MyActivities (valueID,activityID,isFavourite,isSchedule,timeStamp,valueName,activityName,skillID,planID) values(%i,%i,'%d',%i,'%@','%@','%@',%ld,%ld)",[PersistenceStorage getObjectForKey:@"valueID"],[[dict valueForKey:@"ID"] integerValue],1,YES,dateString,[PersistenceStorage getObjectForKey:@"valueName"],[PersistenceStorage getObjectForKey:@"activityName"],[PersistenceStorage getIntegerForKey:@"currentSkillID"],[PersistenceStorage getIntegerForKey:@"currentPlanID"]];
         
         // Execute the query.
         [self.manager executeQuery:query];

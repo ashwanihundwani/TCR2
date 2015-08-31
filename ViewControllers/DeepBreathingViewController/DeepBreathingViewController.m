@@ -115,7 +115,7 @@
 */
 -(void)RefreshScheduleData
 {
-    NSString *query = [NSString stringWithFormat:@"select * from MySkillReminders where SkillName = 'Deep Breathing'"];
+    NSString *query = [NSString stringWithFormat:@"select * from MySkillReminders where SkillName = 'Deep Breathing' and PlanName = \'%@\'",[PersistenceStorage getObjectForKey:@"planName"]];
     
     
     
@@ -520,7 +520,7 @@
 
 - (IBAction)DeleteReminder:(id)sender {
     
-    NSString *query = [NSString stringWithFormat: @"select * from MySkillReminders where SkillName = 'Deep Breathing'"];
+    NSString *query = [NSString stringWithFormat: @"select * from MySkillReminders where SkillName = 'Deep Breathing' and PlanName = \'%@\'",[PersistenceStorage getObjectForKey:@"planName"]];
     
     
     self.manager = [[DBManager alloc]initWithDatabaseFileName:@"GNResoundDB.sqlite"];
@@ -535,7 +535,7 @@
         [PersistenceStorage setObject:strAct andKey:@"EventID"];
     }
     
-    NSString *query1 = [NSString stringWithFormat:@"delete from MySkillReminders where SkillName = 'Deep Breathing'"];
+    NSString *query1 = [NSString stringWithFormat:@"delete from MySkillReminders where SkillName = 'Deep Breathing' and PlanName = \'%@\'",[PersistenceStorage getObjectForKey:@"planName"]];
     
     [self.manager executeQuery:query1];
     

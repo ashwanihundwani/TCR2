@@ -10,9 +10,11 @@
 #import "TabBarController.h"
 
 #import "HomeNewViewController.h"
-
+#import "Utils.h"
 
 @interface AppDelegate ()
+
+@property(atomic, assign) BOOL isLaunchWithNotification;
 
 @end
 
@@ -50,6 +52,7 @@
     if ([localNotification.alertBody isEqualToString:@"Tips for Sleep Feedback"])
         
     {
+        self.isLaunchWithNotification = YES;
         
         if ([[PersistenceStorage getObjectForKey:@"TipsActivated"] isEqual: @"Yes"])
             
@@ -57,10 +60,6 @@
             [self showTipsReminderView];
         
             [PersistenceStorage setObject:@"Yes" andKey:@"launchSleepTips"];
-
-        
-        
-        
         }
         
     }
@@ -68,16 +67,10 @@
     else if ([localNotification.alertBody isEqualToString:@"Weekly Reminder"])
         
     {
-        
-        
+        self.isLaunchWithNotification = YES;
         [self showWeeklyReminderView];
         [PersistenceStorage setObject:@"Yes" andKey:@"launchWeeklyReminder"];
 
-        
-        
-            
-            
-           
     }
     
     
@@ -85,6 +78,7 @@
     else if ([localNotification.alertBody length]>20)
         
     {
+        self.isLaunchWithNotification = YES;
       //  [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
         UIAlertView *alert = [[UIAlertView alloc]   //show alert box with option to play or exit
                               initWithTitle: @"Running Skill"
@@ -96,6 +90,8 @@
         
 [alert show];
          
+    }else{
+        self.isLaunchWithNotification = NO;
     }
  
     
@@ -118,7 +114,7 @@
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
-[UIApplication sharedApplication].applicationIconBadgeNumber = 0;
+    [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
@@ -126,6 +122,28 @@
 [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
 
  //   [self showTipsReminderView];
+    
+    //display the sheduled notification
+    NSArray *notificationArray = [application scheduledLocalNotifications];
+    
+    for(UILocalNotification *notification in notificationArray){
+        NSLog(@"notification with alert : %@ firedate: %@ and repeatInterval:%ld", notification.alertBody, notification.fireDate, notification.repeatInterval);
+        if([notification.alertBody isEqualToString:@"Weekly Reminder"] ){
+            // get the fire date a
+            if([[NSDate date] compare:notification.fireDate] == NSOrderedAscending){
+                // positive case nothing to do
+                NSLog(@"weekly reminder scheduled for:%@ ",notification.fireDate);
+            }else{
+                // missed reminder
+                // lets force show weekly reminder
+                NSLog(@"Detected missed WR notification, Launching WR ");
+                if(!self.isLaunchWithNotification)
+                    [self showWeeklyReminderView];
+            }
+            break;
+        }
+        
+    }
 
 }
 
@@ -151,7 +169,7 @@
     NSString *documentsDirectory = [paths objectAtIndex:0];
     NSString *documentTXTPath = [documentsDirectory stringByAppendingPathComponent:@"TinnitusCoachUsageData.csv"];
     
- NSDate *date = [NSDate date];
+    NSDate *date = [NSDate date];
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
     dateFormatter.dateFormat = @"MM/dd/yy";
     NSString *dateString = [dateFormatter stringFromDate: date];
@@ -239,7 +257,7 @@
 -(void) application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
 {
  
-    
+    NSLog(@"*****app didReceiveLocalNotification ****** ");
     
         UIApplicationState state = [application applicationState];
    

@@ -145,7 +145,7 @@
                 
                 // check for fav and add it
                 if(self.favoriteButton.selected){
-                    NSString *query = [NSString stringWithFormat:@"insert into MyActivities (valueID,activityID,isFavourite,isSchedule,timeStamp,valueName,activityName) values(%i,%lld,'%d',%i,'%@','%@','%@')",[PersistenceStorage getObjectForKey:@"valueID"],self.manager.lastInsertedRowID,1,YES,dateString,[PersistenceStorage getObjectForKey:@"valueName"],self.nameTextField.text];
+                    NSString *query = [NSString stringWithFormat:@"insert into MyActivities (valueID,activityID,isFavourite,isSchedule,timeStamp,valueName,activityName,skillID, planID) values(%i,%lld,'%d',%i,'%@','%@','%@',%ld,%ld)",[PersistenceStorage getObjectForKey:@"valueID"],self.manager.lastInsertedRowID,1,YES,dateString,[PersistenceStorage getObjectForKey:@"valueName"],self.nameTextField.text,[PersistenceStorage getIntegerForKey:@"currentSkillID"],[PersistenceStorage getIntegerForKey:@"currentPlanID"]];
                     
                     // Execute the query.
                     [self.manager executeQuery:query];

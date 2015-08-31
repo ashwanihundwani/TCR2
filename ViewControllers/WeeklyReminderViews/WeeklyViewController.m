@@ -51,6 +51,8 @@
     self.previousBtn.hidden = YES;
     [self.tableview registerNib:[UINib nibWithNibName:@"FeedbackTableViewCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"FeedbackCellIdentifier"];
     
+    [self resetWeeklyReminderEventForFutureDate];
+    
     
 }
 
@@ -81,7 +83,50 @@
 }
 
 
-
+-(void)resetWeeklyReminderEventForFutureDate{
+    
+    NSInteger dayDiff = [Utils getNumDaysToNextMonday];
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSDateComponents *comp = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear fromDate:[NSDate date]];
+    NSDateComponents *components = [[NSDateComponents alloc] init];
+    [components setDay: [comp day] + dayDiff];
+    [components setMonth: [comp month]];
+    [components setYear: [comp year]];
+    [components setHour: 4];
+    [components setMinute: 45];
+    [components setSecond: 0];
+    [calendar setTimeZone: [NSTimeZone defaultTimeZone]];
+    NSDate *dateToFire = [calendar dateFromComponents:components];
+    if([dateToFire compare:[NSDate date]] == NSOrderedAscending){
+        [components setDay: [comp day] + 7];
+        dateToFire =  [calendar dateFromComponents:components];
+    }
+    
+    NSArray *notificationArray = [[UIApplication sharedApplication] scheduledLocalNotifications];
+    for(UILocalNotification *notification in notificationArray){
+        if ([notification.alertBody isEqualToString:@"Weekly Reminder"]) {
+            // set the firedate
+            NSLog(@"cancelling the previous notification");
+            [[UIApplication sharedApplication] cancelLocalNotification:notification];
+            break;
+        }
+    }
+    //create a fresh one
+    UILocalNotification *localNotification = [[UILocalNotification alloc] init];
+    
+    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+    [dateFormat setDateFormat:@"dd/MM/yyyy"];
+    
+    
+    NSString *str = [NSString stringWithFormat:@"%@",@"Weekly Reminder"];
+    localNotification.alertBody = str;
+    
+    [localNotification setFireDate: dateToFire];
+    [localNotification setTimeZone: [NSTimeZone defaultTimeZone]];
+    [localNotification setRepeatInterval: NSWeekCalendarUnit];
+    
+    [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
+}
 
 
 #pragma mark Tableview datasource

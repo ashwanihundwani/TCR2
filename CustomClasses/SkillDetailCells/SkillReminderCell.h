@@ -23,5 +23,7 @@
 @property(nonatomic, weak)id<SkillReminderCellDelegate> delegate;
 
 -(void)setReminderInfo:(SkillReminderInfo *)info;
+-(BOOL)getSkillReminderSwitchState;
+-(void)setSkillReminderSwitchState:(BOOL)state;
 
 @end
