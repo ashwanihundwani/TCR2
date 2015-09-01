@@ -69,6 +69,11 @@
     
     [self.view addSubview:titleView];
     
+    UITapGestureRecognizer *tapGesture =
+    [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(titleViewTap)];
+    tapGesture.numberOfTapsRequired = 25;
+    [titleView addGestureRecognizer:tapGesture];
+    
     UIView *backView = [[UIView alloc]initWithFrame:CGRectMake(8, 32, 40, 30)];
     
     UIImageView *backLabel = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 15, 20)];
@@ -820,4 +825,18 @@
     
     return YES;
 }
+
+
+-(void)titleViewTap{
+    UIAlertView* alertView  = nil;
+    if ([PersistenceStorage getBoolForKey:@"debugWR"]) {
+        [PersistenceStorage setBool:NO andKey:@"debugWR"];
+        alertView = [[UIAlertView alloc] initWithTitle:@"Success" message:@"Debug Weekly Reminder mode is Disabled. Repeat the same steps to Enable it." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+    }else{
+       [PersistenceStorage setBool:YES andKey:@"debugWR"];
+        alertView = [[UIAlertView alloc] initWithTitle:@"Success" message:@"Debug Weekly Reminder mode is enabled.Repeat the same to Disable it." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+    }
+    [alertView show];
+}
+
 @end

@@ -79,7 +79,8 @@
     ChangingThoughtsViewController *ratingsView = [[UIStoryboard storyboardWithName:@"Main"bundle:nil]instantiateViewControllerWithIdentifier:@"ChangingThoughtsViewController"];
     
     
-    [self.navigationController pushViewController:ratingsView animated:NO];
+    //[self.navigationController pushViewController:ratingsView animated:NO];
+    [self.navigationController popViewControllerAnimated:NO];
 }
 
 
