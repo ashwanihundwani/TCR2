@@ -21,4 +21,5 @@
 
 @property(weak, nonatomic)IBOutlet UITableView *tableView;
 
+- (void) toggle1: (BOOL) state;
 @end

@@ -15,7 +15,7 @@
 #import <EventKitUI/EventKitUI.h>
 @interface PlansViewController ()<UITableViewDataSource, UITableViewDelegate>
 {
-    NSMutableArray *userPlansArray, *calenderEventsArray;
+    NSMutableArray *userPlansArray, *calenderEventsArray, *sleepEventsArray;
 }
 
 
@@ -293,59 +293,52 @@
 
 -(void)deletePlanFromDB:(NSDictionary *)planDict andCompletion:(void (^)(BOOL success))block
 {
-    
-    
+    NSString* planID = [planDict objectForKey:@"ID"];
+    NSString* planName = [planDict objectForKey:@"planName"];
+    NSLog(@"Deleting object with plan ID:%@ and planName:%@",planID, planName);
     NSArray *notificationArray = [[UIApplication sharedApplication] scheduledLocalNotifications];
     
     for(UILocalNotification *notification in notificationArray){
        // if ([notification.alertBody containsString:@"'Imagery'"])
             
-        if ([[notification.userInfo valueForKey:@"PlanName"] isEqualToString:[PersistenceStorage getObjectForKey:@"planName"]])
-              
-              //&& [[PersistenceStorage getObjectForKey:@"planName"] valueForKey:@"PlanName"])
-            
-            
-            
-            
+        if ([[notification.userInfo valueForKey:@"PlanName"] isEqualToString:planName] && ![[notification.userInfo valueForKey:@"Type"] isEqualToString:@"Tips for Better Sleep"])
         {
+            NSLog(@"cancelling notification for plan:%@ and skill:%@",planName,[notification.userInfo valueForKey:@"Type"] );
             [[UIApplication sharedApplication] cancelLocalNotification:notification] ;
         }
         
         
     }
     
+    NSString *query01 = [NSString stringWithFormat:@"delete from MyPlans where ID=%@",planID];
     
+           NSString *query2 = [NSString stringWithFormat:@"delete from MySounds where planID = '%@'",planID];
     
-    
-    
-    
-    NSString *query01 = [NSString stringWithFormat:@"delete from MyPlans where ID=%@",[planDict valueForKey:@"ID"]];
-    
-           NSString *query2 = [NSString stringWithFormat:@"delete from MySounds where planID = '%@'",[PersistenceStorage getObjectForKey:@"currentPlanID"]];
-    
-            NSString *query2_1 = [NSString stringWithFormat:@"delete from MyOwnSounds where planID = '%@'",[PersistenceStorage getObjectForKey:@"currentPlanID"]];
+            NSString *query2_1 = [NSString stringWithFormat:@"delete from MyOwnSounds where planID = '%@'",planID];
    
     
-    NSString *query02 = [NSString stringWithFormat:@"delete from MySkills where planID = '%@'",[PersistenceStorage getObjectForKey:@"currentPlanID"]];
+    NSString *query02 = [NSString stringWithFormat:@"delete from MySkills where planID = '%@'",planID];
     
      
     //   NSString *query2 = [NSString stringWithFormat:@"delete from MySounds where planID = '%@'",];
     
-    NSString *query5 = [NSString stringWithFormat:@"delete from MyWebsites where planID = '%@'",[PersistenceStorage getObjectForKey:@"currentPlanID"]];
+    NSString *query5 = [NSString stringWithFormat:@"delete from MyWebsites where planID = '%@'",planID];
     
     
-    NSString *query3 = [NSString stringWithFormat:@"delete from MyReminders where planID = '%@'",[PersistenceStorage getObjectForKey:@"currentPlanID"] ];
+    NSString *query3 = [NSString stringWithFormat:@"delete from MyReminders where PlanName = '%@'",planName];
     
-    NSString *query4 = [NSString stringWithFormat:@"delete from MySkillReminders where PlanName = '%@'",[PersistenceStorage getObjectForKey:@"planName"]];
+    NSString *query4 = [NSString stringWithFormat:@"delete from MySkillReminders where PlanName = '%@' and SkillName != 'Tips for Better Sleep' ",planName];
     
-    NSString *query6 = [NSString stringWithFormat:@"delete from MyActivities where planID = '%@'",[PersistenceStorage getObjectForKey:@"currentPlanID"]];
+    NSString *query4_1 = [NSString stringWithFormat:@"delete from MySkillReminders where SkillName = 'Tips for Better Sleep' "];
+    
+    NSString *query6 = [NSString stringWithFormat:@"delete from MyActivities where planID = '%@'",planID];
     
     
-    NSString *query7 = [NSString stringWithFormat:@"delete from My_Tips where planID = '%@'",[PersistenceStorage getObjectForKey:@"currentPlanID"]];
+    NSString *query7 = [NSString stringWithFormat:@"delete from My_Tips where planID = '%@'",planID];
     
     NSString *query8 = [NSString stringWithFormat:@"delete from My_Contacts "];
-    NSString *query9 = [NSString stringWithFormat:@"delete from MyDevices where planID = '%@'",[PersistenceStorage getObjectForKey:@"currentPlanID"]];
-    NSString *query10 = [NSString stringWithFormat:@"delete from My_TF_Set where planID = '%@'",[PersistenceStorage getObjectForKey:@"currentPlanID"]];
+    NSString *query9 = [NSString stringWithFormat:@"delete from MyDevices where planID = '%@'",planID];
+    NSString *query10 = [NSString stringWithFormat:@"delete from My_TF_Set where planID = '%@'",planID];
 
                         [self.dbManagerMyPlans executeQuery:query02];
                         [self.dbManagerMyPlans executeQuery:query2];
@@ -360,6 +353,11 @@
                         [self.dbManagerMyPlans executeQuery:query10];
 
     
+    NSString* queryforTBS = @"select * from MySkills where skillID = 7";
+    NSArray* TBSArray = [self.dbManagerMyPlans loadDataFromDB:queryforTBS];
+    if (TBSArray.count == 0) {
+        [self.dbManagerMyPlans executeQuery:query4_1];
+    }
     
     BOOL isDone = [self.dbManagerMyPlans executeQuery:query01];
     if (isDone == YES)
@@ -447,40 +445,47 @@
     [manager showAlertwithPositiveBlock:^(BOOL positive) {
         
         NSInteger tag = [[sender view] tag];
-         
-        
-    //    NSString *plName  = [[userPlansArray objectAtIndex:tag] valueForKey:@"planName"];
-     //   NSString *siName = [[userPlansArray objectAtIndex:tag] valueForKey:@"situationName"];
-       
         
         [PersistenceStorage setObject:[[userPlansArray objectAtIndex:tag] valueForKey:@"planName"] andKey:@"deletingPlanName"];
         [PersistenceStorage setObject:[[userPlansArray objectAtIndex:tag] valueForKey:@"situationName"] andKey:@"deletingSituationName"];
 
-        
-        
-  //     [PersistenceStorage setObject:[[userPlansArray objectAtIndex:tag] valueForKey:@"planName"] andKey:@"deletingPlanName"];
-     //    [PersistenceStorage setObject:[[userPlansArray objectAtIndex:tag] valueForKey:@"situationName"] andKey:@"deletingSituationName"];
-
          NSString* reminderQuery = [NSString stringWithFormat:@"select CalendarEventID from MySkillReminders where PlanName = \"%@\"",[[userPlansArray objectAtIndex:tag] valueForKey:@"planName"]  ];
+        NSString* sleepReminderQuery = @"select CalendarEventID from MySkillReminders where SkillName = 'Tips for Better Sleep'";
         NSArray* caleventsArray = [self.dbManagerMyPlans loadDataFromDB:reminderQuery];
         if(caleventsArray.count > 0){
-            calenderEventsArray = [NSMutableArray arrayWithArray:caleventsArray];
+            calenderEventsArray = [[NSMutableArray alloc]init];
+            [calenderEventsArray addObjectsFromArray:caleventsArray];
         }else{
             calenderEventsArray = nil;
         }
-
+        NSArray* sleepArray = [self.dbManagerMyPlans loadDataFromDB:sleepReminderQuery];
+        if(sleepArray.count > 0){
+            sleepEventsArray = [[NSMutableArray alloc]init];
+            [sleepEventsArray addObjectsFromArray:sleepArray];
+        }else{
+            sleepEventsArray = nil;
+        }
+        if(calenderEventsArray != nil && sleepEventsArray != nil)
+            [calenderEventsArray removeObjectsInArray:sleepEventsArray];
+        //get the activities reminders
+        reminderQuery = [NSString stringWithFormat:@"select CalendarEventID from MyReminders where PlanName = \"%@\"",[[userPlansArray objectAtIndex:tag] valueForKey:@"planName"]];
+        NSArray* arr2 = [self.dbManagerMyPlans loadDataFromDB:reminderQuery];
+        if(arr2.count > 0){
+            if(calenderEventsArray){
+                [calenderEventsArray addObjectsFromArray:arr2];
+                
+            }else{
+                calenderEventsArray = [[NSMutableArray alloc] init];
+                [calenderEventsArray addObjectsFromArray:arr2];
+            }
+        }
         [self deletePlanFromDB:[userPlansArray objectAtIndex:tag] andCompletion:^(BOOL success)
          {
              if (success) {
                  
                  NSIndexPath *indexPath = [NSIndexPath indexPathForRow:tag inSection:0];
-                 
-         //        NSString *pName = [userPlansArray get]
                  [userPlansArray removeObjectAtIndex:tag];
-                 [self.plansTableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationNone];
                  [self.plansTableView reloadData];
-                 
-                 // remove the calender events for this plan
                  [self removeEventsFromCalender];
                  [self checkAndDeleteTBSReminders];
                  
@@ -503,7 +508,8 @@
         if (!granted) return;
         NSMutableArray* eventList = [[NSMutableArray alloc] initWithCapacity:calenderEventsArray.count];
         for (NSDictionary* eventDict in calenderEventsArray) {
-            EKEvent* eventToRemove = [store eventWithIdentifier:[eventDict valueForKey:@"CalendarEventID"]];
+            NSString* calEventID = [eventDict valueForKey:@"CalendarEventID"];
+            EKEvent* eventToRemove = [store eventWithIdentifier:calEventID];
             if(eventToRemove != nil)
                 [eventList addObject:eventToRemove];
         }
@@ -537,7 +543,43 @@
             
         }
         
+        // remove calender events if any
+        EKEventStore *store = [[EKEventStore alloc] init];
+        [store requestAccessToEntityType:EKEntityTypeEvent completion:^(BOOL granted, NSError *error) {
+            if (!granted) return;
+            NSMutableArray* eventList = [[NSMutableArray alloc] initWithCapacity:calenderEventsArray.count];
+            for (NSDictionary* eventDict in sleepEventsArray) {
+                NSString* calEventID = [eventDict valueForKey:@"CalendarEventID"];
+                if (calEventID.length == 0) {
+                    continue;
+                }
+                EKEvent* eventToRemove = [store eventWithIdentifier:calEventID];
+                if(eventToRemove != nil)
+                    [eventList addObject:eventToRemove];
+            }
+            
+            for (EKEvent* eventToRemove in eventList) {
+                NSError* err = nil;
+                [store removeEvent:eventToRemove span:EKSpanFutureEvents commit:YES error:&err];
+                if(err != nil){
+                    NSLog(@"Error in deletining event from calender:%@", [eventToRemove description]);
+                }
+            }
+        }
+         
+         ];
     }
+}
+
+-(BOOL)isSleepEvent:(NSString*)eventID{
+    BOOL retVal = NO;
+    for (NSDictionary* sleepDict in sleepEventsArray) {
+        if([eventID isEqualToString:[sleepDict valueForKey:@"CalendarEventID"]]){
+            retVal = YES;
+            break;
+        }
+    }
+    return retVal;
 }
 
 - (void)didReceiveMemoryWarning {

@@ -13,7 +13,7 @@
 #import "ThoughtsIntroDetailViewController.h"
 #import <EventKit/EventKit.h>
 #import <EventKitUI/EventKitUI.h>
-
+#import "Utils.h"
 
 
 
@@ -33,17 +33,24 @@
     
     if (![[PersistenceStorage getObjectForKey:@"WRInitialized"] isEqual: @"Yes"])
         
-    {     NSCalendar *calendar = [NSCalendar currentCalendar];
+    {
+        
+        NSInteger dayDiff = [Utils getNumDaysToNextMonday];
+        NSCalendar *calendar = [NSCalendar currentCalendar];
+        NSDateComponents *comp = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear fromDate:[NSDate date]];
         NSDateComponents *components = [[NSDateComponents alloc] init];
-        [components setDay: 22];
-        [components setMonth: 6];
-        [components setYear: 2015];
+        [components setDay: [comp day] + dayDiff];
+        [components setMonth: [comp month]];
+        [components setYear: [comp year]];
         [components setHour: 4];
         [components setMinute: 45];
         [components setSecond: 0];
         [calendar setTimeZone: [NSTimeZone defaultTimeZone]];
         NSDate *dateToFire = [calendar dateFromComponents:components];
-        
+        if([dateToFire compare:[NSDate date]] == NSOrderedAscending){
+            [components setDay: [comp day] + 7];
+            dateToFire =  [calendar dateFromComponents:components];
+        }
         
         UILocalNotification *localNotification = [[UILocalNotification alloc] init];
         
@@ -188,8 +195,7 @@
     
 }
 - (IBAction)PlansButtonTapped:(id)sender {
-    [[self tabBarController] setSelectedIndex:2];
-    
+    [[self tabBarController] setSelectedIndex:2];    
     
 }
 

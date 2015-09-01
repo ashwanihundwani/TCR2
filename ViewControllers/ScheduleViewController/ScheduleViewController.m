@@ -335,7 +335,7 @@ if (self.datePicker.hidden==0)
             NSString *queryClear = [NSString stringWithFormat:@"delete from MyReminders where ActName = '%@'",[PersistenceStorage getObjectForKey:@"activityName"]];
             
             
-            NSString *query = [NSString stringWithFormat:@"insert into MyReminders ('ID','ActName','ScheduledDate','CalendarEventID','PlanName') values(1,'%@','%@','%@','%@')",[PersistenceStorage getObjectForKey:@"activityName"],[PersistenceStorage getObjectForKey:@"localScheduledDate"],[PersistenceStorage getObjectForKey:@"lastEventIdentifer"],[PersistenceStorage getObjectForKey:@"planName"]];
+            NSString *query = [NSString stringWithFormat:@"insert into MyReminders ('ID','ActName','ScheduledDate','CalendarEventID','PlanName','SkillName') values(1,'%@','%@','%@','%@','Pleasant Activities')",[PersistenceStorage getObjectForKey:@"activityName"],[PersistenceStorage getObjectForKey:@"localScheduledDate"],[PersistenceStorage getObjectForKey:@"lastEventIdentifer"],[PersistenceStorage getObjectForKey:@"planName"]];
             
             
             
@@ -363,28 +363,10 @@ if (self.datePicker.hidden==0)
         localNotification.fireDate = self.startDate ;
         NSString *str = [NSString stringWithFormat:@"%@%@%@%@%@%@",@"\nThe '",[PersistenceStorage getObjectForKey:@"activityName"],@"' pleasant activity is scheduled now in '",[PersistenceStorage getObjectForKey:@"planName"],@"' plan.\n\n You can access and run this activity from this plan. In the plan, look for the skill 'Pleasant Activities' and the list of values: ",[PersistenceStorage getObjectForKey:@"valueName"]];
         localNotification.alertBody =  str;
-      //  NSDictionary   *dict = [NSDictionary dictionaryWithObject: @"String" forKey: @"Test"];
-NSDictionary* dict = @{@"total": @"Test"};
-      //  localNotif.userInfo = infoDict;
-        
-        NSLog(@"khjj  %@",dict[@"total"]);
-        
-      //      NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:@"setNotificationForEveryDay", @"Test", nil];
-        localNotification.userInfo = dict;//[NSMutableDictionary dictionaryWithObject:@"targetURL" forKey:@"Test"];
-        
-//        self.localno
-       // userInfo = [NSMutableDictionary dictionaryWithObject:targetURL
-           //                                                forKey:@"state"];
-        
-//        localNotification.applicationIconBadgeNumber = [[UIApplication sharedApplication] applicationIconBadgeNumber] + 1;
-        
-        
-        
-        [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
-        
+        NSDictionary *infoDict = [NSDictionary dictionaryWithObjectsAndKeys:@"Pleasant Activities", @"Type", [PersistenceStorage getObjectForKey:@"planName"],@"PlanName",self.name,@"Activity",nil];
+        localNotification.userInfo = infoDict;//[NSMutableDictionary dictionaryWithObject:@"targetURL" forKey:@"Test"];
 
-        
-        
+        [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
         
         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark.png"] ];
