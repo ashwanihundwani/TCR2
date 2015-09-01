@@ -475,4 +475,16 @@
 }
 
 
++(NSInteger)getNumDaysToNextMonday{
+    NSDate *now = [NSDate date];
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSDateComponents *components = [calendar components:NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitWeekOfMonth | NSCalendarUnitWeekday fromDate:now];
+    
+    NSUInteger weekdayToday = [components weekday];
+    NSInteger daysToMonday = (9 - weekdayToday) % 7;
+    return daysToMonday;
+}
+
+
+
 @end

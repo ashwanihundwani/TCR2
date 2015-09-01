@@ -47,6 +47,16 @@
     self.dateLabel.text = info.reminderDate;
 }
 
+-(BOOL)getSkillReminderSwitchState{
+    return self.activateSwitch.on;
+}
+
+-(void)setSkillReminderSwitchState:(BOOL)state{
+    self.activateSwitch.hidden = NO;
+    self.activateSwitch.on = state;
+}
+
+
 -(void)onTrash:(id)sender
 {
     if(self.delegate

@@ -94,5 +94,6 @@ typedef enum
                             width:(CGFloat)width
                              font:(UIFont *)font;
 
++(NSInteger)getNumDaysToNextMonday;
 
 @end

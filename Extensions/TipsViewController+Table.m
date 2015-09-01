@@ -71,23 +71,20 @@
         NSArray *reminders = [[NSArray alloc] initWithArray:[self.manager loadDataFromDB:query]];
         
         SkillReminderInfo *info = [[SkillReminderInfo alloc]init];
-        
-        if([reminders count] == 1)
-        {
-            reminder = [reminders objectAtIndex:0];
-            info.reminderDate = [reminder objectForKey:@"ScheduledDate"];
-            info.tryUsingText = [NSString stringWithFormat:@"Try using %@", [reminder objectForKey:@"SkillName"]];
-        }
-        else
-        {
-            info.reminderDate = @"";
-            info.tryUsingText = @"";
-        }
-        
-        
+        info.reminderDate = @"";
+        info.tryUsingText = @"";
         info.reminderExists = reminder ? YES : NO;
         
         [cell setReminderInfo:info];
+        if([reminders count] == 1)
+        {
+            [cell setSkillReminderSwitchState:YES];
+        }
+        else
+        {
+            [cell setSkillReminderSwitchState:NO];
+        }
+
         
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
@@ -206,6 +203,7 @@
     }
     else if(indexPath.section == 1)
     {
+        /*
         NSString *query = [NSString stringWithFormat:@"select * from MySkillReminders where SkillName = 'Tips for Better Sleep'"];
         
         self.manager = [[DBManager alloc]initWithDatabaseFileName:@"GNResoundDB.sqlite"];
@@ -220,6 +218,8 @@
         {
             return 100;
         }
+         */
+        return 100;
     }
     else
     {
@@ -257,7 +257,20 @@
 #pragma mark Skill Reminder Methods
 -(void)didTapActivate:(id)sender
 {
-    [self goToScheduler:self];
+    
+    //[self goToScheduler:sender];
+    // check for toggle
+    SkillReminderCell* cell = (SkillReminderCell*)sender;
+    if([cell getSkillReminderSwitchState]){
+        [cell setSkillReminderSwitchState:NO];
+        [self toggle1:YES];
+        
+    }else{
+        [cell setSkillReminderSwitchState:YES];
+        [self toggle1:NO];
+
+    }
+
 }
 
 -(void)didTapTrash:(id)sender

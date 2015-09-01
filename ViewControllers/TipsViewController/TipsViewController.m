@@ -189,145 +189,151 @@ mySwitch.on = YES;
 }
     
 
-- (IBAction) toggle1: (id) sender {
-    
-    UISwitch *mySwitch = (UISwitch *)[self.view viewWithTag:669];
-     UILabel *label = (UILabel *)[self.view viewWithTag:700];
-    if (mySwitch.on)
+- (void) toggle1: (BOOL) state {
+    if (state)
     {
-        label.text= @"Skill Reminder Activated";
+        NSLog(@"Activating TBS reminder");
         
-       
-        NSCalendar *calendar = [NSCalendar currentCalendar];
-        NSDateComponents *components = [[NSDateComponents alloc] init];
-        [components setDay: 3];
-        [components setMonth: 7];
-        [components setYear: 2012];
-        [components setHour: 5];
-        [components setMinute: 00];
-        [components setSecond: 0];
-        [calendar setTimeZone: [NSTimeZone defaultTimeZone]];
-        NSDate *dateToFire = [calendar dateFromComponents:components];
-        
-        
-        UILocalNotification *localNotification = [[UILocalNotification alloc] init];
-        
-        NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
-        [dateFormat setDateFormat:@"dd/MM/yyyy"];
-        
-        
-        NSString *str = [NSString stringWithFormat:@"%@",@"Tips for Sleep Feedback"];
-        localNotification.alertBody = str;
-        
-        [localNotification setFireDate: dateToFire];
-        [localNotification setTimeZone: [NSTimeZone defaultTimeZone]];
-        [localNotification setRepeatInterval: kCFCalendarUnitDay];
-        
-        [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
-        
-        
-        
-        
-        
-//        
-//        UILocalNotification* localNotification = [[UILocalNotification alloc] init];
-//        
-//        NSDate *today = [NSDate date];
-//        NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
-//        [dateFormat setDateFormat:@"dd/MM/yyyy"];
-//        
-//        localNotification.fireDate = [[NSDate date]dateByAddingTimeInterval:60];
-//        
-//        
-//        
-//        NSString *str = [NSString stringWithFormat:@"%@",@"Tips for Sleep Feedback"];
-//        localNotification.alertBody = str;
-//        
-//        NSDictionary *infoDict = [NSDictionary dictionaryWithObject:@"tipsNotification" forKey:@"UUID"];
-//        localNotification.userInfo = infoDict;
-//        localNotification.repeatInterval = NSMinuteCalendarUnit;
-//
-//        
-//        
-//        [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
-//        
-//        
-//        
-        
+        // getting cuurent state of notificatio settins
+        UIUserNotificationSettings* settings = [[UIApplication sharedApplication] currentUserNotificationSettings];
+        if(settings.types == UIUserNotificationTypeNone){
+            NSLog(@"application not allowed for notification");
+            // notification not enabled , set a calender entry
+            EKEventStore *store = [EKEventStore new];
+            [store requestAccessToEntityType:EKEntityTypeEvent completion:^(BOOL granted, NSError *error) {
+                if (!granted) { return; }
+                EKEvent *event = [EKEvent eventWithEventStore:store];
+                //event.title = self.name : @"concatenation with operators" ;
+                NSDate *twoYearsFromNow = [NSDate dateWithTimeIntervalSinceNow:63113851];
+                
+                EKRecurrenceRule *recurrance;
+                NSDateComponents *comp = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear fromDate:[NSDate date]];
+                [comp setHour: 5];
+                [comp setMinute: 00];
+                [comp setSecond: 0];
+                
+                recurrance = [[EKRecurrenceRule alloc] initRecurrenceWithFrequency:EKRecurrenceFrequencyDaily interval:1 end:[EKRecurrenceEnd recurrenceEndWithEndDate:twoYearsFromNow]];
+                
+                NSString *TC = @"Tinnitus Coach: SKILL  ";
+                event.title = @" Tinnitus Coach - Tips for Better Sleep Skill";
+                event.startDate = [[NSCalendar currentCalendar] dateFromComponents:comp]; //today
+                event.endDate =   [event.startDate dateByAddingTimeInterval:60*60];  //set 1 hour meeting
+                
+                event.recurrenceRules=@[recurrance];
+                
+                event.calendar = [store defaultCalendarForNewEvents];
+                
+                NSError *err = nil;
+                
+                [store saveEvent:event span:EKSpanThisEvent commit:YES error:&err];
+                NSString *savedEventId = event.eventIdentifier;  //save the event id if you want to access this later
+                
+                [PersistenceStorage setObject:savedEventId andKey:@"lastEventIdentifer"];  ///STORE to test it for deletion
+                NSLog(@"%@", [PersistenceStorage getObjectForKey:@"lastEventIdentifer"]);
+                NSString *queryClear = [NSString stringWithFormat:@"delete from MySkillReminders where SkillName = 'Tips for Better Sleep' and PlanName = '%@'",[PersistenceStorage getObjectForKey:@"planName"]];
+                NSString *query = [NSString stringWithFormat:@"insert into MySkillReminders ('ID','SkillName','ScheduledDate','CalendarEventID','PlanName') values(1,'%@','%@','%@','%@')",@"Tips for Better Sleep",[PersistenceStorage getObjectForKey:@"localScheduledDate"],[PersistenceStorage getObjectForKey:@"lastEventIdentifer"],[PersistenceStorage getObjectForKey:@"planName"]];
+                
+                [self.manager executeQuery:queryClear];
+                [self.manager executeQuery:query];
+                [PersistenceStorage setObject:@"Yes" andKey:@"TipsActivated"];
+                [self writeEnabledReminder];
+                [self.tableView reloadData];
 
+                
+                
+            }];
+            
+        }else {
+            NSLog(@"application allowed for notification");
+            NSCalendar *calendar = [NSCalendar currentCalendar];
+            NSDateComponents *components = [[NSDateComponents alloc] init];
+            [components setDay: 3];
+            [components setMonth: 7];
+            [components setYear: 2012];
+            [components setHour: 5];
+            [components setMinute: 00];
+            [components setSecond: 0];
+            [calendar setTimeZone: [NSTimeZone defaultTimeZone]];
+            NSDate *dateToFire = [calendar dateFromComponents:components];
+            
+            
+            UILocalNotification *localNotification = [[UILocalNotification alloc] init];
+            
+            NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+            [dateFormat setDateFormat:@"dd/MM/yyyy"];
+            
+            
+            NSString *str = [NSString stringWithFormat:@"%@",@"Tips for Sleep Feedback"];
+            localNotification.alertBody = str;
+            
+            [localNotification setFireDate: dateToFire];
+            [localNotification setTimeZone: [NSTimeZone defaultTimeZone]];
+            [localNotification setRepeatInterval: kCFCalendarUnitDay];
+            
+            NSDictionary *infoDict = [NSDictionary dictionaryWithObjectsAndKeys:[PersistenceStorage getObjectForKey:@"skillName"], @"Type",[PersistenceStorage getObjectForKey:@"planName"],@"PlanName", nil];
+            localNotification.userInfo = infoDict;
+            
+            [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
+            NSString *queryClear = [NSString stringWithFormat:@"delete from MySkillReminders where SkillName = 'Tips for Better Sleep' and PlanName = '%@'",[PersistenceStorage getObjectForKey:@"planName"]];
+            NSString *query = [NSString stringWithFormat:@"insert into MySkillReminders ('ID','SkillName','ScheduledDate','CalendarEventID','PlanName') values(1,'%@','%@','%@','%@')",@"Tips for Better Sleep",[PersistenceStorage getObjectForKey:@"localScheduledDate"],@"",[PersistenceStorage getObjectForKey:@"planName"]];
+            
+            [self.manager executeQuery:queryClear];
+            [self.manager executeQuery:query];
+            
+            [PersistenceStorage setObject:@"Yes" andKey:@"TipsActivated"];
+            [self writeEnabledReminder];
+            
+        }
         
+    }
+    else
+    {
+        NSLog(@"DeActivating TBS reminder");
+        //get the TBS events
+        NSString* query = @"select * from MySkillReminders where SkillName = 'Tips for Better Sleep'";
+        NSArray* sleepReminderArray = [self.manager loadDataFromDB:query];
+        for (NSDictionary* sleepRemiderDict in sleepReminderArray) {
+            // check for calenderevent and cancel it
+            NSString* calEventId = [sleepRemiderDict objectForKey:@"CalendarEventID"];
+            if(calEventId != nil && calEventId.length > 0){
+                [self removeEventFromCalender:calEventId];
+            }
+        }
+        NSArray *notificationArray = [[UIApplication sharedApplication] scheduledLocalNotifications];
+        NSLog(@"notify array %@",notificationArray);
         
-        [PersistenceStorage setObject:@"Yes" andKey:@"TipsActivated"];
-        
-        
-        [self writeEnabledReminder];
-         
-        
-
-        
-}
-else
-   {label.text= @"Activate Skill Reminder";
-       
-       
-       NSArray *notificationArray = [[UIApplication sharedApplication] scheduledLocalNotifications];
-       NSLog(@"notify array %@",notificationArray);
-       
-       for(UILocalNotification *notification in notificationArray){
-           if ([notification.alertBody isEqualToString:@"Tips for Sleep Feedback"]) {
+        for(UILocalNotification *notification in notificationArray){
+            if ([notification.alertBody isEqualToString:@"Tips for Sleep Feedback"]) {
+                NSLog(@"Found active TBS nottification , Cancelleing it");
                 [[UIApplication sharedApplication] cancelLocalNotification:notification] ;
-           }
-           
-           
-       }
-       
-       
-       //NSArray *notificationArray1 = [[UIApplication sharedApplication] scheduledLocalNotifications];
-      // NSLog(@"notify array  new %@",notificationArray1);
-
-       
-//       
-//       UIApplication *app = [UIApplication sharedApplication];
-//       NSArray *eventArray = [app scheduledLocalNotifications];
-//       
-//       NSLog(@"evenetArray  %@",eventArray);
-//       
-//       for (int i=0; i<[eventArray count]; i++)
-//       {
-//           UILocalNotification* oneEvent = [eventArray objectAtIndex:i];
-//           NSDictionary *userInfoCurrent = oneEvent.userInfo;
-//           
-//           NSLog(@"userInfo  %@",userInfoCurrent);
-//
-//           
-//           NSString *uid=[NSString stringWithFormat:@"%@",[userInfoCurrent valueForKey:@"UUID"]];
-//           if ([uid isEqualToString:@"tipsNotificaion"])
-//           {
-//               NSLog(@"CNCELLING");  //Cancelling local notification
-//               [app cancelLocalNotification:oneEvent];
-//               break;
-//           }
-//       }
-//       
-//       
-//       
-//       
-       
-       
-       
-       
-       
-       
-       [PersistenceStorage setObject:@"No" andKey:@"TipsActivated"];
-       [self writeDeletedReminder];
-
-   }
+            }
+        }
+        NSString *queryClear = [NSString stringWithFormat:@"delete from MySkillReminders where SkillName = 'Tips for Better Sleep'"];
+        [self.manager executeQuery:queryClear];
+        [PersistenceStorage setObject:@"No" andKey:@"TipsActivated"];
+        [self writeDeletedReminder];
+        
+    }
+    [self.tableView reloadData];
     
- 
 }
 
 
-
+-(void)removeEventFromCalender:(NSString*)eventID{
+    EKEventStore *store = [[EKEventStore alloc] init];
+    [store requestAccessToEntityType:EKEntityTypeEvent completion:^(BOOL granted, NSError *error) {
+        if (!granted) return;
+        EKEvent* eventToRemove = [store eventWithIdentifier:eventID];
+        if (eventToRemove) {
+            NSError* err = nil;
+            NSLog(@"Found calender TBS event , removing it");
+            [store removeEvent:eventToRemove span:EKSpanFutureEvents commit:YES error:&err];
+        }
+    }
+     
+     ];
+    
+}
 
 
 

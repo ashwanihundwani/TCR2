@@ -25,7 +25,7 @@
 @interface NewPlanAddedViewController ()<UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate>
 {
     NSMutableArray *skillListArray, *groupListArray;
-    NSString* CalEventIDString;
+    NSMutableArray* CalEventsArray;
     BOOL isTBSDeleted;
 }
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
@@ -324,26 +324,47 @@
 
 -(void)deleteSkillFromDB:(NSDictionary *)skillDict andCompletion:(void (^)(BOOL success))block
 {
+    NSString* skillID = [skillDict valueForKey:@"ID"];
+    NSString* skillName = [skillDict valueForKey:@"skillName"];
+    NSInteger planID = [PersistenceStorage getIntegerForKey:@"currentPlanID"];
+    NSString* planName = self.planName;
+    if (![skillName isEqualToString:@"Tips for Better Sleep"]) {
+        //remove the notfications, if any related to this skill
+        NSArray *notificationArray = [[UIApplication sharedApplication] scheduledLocalNotifications];
+        
+        for(UILocalNotification *notification in notificationArray){
+            if ([[notification.userInfo valueForKey:@"PlanName"] isEqualToString:planName] && [[notification.userInfo valueForKey:@"Type"] isEqualToString:skillName]) {
+                NSLog(@"Cancelling local notification for skill:%@ in Plan:%@", skillName, planName);
+                [[UIApplication sharedApplication] cancelLocalNotification:notification] ;
+            }
+            
+        }
+    }
+
     
-    NSString *query = [NSString stringWithFormat:@"delete from MySkills where SkillID=%@ and planID = %ld",[skillDict valueForKey:@"ID"],(long)[PersistenceStorage getIntegerForKey:@"currentPlanID"]];
+    NSLog(@"Deleting Skill id:%@ having name:%@ from Plan ID:%ld Name:%@",skillID,skillName,planID,planName);
     
-    NSString *query01 = [NSString stringWithFormat:@"delete from MyDevices where SkillID=%@ and planID = %ld",[skillDict valueForKey:@"ID"],(long)[PersistenceStorage getIntegerForKey:@"currentPlanID"]];
+    NSString *query = [NSString stringWithFormat:@"delete from MySkills where SkillID=%@ and planID = %ld",skillID,planID];
+    
+    NSString *query01 = [NSString stringWithFormat:@"delete from MyDevices where SkillID=%@ and planID = %ld",skillID,planID];
     
 
     
     
-    NSString *query1 = [NSString stringWithFormat:@"delete from MySounds where SkillID=%@ and planID = %ld",[skillDict valueForKey:@"ID"],(long)[PersistenceStorage getIntegerForKey:@"currentPlanID"]];
+    NSString *query1 = [NSString stringWithFormat:@"delete from MySounds where SkillID=%@ and planID = %ld",skillID,planID];
     
-    NSString *query1_1 = [NSString stringWithFormat:@"delete from MyOwnSounds where SkillID=%@ and planID = %ld",[skillDict valueForKey:@"ID"],(long)[PersistenceStorage getIntegerForKey:@"currentPlanID"]];
+    NSString *query1_1 = [NSString stringWithFormat:@"delete from MyOwnSounds where SkillID=%@ and planID = %ld",skillID,planID];
     
-    NSString *query2 = [NSString stringWithFormat:@"delete from MyWebsites where SkillID=%@ and planID = %ld",[skillDict valueForKey:@"ID"],(long)[PersistenceStorage getIntegerForKey:@"currentPlanID"]];
+    NSString *query2 = [NSString stringWithFormat:@"delete from MyWebsites where SkillID=%@ and planID = %ld",skillID,planID];
     
-    NSString *query3 = [NSString stringWithFormat:@"delete from MyActivities where SkillID=%@ and planID = %ld",[skillDict valueForKey:@"ID"],(long)[PersistenceStorage getIntegerForKey:@"currentPlanID"]];
+    NSString *query3 = [NSString stringWithFormat:@"delete from MyActivities where SkillID=%@ and planID = %ld",skillID,planID];
     
     
-    NSString *query4 = [NSString stringWithFormat:@"delete from MyReminders where SkillID=%@ and planID = %ld",[skillDict valueForKey:@"ID"],(long)[PersistenceStorage getIntegerForKey:@"currentPlanID"]];
+    NSString *query4 = [NSString stringWithFormat:@"delete from MyReminders where PlanName=\"%@\" and SkillName = '%@'",planName,skillName];
     
-    NSString *query4_1 = [NSString stringWithFormat:@"delete from MySkillReminders where SkillName=\"%@\" and PlanName = \"%@\"",[skillDict valueForKey:@"skillName"],self.planName];
+    NSString *query5 = [NSString stringWithFormat:@"delete from MySkillReminders where SkillName=\"%@\" and PlanName = \"%@\"",skillName, planName];
+    
+    NSString *query5_1 = @"delete from MySkillReminders where SkillName = 'Tips for Better Sleep'";
     
     [self.dbManagerMySkills executeQuery:query01];
     [self.dbManagerMySkills executeQuery:query1];
@@ -351,8 +372,15 @@
     [self.dbManagerMySkills executeQuery:query2];
     [self.dbManagerMySkills executeQuery:query3];
     [self.dbManagerMySkills executeQuery:query4];
-    [self.dbManagerMySkills executeQuery:query4_1];
+    if(![skillName isEqualToString:@"Tips for Better Sleep"]) {
+        [self.dbManagerMySkills executeQuery:query5];
+    }
     
+    NSString* queryforTBS = @"select * from MySkills where skillID = 7";
+    NSArray* TBSArray = [self.dbManagerMySkills loadDataFromDB:queryforTBS];
+    if (TBSArray.count == 0) {
+        [self.dbManagerMySkills executeQuery:query5_1];
+    }
     
     BOOL isDone = [self.dbManagerMySkills executeQuery:query];
     if (isDone == YES)
@@ -434,39 +462,34 @@
         [self writeDeletedSkill];
         
      //before deleting lets fetch the calender even, if any
+        CalEventsArray = [[NSMutableArray alloc] init];
         NSString* reminderQuery = [NSString stringWithFormat:@"select CalendarEventID from MySkillReminders where SkillName = \"%@\" and  PlanName = \"%@\"",[[skillListArray objectAtIndex:indexPath.section]valueForKey:@"skillName"],self.planName ];
         NSArray* calenderEventsArray = [self.dbManagerMySkills loadDataFromDB:reminderQuery];
         if(calenderEventsArray.count > 0){
-            CalEventIDString = [[calenderEventsArray objectAtIndex:0] valueForKey:@"CalendarEventID"];
+            [CalEventsArray addObjectsFromArray:calenderEventsArray];
         }
         if([[[skillListArray objectAtIndex:indexPath.section]valueForKey:@"skillName"]  isEqualToString:@"Tips for Better Sleep"]){
             isTBSDeleted = YES;
         }else{
             isTBSDeleted = NO;
+            if([[[skillListArray objectAtIndex:indexPath.section]valueForKey:@"skillName"]  isEqualToString:@"Pleasant Activities"]){
+                reminderQuery = [NSString stringWithFormat:@"select CalendarEventID from MyReminders where PlanName = \"%@\"",self.planName ];
+                NSArray* arr2 = [self.dbManagerMySkills loadDataFromDB:reminderQuery];
+                if(arr2.count > 0){
+                    [CalEventsArray addObjectsFromArray:arr2];
+                }
+            }
         }
     [self deleteSkillFromDB:[filteredArray objectAtIndex:indexPath.row] andCompletion:^(BOOL success)
      {
          if (success) {
-             
-             /* [skillListArray removeObjectAtIndex:indexPath.row];
-              NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF.groupID == %@",[[groupListArray objectAtIndex:indexPath.section]valueForKey:@"ID"]];
-              NSArray *filteredArray = [skillListArray filteredArrayUsingPredicate:predicate];
-              if ([filteredArray count]<=0) {
-              [groupListArray removeObjectAtIndex:indexPath.section];
-              [self.skillsListTableView deleteSections:[NSIndexSet indexSetWithIndex:indexPath.section] withRowAnimation:UITableViewRowAnimationRight];
-              }
-              else
-              {
-              [self.skillsListTableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationRight];
-              }
-              [self.skillsListTableView reloadData];*/
-             //remove the corresponding calender events
-             if(CalEventIDString != nil)
-                 [self removeEventFromCalender:CalEventIDString];
              [self loadMySkillsData];
-             if(isTBSDeleted)
+             [self.skillsListTableView reloadData];
+             if(isTBSDeleted){
                  [self checkAndDeleteTBSReminders];
-
+             }else{
+                 [self removeEventFromCalender];
+             }
              
          }
          
@@ -478,17 +501,26 @@
 
 }
 
--(void)removeEventFromCalender:(NSString*)eventID{
+-(void)removeEventFromCalender{
     EKEventStore *store = [[EKEventStore alloc] init];
     [store requestAccessToEntityType:EKEntityTypeEvent completion:^(BOOL granted, NSError *error) {
         if (!granted) return;
-        EKEvent* eventToRemove = [store eventWithIdentifier:eventID];
-        if (eventToRemove) {
+        NSMutableArray* eventList = [[NSMutableArray alloc] initWithCapacity:CalEventsArray.count];
+        for (NSDictionary* eventDict in CalEventsArray) {
+            NSString* calEventID = [eventDict valueForKey:@"CalendarEventID"];
+            if(calEventID.length == 0){
+                continue;
+            }
+            EKEvent* eventToRemove = [store eventWithIdentifier:calEventID];
+            if(eventToRemove != nil)
+                [eventList addObject:eventToRemove];
+        }
+        
+        for (EKEvent* eventToRemove in eventList) {
             NSError* err = nil;
-            //    [store removeEvent:eventToRemove span:EKSpanThisEvent commit:YES error:&err];
             [store removeEvent:eventToRemove span:EKSpanFutureEvents commit:YES error:&err];
-            if(err == nil){
-                CalEventIDString = nil;
+            if(err != nil){
+                NSLog(@"Error in deletining event from calender:%@", [eventToRemove description]);
             }
         }
     }
@@ -510,10 +542,9 @@
                 [[UIApplication sharedApplication] cancelLocalNotification:notification] ;
                  NSLog(@"!!!!!!!!!!!!TBS notifocation Cancelled!!!!!!!!!!!!!!!");
             }
-            
-            
         }
-
+        //remove calendars if any
+        [self removeEventFromCalender];
     }
 }
 
