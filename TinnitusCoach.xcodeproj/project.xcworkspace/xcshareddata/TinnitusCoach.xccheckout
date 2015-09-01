@@ -12,6 +12,8 @@
 	<dict>
 		<key>834F090AC5B9B788F889388E022BB8B1FDC2AE7A</key>
 		<string>https://github.com/creospan/TCR2.git</string>
+		<key>CC66267F97DF0A25930EC86053A5C6F5ECE5DB35</key>
+		<string>https://bitbucket.org/rameeznkhan/tinnituscoach.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>TinnitusCoach.xcodeproj</string>
@@ -19,6 +21,8 @@
 	<dict>
 		<key>834F090AC5B9B788F889388E022BB8B1FDC2AE7A</key>
 		<string>../..</string>
+		<key>CC66267F97DF0A25930EC86053A5C6F5ECE5DB35</key>
+		<string>../../../TinnitusCoach</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
 	<string>https://github.com/creospan/TCR2.git</string>
@@ -34,7 +38,15 @@
 			<key>IDESourceControlWCCIdentifierKey</key>
 			<string>834F090AC5B9B788F889388E022BB8B1FDC2AE7A</string>
 			<key>IDESourceControlWCCName</key>
-			<string>Tinnitus%20Coach%20R2</string>
+			<string>TCR2</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>CC66267F97DF0A25930EC86053A5C6F5ECE5DB35</string>
+			<key>IDESourceControlWCCName</key>
+			<string>TinnitusCoach</string>
 		</dict>
 	</array>
 </dict>
