@@ -22,4 +22,6 @@
 -(void)prepareData;
 
 -(NSDictionary *)getSoundDetailForTypeID:(NSInteger)typeID andSoundID:(NSInteger)soundID;
+
+-(IBAction)playAud:(id)sender;
 @end

@@ -18,6 +18,8 @@
 #import "WebsiteSoundCell.h"
 #import "OtherSoundsCell.h"
 #import "TinnitusSoundCell.h"
+#import "MyOwnSoundInfo.h"
+#import "MyOwnSoundCell.h"
 
 @interface SoundActivitiesViewController (Table)< UITableViewDataSource, UITableViewDelegate, SkillIntroductionCellDelegate, OtherSoundsCellDelegate, TinnitusSoundCellDelegate, SoundIntroCellDelegate, WebsiteSoundCellDelegate>
 

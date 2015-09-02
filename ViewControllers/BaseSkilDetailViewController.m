@@ -30,6 +30,9 @@
     
     UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 180, 25)];
     
+    titleLabel.adjustsFontSizeToFitWidth=YES;
+    titleLabel.minimumScaleFactor=0.5;
+    
     Pair *pallete = [Utils getColorFontPair:eCFS_PALLETE_1];
     
     titleLabel.font = pallete.secondObj;

@@ -26,6 +26,7 @@
 #import "WebsiteSoundInfo.h"
 #import "OtherSoundInfo.h"
 #import "SoundIntroInfo.h"
+#import "MyOwnSoundInfo.h"
 
 
 @interface SoundActivitiesViewController ()<SoundTypeViewProtocol>
@@ -117,7 +118,7 @@
         NSArray *sounds = [self loadMySounds:1];
         NSArray *devices = [self loadMyDevices:1];
         NSArray *webAndApps = [self loadMyWebsitesAndApps:1];
-        
+        NSArray *ownSounds = [self loadMyOwnSounds:1];
         NSMutableArray *soothingSounds = [NSMutableArray array];
         
         SoundIntroInfo *introInfo = [[SoundIntroInfo alloc]init];
@@ -192,6 +193,20 @@
             }
         }
         
+        if(ownSounds.count > 0)
+        {
+            NSString *typeId = [[ownSounds objectAtIndex:0] valueForKey:@"soundTypeID"];
+            
+            for(NSDictionary *dict in ownSounds)
+            {
+                MyOwnSoundInfo *info = [[MyOwnSoundInfo alloc]initWithDict:dict];
+                
+                info.typeId = typeId;
+                
+                [soothingSounds addObject:info];
+            }
+        }
+        
         
         [self.soundUICompleteInfo addObject:soothingSounds];
     }
@@ -200,6 +215,7 @@
         NSArray *sounds = [self loadMySounds:2];
         NSArray *devices = [self loadMyDevices:2];
         NSArray *webAndApps = [self loadMyWebsitesAndApps:2];
+        NSArray *ownSounds = [self loadMyOwnSounds:2];
         
         NSMutableArray *soothingSounds = [NSMutableArray array];
         
@@ -269,6 +285,22 @@
             }
         }
         
+        if(ownSounds.count > 0)
+        {
+            
+            NSString *typeId = [[ownSounds objectAtIndex:0] valueForKey:@"soundTypeID"];
+            
+            
+            for(NSDictionary *dict in ownSounds)
+            {
+                MyOwnSoundInfo *info = [[MyOwnSoundInfo alloc]initWithDict:dict];
+                
+                info.typeId = typeId;
+                
+                [soothingSounds addObject:info];
+            }
+        }
+        
         
         [self.soundUICompleteInfo addObject:soothingSounds];
     }
@@ -277,6 +309,7 @@
         NSArray *sounds = [self loadMySounds:3];
         NSArray *devices = [self loadMyDevices:3];
         NSArray *webAndApps = [self loadMyWebsitesAndApps:3];
+        NSArray *ownSounds = [self loadMyOwnSounds:3];
         
         NSMutableArray *bgSounds = [NSMutableArray array];
         
@@ -344,6 +377,20 @@
                 [bgSounds addObject:info];
             }
             
+        }
+        
+        if(ownSounds.count > 0)
+        {
+            NSString *typeId = [[ownSounds objectAtIndex:0] valueForKey:@"soundTypeID"];
+            
+            for(NSDictionary *dict in ownSounds)
+            {
+                MyOwnSoundInfo *info = [[MyOwnSoundInfo alloc]initWithDict:dict];
+                
+                info.typeId = typeId;
+                
+                [bgSounds addObject:info];
+            }
         }
         
         [self.soundUICompleteInfo addObject:bgSounds];

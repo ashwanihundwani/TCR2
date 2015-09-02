@@ -457,6 +457,9 @@
 		CDE964001B8D8B8F00B84E57 /* SamplerSelected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CDE963FC1B8D8B8F00B84E57 /* SamplerSelected@2x.png */; };
 		CDE964011B8D8B8F00B84E57 /* SupportSelected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CDE963FD1B8D8B8F00B84E57 /* SupportSelected@2x.png */; };
 		CDE964031B8D8BC700B84E57 /* HomeSelected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CDE964021B8D8BC700B84E57 /* HomeSelected@2x.png */; };
+		CDF03B531B9772D400FF962F /* MyOwnSoundCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CDF03B4F1B9772D400FF962F /* MyOwnSoundCell.m */; };
+		CDF03B541B9772D400FF962F /* MyOwnSoundInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = CDF03B511B9772D400FF962F /* MyOwnSoundInfo.m */; };
+		CDF03B551B9772D400FF962F /* MyOwnSoundCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CDF03B521B9772D400FF962F /* MyOwnSoundCell.xib */; };
 		CDF14CF41B8F718A005A0E01 /* TipsViewController+Table.m in Sources */ = {isa = PBXBuildFile; fileRef = CDF14CF31B8F718A005A0E01 /* TipsViewController+Table.m */; };
 		CDFFBFB71B8F660A00BD2445 /* GuidedMeditationViewController+Table.m in Sources */ = {isa = PBXBuildFile; fileRef = CDFFBFB61B8F660A00BD2445 /* GuidedMeditationViewController+Table.m */; };
 		CDFFBFBD1B8F68F600BD2445 /* PleasantActivityViewController+Table.m in Sources */ = {isa = PBXBuildFile; fileRef = CDFFBFBC1B8F68F600BD2445 /* PleasantActivityViewController+Table.m */; };
@@ -1089,6 +1092,11 @@
 		CDE963FC1B8D8B8F00B84E57 /* SamplerSelected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SamplerSelected@2x.png"; sourceTree = "<group>"; };
 		CDE963FD1B8D8B8F00B84E57 /* SupportSelected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SupportSelected@2x.png"; sourceTree = "<group>"; };
 		CDE964021B8D8BC700B84E57 /* HomeSelected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "HomeSelected@2x.png"; sourceTree = "<group>"; };
+		CDF03B4E1B9772D400FF962F /* MyOwnSoundCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyOwnSoundCell.h; sourceTree = "<group>"; };
+		CDF03B4F1B9772D400FF962F /* MyOwnSoundCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyOwnSoundCell.m; sourceTree = "<group>"; };
+		CDF03B501B9772D400FF962F /* MyOwnSoundInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyOwnSoundInfo.h; sourceTree = "<group>"; };
+		CDF03B511B9772D400FF962F /* MyOwnSoundInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyOwnSoundInfo.m; sourceTree = "<group>"; };
+		CDF03B521B9772D400FF962F /* MyOwnSoundCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MyOwnSoundCell.xib; sourceTree = "<group>"; };
 		CDF14CF21B8F718A005A0E01 /* TipsViewController+Table.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "TipsViewController+Table.h"; path = "Extensions/TipsViewController+Table.h"; sourceTree = "<group>"; };
 		CDF14CF31B8F718A005A0E01 /* TipsViewController+Table.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "TipsViewController+Table.m"; path = "Extensions/TipsViewController+Table.m"; sourceTree = "<group>"; };
 		CDFFBFB51B8F660A00BD2445 /* GuidedMeditationViewController+Table.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "GuidedMeditationViewController+Table.h"; path = "Extensions/GuidedMeditationViewController+Table.h"; sourceTree = "<group>"; };
@@ -1939,6 +1947,11 @@
 		153A47411AD6D5840011B6A1 /* SoundActivitiesCell */ = {
 			isa = PBXGroup;
 			children = (
+				CDF03B4E1B9772D400FF962F /* MyOwnSoundCell.h */,
+				CDF03B4F1B9772D400FF962F /* MyOwnSoundCell.m */,
+				CDF03B501B9772D400FF962F /* MyOwnSoundInfo.h */,
+				CDF03B511B9772D400FF962F /* MyOwnSoundInfo.m */,
+				CDF03B521B9772D400FF962F /* MyOwnSoundCell.xib */,
 				CD7D80381B8F7FC900D77939 /* BaseSoundCell.h */,
 				CD7D80391B8F7FC900D77939 /* BaseSoundCell.m */,
 				CD7D80291B8F7FB700D77939 /* TinnitusSoundCell.h */,
@@ -3145,6 +3158,7 @@
 				04372E1C1AED386B00B30BC7 /* 2PassiveMuscleRelaxation.mp3 in Resources */,
 				0432626F1AE5015F00C4C47A /* support.png in Resources */,
 				4A90176C1AB8B87F00AE4B9D /* half_selected_star.png in Resources */,
+				CDF03B551B9772D400FF962F /* MyOwnSoundCell.xib in Resources */,
 				4A8C5E901AB35250001FC7F4 /* Images.xcassets in Resources */,
 				04508BDD1AEB7AD1008B6F1C /* Devices.png in Resources */,
 				04C286031AF79D7B002E3347 /* downArrow.png in Resources */,
@@ -3183,6 +3197,7 @@
 				15156B301ABEFC52009F4489 /* SamplerViewController.m in Sources */,
 				15156B2F1ABEFC52009F4489 /* RatingsViewController.m in Sources */,
 				048EF9031AEA64CA001D70C6 /* ThoughtsIntroDetailViewController.m in Sources */,
+				CDF03B531B9772D400FF962F /* MyOwnSoundCell.m in Sources */,
 				04AB4BC01B16ABF200446EC4 /* CTF03.m in Sources */,
 				1550E5E11AC9ACE200E36C90 /* WebsitesandAppsWithCommentsCell.m in Sources */,
 				048EF8E61AEA6497001D70C6 /* TipsSkillDetailViewController.m in Sources */,
@@ -3204,6 +3219,7 @@
 				39953FC81B7A5D66004F4990 /* ThoughtErrorCell.m in Sources */,
 				04B8F7AA1B13A57B008D54D0 /* NookDB.m in Sources */,
 				04B0F1B31AEF1138005BCEA5 /* AddressBookJsonResponse.m in Sources */,
+				CDF03B541B9772D400FF962F /* MyOwnSoundInfo.m in Sources */,
 				043F0D711B3508430050D909 /* CTFPrevEntries.m in Sources */,
 				CD39CDF41B8EF05C00E61F51 /* DeepBreathingViewController+Table.m in Sources */,
 				CD39CDE71B8E438C00E61F51 /* SkillIntroInfo.m in Sources */,

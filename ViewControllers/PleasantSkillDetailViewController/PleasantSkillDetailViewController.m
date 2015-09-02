@@ -32,8 +32,27 @@
     {
         
         
-        PleasantIntroDetailViewController *siv = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"PleasantIntroDetailViewController"];
-        [self.navigationController pushViewController:siv animated:YES];
+        NSMutableArray *pageInfos = [NSMutableArray array];
+        
+        IntroPageInfo *info = [[IntroPageInfo alloc] initWithimage:[UIImage imageNamed:@"Intro5image1.png"] title: P_A_PAGE1_TITLE description:@"Working and doing chores are important. It is also important to do some things just because you enjoy them. Pleasant activities are activities you enjoy."];
+        
+        [pageInfos addObject:info];
+        
+        IntroPageInfo *info2 = [[IntroPageInfo alloc] initWithimage:[UIImage imageNamed:@"Intro5image2.png"] title: @"How can \"Pleasant Activities\" help me?" description:P_A_INTRO_PAGE2];
+        
+        [pageInfos addObject:info2];
+        
+        IntroPageInfo *info3 = [[IntroPageInfo alloc] initWithimage:[UIImage imageNamed:@"Intro5image3.png"] title: P_A_PAGE3_TITLE description:P_A_INTRO_PAGE3];
+        
+        [pageInfos addObject:info3];
+        
+        SwiperViewController *swiper = [[SwiperViewController alloc]init];
+        
+        swiper.pageInfos = pageInfos;
+        
+        swiper.header = @"Welcome to Pleasant Activities";
+        
+        [self.navigationController pushViewController:swiper animated:YES];
         
     }
     

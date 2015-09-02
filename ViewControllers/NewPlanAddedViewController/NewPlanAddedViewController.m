@@ -216,6 +216,7 @@
     //titleLabel.textColor = [UIColor colorWithHexValue:@"797979"];
     titleLabel.backgroundColor = [UIColor clearColor];
     titleLabel.text = self.planName;
+    titleLabel.adjustsFontSizeToFitWidth = YES;
     
     [titleView addSubview:titleLabel];
     

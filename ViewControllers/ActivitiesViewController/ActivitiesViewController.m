@@ -74,7 +74,7 @@
     
     activityLabel.textAlignment = NSTextAlignmentCenter;
     
-    activityLabel.text= @"Add a Favourite Activity";
+    activityLabel.text= @"Add a Favorite Activity";
     
     
     activityLabel.textColor = [UIColor whiteColor];

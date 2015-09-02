@@ -118,6 +118,22 @@
                 
                 return cell;
             }
+            else if([item isKindOfClass:[MyOwnSoundInfo class]])
+            {
+                MyOwnSoundInfo *info = (MyOwnSoundInfo *)item;
+                MyOwnSoundCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"MyOwnSoundCell"];
+                
+                if(!cell)
+                {
+                    cell = [[[NSBundle mainBundle] loadNibNamed:@"MyOwnSoundCell" owner:nil options:nil] objectAtIndex:0];
+                }
+                
+                cell.delegate = self;
+                
+                [cell setSoundInfo:info];
+                
+                return cell;
+            }
             else
             {
                 TinnitusSoundInfo *info = (TinnitusSoundInfo *)item;
@@ -274,6 +290,17 @@
             return constant + titleHeight + subtitleHeight;
             
         }
+        else if ([item isKindOfClass:[MyOwnSoundInfo class]])
+        {
+            MyOwnSoundInfo *info = (MyOwnSoundInfo *)item;
+            
+            CGFloat constant = 27;
+            
+            CGFloat height = [Utils heightForLabelForString:info.title width:172 font:TITLE_LABEL_FONT];
+            
+            return constant + height;
+            
+        }
         else
         {
             OtherSoundInfo *info = (OtherSoundInfo *)item;
@@ -315,6 +342,16 @@
         
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:info.url]];
     }
+    else if ([tableCell isKindOfClass:[MyOwnSoundCell class]])
+    {
+        MyOwnSoundInfo *info = (MyOwnSoundInfo *)item;
+        
+        //TODO
+        //[PersistenceStorage setObject:[soundDict valueForKey:@"URL"] andKey:@"mediaURL" ];
+        
+        [self playAud:nil];
+    }
+    
     else //if ([soundDict valueForKey:@"soundID"] != nil)
     {
         TinnitusSoundInfo *info = (TinnitusSoundInfo *)item;

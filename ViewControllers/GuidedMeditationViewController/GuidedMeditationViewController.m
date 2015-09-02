@@ -100,13 +100,13 @@
     [self.scrollView setFrame:CGRectMake(0.0, 0.0, self.view.frame.size.width, self.view.frame.size.height)];
     [self.scrollView setContentSize:CGSizeMake(320,800)];
     if ([[PersistenceStorage getObjectForKey:@"Referer"] isEqualToString:@"AudioPlayerTwoViewController"]) {
-        SkillRatingsViewController *ratingsView = [[UIStoryboard storyboardWithName:@"Main"bundle:nil]instantiateViewControllerWithIdentifier:@"SkillRatingsViewController"];
-        
-        //ratingsView.skillSection = @"Sounds";
-        //  ratingsView.skillDetail = self.name;
-        
-        //[self.navigationController pushViewController:ratingsView animated:YES];
-        [self.navigationController presentModalViewController:ratingsView animated:YES];
+//        SkillRatingsViewController *ratingsView = [[UIStoryboard storyboardWithName:@"Main"bundle:nil]instantiateViewControllerWithIdentifier:@"SkillRatingsViewController"];
+//        
+//        //ratingsView.skillSection = @"Sounds";
+//        //  ratingsView.skillDetail = self.name;
+//        
+//        //[self.navigationController pushViewController:ratingsView animated:YES];
+//        [self.navigationController presentModalViewController:ratingsView animated:YES];
     }
     
     
