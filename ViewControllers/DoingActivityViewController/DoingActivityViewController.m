@@ -74,11 +74,11 @@
     //  [self.navigationController pushViewController:samplerView animated:NO];}
     
     [PersistenceStorage setObject:@" " andKey:@"Referer"];
-    //[self dismissModalViewControllerAnimated:NO];
+     [self dismissModalViewControllerAnimated:NO];
     
     [self.tabBarController.tabBar setHidden:NO];
     
-    [self.navigationController popViewControllerAnimated:YES];
+    //[self.navigationController popViewControllerAnimated:YES];
 }
 
 
@@ -105,9 +105,10 @@
      */
     
     [self.tabBarController.tabBar setHidden:NO];
+    [self dismissModalViewControllerAnimated:NO];
     
     [PersistenceStorage setObject:@"DoingActivityVC" andKey:@"Referer"];
-    [self.navigationController popViewControllerAnimated:YES];
+ //   [self.navigationController popViewControllerAnimated:YES];
     
     
 }
