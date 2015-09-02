@@ -176,10 +176,12 @@ UIBarButtonItem *barButton = [[UIBarButtonItem alloc]initWithBarButtonSystemItem
 
 
 - (void)cancelTapped  {
-    ChangingThoughtsViewController *ratingsView = [[UIStoryboard storyboardWithName:@"Main"bundle:nil]instantiateViewControllerWithIdentifier:@"ChangingThoughtsViewController"];
-    
-    
-    [self.navigationController pushViewController:ratingsView animated:YES];
+    for (UIViewController* vc in self.navigationController.viewControllers) {
+        if([vc isKindOfClass:[ChangingThoughtsViewController class]]){
+            [self.navigationController popToViewController:vc animated:YES];
+        }
+    }
+
 }
 
 
