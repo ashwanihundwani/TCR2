@@ -436,6 +436,7 @@
 		CD39CDEE1B8E44B400E61F51 /* BaseSkilDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD39CDED1B8E44B400E61F51 /* BaseSkilDetailViewController.m */; };
 		CD39CDF41B8EF05C00E61F51 /* DeepBreathingViewController+Table.m in Sources */ = {isa = PBXBuildFile; fileRef = CD39CDF31B8EF05C00E61F51 /* DeepBreathingViewController+Table.m */; };
 		CD39CDFA1B8EF5F400E61F51 /* ImageryViewController+Table.m in Sources */ = {isa = PBXBuildFile; fileRef = CD39CDF91B8EF5F400E61F51 /* ImageryViewController+Table.m */; };
+		CD594DF41B96BFFC00DFA6BE /* style1.css in Resources */ = {isa = PBXBuildFile; fileRef = CD594DF31B96BFFC00DFA6BE /* style1.css */; };
 		CD7D801B1B8F7EB100D77939 /* OtherSoundInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = CD7D80161B8F7EB100D77939 /* OtherSoundInfo.m */; };
 		CD7D801C1B8F7EB100D77939 /* TinnitusSoundInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = CD7D80181B8F7EB100D77939 /* TinnitusSoundInfo.m */; };
 		CD7D801D1B8F7EB100D77939 /* WebsiteSoundInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = CD7D801A1B8F7EB100D77939 /* WebsiteSoundInfo.m */; };
@@ -1057,6 +1058,7 @@
 		CD39CDF31B8EF05C00E61F51 /* DeepBreathingViewController+Table.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "DeepBreathingViewController+Table.m"; path = "Extensions/DeepBreathingViewController+Table.m"; sourceTree = "<group>"; };
 		CD39CDF81B8EF5F400E61F51 /* ImageryViewController+Table.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "ImageryViewController+Table.h"; path = "Extensions/ImageryViewController+Table.h"; sourceTree = "<group>"; };
 		CD39CDF91B8EF5F400E61F51 /* ImageryViewController+Table.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "ImageryViewController+Table.m"; path = "Extensions/ImageryViewController+Table.m"; sourceTree = "<group>"; };
+		CD594DF31B96BFFC00DFA6BE /* style1.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = style1.css; sourceTree = "<group>"; };
 		CD7D80151B8F7EB100D77939 /* OtherSoundInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OtherSoundInfo.h; sourceTree = "<group>"; };
 		CD7D80161B8F7EB100D77939 /* OtherSoundInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OtherSoundInfo.m; sourceTree = "<group>"; };
 		CD7D80171B8F7EB100D77939 /* TinnitusSoundInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TinnitusSoundInfo.h; sourceTree = "<group>"; };
@@ -2266,6 +2268,7 @@
 		4A8C5EA81AB357D3001FC7F4 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				CD594DF31B96BFFC00DFA6BE /* style1.css */,
 				04E316A51B71F32800CAFE6F /* Next-Arrow.png */,
 				0449FFD01B7114CF00784ABC /* style.css */,
 				04DF9A991B3C6F3600989E2B /* infopupup.css */,
@@ -3003,6 +3006,7 @@
 				4A4A3AE21AC3147E00F2AEF6 /* home32.png in Resources */,
 				1550E5C11AC9403100E36C90 /* fan.mp3 in Resources */,
 				043C2DA91AE542F20040BF2D /* homeplans.png in Resources */,
+				CD594DF41B96BFFC00DFA6BE /* style1.css in Resources */,
 				1550E5C21AC9403100E36C90 /* FishTank.mp3 in Resources */,
 				04712A501B1AC20F009953D3 /* 4.1.10image1.png in Resources */,
 				04B0F1BF1AEF4474005BCEA5 /* deleteContact.png in Resources */,

@@ -10,7 +10,7 @@
     <link rel="stylesheet" type="text/css" href="af.ui.css" />
     <link rel="stylesheet" type="text/css" href="icons.css" />
     <script type="text/javascript" charset="utf-8" src="appframework.ui.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="style.css" />
+    <link rel="stylesheet" type="text/css" href="style1.css" />
 
     <!-- phantom library, needed for XDK "legacy" container api calls -->
     <script src="intelxdk.js"></script>
@@ -48,6 +48,7 @@
         <div class="panel" title="Using Sound" id="listview" data-footer="none" selected="true">
 
          <ul class="list">
+             <b>
             <a href="#item1">
               <div class="list-div">
                 <li>Introduction to 'Using Sound'</li>
@@ -72,6 +73,7 @@
                 <img class="next-chevron" align="right" src="Next-Arrow.png"></img>
               </div>
             </a>
+            </b>
             </ul>
 
         </div>
@@ -123,11 +125,11 @@
 
             <p><b>Possible Soothing Sounds:</b></p>
 
-            <p><audio controls autoplay>
+            <p><audio controls autoplay onplaying="playAudio('201')" id = "201">
                 <source src="BabblingBrook.mp3" type="audio/mpeg" />
             </audio><br><b> Babbling Brook</b></p>
 
-            <p><audio controls autoplay>
+            <p><audio controls autoplay onplaying="playAudio('202')" id = "202">
                 <source src="CracklingFire.mp3" type="audio/mpeg" />
             </audio><br><b>Crackling Fire</b></p>
 
@@ -180,11 +182,11 @@
 
               <p><b>Possible Interesting Sounds:</b></p>
 
-             <p><audio controls autoplay>
+             <p><audio controls autoplay onplaying="playAudio('203')" id = "203">
                <source src="Apollo11.mp3" type="audio/mpeg" />
              </audio><br><b> Apollo 11</b></p>
 
-<p><audio controls autoplay>
+<p><audio controls autoplay onplaying="playAudio('204')" id = "204">
     <source src="WhatSticks.mp3" type="audio/mpeg" />
 </audio><br><b>What Sticks</b></p>
 
@@ -252,11 +254,11 @@
 
             <p><b>Possible Background Sounds:</b></p>
 
-            <p><audio controls autoplay>
+            <p><audio controls autoplay onplaying="playAudio('205')" id = "205">
                 <source src="FishTank.mp3" type="audio/mpeg" />
             </audio><br><b> Fish Tank</b></p>
 
-            <p><audio controls autoplay>
+            <p><audio controls autoplay onplaying="playAudio('206')" id = "206">
                 <source src="PinkNoise.mp3" type="audio/mpeg" />
             </audio><br><b>Pink Noise</b></p>
 
@@ -266,5 +268,24 @@
 
     </div>
 </div>
+<script>
+    
+    var playingAudioId = "";
+    function playAudio(audioID)
+    {
+        if(playingAudioId == audioID) return;
+        
+        if(playingAudioId == "")
+        {
+            
+        }
+        else
+        {
+            document.getElementById(playingAudioId).pause();
+        }
+        
+        playingAudioId = audioID;
+    }
+</script>
 </body>
 </html>

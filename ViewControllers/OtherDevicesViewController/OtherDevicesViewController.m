@@ -259,9 +259,9 @@
     }
     
 
+    NSString *soundTypeIdStr = [NSString stringWithFormat:@"%d", soundTypeID];
     
-    
-    NSString *query = [NSString stringWithFormat:@"select * from Plan_Devices where soundTypeID = '%@' and ID NOT IN (select deviceID from MyDevices where planID ='%@' and soundTypeID = '%@' ) ",[PersistenceStorage getObjectForKey:@"soundTypeID"],[PersistenceStorage getObjectForKey:@"currentPlanID"],[PersistenceStorage getObjectForKey:@"soundTypeID"]];
+    NSString *query = [NSString stringWithFormat:@"select * from Plan_Devices where soundTypeID = '%@' and ID NOT IN (select deviceID from MyDevices where planID ='%@' and soundTypeID = '%@' ) ",soundTypeIdStr,[PersistenceStorage getObjectForKey:@"currentPlanID"],soundTypeIdStr];
 
     
     NSLog(@"%@",query)    ;

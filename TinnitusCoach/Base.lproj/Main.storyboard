@@ -10860,7 +10860,7 @@ With this app, you can make plans for using sound when your tinnitus is botherin
                                         <variation key="widthClass=compact" constant="260"/>
                                         <variation key="heightClass=regular-widthClass=compact" constant="280"/>
                                     </constraint>
-                                    <constraint firstAttribute="height" constant="51" id="kDP-Qb-nJh"/>
+                                    <constraint firstAttribute="height" constant="55" id="kDP-Qb-nJh"/>
                                     <constraint firstAttribute="width" constant="298" id="yOw-JJ-tuS"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
@@ -10917,7 +10917,7 @@ With this app, you can make plans for using sound when your tinnitus is botherin
                                     </mask>
                                 </variation>
                             </textField>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WUZ-Nh-xzC">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Write down a new thought about the situation that is more helpful." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WUZ-Nh-xzC">
                                 <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="43" id="Kdf-mb-LFW"/>
@@ -10925,8 +10925,6 @@ With this app, you can make plans for using sound when your tinnitus is botherin
                                         <variation key="widthClass=compact" constant="300"/>
                                     </constraint>
                                 </constraints>
-                                <string key="text">Write down a new thought about the situation that is more helpful.
-</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>

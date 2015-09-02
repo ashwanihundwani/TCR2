@@ -9,6 +9,7 @@
         
         <link rel="stylesheet" type="text/css" href="af.ui.css" />
         <link rel="stylesheet" type="text/css" href="icons.css" />
+        <link rel="stylesheet" type="text/css" href="style1.css" />
         <script type="text/javascript" charset="utf-8" src="appframework.ui.min.js"></script>
         
         <!-- phantom library, needed for XDK "legacy" container api calls -->
@@ -17,6 +18,7 @@
         <script src="cordova.js"></script>
         <!-- phantom library, needed for XDK "legacy" container CORS -->
         <script src="xhr.js"></script>
+        
         
         <script>
             var onDeviceReady=function(){                             // called when Cordova is ready
@@ -45,15 +47,23 @@
                     <b>
                     <!--List View Page-->
                     <div class="panel" title="Resources" id="listview" data-footer="none" selected="true">
+                        
                         <ul class="list">
-                            <li><a style="text-decoration:none" href="#item1">Resources</a></li>
-                            <li><a style="text-decoration:none" href="#item2">Information about tinnitus</a></li>
-                            <li><a style="text-decoration:none" href="#item3">Websites and apps with sound</a></li>
-                            <li><a style="text-decoration:none" href="#item4">Sleep and mental health information</a></li>
-                            
-                       </b>           </ul>
-        </div>
-        
+                            <b>
+                            <a href="#item1"><div class="list-div"><li>Resources</li>
+                                <img class="next-chevron" align="right" src="Next-Arrow.png"></img>
+                            </div></a>
+                            <a href="#item2"><div class="list-div"><li>Information about tinnitus</li>
+                                <img class="next-chevron" align="right" src="Next-Arrow.png"></img>
+                            </div></a>
+                            <a href="#item3"><div class="list-div"><li>Websites and apps with sound</li>
+                                <img class="next-chevron" align="right" src="Next-Arrow.png"></img>
+                            </div></a>
+                            <a href="#item4"><div class="list-div"><li>Sleep and mental health information</li>
+                                <img class="next-chevron" align="right" src="Next-Arrow.png"></img>
+                            </div></a>
+                        </b></ul>
+                    </div>
         <!--Detail View Pages for each list items-->
         <div class="panel" title=" " id="item1" data-footer="none">
             <p>"Knowledge is power." Learning about tinnitus can help you manage your reactions to it. There are many good websites and apps for people with tinnitus. Be aware that some websites have wrong or misleading information. Contact an audiologist if you have questions.</p>
