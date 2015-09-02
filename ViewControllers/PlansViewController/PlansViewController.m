@@ -21,6 +21,8 @@
 
 @property (weak, nonatomic) IBOutlet UITableView *plansTableView;
 @property (nonatomic, strong) DBManager *dbManagerMyPlans;
+@property (nonatomic, strong) DBManager *dbManagerMySkills;
+
 @property (weak, nonatomic) IBOutlet UIButton *addNewPlanBtn;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *headerLabelHeightConst;
 @end
@@ -114,7 +116,8 @@
     
     self.dbManagerMyPlans = [[DBManager alloc]initWithDatabaseFileName:@"GNResoundDB.sqlite"];
     
-    
+    self.dbManagerMySkills = [[DBManager alloc]initWithDatabaseFileName:@"GNResoundDB.sqlite"];
+
     
     if (![[PersistenceStorage getObjectForKey:@"shownPlansIntro"] isEqual: @"OK"])
         
@@ -298,6 +301,42 @@
     NSLog(@"Deleting object with plan ID:%@ and planName:%@",planID, planName);
     NSArray *notificationArray = [[UIApplication sharedApplication] scheduledLocalNotifications];
     
+    
+//    VIKRAM 2 Sept 2015
+    
+// Make the list of skills separated by | and insert into SkillDetail3
+    // This is inserted in the row. Refer writeDeletedPlan
+    
+    
+    NSString *querySkills = [NSString stringWithFormat: @"select skillName from Plan_Skills Inner JOIN MySkills on MySkills.SkillID = Plan_Skills.ID where MySkills.PlanID = %@",planID];
+ 
+    
+    NSArray* skillArr = [self.dbManagerMySkills loadDataFromDB:querySkills];
+    
+    
+    NSMutableString *skillString =[NSMutableString stringWithString:@""];
+    
+    
+    for(int i= 0 ;i<[skillArr count];i++)
+    {
+        
+        
+        [skillString appendString:[[skillArr objectAtIndex:i] valueForKey:@"skillName"]];
+        [skillString appendString:@"|"];
+        
+        
+    }
+    
+    if ([skillString length] > 0) {
+        NSString *outPut = skillString;
+        outPut = [outPut substringToIndex:[outPut length] - 1];
+        NSLog(@"%@",outPut);
+        [PersistenceStorage setObject:outPut andKey:@"skillDetail3"];
+        
+        
+    }
+    
+    
     for(UILocalNotification *notification in notificationArray){
        // if ([notification.alertBody containsString:@"'Imagery'"])
             
@@ -445,6 +484,14 @@
     [manager showAlertwithPositiveBlock:^(BOOL positive) {
         
         NSInteger tag = [[sender view] tag];
+        
+        
+        
+        
+        
+        
+        
+        
         
         [PersistenceStorage setObject:[[userPlansArray objectAtIndex:tag] valueForKey:@"planName"] andKey:@"deletingPlanName"];
         [PersistenceStorage setObject:[[userPlansArray objectAtIndex:tag] valueForKey:@"situationName"] andKey:@"deletingSituationName"];
@@ -742,6 +789,10 @@
 -(void)writeDeletedPlan{
     //  NSURL *path = [self getUrlOfFiles:@"TinnitusCoachUsageData.csv"];
     
+    
+    
+    
+    
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0];
     NSString *documentTXTPath = [documentsDirectory stringByAppendingPathComponent:@"TinnitusCoachUsageData.csv"];
@@ -756,7 +807,7 @@
     NSString *type = @"Plan";
     
     NSString *str = @"Removed Plan";
-    NSString   *finalStr = [NSString stringWithFormat:@"\r%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@",dateString,timeString,type,str,nil,[PersistenceStorage getObjectForKey:@"deletingPlanName"],[PersistenceStorage getObjectForKey:@"deletingSituationName"],nil,nil,nil,nil,nil,nil,nil,nil,nil];
+    NSString   *finalStr = [NSString stringWithFormat:@"\r%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@",dateString,timeString,type,str,nil,[PersistenceStorage getObjectForKey:@"deletingPlanName"],[PersistenceStorage getObjectForKey:@"deletingSituationName"],nil,[PersistenceStorage getObjectForKey:@"skillDetail3"],nil,nil,nil,nil,nil,nil,nil];
     
     NSFileManager *fileManager = [NSFileManager defaultManager];
     if(![fileManager fileExistsAtPath:documentTXTPath])
@@ -810,7 +861,7 @@
     NSString *type = @"Navigation";
     
     NSString *str = @"Plans";
-    NSString   *finalStr = [NSString stringWithFormat:@"\r%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@",dateString,timeString,type,nil,str,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil];
+    NSString   *finalStr = [NSString stringWithFormat:@"\r%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@",dateString,timeString,type,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil];
     
     NSFileManager *fileManager = [NSFileManager defaultManager];
     if(![fileManager fileExistsAtPath:documentTXTPath])
@@ -847,6 +898,11 @@
     
     NSString *str = @"Watched the Plan Introduction";
     NSString   *finalStr = [NSString stringWithFormat:@"\r%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@",dateString,timeString,type,str,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil];
+    
+    
+    
+    
+    
     
     NSFileManager *fileManager = [NSFileManager defaultManager];
     if(![fileManager fileExistsAtPath:documentTXTPath])
