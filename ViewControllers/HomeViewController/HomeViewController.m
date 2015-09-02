@@ -195,8 +195,7 @@
     
 }
 - (IBAction)PlansButtonTapped:(id)sender {
-    [[self tabBarController] setSelectedIndex:2];    
-    
+    [[self tabBarController] setSelectedIndex:2];
 }
 
 - (IBAction)NookButtonTapped:(id)sender {
@@ -204,15 +203,18 @@
     [[self tabBarController] setSelectedIndex:3];
     
     
-    
-    
-    
 }
 
 - (IBAction)SupportButtonTapped:(id)sender {
-    [[self tabBarController] setSelectedIndex:4];
-    
-
+    if ([PersistenceStorage getBoolForKey:@"debugWR"]) {
+        UIStoryboard *storyBoard = [ UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        UIViewController *WeeklyReminder = [storyBoard instantiateViewControllerWithIdentifier:@"WeeklyViewController"];
+        UIWindow *currentWindow = [[UIApplication sharedApplication].windows firstObject];
+        [currentWindow.rootViewController presentViewController:WeeklyReminder animated:YES completion:nil];
+        
+    }else{
+        [[self tabBarController] setSelectedIndex:4];
+    }
 //    UIStoryboard *storyBoard = [ UIStoryboard storyboardWithName:@"Main" bundle:nil];
 //    UIViewController *mySleepsViewCotroller = [storyBoard instantiateViewControllerWithIdentifier:@"WeeklyViewController"];
 //    UIWindow *currentWindow = [[UIApplication sharedApplication].windows firstObject];
