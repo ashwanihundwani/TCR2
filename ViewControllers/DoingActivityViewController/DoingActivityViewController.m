@@ -74,9 +74,8 @@
     //  [self.navigationController pushViewController:samplerView animated:NO];}
     
     [PersistenceStorage setObject:@" " andKey:@"Referer"];
-     [self dismissModalViewControllerAnimated:NO];
     
-    [self.tabBarController.tabBar setHidden:NO];
+    [self.navigationController popViewControllerAnimated:NO];
     
     //[self.navigationController popViewControllerAnimated:YES];
 }
@@ -95,6 +94,7 @@
 
 -(IBAction)doneButtonTapped:(id)sender
 {
+    
     /*    RatingsViewController *ratingsView = [[UIStoryboard storyboardWithName:@"Main"bundle:nil]instantiateViewControllerWithIdentifier:@"RatingsViewController"];
      ratingsView.skillSection = @"Sounds";
      ratingsView.skillDetail = self.name;
@@ -103,11 +103,9 @@
      [self.navigationController presentModalViewController:ratingsView animated:YES];
      
      */
-    
-    [self.tabBarController.tabBar setHidden:NO];
-    [self dismissModalViewControllerAnimated:NO];
-    
     [PersistenceStorage setObject:@"DoingActivityVC" andKey:@"Referer"];
+    [self.navigationController popViewControllerAnimated:NO];
+    
  //   [self.navigationController popViewControllerAnimated:YES];
     
     

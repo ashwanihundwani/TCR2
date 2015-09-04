@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="49e-Tb-3d3">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7702" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="49e-Tb-3d3">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -689,14 +689,14 @@
                                 <nil key="highlightedColor"/>
                                 <variation key="default">
                                     <mask key="constraints">
-                                        <exclude reference="WvG-p7-Ad4"/>
                                         <exclude reference="MdS-hY-YA6"/>
+                                        <exclude reference="WvG-p7-Ad4"/>
                                     </mask>
                                 </variation>
                                 <variation key="heightClass=regular-widthClass=compact">
                                     <mask key="constraints">
-                                        <include reference="WvG-p7-Ad4"/>
                                         <include reference="MdS-hY-YA6"/>
+                                        <include reference="WvG-p7-Ad4"/>
                                     </mask>
                                 </variation>
                             </label>
@@ -785,16 +785,16 @@
                                 </state>
                                 <variation key="default">
                                     <mask key="constraints">
-                                        <exclude reference="BSF-1H-7xZ"/>
                                         <exclude reference="0qb-0a-7br"/>
+                                        <exclude reference="BSF-1H-7xZ"/>
                                         <exclude reference="cG9-2g-fEh"/>
                                         <exclude reference="pRg-WY-Jtl"/>
                                     </mask>
                                 </variation>
                                 <variation key="heightClass=regular-widthClass=compact">
                                     <mask key="constraints">
-                                        <include reference="BSF-1H-7xZ"/>
                                         <include reference="0qb-0a-7br"/>
+                                        <include reference="BSF-1H-7xZ"/>
                                         <include reference="cG9-2g-fEh"/>
                                         <include reference="pRg-WY-Jtl"/>
                                     </mask>
@@ -861,30 +861,30 @@
                                 <exclude reference="B9H-bc-TiT"/>
                             </mask>
                             <mask key="constraints">
-                                <exclude reference="TLt-oP-ix1"/>
-                                <exclude reference="Hr1-2R-ZSX"/>
-                                <exclude reference="IYU-Dm-mKk"/>
                                 <exclude reference="Sn7-3D-iCO"/>
                                 <exclude reference="l5o-qx-zWS"/>
+                                <exclude reference="0br-L7-Erm"/>
+                                <exclude reference="P4i-NU-Ihg"/>
+                                <exclude reference="ZiD-L7-PSQ"/>
+                                <exclude reference="be7-jD-rs7"/>
+                                <exclude reference="dJo-qa-2H9"/>
+                                <exclude reference="tS3-Wd-kPv"/>
+                                <exclude reference="vsu-Cc-Njj"/>
+                                <exclude reference="2cz-Zc-GVJ"/>
+                                <exclude reference="4fz-6D-AfZ"/>
                                 <exclude reference="hML-Jk-JhH"/>
                                 <exclude reference="lcD-Mg-DkW"/>
                                 <exclude reference="mJr-dS-3hs"/>
                                 <exclude reference="rUd-ww-LJi"/>
-                                <exclude reference="2cz-Zc-GVJ"/>
-                                <exclude reference="4fz-6D-AfZ"/>
-                                <exclude reference="HGd-TK-i8r"/>
-                                <exclude reference="0U4-Ch-RNF"/>
-                                <exclude reference="pbL-1q-gMV"/>
-                                <exclude reference="ccV-1R-LhV"/>
-                                <exclude reference="hB2-kt-N58"/>
+                                <exclude reference="Hr1-2R-ZSX"/>
+                                <exclude reference="IYU-Dm-mKk"/>
+                                <exclude reference="TLt-oP-ix1"/>
                                 <exclude reference="ISu-cS-yTx"/>
-                                <exclude reference="0br-L7-Erm"/>
-                                <exclude reference="vsu-Cc-Njj"/>
-                                <exclude reference="dJo-qa-2H9"/>
-                                <exclude reference="tS3-Wd-kPv"/>
-                                <exclude reference="P4i-NU-Ihg"/>
-                                <exclude reference="be7-jD-rs7"/>
-                                <exclude reference="ZiD-L7-PSQ"/>
+                                <exclude reference="hB2-kt-N58"/>
+                                <exclude reference="0U4-Ch-RNF"/>
+                                <exclude reference="HGd-TK-i8r"/>
+                                <exclude reference="ccV-1R-LhV"/>
+                                <exclude reference="pbL-1q-gMV"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=compact">
@@ -897,30 +897,30 @@
                                 <include reference="B9H-bc-TiT"/>
                             </mask>
                             <mask key="constraints">
-                                <include reference="TLt-oP-ix1"/>
-                                <include reference="Hr1-2R-ZSX"/>
-                                <include reference="IYU-Dm-mKk"/>
                                 <include reference="Sn7-3D-iCO"/>
                                 <exclude reference="l5o-qx-zWS"/>
+                                <include reference="0br-L7-Erm"/>
+                                <include reference="P4i-NU-Ihg"/>
+                                <include reference="ZiD-L7-PSQ"/>
+                                <include reference="be7-jD-rs7"/>
+                                <exclude reference="dJo-qa-2H9"/>
+                                <exclude reference="tS3-Wd-kPv"/>
+                                <include reference="vsu-Cc-Njj"/>
+                                <exclude reference="2cz-Zc-GVJ"/>
+                                <exclude reference="4fz-6D-AfZ"/>
                                 <exclude reference="hML-Jk-JhH"/>
                                 <exclude reference="lcD-Mg-DkW"/>
                                 <include reference="mJr-dS-3hs"/>
                                 <include reference="rUd-ww-LJi"/>
-                                <exclude reference="2cz-Zc-GVJ"/>
-                                <exclude reference="4fz-6D-AfZ"/>
-                                <include reference="HGd-TK-i8r"/>
-                                <include reference="0U4-Ch-RNF"/>
-                                <include reference="pbL-1q-gMV"/>
-                                <include reference="ccV-1R-LhV"/>
-                                <include reference="hB2-kt-N58"/>
+                                <include reference="Hr1-2R-ZSX"/>
+                                <include reference="IYU-Dm-mKk"/>
+                                <include reference="TLt-oP-ix1"/>
                                 <include reference="ISu-cS-yTx"/>
-                                <include reference="0br-L7-Erm"/>
-                                <include reference="vsu-Cc-Njj"/>
-                                <exclude reference="dJo-qa-2H9"/>
-                                <exclude reference="tS3-Wd-kPv"/>
-                                <include reference="P4i-NU-Ihg"/>
-                                <include reference="be7-jD-rs7"/>
-                                <include reference="ZiD-L7-PSQ"/>
+                                <include reference="hB2-kt-N58"/>
+                                <include reference="0U4-Ch-RNF"/>
+                                <include reference="HGd-TK-i8r"/>
+                                <include reference="ccV-1R-LhV"/>
+                                <include reference="pbL-1q-gMV"/>
                             </mask>
                         </variation>
                     </view>
@@ -2649,198 +2649,78 @@
                         <viewControllerLayoutGuide type="top" id="iDq-h0-7sZ"/>
                         <viewControllerLayoutGuide type="bottom" id="3Zn-Ez-k2E"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="crV-ju-8nU">
+                    <view key="view" contentMode="scaleToFill" id="MHF-mv-AVQ">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2gz-5j-gzU">
-                                <rect key="frame" x="26" y="84" width="128" height="200"/>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="w0y-34-Vjq">
+                                <rect key="frame" x="30" y="109" width="115" height="160"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="128" id="UPG-41-FbN"/>
+                                    <constraint firstAttribute="height" constant="160" id="Kzi-1A-k5w"/>
+                                    <constraint firstAttribute="width" constant="115" id="dFv-MR-ydz"/>
                                 </constraints>
                                 <state key="normal" title="Button" image="home_sampler.png">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="UPG-41-FbN"/>
-                                    </mask>
-                                </variation>
-                                <variation key="heightClass=regular-widthClass=compact">
-                                    <mask key="constraints">
-                                        <include reference="UPG-41-FbN"/>
-                                    </mask>
-                                </variation>
                                 <connections>
-                                    <action selector="SamplerButtonTapped:" destination="TQy-Dn-RkJ" eventType="touchUpInside" id="SwI-yE-rus"/>
+                                    <action selector="SamplerButtonTapped:" destination="TQy-Dn-RkJ" eventType="touchUpInside" id="Kuh-R0-ixz"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bfn-NP-O7j">
-                                <rect key="frame" x="26" y="290" width="128" height="200"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NTV-cJ-VqM">
+                                <rect key="frame" x="30" y="314" width="115" height="160"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="128" id="hsO-TU-Pxp"/>
+                                    <constraint firstAttribute="height" constant="160" id="33r-4C-zPp"/>
+                                    <constraint firstAttribute="width" constant="115" id="PuX-ch-T6w"/>
                                 </constraints>
                                 <state key="normal" title="Button" image="home_nook.png">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="hsO-TU-Pxp"/>
-                                    </mask>
-                                </variation>
-                                <variation key="heightClass=regular-widthClass=compact">
-                                    <mask key="constraints">
-                                        <include reference="hsO-TU-Pxp"/>
-                                    </mask>
-                                </variation>
                                 <connections>
-                                    <action selector="NookButtonTapped:" destination="TQy-Dn-RkJ" eventType="touchUpInside" id="8sU-Sb-65E"/>
+                                    <action selector="NookButtonTapped:" destination="TQy-Dn-RkJ" eventType="touchUpInside" id="eWb-fd-pZe"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f7H-W5-RQh">
-                                <rect key="frame" x="160" y="84" width="128" height="200"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UwV-I6-zvs">
+                                <rect key="frame" x="175" y="314" width="115" height="160"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="128" id="51Z-cw-y7U"/>
-                                </constraints>
-                                <state key="normal" title="Button" image="home_plans.png">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="51Z-cw-y7U"/>
-                                    </mask>
-                                </variation>
-                                <variation key="heightClass=regular-widthClass=compact">
-                                    <mask key="constraints">
-                                        <include reference="51Z-cw-y7U"/>
-                                    </mask>
-                                </variation>
-                                <connections>
-                                    <action selector="PlansButtonTapped:" destination="TQy-Dn-RkJ" eventType="touchUpInside" id="0JJ-he-uFw"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iYa-aK-XuH">
-                                <rect key="frame" x="160" y="290" width="128" height="200"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="128" id="oJl-7V-ks5"/>
+                                    <constraint firstAttribute="height" constant="160" id="B5r-y8-RjJ"/>
+                                    <constraint firstAttribute="width" constant="115" id="Uc2-Lh-IrR"/>
                                 </constraints>
                                 <state key="normal" title="Button" image="home_findsupport.png">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="oJl-7V-ks5"/>
-                                    </mask>
-                                </variation>
-                                <variation key="heightClass=regular-widthClass=compact">
-                                    <mask key="constraints">
-                                        <include reference="oJl-7V-ks5"/>
-                                    </mask>
-                                </variation>
                                 <connections>
-                                    <action selector="SupportButtonTapped:" destination="TQy-Dn-RkJ" eventType="touchUpInside" id="yoa-Pw-e5E"/>
+                                    <action selector="SupportButtonTapped:" destination="TQy-Dn-RkJ" eventType="touchUpInside" id="DHU-CX-hjR"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tinnitus Coach" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gWb-4P-mNw">
-                                <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Mvp-Cf-dbh">
+                                <rect key="frame" x="175" y="109" width="115" height="160"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="171" id="Rfb-Bw-agx"/>
-                                    <constraint firstAttribute="width" constant="320" id="lUm-xU-Ysz">
-                                        <variation key="widthClass=compact" constant="320"/>
-                                    </constraint>
+                                    <constraint firstAttribute="width" constant="115" id="mmA-BO-fRw"/>
+                                    <constraint firstAttribute="height" constant="160" id="zmL-0P-gnb"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="23"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="Rfb-Bw-agx"/>
-                                        <exclude reference="lUm-xU-Ysz"/>
-                                    </mask>
-                                </variation>
-                                <variation key="widthClass=compact">
-                                    <mask key="constraints">
-                                        <exclude reference="Rfb-Bw-agx"/>
-                                        <include reference="lUm-xU-Ysz"/>
-                                    </mask>
-                                </variation>
-                            </label>
+                                <state key="normal" title="Button" image="home_plans.png">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="PlansButtonTapped:" destination="TQy-Dn-RkJ" eventType="touchUpInside" id="VJU-qk-6SG"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="2gz-5j-gzU" firstAttribute="leading" secondItem="crV-ju-8nU" secondAttribute="leadingMargin" constant="10" id="18u-gN-FQV">
-                                <variation key="heightClass=regular-widthClass=compact" constant="12"/>
-                            </constraint>
-                            <constraint firstItem="bfn-NP-O7j" firstAttribute="leading" secondItem="crV-ju-8nU" secondAttribute="leadingMargin" constant="10" id="9qj-lG-iVq">
-                                <variation key="heightClass=regular-widthClass=compact" constant="12"/>
-                            </constraint>
-                            <constraint firstItem="gWb-4P-mNw" firstAttribute="top" secondItem="iDq-h0-7sZ" secondAttribute="bottom" constant="-8" id="Asp-VC-FnC">
-                                <variation key="widthClass=compact" constant="25"/>
-                            </constraint>
-                            <constraint firstItem="f7H-W5-RQh" firstAttribute="leading" secondItem="iYa-aK-XuH" secondAttribute="leading" id="Awr-ZI-QiB"/>
-                            <constraint firstItem="iYa-aK-XuH" firstAttribute="top" secondItem="f7H-W5-RQh" secondAttribute="bottom" constant="6" id="CFh-FC-zSg"/>
-                            <constraint firstItem="2gz-5j-gzU" firstAttribute="top" secondItem="iDq-h0-7sZ" secondAttribute="bottom" constant="64" id="Egw-JN-twR"/>
-                            <constraint firstItem="bfn-NP-O7j" firstAttribute="top" secondItem="2gz-5j-gzU" secondAttribute="bottom" constant="6" id="KNx-mf-dKo"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="iYa-aK-XuH" secondAttribute="trailing" constant="96" id="TN3-sH-b9F">
-                                <variation key="heightClass=regular-widthClass=compact" constant="12"/>
-                            </constraint>
-                            <constraint firstItem="f7H-W5-RQh" firstAttribute="top" secondItem="iDq-h0-7sZ" secondAttribute="bottom" constant="64" id="V2z-Pa-Jed"/>
-                            <constraint firstAttribute="centerX" secondItem="gWb-4P-mNw" secondAttribute="centerX" constant="25" id="XPK-5f-gen">
-                                <variation key="widthClass=compact" constant="0.0"/>
-                            </constraint>
-                            <constraint firstItem="f7H-W5-RQh" firstAttribute="leading" secondItem="crV-ju-8nU" secondAttribute="leadingMargin" constant="144" id="aYo-Oi-Kn1">
-                                <variation key="heightClass=regular-widthClass=compact" constant="64"/>
-                            </constraint>
-                            <constraint firstItem="3Zn-Ez-k2E" firstAttribute="top" secondItem="bfn-NP-O7j" secondAttribute="bottom" constant="261" id="fgd-DJ-paD"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="f7H-W5-RQh" secondAttribute="trailing" constant="96" id="soU-af-7MZ">
-                                <variation key="heightClass=regular-widthClass=compact" constant="12"/>
-                            </constraint>
-                            <constraint firstItem="3Zn-Ez-k2E" firstAttribute="top" secondItem="iYa-aK-XuH" secondAttribute="bottom" constant="261" id="ziC-O0-ZSX"/>
+                            <constraint firstAttribute="trailing" secondItem="w0y-34-Vjq" secondAttribute="trailing" constant="175" id="Hba-Cv-Epm"/>
+                            <constraint firstItem="Mvp-Cf-dbh" firstAttribute="leading" secondItem="UwV-I6-zvs" secondAttribute="trailing" constant="-115" id="QBy-Zg-Ny4"/>
+                            <constraint firstItem="NTV-cJ-VqM" firstAttribute="top" secondItem="w0y-34-Vjq" secondAttribute="bottom" constant="45" id="cgj-fq-Zc8"/>
+                            <constraint firstItem="Mvp-Cf-dbh" firstAttribute="leading" secondItem="w0y-34-Vjq" secondAttribute="trailing" constant="30" id="lRK-or-CPg"/>
+                            <constraint firstItem="UwV-I6-zvs" firstAttribute="top" secondItem="Mvp-Cf-dbh" secondAttribute="bottom" constant="45" id="pMp-eK-ZEh"/>
+                            <constraint firstItem="NTV-cJ-VqM" firstAttribute="leading" secondItem="MHF-mv-AVQ" secondAttribute="leading" constant="30" id="t1H-ah-03M"/>
+                            <constraint firstItem="Mvp-Cf-dbh" firstAttribute="top" secondItem="MHF-mv-AVQ" secondAttribute="top" constant="109" id="u0K-pK-73D"/>
+                            <constraint firstItem="w0y-34-Vjq" firstAttribute="top" secondItem="MHF-mv-AVQ" secondAttribute="top" constant="109" id="vO6-rK-Fyx"/>
+                            <constraint firstItem="UwV-I6-zvs" firstAttribute="leading" secondItem="NTV-cJ-VqM" secondAttribute="trailing" constant="30" id="xDj-bz-6Be"/>
                         </constraints>
                         <variation key="default">
-                            <mask key="subviews">
-                                <exclude reference="gWb-4P-mNw"/>
-                            </mask>
                             <mask key="constraints">
-                                <exclude reference="Asp-VC-FnC"/>
-                                <exclude reference="XPK-5f-gen"/>
-                                <exclude reference="18u-gN-FQV"/>
-                                <exclude reference="Egw-JN-twR"/>
-                                <exclude reference="Awr-ZI-QiB"/>
-                                <exclude reference="V2z-Pa-Jed"/>
-                                <exclude reference="aYo-Oi-Kn1"/>
-                                <exclude reference="soU-af-7MZ"/>
-                                <exclude reference="9qj-lG-iVq"/>
-                                <exclude reference="KNx-mf-dKo"/>
-                                <exclude reference="CFh-FC-zSg"/>
-                                <exclude reference="TN3-sH-b9F"/>
-                                <exclude reference="fgd-DJ-paD"/>
-                                <exclude reference="ziC-O0-ZSX"/>
-                            </mask>
-                        </variation>
-                        <variation key="widthClass=compact">
-                            <mask key="subviews">
-                                <include reference="gWb-4P-mNw"/>
-                            </mask>
-                            <mask key="constraints">
-                                <include reference="Asp-VC-FnC"/>
-                                <include reference="XPK-5f-gen"/>
-                            </mask>
-                        </variation>
-                        <variation key="heightClass=regular-widthClass=compact">
-                            <mask key="constraints">
-                                <include reference="18u-gN-FQV"/>
-                                <include reference="Egw-JN-twR"/>
-                                <include reference="Awr-ZI-QiB"/>
-                                <include reference="V2z-Pa-Jed"/>
-                                <exclude reference="aYo-Oi-Kn1"/>
-                                <exclude reference="soU-af-7MZ"/>
-                                <include reference="9qj-lG-iVq"/>
-                                <include reference="KNx-mf-dKo"/>
-                                <include reference="CFh-FC-zSg"/>
-                                <include reference="TN3-sH-b9F"/>
-                                <exclude reference="fgd-DJ-paD"/>
-                                <exclude reference="ziC-O0-ZSX"/>
+                                <exclude reference="QBy-Zg-Ny4"/>
                             </mask>
                         </variation>
                     </view>
@@ -9091,7 +8971,7 @@ With this app, you can make plans for using sound when your tinnitus is botherin
                                 </variation>
                             </label>
                             <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="ctf01.png" translatesAutoresizingMaskIntoConstraints="NO" id="UcD-lX-CMt">
-                                <rect key="frame" x="0.0" y="-37" width="277" height="37"/>
+                                <rect key="frame" x="0.0" y="-2" width="277" height="37"/>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -10000,7 +9880,7 @@ With this app, you can make plans for using sound when your tinnitus is botherin
                                     </mask>
                                 </variation>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Step - 4 Thought Error" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BPL-oe-bZk">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Step 4 - Thought Error" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BPL-oe-bZk">
                                 <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -10651,7 +10531,7 @@ With this app, you can make plans for using sound when your tinnitus is botherin
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Step - 2 Describe Thought" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NVW-Un-LKC">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Step 2 - Describe Thought" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NVW-Un-LKC">
                                 <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -11068,10 +10948,10 @@ With this app, you can make plans for using sound when your tinnitus is botherin
                                 </variation>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Step 5 - New Thought" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ez6-4f-vjL">
-                                <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
+                                <rect key="frame" x="0.0" y="-21" width="250" height="21"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="94" id="8tH-5M-BdY">
-                                        <variation key="heightClass=regular-widthClass=compact" constant="106"/>
+                                    <constraint firstAttribute="width" constant="250" id="8tH-5M-BdY">
+                                        <variation key="widthClass=compact" constant="250"/>
                                     </constraint>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
@@ -12169,7 +12049,7 @@ With this app, you can make plans for using sound when your tinnitus is botherin
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Step - 6 New Emotions" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f3I-cR-ov4">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Step 6 - New Emotions" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f3I-cR-ov4">
                                 <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -14005,29 +13885,29 @@ With this app, you can make plans for using sound when your tinnitus is botherin
         <image name="SamplerSelected.png" width="25" height="25"/>
         <image name="Selected_CheckBox.png" width="55" height="55"/>
         <image name="SupportSelected.png" width="25" height="25"/>
-        <image name="changing.png" width="90" height="120"/>
+        <image name="changing.png" width="188" height="250"/>
         <image name="ctf01.png" width="277" height="37"/>
         <image name="ctf02.png" width="277" height="37"/>
         <image name="ctf03.png" width="277" height="37"/>
         <image name="ctf04.png" width="277" height="37"/>
         <image name="ctf05.png" width="277" height="37"/>
         <image name="ctf06.png" width="277" height="37"/>
-        <image name="deep.breathing.png" width="90" height="120"/>
-        <image name="faqs.png" width="90" height="120"/>
-        <image name="guided.png" width="90" height="120"/>
-        <image name="home_findsupport.png" width="128" height="200"/>
-        <image name="home_nook.png" width="128" height="200"/>
-        <image name="home_plans.png" width="128" height="200"/>
-        <image name="home_sampler.png" width="128" height="200"/>
+        <image name="deep.breathing.png" width="188" height="250"/>
+        <image name="faqs.png" width="188" height="250"/>
+        <image name="guided.png" width="188" height="250"/>
+        <image name="home_findsupport.png" width="267" height="417"/>
+        <image name="home_nook.png" width="267" height="417"/>
+        <image name="home_plans.png" width="267" height="417"/>
+        <image name="home_sampler.png" width="267" height="417"/>
         <image name="imagery.png" width="32" height="32"/>
         <image name="line.png" width="400" height="8"/>
         <image name="media-repeat.png" width="36" height="36"/>
-        <image name="pleasant.png" width="90" height="120"/>
-        <image name="resources.png" width="90" height="120"/>
+        <image name="pleasant.png" width="188" height="250"/>
+        <image name="resources.png" width="188" height="250"/>
         <image name="samplersounds.png" width="30" height="30"/>
         <image name="support.png" width="640" height="1136"/>
         <image name="tabhome.png" width="30" height="30"/>
-        <image name="tips.png" width="90" height="120"/>
+        <image name="tips.png" width="188" height="250"/>
         <image name="trashcan.png" width="55" height="55"/>
         <image name="u10.jpg" width="351" height="316"/>
         <image name="u263.png" width="5" height="30"/>
@@ -14035,6 +13915,6 @@ With this app, you can make plans for using sound when your tinnitus is botherin
         <image name="u267.png" width="50" height="50"/>
         <image name="u275.png" width="50" height="50"/>
         <image name="u277.png" width="50" height="50"/>
-        <image name="usingsound.png" width="90" height="120"/>
+        <image name="usingsound.png" width="188" height="250"/>
     </resources>
 </document>

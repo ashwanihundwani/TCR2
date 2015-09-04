@@ -697,7 +697,7 @@
 //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sayHello:) name:@"sayHelloNotification"; object:nil];
     
     //// To chech for the feedback modal
-    if ([[PersistenceStorage getObjectForKey:@"Referer"] isEqual: @"AudioPlayerOneViewController"]) {
+    if ([[PersistenceStorage getObjectForKey:@"Referer"] isEqual: @"AudioPlayerOneViewController"] || [[PersistenceStorage getObjectForKey:@"Referer"] isEqual: @"AudioPanningVC"]) {
         SkillRatingsViewController *ratingsView = [[UIStoryboard storyboardWithName:@"Main"bundle:nil]instantiateViewControllerWithIdentifier:@"SkillRatingsViewController"];
         
         //ratingsView.skillSection = @"Sounds";

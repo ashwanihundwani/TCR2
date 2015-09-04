@@ -28,7 +28,7 @@
      [self setUpView];
     [super viewDidLoad];
     
-    self.activties = @[@"Favorites", @"Values and Activities"];
+    self.activties = @[@"Values and Activities", @"Favorites"];
     
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     

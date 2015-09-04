@@ -7,6 +7,7 @@
 //
 
 #import "GuidedMeditationViewController+Table.h"
+#import "MBProgressHUD.h"
 
 @implementation GuidedMeditationViewController (Table)
 
@@ -327,6 +328,17 @@
     DeleteCormationManager *manager = [DeleteCormationManager getInstance];
     
     [manager showAlertwithPositiveBlock:^(BOOL positive) {
+        
+        
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark.png"] ];
+        
+        hud.mode = MBProgressHUDModeCustomView;
+        
+        hud.labelText = @"Removed";
+        
+        [hud show:YES];
+        [hud hide:YES afterDelay:1];
         
         [self DeleteReminder:self];
         [self.tableView reloadData];

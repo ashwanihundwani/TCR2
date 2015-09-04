@@ -59,7 +59,12 @@
     
     UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(22, 10, 276, 40)];
     
-    label.text= [PersistenceStorage getObjectForKey:@"valueDescription"];
+    NSString *string = [PersistenceStorage getObjectForKey:@"valueDescription"];
+    
+    string = [string stringByTrimmingCharactersInSet:
+              [NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    
+    label.text = string;
     
     label.numberOfLines = 2;
     

@@ -24,6 +24,36 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    UIView *titleView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 64)];
+    
+    titleView.backgroundColor = [Utils colorWithHexValue:NAV_BAR_BLACK_COLOR];
+    
+    UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 10, 320, 64)];
+    
+    Pair *pallete = [Utils getColorFontPair:eCFS_PALLETE_1];
+    
+    titleLabel.font = pallete.secondObj;
+    titleLabel.textColor = pallete.firstObj;
+    
+    
+    titleLabel.textAlignment = NSTextAlignmentCenter;
+    
+    //titleLabel.textColor = [UIColor colorWithHexValue:@"797979"];
+    titleLabel.backgroundColor = [UIColor clearColor];
+    titleLabel.text = @"Tinnitus Coach";
+    
+    
+    UIView *line = [[UIView alloc]initWithFrame:CGRectMake(0, titleView.frame.size.height - 1, 320, 1)];
+    
+    line.backgroundColor = [UIColor colorWithRed:0.0/255.0 green:0.0/255.0 blue:0.098/255.0 alpha:0.22];;
+    
+    [titleView addSubview:line];
+    
+    [titleView addSubview:titleLabel];
+    
+    [self.view addSubview:titleView];
+    [self.parentViewController.navigationController popToRootViewControllerAnimated:YES];
+
     [self requestAccessToEvents];
     [self.parentViewController.navigationController popToRootViewControllerAnimated:YES];
     

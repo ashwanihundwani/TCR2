@@ -55,7 +55,7 @@
         
         SkillIntroInfo *info = [[SkillIntroInfo alloc]init];
         
-        info.descriptionText = @"Use this skill to schedule Pleasant Activities that fit with your values";
+        info.descriptionText = @"Use this skill to schedule Pleasant Activities that fit with your values.";
         
         info.skillImage = [UIImage imageNamed:@"5PleasantActivities.png"];
         
@@ -208,12 +208,12 @@
     if(indexPath.section == 1)
     {
         switch (indexPath.row) {
-            case 0:
+            case 1:
             {
                 [self favoritesClicked:self];
             }
                 break;
-            case 1:
+            case 0:
             {
                 [self valuesClicked:self];
             }
