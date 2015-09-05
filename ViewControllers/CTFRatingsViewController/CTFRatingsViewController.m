@@ -118,7 +118,7 @@
     [button setBackgroundColor:[UIColor colorWithRed:0.0/255.0 green:122.0/255.0 blue:255.0/255.0 alpha:1]];
     
     button.layer.cornerRadius = 5.0f;
-    [button setUserInteractionEnabled:NO];
+    [button setUserInteractionEnabled:YES];
     [self.navigationItem setHidesBackButton:YES];
     [self.view addSubview:button];
     
