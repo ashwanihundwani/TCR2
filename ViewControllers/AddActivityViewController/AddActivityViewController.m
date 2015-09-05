@@ -175,7 +175,7 @@
 }
 
 -(BOOL)activityExists{
-   NSString* queryString = [NSString stringWithFormat:@"select count(*) from Plan_Activities where valueName =\"%@\" and activityName =\"%@\"",[PersistenceStorage getObjectForKey:@"valueName"],self.nameTextField.text];
+   NSString* queryString = [NSString stringWithFormat:@"select count(*) from Plan_Activities where activityName =\"%@\"",self.nameTextField.text];
     NSDictionary* dict = [[self.manager loadDataFromDB:queryString] objectAtIndex:0];
     int val = [(NSString*)[dict valueForKey:@"count(*)"] intValue];
     return  val > 0 ? YES:NO;

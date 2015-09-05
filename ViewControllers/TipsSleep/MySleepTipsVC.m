@@ -265,7 +265,7 @@
 #pragma mark Database Transaction
 -(NSMutableDictionary *)gettingMyTips
 {
-    NSString *query = @"select * from My_Tips";
+    NSString *query = [NSString stringWithFormat:@"select * from My_Tips where planID = %@ and skillID = %@",[PersistenceStorage getObjectForKey:@"currentPlanID"],[PersistenceStorage getObjectForKey:@"currentSkillID"]] ;
     
     NSArray *allMyTips=[NSArray arrayWithArray:[self.dbManager loadDataFromDB:query]];
     

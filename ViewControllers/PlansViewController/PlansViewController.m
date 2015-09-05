@@ -373,7 +373,7 @@
     NSString *query6 = [NSString stringWithFormat:@"delete from MyActivities where planID = '%@'",planID];
     
     
-    NSString *query7 = [NSString stringWithFormat:@"delete from My_Tips where planID = '%@'",planID];
+    NSString *query7 = [NSString stringWithFormat:@"delete from My_Tips where planID = %@",planID];
     
     NSString *query8 = [NSString stringWithFormat:@"delete from My_Contacts "];
     NSString *query9 = [NSString stringWithFormat:@"delete from MyDevices where planID = '%@'",planID];
