@@ -98,6 +98,8 @@
     
     [self.scrollView setFrame:CGRectMake(0.0, 0.0, self.view.frame.size.width, self.view.frame.size.height)];
     [self.scrollView setContentSize:CGSizeMake(320,600)];
+    
+    [self.tableView reloadData];
 }
 
 

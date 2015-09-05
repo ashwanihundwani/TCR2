@@ -66,7 +66,6 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     
-    
     NSLog(@"%@",[PersistenceStorage getObjectForKey:@"skillName"]);
     
     
@@ -467,8 +466,15 @@ if (self.datePicker.hidden==0)
             
             NSString *queryClear = [NSString stringWithFormat:@"delete from MySkillReminders where SkillName = 'Imagery' and PlanName = '%@'",[PersistenceStorage getObjectForKey:@"planName"]];
             
+            NSString *dateWithRepeat = [PersistenceStorage getObjectForKey:@"localScheduledDate"];
             
-            NSString *query = [NSString stringWithFormat:@"insert into MySkillReminders ('ID','SkillName','ScheduledDate','CalendarEventID','PlanName') values(1,'%@','%@','%@','%@' )",@"Imagery",[PersistenceStorage getObjectForKey:@"localScheduledDate"],[PersistenceStorage getObjectForKey:@"lastEventIdentifer"],[PersistenceStorage getObjectForKey:@"planName"]];
+            if([repeatLabel.titleLabel.text isEqualToString:@"Daily"] ||
+               [repeatLabel.titleLabel.text isEqualToString:@"Weekly"])
+            {
+                dateWithRepeat = [[[PersistenceStorage getObjectForKey:@"localScheduledDate"] stringByAppendingString:@"\n"] stringByAppendingString:repeatLabel.titleLabel.text];
+            }
+            
+            NSString *query = [NSString stringWithFormat:@"insert into MySkillReminders ('ID','SkillName','ScheduledDate','CalendarEventID','PlanName') values(1,'%@','%@','%@','%@' )",@"Imagery",dateWithRepeat,[PersistenceStorage getObjectForKey:@"lastEventIdentifer"],[PersistenceStorage getObjectForKey:@"planName"]];
             
             [self.manager executeQuery:queryClear];
             [self.manager executeQuery:query];
@@ -573,11 +579,19 @@ if (self.datePicker.hidden==0)
             [PersistenceStorage setObject:savedEventId andKey:@"lastEventIdentifer"];  ///STORE to test it for deletion
             NSLog(@"%@", [PersistenceStorage getObjectForKey:@"lastEventIdentifer"]);
             
+            NSString *dateWithRepeat = [PersistenceStorage getObjectForKey:@"localScheduledDate"];
+            
+            if([repeatLabel.titleLabel.text isEqualToString:@"Daily"] ||
+               [repeatLabel.titleLabel.text isEqualToString:@"Weekly"])
+            {
+                dateWithRepeat = [[[PersistenceStorage getObjectForKey:@"localScheduledDate"] stringByAppendingString:@"\n"] stringByAppendingString:repeatLabel.titleLabel.text];
+            }
+
             
             NSString *queryClear = [NSString stringWithFormat:@"delete from MySkillReminders where SkillName = 'Guided Meditation' and PlanName = '%@'",[PersistenceStorage getObjectForKey:@"planName"]];;
             
             
-            NSString *query = [NSString stringWithFormat:@"insert into MySkillReminders ('ID','SkillName','ScheduledDate','CalendarEventID','PlanName') values(1,'%@','%@','%@','%@')",@"Guided Meditation",[PersistenceStorage getObjectForKey:@"localScheduledDate"],[PersistenceStorage getObjectForKey:@"lastEventIdentifer"],[PersistenceStorage getObjectForKey:@"planName"]];
+            NSString *query = [NSString stringWithFormat:@"insert into MySkillReminders ('ID','SkillName','ScheduledDate','CalendarEventID','PlanName') values(1,'%@','%@','%@','%@')",@"Guided Meditation",dateWithRepeat,[PersistenceStorage getObjectForKey:@"lastEventIdentifer"],[PersistenceStorage getObjectForKey:@"planName"]];
             
             [self.manager executeQuery:queryClear];
             [self.manager executeQuery:query];
@@ -792,11 +806,19 @@ if (self.datePicker.hidden==0)
             [PersistenceStorage setObject:savedEventId andKey:@"lastEventIdentifer"];  ///STORE to test it for deletion
             NSLog(@"%@", [PersistenceStorage getObjectForKey:@"lastEventIdentifer"]);
             
+            NSString *dateWithRepeat = [PersistenceStorage getObjectForKey:@"localScheduledDate"];
+            
+            if([repeatLabel.titleLabel.text isEqualToString:@"Daily"] ||
+               [repeatLabel.titleLabel.text isEqualToString:@"Weekly"])
+            {
+                dateWithRepeat = [[[PersistenceStorage getObjectForKey:@"localScheduledDate"] stringByAppendingString:@"\n"] stringByAppendingString:repeatLabel.titleLabel.text];
+            }
+            
             
             NSString *queryClear = [NSString stringWithFormat:@"delete from MySkillReminders where SkillName = 'Deep Breathing' and PlanName = '%@'",[PersistenceStorage getObjectForKey:@"planName"]];
             
             
-            NSString *query = [NSString stringWithFormat:@"insert into MySkillReminders ('ID','SkillName','ScheduledDate','CalendarEventID','PlanName') values(1,'%@','%@','%@','%@')",@"Deep Breathing",[PersistenceStorage getObjectForKey:@"localScheduledDate"],[PersistenceStorage getObjectForKey:@"lastEventIdentifer"],[PersistenceStorage getObjectForKey:@"planName"]];
+            NSString *query = [NSString stringWithFormat:@"insert into MySkillReminders ('ID','SkillName','ScheduledDate','CalendarEventID','PlanName') values(1,'%@','%@','%@','%@')",@"Deep Breathing",dateWithRepeat,[PersistenceStorage getObjectForKey:@"lastEventIdentifer"],[PersistenceStorage getObjectForKey:@"planName"]];
             
             [self.manager executeQuery:queryClear];
             [self.manager executeQuery:query];
@@ -861,7 +883,7 @@ if (self.datePicker.hidden==0)
                         action:@selector(setDatePickerTime:)
               forControlEvents:UIControlEventValueChanged];
     NSDateFormatter *outputFormatter = [[NSDateFormatter alloc] init];
-    [outputFormatter setDateFormat:@"MMM dd,yyy HH:mm"];
+    [outputFormatter setDateFormat:@"MMM dd,yyy hh:mm a"];
     
     NSString *title = [outputFormatter stringFromDate:self.datePicker.date];
     self.startDate = self.datePicker.date;
@@ -943,7 +965,7 @@ if (self.datePicker.hidden==0)
 -(void)setDatePickerTime:(id)sender
 {
     NSDateFormatter *outputFormatter = [[NSDateFormatter alloc] init];
-    [outputFormatter setDateFormat:@"MMM dd,yyy HH:mm"];
+    [outputFormatter setDateFormat:@"MMM dd,yyy hh:mm a"];
     
     NSString *title = [outputFormatter stringFromDate:self.datePicker.date];
     self.startDate = self.datePicker.date;

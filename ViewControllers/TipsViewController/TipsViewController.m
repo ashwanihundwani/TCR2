@@ -186,6 +186,8 @@ mySwitch.on = YES;
       mySwitch.on = NO;
       label.text = @"Activate Skill Reminder";
   }
+    
+    [self.tableView reloadData];
 }
     
 

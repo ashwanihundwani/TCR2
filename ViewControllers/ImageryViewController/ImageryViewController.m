@@ -23,6 +23,7 @@
 #import "NookUsingSoundViewControllerOne.h"
 #import "NewPlanAddedViewController.h"
 
+#import "CoundownTimerViewController.h"
 
 #import <EventKit/EventKit.h>
 
@@ -213,7 +214,7 @@ NSArray *remindersArray;
         
     }
     
-    
+    [self.tableView reloadData];
     
     
 }
@@ -355,12 +356,15 @@ NSArray *remindersArray;
 
 
 - (IBAction)BreathingTimer:(id)sender {
-    ImageryTimerViewController *guided = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]
-                                            
-                                            instantiateViewControllerWithIdentifier:@"ImageryTimerViewController"];
-//    [self.navigationController pushViewController:guided animated:YES];
-    [PersistenceStorage setObject:@"Timer for Practice" andKey:@"skillDetail1"];
 
+    CountdownTimerViewController *guided = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]
+                                            
+                                            instantiateViewControllerWithIdentifier:@"CountdownTimerViewController"];
+    
+    guided.header = @"Imagery Timer";
+    
+    guided.image = [UIImage imageNamed:@"2DeepBreathing.png"];
+    
     [self.navigationController presentModalViewController:guided animated:YES];
 
     

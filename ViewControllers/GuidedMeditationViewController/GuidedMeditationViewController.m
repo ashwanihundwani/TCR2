@@ -138,7 +138,7 @@
     }
     
     
-    
+    [self.tableView reloadData];
     
 }
 

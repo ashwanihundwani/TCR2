@@ -79,7 +79,7 @@
     
     activityLabel.textAlignment = NSTextAlignmentCenter;
     
-    activityLabel.text= @"Add a Favorite Activity";
+    activityLabel.text= @"Add New Activity";
     
     
     activityLabel.textColor = [UIColor whiteColor];
@@ -485,6 +485,10 @@
         
         [activityCell.deleteButton setHidden:YES];
         
+    }
+    else
+    {
+        [activityCell.deleteButton setHidden:NO];
     }
     activityCell.initialImageView.layer.borderWidth = 0.2f;
     

@@ -19,6 +19,7 @@
 @property (weak, nonatomic) IBOutlet UISwitch *activateSwitch;
 @property (weak, nonatomic) IBOutlet UIImageView *trashImageView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *tryUsingTopConstraint;
+@property (weak, nonatomic) IBOutlet UILabel *repeatLabel;
 
 @end
 
@@ -45,6 +46,16 @@
     self.tryUsingLabel.text = info.tryUsingText;
     
     self.dateLabel.text = info.reminderDate;
+    
+    if(info.repeatStr)
+    {
+        self.repeatLabel.text = info.repeatStr;
+        self.repeatLabel.hidden = FALSE;
+    }
+    else
+    {
+        self.repeatLabel.hidden = TRUE;
+    }
 }
 
 -(BOOL)getSkillReminderSwitchState{

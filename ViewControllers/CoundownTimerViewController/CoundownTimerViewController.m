@@ -36,11 +36,48 @@
 //From the sounds array
 @property(weak, nonatomic) IBOutlet UIView *viewForControl;
 
+@property(weak, nonatomic) IBOutlet UIView *playSoundView;
+@property(weak, nonatomic) IBOutlet UIView *setTimerView;
+
+@property(weak, nonatomic) IBOutlet UILabel *soundLabel;
+@property(weak, nonatomic) IBOutlet UILabel *timerLabel;
+
+@property(weak, nonatomic) IBOutlet UIButton *startButton;
+@property(weak, nonatomic) IBOutlet UIButton *doneButton;
+
+@property(weak, nonatomic)IBOutlet UIImageView *imageView;
+
+
 @end
 
 //@implementation AudioPlayerTwoViewController
 
 @implementation CountdownTimerViewController
+
+-(IBAction)onStart:(id)sender
+{
+    if([self.startButton.titleLabel.text isEqualToString:@"Start"])
+    {
+        [self countdownTimer:self];
+        [self.startButton setTitle:@"Stop" forState:UIControlStateNormal];
+        
+    }
+    else
+    {
+        [timer invalidate];
+        timer = nil;
+        [self.audioPlayer stop];
+        
+        [self.startButton setTitle:@"Start" forState:UIControlStateNormal];
+    }
+}
+
+-(IBAction)onDone:(id)sender
+{
+    [PersistenceStorage setObject:@"Timer" andKey:@"Referer"];
+    [self dismissModalViewControllerAnimated:NO];
+}
+
 @synthesize myCounterLabel;
 
 
@@ -59,7 +96,7 @@
     
     UILabel *firstLabel = (UILabel *)[self.view viewWithTag:77];
     firstLabel.text = @"Babbling Brook";
-    self.audioPlayer.numberOfLoops = -1;
+    self.audioPlayer.numberOfLoops = 0;
     
     NSString *beasMonoPath  =[[NSBundle mainBundle]pathForResource:@"BabblingBrook.mp3"  ofType:nil];
     NSURL *url = [NSURL URLWithString:beasMonoPath];
@@ -77,7 +114,36 @@
 int hours, minutes, seconds;
 int secondsLeft;
 
+
+-(void)onPlaySound:(id)sender
+{
+    [self selectAudio:sender];
+}
+
+-(void)onTimer:(id)sender
+{
+    [self selectTime:self];
+}
+
+
+
 - (void)viewDidLoad {
+    
+    
+    
+    
+    [super viewDidLoad];
+    
+    [self.timerLabel setText:@"5 min"];
+    self.imageView.image =  [UIImage imageNamed:@"BabblingBrook.png"];
+    self.soundLabel.text = @"Babbling Brook";
+    
+    
+    [[self.view viewWithTag:1] removeFromSuperview];
+    [[self.view viewWithTag:2] removeFromSuperview];
+    [[self.view viewWithTag:3] removeFromSuperview];
+    [[self.view viewWithTag:77] removeFromSuperview];
+    [[self.view viewWithTag:200] removeFromSuperview];
     
     [[self.view viewWithTag:1] setHidden:NO];
     
@@ -86,12 +152,40 @@ int secondsLeft;
     [[self.view viewWithTag:3] setHidden:NO];
     [[self.view viewWithTag:220] setHidden:YES];
     
- [[self.view viewWithTag:77] setHidden:NO];
+    [[self.view viewWithTag:77] setHidden:NO];
     
+    self.navigationController.navigationBar.hidden = NO;
     
+    UIView *titleView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 64)];
     
-    [super viewDidLoad];
-      timer = [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(updateCounter:) userInfo:nil repeats:YES];
+    titleView.backgroundColor = [Utils colorWithHexValue:NAV_BAR_BLACK_COLOR];
+    
+    UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 20, 320, 44)];
+    
+    Pair *pallete = [Utils getColorFontPair:eCFS_PALLETE_1];
+    
+    titleLabel.font = pallete.secondObj;
+    titleLabel.textColor = pallete.firstObj;
+    
+    titleLabel.textAlignment = NSTextAlignmentCenter;
+    
+    //titleLabel.textColor = [UIColor colorWithHexValue:@"797979"];
+    titleLabel.backgroundColor = [UIColor clearColor];
+    titleLabel.text = self.header;
+    
+    [titleView addSubview:titleLabel];
+    
+    UIView *line = [[UIView alloc]initWithFrame:CGRectMake(0, titleView.frame.size.height - 1, 320, 1)];
+    
+    line.backgroundColor = [UIColor colorWithRed:0.0/255.0 green:0.0/255.0 blue:0.098/255.0 alpha:0.22];;
+    
+    [titleView addSubview:line];
+    
+    [self.view addSubview:titleView];
+    
+    [Utils addTapGestureToView:self.setTimerView target:self selector:@selector(onTimer:)];
+    
+    [Utils addTapGestureToView:self.playSoundView target:self selector:@selector(onPlaySound:)];
     
     NSError *sessionError = nil;
      [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:&sessionError];
@@ -132,12 +226,12 @@ int secondsLeft;
         
         
         
-myCounterLabel.text = displayTime;
+self.timerLabel.text = displayTime;
         
     }
     else
     {
-myCounterLabel.text= @"00:00 min";
+self.timerLabel.text= @"00:00 min";
              [self.audioPlayer stop];
             [[self.view viewWithTag:77] setHidden:NO];
         
@@ -154,6 +248,9 @@ myCounterLabel.text= @"00:00 min";
 
 - (IBAction)countdownTimer:(id)sender {
 
+    
+    timer = [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(updateCounter:) userInfo:nil repeats:YES];
+    
     [[self.view viewWithTag:220] setHidden:YES];
     [[self.view viewWithTag:77] setHidden:NO];
 
@@ -178,7 +275,6 @@ myCounterLabel.text= @"00:00 min";
     self.startDate = [currentDate1 dateByAddingTimeInterval:tDurationDouble];
 
    
-    self.audioPlayer.numberOfLoops = -1;
 
     [self.audioPlayer play];
 
@@ -292,7 +388,7 @@ myCounterLabel.text= @"00:00 min";
 
 - (void)actionSheet:(UIActionSheet *)actionSheetTimer clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    timer = nil;
+    [self.timerLabel setText:@"5 min"];
 
      //Get the name of the current pressed button
     NSString *buttonTitle = [actionSheetTimer buttonTitleAtIndex:buttonIndex];
@@ -310,16 +406,17 @@ myCounterLabel.text= @"00:00 min";
         
         if  ([buttonTitle isEqualToString:@"Babbling Brook"]) {
             
+            self.soundLabel.text = @"Babbling Brook";
+            self.audioPlayer.numberOfLoops = 0;
             
             //
             UILabel *firstLabel = (UILabel *)[self.view viewWithTag:77];
             firstLabel.text = @"Babbling Brook";
-            [_img setImage:[UIImage imageNamed: @"BabblingBrook.png"]];
+            [self.imageView setImage:[UIImage imageNamed: @"BabblingBrook.png"]];
             NSString *beasMonoPath  =[[NSBundle mainBundle]pathForResource:@"BabblingBrook.mp3"  ofType:nil];
             NSURL *url = [NSURL URLWithString:beasMonoPath];
             self.audioPlayer = [[AVAudioPlayer alloc]initWithContentsOfURL:url error:nil];
             [PersistenceStorage setObject:@"Babbling Brook" andKey:@"skillDetail2"];
-            self.audioPlayer.numberOfLoops = -1;
 
         }
         
@@ -327,17 +424,19 @@ myCounterLabel.text= @"00:00 min";
         
         if  ([buttonTitle isEqualToString:@"Crackling Fire"]) {
             
+            self.soundLabel.text = @"Crackling Fire";
+            self.audioPlayer.numberOfLoops = 0;
             
             //
             UILabel *firstLabel = (UILabel *)[self.view viewWithTag:77];
             firstLabel.text = @"Crackling Fire";
-             [_img setImage:[UIImage imageNamed: @"Fire.png"]];
+             [self.imageView setImage:[UIImage imageNamed: @"Fire.png"]];
 
             NSString *beasMonoPath  =[[NSBundle mainBundle]pathForResource:@"CracklingFire.mp3"  ofType:nil];
             NSURL *url = [NSURL URLWithString:beasMonoPath];
             self.audioPlayer = [[AVAudioPlayer alloc]initWithContentsOfURL:url error:nil];
             [PersistenceStorage setObject:@"Crackling Fire" andKey:@"skillDetail2"];
-            self.audioPlayer.numberOfLoops = -1;
+   
 
         }
         
@@ -347,35 +446,39 @@ myCounterLabel.text= @"00:00 min";
         
         if  ([buttonTitle isEqualToString:@"Frogs"]) {
             
+            self.soundLabel.text = @"Frogs";
+            
+            self.audioPlayer.numberOfLoops = 0;
             
             //
             UILabel *firstLabel = (UILabel *)[self.view viewWithTag:77];
             firstLabel.text = @"Frogs";
-             [_img setImage:[UIImage imageNamed: @"Frogs.png"]];
+             [self.imageView setImage:[UIImage imageNamed: @"Frogs.png"]];
 
             NSString *beasMonoPath  =[[NSBundle mainBundle]pathForResource:@"frog.mp3"  ofType:nil];
             NSURL *url = [NSURL URLWithString:beasMonoPath];
             self.audioPlayer = [[AVAudioPlayer alloc]initWithContentsOfURL:url error:nil];
             [PersistenceStorage setObject:@"Frogs" andKey:@"skillDetail2"];
-            self.audioPlayer.numberOfLoops = -1;
 
         }
         
         
         
         if  ([buttonTitle isEqualToString:@"Ocean Waves"]) {
-            
+
+            self.soundLabel.text = @"Ocean Waves";
+    
+            self.audioPlayer.numberOfLoops = 0;
             
             //
             UILabel *firstLabel = (UILabel *)[self.view viewWithTag:77];
             firstLabel.text = @"Ocean Waves";
-             [_img setImage:[UIImage imageNamed: @"Ocean.png"]];
+             [self.imageView setImage:[UIImage imageNamed: @"Ocean.png"]];
 
             NSString *beasMonoPath  =[[NSBundle mainBundle]pathForResource:@"OceanWaves.mp3"  ofType:nil];
             NSURL *url = [NSURL URLWithString:beasMonoPath];
             self.audioPlayer = [[AVAudioPlayer alloc]initWithContentsOfURL:url error:nil];
             [PersistenceStorage setObject:@"Ocean Waves" andKey:@"skillDetail2"];
-            self.audioPlayer.numberOfLoops = -1;
 
         }
         
@@ -383,17 +486,18 @@ myCounterLabel.text= @"00:00 min";
         
         if  ([buttonTitle isEqualToString:@"Pink Noise"]) {
             
-            
+            self.soundLabel.text = @"Pink Noise";
+            self.audioPlayer.numberOfLoops = 0;
+
             //
             UILabel *firstLabel = (UILabel *)[self.view viewWithTag:77];
             firstLabel.text = @"Pink Noise";
-             [_img setImage:[UIImage imageNamed: @"PinkNoise.png"]];
+             [self.imageView setImage:[UIImage imageNamed: @"PinkNoise.png"]];
 
             NSString *beasMonoPath  =[[NSBundle mainBundle]pathForResource:@"PinkNoise.mp3"  ofType:nil];
             NSURL *url = [NSURL URLWithString:beasMonoPath];
             self.audioPlayer = [[AVAudioPlayer alloc]initWithContentsOfURL:url error:nil];
             [PersistenceStorage setObject:@"Pink Noise" andKey:@"skillDetail2"];
-            self.audioPlayer.numberOfLoops = -1;
 
         }
         
@@ -417,7 +521,7 @@ myCounterLabel.text= @"00:00 min";
     if  ([buttonTitle isEqualToString:@"5 min"]) {
         
         [PersistenceStorage setObject:@300 andKey:@"timerDuration"];
-        myCounterLabel.text= @"05:00 min";
+        self.timerLabel.text= @"05:00 min";
 
         // secondsLeft1 = [PersistenceStorage getObjectForKey:@"timerDuration"];
     }
@@ -427,7 +531,7 @@ myCounterLabel.text= @"00:00 min";
     if  ([buttonTitle isEqualToString:@"10 min"]) {
         
         [PersistenceStorage setObject:@600 andKey:@"timerDuration"];
-        myCounterLabel.text= @"10:00 min";
+        self.timerLabel.text= @"10:00 min";
 
         // secondsLeft1 = [PersistenceStorage getObjectForKey:@"timerDuration"];
     }
@@ -439,7 +543,7 @@ myCounterLabel.text= @"00:00 min";
     if  ([buttonTitle isEqualToString:@"20 min"]) {
         
         [PersistenceStorage setObject:@1200 andKey:@"timerDuration"];
-        myCounterLabel.text= @"20:00 min";
+        self.timerLabel.text= @"20:00 min";
 
         // secondsLeft1 = [PersistenceStorage getObjectForKey:@"timerDuration"];
     }
@@ -449,7 +553,7 @@ myCounterLabel.text= @"00:00 min";
         if  ([buttonTitle isEqualToString:@"30 min"]) {
             
             [PersistenceStorage setObject:@1800 andKey:@"timerDuration"];
-            myCounterLabel.text= @"30:00 min";
+            self.timerLabel.text= @"30:00 min";
 
             // secondsLeft1 = [PersistenceStorage getObjectForKey:@"timerDuration"];
         }
@@ -458,7 +562,7 @@ myCounterLabel.text= @"00:00 min";
         if  ([buttonTitle isEqualToString:@"60 min"]) {
             
             [PersistenceStorage setObject:@3600 andKey:@"timerDuration"];
-            myCounterLabel.text= @"60:00 min";
+            self.timerLabel.text= @"60:00 min";
 
             // secondsLeft1 = [PersistenceStorage getObjectForKey:@"timerDuration"];
         }
@@ -484,7 +588,11 @@ myCounterLabel.text= @"00:00 min";
     }
     
     
+    [self.audioPlayer stop];
+    [timer invalidate];
+    timer = nil;
     
+    [self.startButton setTitle:@"Start" forState:UIControlStateNormal];
 }
 
 
@@ -622,7 +730,7 @@ myCounterLabel.text= @"00:00 min";
     
     
     self.audioSeekSlider.value = 0;
-    self.audioPlayer.numberOfLoops = -1;
+    self.audioPlayer.numberOfLoops = 0;
     self.audioSeekSlider.minimumValue = 0;
     self.audioSeekSlider.maximumValue = self.audioPlayer.duration;
     
@@ -661,7 +769,6 @@ myCounterLabel.text= @"00:00 min";
         }
         else
         {
-            self.audioPlayer.numberOfLoops = -1;
             [self.audioPlayer play];
             [self.playPauseButton setTitle:@"Pause" forState:UIControlStateNormal];
             self.updateTimer = [NSTimer scheduledTimerWithTimeInterval:.01 target:self selector:@selector(updateCurrentTime) userInfo:self.audioPlayer repeats:YES];

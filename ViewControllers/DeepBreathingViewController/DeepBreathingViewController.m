@@ -218,15 +218,15 @@
      
      
      
-     if ([[PersistenceStorage getObjectForKey:@"Referer"] isEqual: @"VideoPlayerViewController"])  {
-        SkillRatingsViewController *ratingsView = [[UIStoryboard storyboardWithName:@"Main"bundle:nil]instantiateViewControllerWithIdentifier:@"SkillRatingsViewController"];
-        
-        //ratingsView.skillSection = @"Sounds";
-        //  ratingsView.skillDetail = self.name;
-        
-        //[self.navigationController pushViewController:ratingsView animated:YES];
-        [self.navigationController presentModalViewController:ratingsView animated:YES];
-    }
+//     if ([[PersistenceStorage getObjectForKey:@"Referer"] isEqual: @"VideoPlayerViewController"])  {
+//        SkillRatingsViewController *ratingsView = [[UIStoryboard storyboardWithName:@"Main"bundle:nil]instantiateViewControllerWithIdentifier:@"SkillRatingsViewController"];
+//        
+//        //ratingsView.skillSection = @"Sounds";
+//        //  ratingsView.skillDetail = self.name;
+//        
+//        //[self.navigationController pushViewController:ratingsView animated:YES];
+//        [self.navigationController presentModalViewController:ratingsView animated:YES];
+//    }
 
     
     
@@ -258,7 +258,7 @@
     }
     
     
-    
+    [self.tableView reloadData];
     
 }
 
@@ -467,6 +467,11 @@
     CountdownTimerViewController *guided = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]
                                             
                                             instantiateViewControllerWithIdentifier:@"CountdownTimerViewController"];
+    
+    guided.header = @"Deep Breathing Timer";
+    
+    guided.image = [UIImage imageNamed:@"2DeepBreathing.png"];
+    
     [self.navigationController presentModalViewController:guided animated:YES];
     
  

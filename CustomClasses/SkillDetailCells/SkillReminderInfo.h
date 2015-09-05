@@ -13,5 +13,6 @@
 @property(nonatomic)BOOL reminderExists;
 @property(nonatomic, strong)NSString *tryUsingText;
 @property(nonatomic, strong)NSString *reminderDate;
+@property(nonatomic, strong)NSString *repeatStr;
 
 @end

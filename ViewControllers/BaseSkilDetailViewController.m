@@ -65,14 +65,9 @@
     
     self.navigationItem.titleView = titleView;
     
-    UILabel *backLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 0, 60, 20)];
+    UIImageView *backLabel = [[UIImageView alloc]initWithFrame:CGRectMake(10, 10, 15, 20)];
     
-    backLabel.text = @"Cancel";
-    
-    pallete = [Utils getColorFontPair:eCFS_PALLETE_3];
-    
-    backLabel.font = pallete.secondObj;
-    backLabel.textColor = pallete.firstObj;
+    backLabel.image = [UIImage imageNamed:@"Active_Back-Arrow.png"];
     
     [Utils addTapGestureToView:backLabel target:self
                       selector:@selector(cancel)];

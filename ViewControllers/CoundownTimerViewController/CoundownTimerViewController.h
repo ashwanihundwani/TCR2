@@ -14,11 +14,13 @@
     IBOutlet UILabel *myCounterLabel1;
 }
 
+@property(nonatomic, strong)NSString *header;
 @property(nonatomic,strong) NSString *name;
 @property(nonatomic,strong) NSString *url;
 @property(nonatomic,strong) NSString *videoURL;
 @property (nonatomic,assign) audioPanning panning;
 
+@property(nonatomic, strong)UIImage *image;
 @property (weak, nonatomic) IBOutlet UILabel *Label;
 @property (weak, nonatomic) IBOutlet UIImageView *img;
 
