@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7702" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="49e-Tb-3d3">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="49e-Tb-3d3">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -927,6 +927,7 @@
                     <connections>
                         <outlet property="nextBtn" destination="B9H-bc-TiT" id="HeD-G7-CCI"/>
                         <outlet property="previousBtn" destination="Cv0-8r-QRz" id="M0h-F6-NyI"/>
+                        <outlet property="submittBtn" destination="SJ4-2u-C5d" id="Bca-54-ZXe"/>
                         <outlet property="tableview" destination="NwW-vA-ouD" id="NjL-Dh-Obg"/>
                     </connections>
                 </viewController>
@@ -6257,8 +6258,8 @@ With this app, you can make plans for using sound when your tinnitus is botherin
                                         </userDefinedRuntimeAttributes>
                                         <variation key="default">
                                             <mask key="constraints">
-                                                <exclude reference="uJs-Ua-1ho"/>
                                                 <exclude reference="Gz8-ec-8VP"/>
+                                                <exclude reference="uJs-Ua-1ho"/>
                                             </mask>
                                         </variation>
                                         <connections>

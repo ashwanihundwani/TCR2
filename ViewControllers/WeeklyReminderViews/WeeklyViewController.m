@@ -50,6 +50,11 @@
     currentPlanIndex = 0;
     self.previousBtn.hidden = YES;
     [self.tableview registerNib:[UINib nibWithNibName:@"FeedbackTableViewCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"FeedbackCellIdentifier"];
+    if(categorizedSkills != nil && categorizedSkills.count > 1){
+        self.submittBtn.hidden = YES;
+    }else{
+        self.submittBtn.hidden = NO;
+    }
     
     [self resetWeeklyReminderEventForFutureDate];
     
@@ -1115,6 +1120,7 @@
         currentPlanIndex--;
         if(currentPlanIndex == 0)
             self.previousBtn.hidden = YES;
+        self.submittBtn.hidden = YES;
         [self.tableview reloadData];
     }
     
@@ -1127,8 +1133,12 @@
             self.previousBtn.hidden = NO;
         }
         currentPlanIndex++;
-        if(currentPlanIndex == maxMyPlan -1)
+        if(currentPlanIndex == maxMyPlan -1){
             self.nextBtn.hidden = YES;
+            self.submittBtn.hidden = NO;
+        }else{
+            self.submittBtn.hidden = YES;
+        }
         [self.tableview reloadData];
     }
 }
