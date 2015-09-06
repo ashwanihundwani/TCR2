@@ -763,6 +763,39 @@
     return nil;
 }
 
+-(UIView*)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
+    switch (tableView.tag) {
+        case 200:{
+            switch (section) {
+                case 0:{
+                    UIView *soundHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, 300.0, 60.0)];
+                    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(20.0, 10.0, 280, 60.0)];
+                    label.text = @"To hear more sounds, go to \"Add and Use Plans\" from the home page, and add \"Using Sound\" to a plan.";
+                    label.font = [UIFont systemFontOfSize:12];
+                    label.textColor= [UIColor darkGrayColor];
+                    label.numberOfLines =3;
+                    [soundHeaderView addSubview:label];
+                    return soundHeaderView;
+                }
+                default:
+                    return nil;
+            }
+        }
+
+        default:
+            return nil;
+    }
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
+    switch (tableView.tag) {
+        case 200:
+            return 60;
+            default:
+            return 0;
+    }
+}
+
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:[tableView indexPathForSelectedRow] animated:YES];
     switch (tableView.tag) {
