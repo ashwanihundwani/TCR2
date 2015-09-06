@@ -7,6 +7,7 @@
 //
 
 #import "BaseSkilDetailViewController.h"
+#import "ChangingThoughtsViewController.h"
 
 @interface BaseSkilDetailViewController ()
 
@@ -46,8 +47,17 @@
     titleLabel.backgroundColor = [UIColor clearColor];
     titleLabel.text = [self planText];
     
-    UILabel *situationLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 20
-                                                                    , 180, 20)];
+    
+    CGFloat width = 180;
+    CGFloat origin = 0;
+    
+    if([self isKindOfClass:[ChangingThoughtsViewController class]]){
+        width = 200;
+        origin = -10;
+    }
+    
+    UILabel *situationLabel = [[UILabel alloc]initWithFrame:CGRectMake(origin, 20
+                                                                    , width, 20)];
     
     pallete = [Utils getColorFontPair:eCFS_PALLETE_2];
     

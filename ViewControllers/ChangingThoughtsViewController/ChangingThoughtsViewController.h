@@ -7,7 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BaseSkilDetailViewController.h"
 
-@interface ChangingThoughtsViewController : UIViewController
+@interface ChangingThoughtsViewController : BaseSkilDetailViewController
+
+@property(nonatomic, weak)IBOutlet UITableView *tableView;
+
+@property(nonatomic, strong) NSArray *thoughtsAndFeelings;
+
+
+-(IBAction)newEntryClicked:(id)sender;
+- (IBAction)viewEntriesClicked:(id)sender;
 
 @end

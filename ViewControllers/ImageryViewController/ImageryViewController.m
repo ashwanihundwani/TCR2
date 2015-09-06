@@ -31,7 +31,7 @@
 #import "IntroPageInfo.h"
 
 
-@interface ImageryViewController ()<UITableViewDataSource,UITableViewDelegate>{
+@interface ImageryViewController ()<UITableViewDataSource,UITableViewDelegate, ScheduleViewControllerDelegate>{
     NSArray *paArray;
 NSArray *remindersArray;
 }
@@ -219,6 +219,11 @@ NSArray *remindersArray;
     
 }
 
+-(void)didTapDelete:(id)sender
+{
+    [self DeleteReminder:self];
+}
+
 
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
@@ -306,18 +311,45 @@ NSArray *remindersArray;
         [PersistenceStorage setObject:buttonTitle andKey:@"optionName"];
         
         UILabel *label = (UILabel *)[self.view viewWithTag:333];
-        if (![label.text isEqualToString:@"No reminders"])
-        {
-        }
+        //        if (![label.text isEqualToString:@"No reminders"])
+        //        {
+        //        }
+        //
+        //        else
+        //        {
+        //
         
-        else
-        {  [self writeClickedNextSteps];
+        NSString *query = [NSString stringWithFormat: @"select * from MySkillReminders where SkillName = 'Imagery' and PlanName = \'%@\'",[PersistenceStorage getObjectForKey:@"planName"]];
+        
+        self.manager = [[DBManager alloc]initWithDatabaseFileName:@"GNResoundDB.sqlite"];
+        
+        NSArray *reminders = [[NSArray alloc] initWithArray:[self.manager loadDataFromDB:query]];
+        
+        if(reminders.count > 0)
+        {
+            [PersistenceStorage setObject:@"YES" andKey:@"showCancelActivityButton"];
+        }
+        else{
+            
+            [PersistenceStorage setObject:@"NO" andKey:@"showCancelActivityButton"];
+        }
+
+//        UILabel *label = (UILabel *)[self.view viewWithTag:333];
+//        if (![label.text isEqualToString:@"No reminders"])
+//        {
+//        }
+        
+//        else
+//        {
+        [self writeClickedNextSteps];
         
 
         
         ScheduleViewController *svc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"ScheduleViewController"];
+            
+            svc.delegate = self;
          [self.navigationController pushViewController:svc animated:YES];
-        }
+        //}
     }
     
     
@@ -525,6 +557,8 @@ audioPanning.videoURL = @"ImageryLesson.mp4";
 -(IBAction)goToScheduler:(id)sender
 {
     ScheduleViewController *favc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"ScheduleViewController"];
+    
+    favc.delegate = self;
     [self.navigationController pushViewController:favc animated:YES];
 }
 
@@ -533,8 +567,7 @@ audioPanning.videoURL = @"ImageryLesson.mp4";
 
 - (IBAction)DeleteReminder:(id)sender {
     
-    NSString *query = [NSString stringWithFormat: @"select * from MySkillReminders where SkillName = 'Imagery'"];
-    
+    NSString *query = [NSString stringWithFormat: @"select * from MySkillReminders where SkillName = 'Imagery' and PlanName = \'%@\'",[PersistenceStorage getObjectForKey:@"planName"]];
     
     self.manager = [[DBManager alloc]initWithDatabaseFileName:@"GNResoundDB.sqlite"];
     remindersArray = [[NSArray alloc] initWithArray:[self.manager loadDataFromDB:query]];
@@ -548,7 +581,7 @@ audioPanning.videoURL = @"ImageryLesson.mp4";
         [PersistenceStorage setObject:strAct andKey:@"EventID"];
     }
     
-    NSString *query1 = [NSString stringWithFormat:@"delete from MySkillReminders where SkillName = 'Imagery'"];
+    NSString *query1 = [NSString stringWithFormat:@"delete from MySkillReminders where SkillName = 'Imagery' and PlanName = \'%@\'",[PersistenceStorage getObjectForKey:@"planName"]];;
     
     [self.manager executeQuery:query1];
     

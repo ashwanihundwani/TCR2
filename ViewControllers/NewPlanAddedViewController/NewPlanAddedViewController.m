@@ -163,7 +163,7 @@
     NSString *skillName = [[filteredArray objectAtIndex:indexPath.row] valueForKey:@"skillName"];
     
     
-    CGFloat labelHeight = [Utils heightForLabelForString:skillName width:200 font:TITLE_LABEL_FONT];
+    CGFloat labelHeight = [Utils heightForLabelForString:skillName width:210 font:TITLE_LABEL_FONT];
     
     constant += labelHeight;
     

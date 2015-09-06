@@ -38,7 +38,7 @@
         
         [pageInfos addObject:info];
         
-        IntroPageInfo *info2 = [[IntroPageInfo alloc] initWithimage:[UIImage imageNamed:@"Intro4image2.png"] title: G_M_INTRO_PAGE_2];
+        IntroPageInfo *info2 = [[IntroPageInfo alloc] initWithimage:[UIImage imageNamed:@"Intro4image2.png"] title: @"What will I be doing in these exercises?" description:G_M_INTRO_PAGE_2];
         
         [pageInfos addObject:info2];
         
@@ -81,7 +81,8 @@
     
     [pageInfos addObject:info];
     
-    IntroPageInfo *info2 = [[IntroPageInfo alloc] initWithimage:[UIImage imageNamed:@"Intro4image2.png"] title: G_M_INTRO_PAGE_2];
+    IntroPageInfo *info2 = [[IntroPageInfo alloc] initWithimage:[UIImage imageNamed:@"Intro4image2.png"] title: @"What will I be doing in these exercises?" description:G_M_INTRO_PAGE_2];
+    
     
     [pageInfos addObject:info2];
     

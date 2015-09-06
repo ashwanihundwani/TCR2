@@ -28,6 +28,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.thoughtsAndFeelings = @[@"Add New Entry", @"Previous Entries"];
+    
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    /*
  
     UIView *titleView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 170, 44)];
     
@@ -87,7 +92,7 @@
     
     self.navigationItem.leftBarButtonItems = [NSArray arrayWithObjects:negativeSpacer, item, nil];
     
-    
+    */
     
     
     

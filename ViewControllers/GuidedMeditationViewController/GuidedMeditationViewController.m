@@ -21,7 +21,7 @@
 #import "SwiperViewController.h"
 #import "IntroPageInfo.h"
 
-@interface GuidedMeditationViewController ()
+@interface GuidedMeditationViewController ()<ScheduleViewControllerDelegate>
 {NSArray *remindersArray;
 }
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
@@ -29,6 +29,11 @@
 @end
 
 @implementation GuidedMeditationViewController
+
+-(void)didTapDelete:(id)sender
+{
+    [self DeleteReminder:self];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -100,13 +105,13 @@
     [self.scrollView setFrame:CGRectMake(0.0, 0.0, self.view.frame.size.width, self.view.frame.size.height)];
     [self.scrollView setContentSize:CGSizeMake(320,800)];
     if ([[PersistenceStorage getObjectForKey:@"Referer"] isEqualToString:@"AudioPlayerTwoViewController"]) {
-//        SkillRatingsViewController *ratingsView = [[UIStoryboard storyboardWithName:@"Main"bundle:nil]instantiateViewControllerWithIdentifier:@"SkillRatingsViewController"];
-//        
-//        //ratingsView.skillSection = @"Sounds";
-//        //  ratingsView.skillDetail = self.name;
-//        
-//        //[self.navigationController pushViewController:ratingsView animated:YES];
-//        [self.navigationController presentModalViewController:ratingsView animated:YES];
+        SkillRatingsViewController *ratingsView = [[UIStoryboard storyboardWithName:@"Main"bundle:nil]instantiateViewControllerWithIdentifier:@"SkillRatingsViewController"];
+        
+        //ratingsView.skillSection = @"Sounds";
+        //  ratingsView.skillDetail = self.name;
+        
+        //[self.navigationController pushViewController:ratingsView animated:YES];
+        [self.navigationController presentModalViewController:ratingsView animated:YES];
     }
     
     
@@ -220,19 +225,38 @@
     
     if ([buttonTitle isEqualToString:@"Schedule Skill Reminder"]) {
         UILabel *label = (UILabel *)[self.view viewWithTag:333];
-        if (![label.text isEqualToString:@"No reminders"])
+//        if (![label.text isEqualToString:@"No reminders"])
+//        {
+//        }
+//        
+//        else
+//        {
+        
+        NSString *query = [NSString stringWithFormat: @"select * from MySkillReminders where SkillName = 'Guided Meditation' and PlanName = \'%@\'",[PersistenceStorage getObjectForKey:@"planName"]];
+        
+        self.manager = [[DBManager alloc]initWithDatabaseFileName:@"GNResoundDB.sqlite"];
+        
+        NSArray *reminders = [[NSArray alloc] initWithArray:[self.manager loadDataFromDB:query]];
+        
+        if(reminders.count > 0)
         {
+            [PersistenceStorage setObject:@"YES" andKey:@"showCancelActivityButton"];
+        }
+        else{
+            
+            [PersistenceStorage setObject:@"NO" andKey:@"showCancelActivityButton"];
         }
         
-        else
-        {  [PersistenceStorage setObject:nil andKey:@"skillDetail1"];
+
+        [PersistenceStorage setObject:nil andKey:@"skillDetail1"];
         
         [self writeClickedNextSteps];
         
    ScheduleViewController *svc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"ScheduleViewController"];
         //     svc.name = strAct;
+            svc.delegate= self;
         [self.navigationController pushViewController:svc animated:YES];
-        }
+        //}
     }
     
     
@@ -259,7 +283,7 @@
     
     [pageInfos addObject:info];
     
-    IntroPageInfo *info2 = [[IntroPageInfo alloc] initWithimage:[UIImage imageNamed:@"Intro4image2.png"] title: @"What will I be doing in these exercises?" description:@"For three of these exercises you will focus on relaxing different parts of the body where you feel stress. The other two exercises focus on 'mindfulness'. Mindfulness means paying attention to the present moment."];
+    IntroPageInfo *info2 = [[IntroPageInfo alloc] initWithimage:[UIImage imageNamed:@"Intro4image2.png"] title: @"What will I be doing in these exercises?" description:G_M_INTRO_PAGE_2];
     
     [pageInfos addObject:info2];
     
@@ -350,10 +374,7 @@
 
 -(void)RefreshScheduleData
 {
-    NSString *query = [NSString stringWithFormat:@"select * from MySkillReminders where SkillName = 'Guided Meditation'"];
-    
-    
-    
+    NSString *query = [NSString stringWithFormat: @"select * from MySkillReminders where SkillName = 'Guided Meditation' and PlanName = \'%@\'",[PersistenceStorage getObjectForKey:@"planName"]];
     
     self.manager = [[DBManager alloc]initWithDatabaseFileName:@"GNResoundDB.sqlite"];
     remindersArray = [[NSArray alloc] initWithArray:[self.manager loadDataFromDB:query]];
@@ -402,6 +423,8 @@
 -(IBAction)goToScheduler:(id)sender
 {
     ScheduleViewController *favc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"ScheduleViewController"];
+    
+    favc.delegate = self;
     [self.navigationController pushViewController:favc animated:YES];
 }
 
@@ -410,7 +433,7 @@
 
 - (IBAction)DeleteReminder:(id)sender {
     
-    NSString *query = [NSString stringWithFormat: @"select * from MySkillReminders where SkillName = 'Guided Meditation'"];
+    NSString *query = [NSString stringWithFormat: @"select * from MySkillReminders where SkillName = 'Guided Meditation' and PlanName = \'%@\'",[PersistenceStorage getObjectForKey:@"planName"]];
     
     
     self.manager = [[DBManager alloc]initWithDatabaseFileName:@"GNResoundDB.sqlite"];
@@ -425,7 +448,7 @@
         [PersistenceStorage setObject:strAct andKey:@"EventID"];
     }
     
-    NSString *query1 = [NSString stringWithFormat:@"delete from MySkillReminders where SkillName = 'Guided Meditation'"];
+    NSString *query1 = [NSString stringWithFormat:@"delete from MySkillReminders where SkillName = 'Guided Meditation' and PlanName = \'%@\'",[PersistenceStorage getObjectForKey:@"planName"]];
     
     [self.manager executeQuery:query1];
     

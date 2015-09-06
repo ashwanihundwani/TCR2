@@ -169,7 +169,7 @@ self.navigationItem.hidesBackButton = YES;
     //    if ([labelOne.text isEqual: @"One"]) {
     
     
-    if    ([[PersistenceStorage getObjectForKey:@"skillDetail1"] isEqual:@"Watched Video Introduction"])
+    if    ([[PersistenceStorage getObjectForKey:@"skillDetail1"] isEqualToString:@"Watched Video Introduction"])
     
     {
 

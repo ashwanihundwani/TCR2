@@ -378,6 +378,7 @@
     NSString *lastName;
     NSString *retrievedName;
     NSString *recordID;
+    NSString *companyName;
     
     NSDate *retrievedDate;
     UIImage *retrievedImage;
@@ -425,6 +426,9 @@
     // get the last name
     lastName = (__bridge_transfer NSString *)ABRecordCopyValue(person, kABPersonLastNameProperty);
     
+    
+    //get the company name
+    companyName = (__bridge_transfer NSString *)ABRecordCopyValue(person, kABPersonOrganizationProperty);
     // get the birthday
     retrievedDate = (__bridge_transfer NSDate*)ABRecordCopyValue(person, kABPersonBirthdayProperty);
     
@@ -474,6 +478,11 @@
         retrievedName = [[NSString alloc] initWithFormat:@"%@", lastName];
     }
     
+    if(companyName)
+    {
+        retrievedName = [[NSString alloc] initWithFormat:@"%@", companyName];
+    }
+    
     NSString *query = @"SELECT * FROM My_Contacts";
     
     NSArray *allRecordsArray = [dbManager loadDataFromDB:query];
@@ -499,15 +508,24 @@
         }
     }
     
-    
-    query = [NSString stringWithFormat:@"insert into My_Contacts (contactName,contactNumber,contactType,createdDate) values('%@','%@','%@','%@')",retrievedName,contactNumber,[PersistenceStorage getObjectForKey:@"contactType"],nil];
-    
-    // Execute the query.
-    [dbManager executeQuery:query];
-    [self dismissViewControllerAnimated:NO completion:^(){}];
-    [self setData];
-    [self addedContact];
-    [self.supportTableView reloadData];
+    if(retrievedName)
+    {
+        query = [NSString stringWithFormat:@"insert into My_Contacts (contactName,contactNumber,contactType,createdDate) values('%@','%@','%@','%@')",retrievedName,contactNumber,[PersistenceStorage getObjectForKey:@"contactType"],nil];
+        
+        // Execute the query.
+        [dbManager executeQuery:query];
+        [self dismissViewControllerAnimated:NO completion:^(){}];
+        [self setData];
+        
+        [self.supportTableView reloadData];
+    }
+    else
+    {
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil message:@"Invalid contact, cannot save a contact without name." delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:
+                              nil];
+        
+        [alert show];
+    }
     
 }
 

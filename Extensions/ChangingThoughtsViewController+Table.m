@@ -1,30 +1,41 @@
 //
-//  TipsViewController+Table.m
+//  ChangingThoughtsViewController+Table.m
 //  TinnitusCoach
 //
-//  Created by Ashwani Hundwani on 13/06/2015.
+//  Created by Ashwani Hundwani on 06/09/2015.
 //  Copyright (c) 2015 Creospan. All rights reserved.
 //
 
-#import "TipsViewController+Table.h"
-#import "DeleteCormationManager.h"
+#import "ChangingThoughtsViewController+Table.h"
 
-@implementation TipsViewController (Table)
+@implementation ChangingThoughtsViewController (Table)
+-(CGFloat)heightForIndexPath:(NSIndexPath *)indexPath
+{
+    CGFloat constant = 27;
+    
+    CGFloat labelHeight = [Utils heightForLabelForString:[self.thoughtsAndFeelings objectAtIndex:indexPath.row] width:240 font:TITLE_LABEL_FONT];
+    
+    constant += labelHeight;
+    
+    return constant;
+}
+
+
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 3;
+    return 2;
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if(section != 2)
+    if(section == 0)
     {
         return 1;
     }
     else
     {
-        return self.exercises.count;
+        return self.thoughtsAndFeelings.count;
     }
 }
 
@@ -43,52 +54,13 @@
         
         SkillIntroInfo *info = [[SkillIntroInfo alloc]init];
         
-        info.descriptionText = @"To use Tips for Better Sleep select the tips you want to use. Press “View My Sleep Tips” below to get started.";
+        info.descriptionText = @"When you are feeling bad, changing your thoughts can help you feel better.  Click “Add New Entry” to start the step-by-step guide to Changing Thoughts and Feelings.";
         
-        info.skillImage = [UIImage imageNamed:@"7TipsforBetterSleep.png"];
+        info.skillImage = [UIImage imageNamed:@"6ChangingThoughts&Feelings.png"];
         
         [cell setSkillIntroInfo:info];
         
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        
-        return cell;
-    }
-    else if(indexPath.section == 1)
-    {
-        SkillReminderCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"SkillReminderCell"];
-        
-        if(!cell)
-        {
-            cell = [[[NSBundle mainBundle] loadNibNamed:@"SkillReminderCell" owner:nil options:nil] objectAtIndex:0];
-        }
-        
-        id reminder = nil;
-        
-        NSString *query = [NSString stringWithFormat:@"select * from MySkillReminders where SkillName = 'Tips for Better Sleep'"];
-        
-        self.manager = [[DBManager alloc]initWithDatabaseFileName:@"GNResoundDB.sqlite"];
-        
-        NSArray *reminders = [[NSArray alloc] initWithArray:[self.manager loadDataFromDB:query]];
-        
-        SkillReminderInfo *info = [[SkillReminderInfo alloc]init];
-        info.reminderDate = @"";
-        info.tryUsingText = @"";
-        info.reminderExists = reminder ? YES : NO;
-        
-        [cell setReminderInfo:info];
-        if([reminders count] == 1)
-        {
-            [cell setSkillReminderSwitchState:YES];
-        }
-        else
-        {
-            [cell setSkillReminderSwitchState:NO];
-        }
-
-        
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        
-        cell.delegate = self;
         
         return cell;
     }
@@ -104,9 +76,13 @@
             
             [accessory setImage:[UIImage imageNamed:@"Active_Next-Arrow.png"]];
             
+            accessory.tag = ACCESSORY_IMAGE_TAG;
+            
             [cell addSubview:accessory];
             
-            UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(22 , 11, 276, 20)];
+            UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(22 , 11, 240, 20)];
+            
+            titleLabel.numberOfLines = 1000;
             
             titleLabel.tag = 1007;
             
@@ -121,15 +97,31 @@
             
             separator.backgroundColor = [Utils colorWithHexValue:@"EEEEEE"];
             
+            separator.tag = SEPARATOR_TAG;
             
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             
             [cell addSubview:separator];
         }
         
-        UILabel *titleLabel = (UILabel *)[cell viewWithTag:1007];
+        UILabel *titleLabel = (UILabel *)[cell viewWithTag:TITLE_LABEL_TAG];
         
-        titleLabel.text = [self.exercises objectAtIndex:indexPath.row];
+        titleLabel.text = [self.thoughtsAndFeelings objectAtIndex:indexPath.row];
+        
+        CGFloat labelHeight = [Utils heightForLabelForString:titleLabel.text width:240 font:TITLE_LABEL_FONT];
+        
+        
+        titleLabel.height = labelHeight;
+        
+        UIView *separator = [cell viewWithTag:SEPARATOR_TAG];
+        
+        CGFloat height = [self heightForIndexPath:indexPath];
+        
+        separator.y = height - 1;
+        
+        UIImageView *accessory = (UIImageView *)[cell viewWithTag:ACCESSORY_IMAGE_TAG];
+        
+        accessory.y = height / 2 - accessory.height / 2;
         
         return cell;
     }
@@ -137,7 +129,7 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
 {
-    if(section != 2)
+    if(section == 0)
     {
         return 10;
     }
@@ -158,7 +150,7 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    if(section == 2)
+    if(section == 1)
     {
         return 60;
     }
@@ -172,11 +164,14 @@
 
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
+    if(section != 1)
+        return nil;
+    
     UIView *videoHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, 300.0, 56.0)];
     
-    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(20.0, 24.0, 200.0, 20.0)];
+    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(20.0, 24.0, 300.0, 20.0)];
     
-    label.text = @"Tips for Better Sleep";
+    label.text = @"Schedule Pleasant Activities";
     
     Pair *pallete = [Utils getColorFontPair:eCFS_PALLETE_3];
     
@@ -199,42 +194,27 @@
 {
     if(indexPath.section == 0)
     {
-        return 370;
-    }
-    else if(indexPath.section == 1)
-    {
-        /*
-        NSString *query = [NSString stringWithFormat:@"select * from MySkillReminders where SkillName = 'Tips for Better Sleep'"];
-        
-        self.manager = [[DBManager alloc]initWithDatabaseFileName:@"GNResoundDB.sqlite"];
-        
-        NSArray *reminders = [[NSArray alloc] initWithArray:[self.manager loadDataFromDB:query]];
-        
-        if([reminders count] == 1)
-        {
-            return 128;
-        }
-        else
-        {
-            return 100;
-        }
-         */
-        return 100;
+        return 380;
     }
     else
     {
-        return 44;
+        return [self heightForIndexPath:indexPath];
     }
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if(indexPath.section == 2)
+    if(indexPath.section == 1)
     {
         switch (indexPath.row) {
             case 0:
             {
-                [self openMySleepTipsVC:self];
+                [self newEntryClicked:self];
+            }
+                break;
+            case 1:
+            {
+                [self viewEntriesClicked:self];
             }
                 
             default:
@@ -254,56 +234,15 @@
     [self learnMoreClicked:self];
 }
 
-#pragma mark Skill Reminder Methods
--(void)didTapActivate:(id)sender
-{
-    
-    //[self goToScheduler:sender];
-    // check for toggle
-    SkillReminderCell* cell = (SkillReminderCell*)sender;
-    if([cell getSkillReminderSwitchState]){
-        [cell setSkillReminderSwitchState:NO];
-        [self toggle1:YES];
-        
-    }else{
-        [cell setSkillReminderSwitchState:YES];
-        [self toggle1:NO];
-
-    }
-
-}
-
--(void)didTapTrash:(id)sender
-{
-    DeleteCormationManager *manager = [DeleteCormationManager getInstance];
-    
-    [manager showAlertwithPositiveBlock:^(BOOL positive) {
-        
-        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-        hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark.png"] ];
-        
-        hud.mode = MBProgressHUDModeCustomView;
-        
-        hud.labelText = @"Removed";
-        
-        [hud show:YES];
-        [hud hide:YES afterDelay:1];
-        
-        [self DeleteReminder:self];
-        [self.tableView reloadData];
-        
-    } negativeBlock:^(BOOL negative) {
-        
-        //TODO - do nothing.
-        
-    }];
-}
-
-
 #pragma mark Abstract Methods
--(NSString *)activityText
+
+-(NSString *)planText
 {
-    return @"Tips for Better Sleep";
+    return [NSString stringWithFormat:@"Plan for %@ ",[PersistenceStorage getObjectForKey:@"planName"]];
 }
 
+-(NSString *)activityText{
+    
+    return [PersistenceStorage getObjectForKey:@"skillName"];
+}
 @end

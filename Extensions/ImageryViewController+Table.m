@@ -271,12 +271,12 @@
         switch (indexPath.row) {
             case 0:
             {
-                [self PlayVideoTwo:self];
+                [self PlayVideoOne:self];
             }
                 break;
             case 1:
             {
-                [self PlayVideoOne:self];
+                [self PlayVideoTwo:self];
             }
                 break;
                 

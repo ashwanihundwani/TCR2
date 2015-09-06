@@ -83,120 +83,139 @@ else
     tlabel.hidden  = YES;
 }
 
-    [PersistenceStorage setObject:@"No" andKey:@"showCancelActivityButton"];
-
 
 }
 
 - (IBAction)DeleteReminder:(id)sender {
     
+    NSString *skillName = [PersistenceStorage getObjectForKey:@"skillName"];
     
-    [self writeSkillReminderToggle:@"Turned Off Reminder"];
-
-    
-    NSString *query = [NSString stringWithFormat: @"select * from MyReminders where ActName = '%@'", [PersistenceStorage getObjectForKey:@"activityName"] ];
-    
-    
-    
-    NSString *queryClear = [NSString stringWithFormat:@"delete from MyReminders where ActName = '%@'",[PersistenceStorage getObjectForKey:@"activityName"]];
-    
-    //  NSString *queryDelete = [NSString stringWithFormat:@"delete from MyReminders where ActivityName = %ld", [PersistenceStorage getObjectForKey:@"activityName"] ];
-    
-    
-    
-    self.manager = [[DBManager alloc]initWithDatabaseFileName:@"GNResoundDB.sqlite"];
-    remindersArray = [[NSArray alloc] initWithArray:[self.manager loadDataFromDB:query]];
-    
-    
-    if ([remindersArray count]== 1) {
+    if([skillName isEqualToString:@"Deep Breathing"]
+       || [skillName isEqualToString:@"Imagery"]
+       || [skillName isEqualToString:@"Guided Meditation"]){
         
-        
-        NSDictionary *dict = [remindersArray objectAtIndex:0];
-        NSString *strAct = [dict valueForKey:@"CalendarEventID"];
-        [PersistenceStorage setObject:strAct andKey:@"EventID"];
-        
-        
-    }
-    
-    
-    
-    
-    //clear notification
-    
-    NSArray *notificationArray = [[UIApplication sharedApplication] scheduledLocalNotifications];
-    NSLog(@"notify array %@",notificationArray);
-    
-    for(UILocalNotification *notification in notificationArray){
-        if ([notification.alertBody containsString:[PersistenceStorage getObjectForKey:@"activityName"]]) {
-            [[UIApplication sharedApplication] cancelLocalNotification:notification] ;
+        if(self.delegate
+           && [self.delegate respondsToSelector:@selector(didTapDelete:)]){
+            
+            [self.delegate didTapDelete:self];
+            
+            UILabel *tlabel = [self.view viewWithTag:555];
+            
+            tlabel.hidden = true;
+            
+            [PersistenceStorage setObject:@"NO" andKey:@"showCancelActivityButton"];
         }
         
         
     }
-    
-    
-    
-    
-    /*
-     
-     NSString *query = [NSString stringWithFormat: @"delete from MyReminders where ActivityName = %ld", [PersistenceStorage getObjectForKey:@"activityName"] ];
-     
-     
-     BOOL isDone = [self.manager executeQuery:queryClear];
-     if (isDone == YES)
-     {
-     
-     
-     
-     
-     
-     
-     //   [[planListArray objectAtIndex:indexPath.row] valueForKey:@"situationName"];
-     
-     
-     
-     
-     }
-     else{
-     }
-     
-     
-     
-     if ([remindersArray count]== 1) {
-     
-     //label.text = @"Reminder set";
-     
-     NSDictionary *dict = [remindersArray objectAtIndex:0];
-     NSString *strAct = [dict valueForKey:@"ScheduledDate"];
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     */
-    
-    
-    
-    
-    
-    
-    
-    
-    [self.manager executeQuery:queryClear];
-    
-    
-    ActivitiesViewController *svc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"ActivitiesViewController"];
-    // [self.navigationController pushViewController:svc animated:NO];
-    [self.navigationController popViewControllerAnimated:YES];
-    
-    //    [self.manager executeQuery:queryClear];
+    else{
+        NSString *query = [NSString stringWithFormat: @"select * from MyReminders where ActName = '%@'", [PersistenceStorage getObjectForKey:@"activityName"] ];
+        
+        
+        
+        NSString *queryClear = [NSString stringWithFormat:@"delete from MyReminders where ActName = '%@'",[PersistenceStorage getObjectForKey:@"activityName"]];
+        
+        //  NSString *queryDelete = [NSString stringWithFormat:@"delete from MyReminders where ActivityName = %ld", [PersistenceStorage getObjectForKey:@"activityName"] ];
+        
+        
+        
+        self.manager = [[DBManager alloc]initWithDatabaseFileName:@"GNResoundDB.sqlite"];
+        remindersArray = [[NSArray alloc] initWithArray:[self.manager loadDataFromDB:query]];
+        
+        
+        if ([remindersArray count]== 1) {
+            
+            
+            NSDictionary *dict = [remindersArray objectAtIndex:0];
+            NSString *strAct = [dict valueForKey:@"CalendarEventID"];
+            [PersistenceStorage setObject:strAct andKey:@"EventID"];
+            
+            
+        }
+        
+        
+        
+        
+        //clear notification
+        
+        NSArray *notificationArray = [[UIApplication sharedApplication] scheduledLocalNotifications];
+        NSLog(@"notify array %@",notificationArray);
+        
+        for(UILocalNotification *notification in notificationArray){
+            if ([notification.alertBody containsString:[PersistenceStorage getObjectForKey:@"activityName"]]) {
+                [[UIApplication sharedApplication] cancelLocalNotification:notification] ;
+            }
+            
+            
+        }
+        
+        
+        
+        
+        /*
+         
+         NSString *query = [NSString stringWithFormat: @"delete from MyReminders where ActivityName = %ld", [PersistenceStorage getObjectForKey:@"activityName"] ];
+         
+         
+         BOOL isDone = [self.manager executeQuery:queryClear];
+         if (isDone == YES)
+         {
+         
+         
+         
+         
+         
+         
+         //   [[planListArray objectAtIndex:indexPath.row] valueForKey:@"situationName"];
+         
+         
+         
+         
+         }
+         else{
+         }
+         
+         
+         
+         if ([remindersArray count]== 1) {
+         
+         //label.text = @"Reminder set";
+         
+         NSDictionary *dict = [remindersArray objectAtIndex:0];
+         NSString *strAct = [dict valueForKey:@"ScheduledDate"];
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         */
+        
+        
+        
+        
+        
+        
+        
+        
+        [self.manager executeQuery:queryClear];
+        
+        
+        ActivitiesViewController *svc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"ActivitiesViewController"];
+        // [self.navigationController pushViewController:svc animated:NO];
+        [self.navigationController popViewControllerAnimated:YES];
+        
+        //    [self.manager executeQuery:queryClear];
+    }
+   
+    [self writeSkillReminderToggle:@"Turned Off Reminder"];
+
     
     
 }
@@ -385,7 +404,7 @@ if (self.datePicker.hidden==0)
         
     }
     
-    if ([[PersistenceStorage getObjectForKey:@"skillName"] isEqualToString:@"Imagery"]){
+    if ([[PersistenceStorage getObjectForKey:@"skillName"] isEqualToString:@"Imagery"] && ![[PersistenceStorage getObjectForKey:@"showCancelActivityButton"] isEqualToString:@"YES"]){
         
         NSString * schDate = self.startDate;
         
@@ -504,7 +523,7 @@ if (self.datePicker.hidden==0)
     
     
     
-    if ([[PersistenceStorage getObjectForKey:@"skillName"] isEqualToString:@"Guided Meditation"]){
+    if ([[PersistenceStorage getObjectForKey:@"skillName"] isEqualToString:@"Guided Meditation"] && ![[PersistenceStorage getObjectForKey:@"showCancelActivityButton"] isEqualToString:@"YES"]){
         
         NSString * schDate = self.startDate;
         
@@ -727,7 +746,7 @@ if (self.datePicker.hidden==0)
     
     
     
-    if ([[PersistenceStorage getObjectForKey:@"skillName"] isEqualToString:@"Deep Breathing"]){
+    if ([[PersistenceStorage getObjectForKey:@"skillName"] isEqualToString:@"Deep Breathing"] && ![[PersistenceStorage getObjectForKey:@"showCancelActivityButton"] isEqualToString:@"YES"]){
         
         NSString * schDate = self.startDate;
         

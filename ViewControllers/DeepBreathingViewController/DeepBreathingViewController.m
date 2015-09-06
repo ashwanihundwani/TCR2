@@ -26,7 +26,7 @@
 
 
 
-@interface DeepBreathingViewController ()
+@interface DeepBreathingViewController ()<ScheduleViewControllerDelegate>
 {NSArray *remindersArray;
 }
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
@@ -181,7 +181,13 @@
 -(IBAction)goToScheduler:(id)sender
 {
     ScheduleViewController *favc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"ScheduleViewController"];
+    favc.delegate = self;
     [self.navigationController pushViewController:favc animated:YES];
+}
+
+-(void)didTapDelete:(id)sender
+{
+    [self DeleteReminder:self];
 }
 
 
@@ -218,15 +224,15 @@
      
      
      
-//     if ([[PersistenceStorage getObjectForKey:@"Referer"] isEqual: @"VideoPlayerViewController"])  {
-//        SkillRatingsViewController *ratingsView = [[UIStoryboard storyboardWithName:@"Main"bundle:nil]instantiateViewControllerWithIdentifier:@"SkillRatingsViewController"];
-//        
-//        //ratingsView.skillSection = @"Sounds";
-//        //  ratingsView.skillDetail = self.name;
-//        
-//        //[self.navigationController pushViewController:ratingsView animated:YES];
-//        [self.navigationController presentModalViewController:ratingsView animated:YES];
-//    }
+     if ([[PersistenceStorage getObjectForKey:@"Referer"] isEqual: @"VideoPlayerViewController"])  {
+        SkillRatingsViewController *ratingsView = [[UIStoryboard storyboardWithName:@"Main"bundle:nil]instantiateViewControllerWithIdentifier:@"SkillRatingsViewController"];
+        
+        //ratingsView.skillSection = @"Sounds";
+        //  ratingsView.skillDetail = self.name;
+        
+        //[self.navigationController pushViewController:ratingsView animated:YES];
+        [self.navigationController presentModalViewController:ratingsView animated:YES];
+    }
 
     
     
@@ -339,12 +345,29 @@
         
         
         UILabel *label = (UILabel *)[self.view viewWithTag:333];
-        if (![label.text isEqualToString:@"No reminders"])
-        {
-        }
+//        if (![label.text isEqualToString:@"No reminders"])
+//        {
+//        }
+//        
+//        else
+//        {
+//
         
-        else
+        NSString *query = [NSString stringWithFormat: @"select * from MySkillReminders where SkillName = 'Deep Breathing' and PlanName = \'%@\'",[PersistenceStorage getObjectForKey:@"planName"]];
+        
+        self.manager = [[DBManager alloc]initWithDatabaseFileName:@"GNResoundDB.sqlite"];
+        
+        NSArray *reminders = [[NSArray alloc] initWithArray:[self.manager loadDataFromDB:query]];
+        
+        if(reminders.count > 0)
         {
+            [PersistenceStorage setObject:@"YES" andKey:@"showCancelActivityButton"];
+        }
+        else{
+            
+            [PersistenceStorage setObject:@"NO" andKey:@"showCancelActivityButton"];
+        }
+
         
         [PersistenceStorage setObject:buttonTitle andKey:@"optionName"];
         
@@ -353,8 +376,10 @@
         
 
         ScheduleViewController *svc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"ScheduleViewController"];
+        
+        svc.delegate = self;
         [self.navigationController pushViewController:svc animated:YES];
-        }
+        //}
         
             
     }
@@ -496,9 +521,9 @@
     
     VideoPlayerViewController *audioPanning = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"VideoPlayerViewController"];
     audioPanning.panning = video;
-    audioPanning.videoURL = @"DeepBreathingLesson.mp4";
-    [PersistenceStorage setObject:@"Video Lesson" andKey:@"skillDetail1"];
-
+    audioPanning.videoURL = @"deep_breathing.mp4";
+    [PersistenceStorage setObject:@"Watched Video Introduction" andKey:@"skillDetail1"];
+    
     [self.navigationController presentModalViewController:audioPanning animated:NO];
 
     
@@ -511,11 +536,10 @@
     
     VideoPlayerViewController *audioPanning = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"VideoPlayerViewController"];
     audioPanning.panning = video;
-    audioPanning.videoURL = @"deep_breathing.mp4";
-    [PersistenceStorage setObject:@"Watched Video Introduction" andKey:@"skillDetail1"];
-
+    audioPanning.videoURL = @"DeepBreathingLesson.mp4";
+    [PersistenceStorage setObject:@"Video Lesson" andKey:@"skillDetail1"];
+    
     [self.navigationController presentModalViewController:audioPanning animated:NO];
-
     
 //    [self.navigationController pushViewController:audioPanning animated:YES];
 }

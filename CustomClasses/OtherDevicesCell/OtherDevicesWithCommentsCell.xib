@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6250" systemVersion="14A389" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7702" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -13,14 +13,19 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RK4-g4-eit">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="10" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RK4-g4-eit">
                         <rect key="frame" x="48" y="11" width="264" height="24"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="24" id="WCo-9w-cV3"/>
                         </constraints>
-                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="WCo-9w-cV3"/>
+                            </mask>
+                        </variation>
                     </label>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hc2-p7-hca">
                         <rect key="frame" x="11" y="7" width="32" height="32"/>
@@ -46,6 +51,7 @@
                     <constraint firstItem="RK4-g4-eit" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="11" id="EPh-7M-Ecv"/>
                     <constraint firstAttribute="trailing" secondItem="RK4-g4-eit" secondAttribute="trailing" constant="8" id="KI1-Z4-9xB"/>
                     <constraint firstAttribute="trailing" secondItem="rej-KP-p9t" secondAttribute="trailing" constant="8" id="QaY-G7-gB1"/>
+                    <constraint firstAttribute="bottom" secondItem="RK4-g4-eit" secondAttribute="bottom" constant="55" id="aXQ-Yo-xjt"/>
                     <constraint firstItem="hc2-p7-hca" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="11" id="cog-pN-g4S"/>
                     <constraint firstItem="RK4-g4-eit" firstAttribute="leading" secondItem="hc2-p7-hca" secondAttribute="trailing" constant="5" id="hMI-vV-AUJ"/>
                     <constraint firstItem="hc2-p7-hca" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="7" id="i4a-TH-QBd"/>

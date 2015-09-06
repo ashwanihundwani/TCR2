@@ -338,12 +338,17 @@
 
 #pragma mark - UITableViewDelegate
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    NSString *desc = [[otherDevicesSoundsArray objectAtIndex:indexPath.row] valueForKey:@"deviceName"];
+    
+    CGFloat subTitleHeight = [Utils heightForLabelForString:desc width:264 font:TITLE_LABEL_FONT];
+    
     if ([[self.checkFlagArray objectAtIndex:indexPath.row] boolValue]) {
-        return 100.0f;
+        return 55 + subTitleHeight;
     }
     else
     {
-        return 70.0f;
+        return 35 + subTitleHeight;
     }
 }
 

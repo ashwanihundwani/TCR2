@@ -8,9 +8,18 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol ScheduleViewControllerDelegate <NSObject>
+
+
+-(void)didTapDelete:(id)sender;
+
+
+@end
+
 
 @interface ScheduleViewController : UIViewController <UIActionSheetDelegate,UIAlertViewDelegate>
 
+@property(nonatomic, weak)id<ScheduleViewControllerDelegate> delegate;
  @property (weak, nonatomic) IBOutlet UIButton *startButton;
 @property (weak, nonatomic) IBOutlet UIButton *endButton;
 - (IBAction)startButtonTapped:(id)sender;
