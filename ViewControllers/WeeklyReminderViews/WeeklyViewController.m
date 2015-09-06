@@ -996,6 +996,14 @@
 
 - (IBAction)cancelTapped:(id)sender {
     
+    [self performSelector:@selector(dismissSelf) withObject:nil afterDelay:1.2];
+
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark.png"] ];
+    hud.mode = MBProgressHUDModeCustomView;
+    hud.labelText = @"Thanks for the feedback!";
+    [hud show:YES];
+    [hud hide:YES afterDelay:1];
     
     for (NSDictionary *myskills in selectedSkills) {
         NSString *sName = [myskills valueForKey:@"skillName"];
@@ -1066,7 +1074,7 @@
     
     
     
-    [self dismissViewControllerAnimated:YES completion:^{
+    //[self dismissViewControllerAnimated:YES completion:^{
         //
         //        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         //        hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark.png"] ];
@@ -1094,7 +1102,11 @@
         
         
         
-    }];
+   // }];
+}
+
+-(void)dismissSelf{
+    [self dismissViewControllerAnimated:YES completion:^{}];
 }
 
 
