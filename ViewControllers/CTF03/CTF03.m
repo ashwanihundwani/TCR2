@@ -85,7 +85,7 @@ self.dbManager = [[DBManager alloc] initWithDatabaseFileName:@"GNResoundDB.sqlit
 -(void)setData
 {
     NSString *query = @"SELECT thoughtText,rating FROM My_TF where thoughtCategory = 'step3'";
-    emotionsArray = [self.dbManager loadDataFromDB:query];
+    emotionsArray = [NSMutableArray arrayWithArray:[self.dbManager loadDataFromDB:query]];
 //[emotionsArray removeAllObjects];
   //   for (NSDictionary *emotion in allRecordsArray) {
         
@@ -198,17 +198,24 @@ NSLog(@"''%@",emotionsArray);
 //[thoughtList appendString:[[emotionsArray objectAtIndex:indexPath.row] valueForKey:@"thoughtText"]];
   //  [thoughtList appendString:[[emotionsArray objectAtIndex:indexPath.row] valueForKey:@"rating"]];
 
-    
-    UIButton* deleteBtn = [[UIButton alloc] initWithFrame:CGRectMake(4, cell.frame.origin.y+8, 25, 25)];
-    [deleteBtn setBackgroundImage:[UIImage imageNamed:@"Active_Trash_Button.png"] forState:UIControlStateNormal];
-    deleteBtn.tag = indexPath.row;
-    [deleteBtn addTarget:self action:@selector(deleteBtnPressed:) forControlEvents:UIControlEventTouchUpInside];
-    [cell addSubview:deleteBtn];
-    UILabel* emotioTextLabel = [[UILabel alloc] initWithFrame:CGRectMake(35, cell.frame.origin.y+5, 200, 35)];
+    UIButton* deleteBtn = (UIButton*)[cell viewWithTag:1089];
+    if(deleteBtn == nil){
+        deleteBtn = [[UIButton alloc] initWithFrame:CGRectMake(4, cell.frame.origin.y+8, 25, 25)];
+        [deleteBtn setBackgroundImage:[UIImage imageNamed:@"Active_Trash_Button.png"] forState:UIControlStateNormal];
+        deleteBtn.tag = 1089;
+        [deleteBtn addTarget:self action:@selector(deleteBtnPressed:) forControlEvents:UIControlEventTouchUpInside];
+        [cell addSubview:deleteBtn];
+        
+    }
+    UILabel* emotioTextLabel = (UILabel*)[cell viewWithTag:1090];
+    if(emotioTextLabel == nil){
+        emotioTextLabel = [[UILabel alloc] initWithFrame:CGRectMake(35, cell.frame.origin.y+5, 200, 35)];
+        emotioTextLabel.tag = 1090;
+        [cell addSubview:emotioTextLabel];
+    }
     //cell.textLabel.text = [[emotionsArray objectAtIndex:indexPath.row] valueForKey:@"thoughtText"];
     emotioTextLabel.textColor = [UIColor blackColor];
     emotioTextLabel.text = [[emotionsArray objectAtIndex:indexPath.row] valueForKey:@"thoughtText"];
-    [cell addSubview:emotioTextLabel];
     cell.detailTextLabel.text = [[emotionsArray objectAtIndex:indexPath.row] valueForKey:@"rating"];
 
      
@@ -358,8 +365,26 @@ NSLog(@"''%@",emotionsArray);
     }
 
 -(void)deleteBtnPressed:(UIView*)sender{
-    NSInteger rowIndex = sender.tag;
-    [emotionsArray removeObjectAtIndex:rowIndex];
+    //delete from db
+    UITableViewCell* cell = (UITableViewCell*)[sender superview];
+    NSIndexPath* indexPath = [self.EmotionsTableView indexPathForCell:cell];
+    NSInteger rowIndex = indexPath.row;
+    NSDictionary* emotionDict = [emotionsArray objectAtIndex:rowIndex];
+    NSString* deleteQuery = [NSString stringWithFormat:@"delete from My_TF where thoughtCategory = 'step3' and thoughtText = '%@' and rating = '%@'",[emotionDict valueForKey:@"thoughtText"],[emotionDict valueForKey:@"rating"]];
+    [self.dbManager executeQuery:deleteQuery];
+    if(self.dbManager.affectedRows > 0){
+        [emotionsArray removeObjectAtIndex:rowIndex];
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark.png"] ];
+        
+        hud.mode = MBProgressHUDModeCustomView;
+        
+        hud.labelText = @"Removed";
+        
+        [hud show:YES];
+        [hud hide:YES afterDelay:1];
+
+    }
     [self.EmotionsTableView reloadData];
 }
 

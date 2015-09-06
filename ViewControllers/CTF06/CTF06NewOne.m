@@ -94,7 +94,7 @@
 -(void)setData
 {
     NSString *query = @"SELECT thoughtText,rating FROM My_TF where thoughtCategory = 'step6'";
-    emotionsArray = [self.dbManager loadDataFromDB:query];
+    emotionsArray = [NSMutableArray arrayWithArray:[self.dbManager loadDataFromDB:query]];
     //[emotionsArray removeAllObjects];
     //   for (NSDictionary *emotion in allRecordsArray) {
     
@@ -115,7 +115,7 @@
             //self.textLabel.text =@"Segment 1 selected.";
             
         { NSString *query = @"SELECT thoughtText,rating FROM My_TF where thoughtCategory = 'step6'";
-            emotionsArray = [self.dbManager loadDataFromDB:query];
+            emotionsArray = [NSMutableArray arrayWithArray:[self.dbManager loadDataFromDB:query]];
             [[self.view viewWithTag:335] setHidden:NO];
 
             break;}
@@ -124,7 +124,7 @@
             //self.textLabel.text =@"Segment 2 selected.";
             
         {NSString *query1 = @"SELECT thoughtText,rating FROM My_TF where thoughtCategory = 'step3'";
-            emotionsArray = [self.dbManager loadDataFromDB:query1];
+            emotionsArray = [NSMutableArray arrayWithArray:[self.dbManager loadDataFromDB:query1]];
             [[self.view viewWithTag:335] setHidden:YES];
 
             break;}
@@ -428,8 +428,27 @@
     UITableViewCell* cell = (UITableViewCell*)[sender superview];
     NSIndexPath* indexPath = [self.EmotionsTableView indexPathForCell:cell];
     NSInteger rowIndex = indexPath.row;
-    [emotionsArray removeObjectAtIndex:rowIndex];
-    [self.EmotionsTableView reloadData];
+    NSDictionary* emotionDict = [emotionsArray objectAtIndex:rowIndex];
+    NSString* deleteQuery = @"";[NSString stringWithFormat:@"delete from My_TF where thoughtCategory = 'step3' and thoughtText = '%@' and rating = '%@'",[emotionDict valueForKey:@"thoughtText"],[emotionDict valueForKey:@"rating"]];
+    if(self.segmentedControl.selectedSegmentIndex == 0){
+        deleteQuery = [NSString stringWithFormat:@"delete from My_TF where thoughtCategory = 'step6' and thoughtText = '%@' and rating = '%@'",[emotionDict valueForKey:@"thoughtText"],[emotionDict valueForKey:@"rating"]];
+    }else{
+        deleteQuery = [NSString stringWithFormat:@"delete from My_TF where thoughtCategory = 'step3' and thoughtText = '%@' and rating = '%@'",[emotionDict valueForKey:@"thoughtText"],[emotionDict valueForKey:@"rating"]];
+    }
+    [self.dbManager executeQuery:deleteQuery];
+    if(self.dbManager.affectedRows > 0){
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark.png"] ];
+        
+        hud.mode = MBProgressHUDModeCustomView;
+        
+        hud.labelText = @"Removed";
+        
+        [hud show:YES];
+        [hud hide:YES afterDelay:1];
+        [emotionsArray removeObjectAtIndex:rowIndex];
+        [self.EmotionsTableView reloadData];
+    }
 }
 
 
