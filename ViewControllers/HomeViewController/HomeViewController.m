@@ -209,6 +209,7 @@
 
 
 - (IBAction)SamplerButtonTapped:(id)sender {
+    [PersistenceStorage setInteger:1 andKey:@"HomeButtonTapped"];
     [[self tabBarController] setSelectedIndex:1];
   
     
@@ -225,11 +226,12 @@
     
 }
 - (IBAction)PlansButtonTapped:(id)sender {
+    [PersistenceStorage setInteger:2 andKey:@"HomeButtonTapped"];
     [[self tabBarController] setSelectedIndex:2];
 }
 
 - (IBAction)NookButtonTapped:(id)sender {
-    
+    [PersistenceStorage setInteger:3 andKey:@"HomeButtonTapped"];
     [[self tabBarController] setSelectedIndex:3];
     
     
@@ -243,6 +245,7 @@
         [currentWindow.rootViewController presentViewController:WeeklyReminder animated:YES completion:nil];
         
     }else{
+        [PersistenceStorage setInteger:4 andKey:@"HomeButtonTapped"];
         [[self tabBarController] setSelectedIndex:4];
     }
 //    UIStoryboard *storyBoard = [ UIStoryboard storyboardWithName:@"Main" bundle:nil];

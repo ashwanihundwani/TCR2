@@ -216,9 +216,18 @@
     timeFormatter.dateFormat = @"HH:mm:ss";
     NSString *timeString = [timeFormatter stringFromDate: date];
     NSString *type = @"Navigation";
-    
     NSString *str = @"Nook";
-    NSString   *finalStr = [NSString stringWithFormat:@"\r%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@",dateString,timeString,type,nil,str,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil];
+    NSString * navMethod = @"";
+    if([PersistenceStorage getIntegerForKey:@"HomeButtonTapped"] == self.tabBarController.selectedIndex ){
+        navMethod = @"Navigated from Home Screen";
+        [PersistenceStorage setInteger:-1 andKey:@"HomeButtonTapped"];
+    }else if(self.tabBarController.selectedIndex == 3){
+        navMethod = @"Navigated from Nav Bar";
+    }else{
+        navMethod = nil;
+    }
+    NSLog(@"navigation method is:%@ and parent controller is: %@", navMethod, [[self parentViewController] class]);
+    NSString   *finalStr = [NSString stringWithFormat:@"\r%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@",dateString,timeString,type,navMethod,str,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil];
     
     NSFileManager *fileManager = [NSFileManager defaultManager];
     
