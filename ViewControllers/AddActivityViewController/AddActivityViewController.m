@@ -11,7 +11,7 @@
 @interface AddActivityViewController ()
 @property (nonatomic, strong) void (^onCompletion)(id result);
 @property (nonatomic, strong) UIButton* favoriteButton;
-
+@property (nonatomic, strong)UIView *buttonInnerView;
 
 @end
 
@@ -52,9 +52,21 @@
     UILabel* favLabel = [[UILabel alloc] initWithFrame:CGRectMake(70, 200, 200, 30)];
     favLabel.text = @"Also Add to Favorites";
     [self.view addSubview:favLabel];
+    
+    
+    UIView *innerView = [[UIView alloc]initWithFrame:CGRectMake(3, 3, 24, 24)];
+    innerView.layer.borderColor = [UIColor grayColor].CGColor;
+    innerView.layer.borderWidth = 1;
+    innerView.layer.cornerRadius = innerView.height / 2;
+    innerView.userInteractionEnabled = NO;
+    self.buttonInnerView = innerView;
+    
     UIButton* favbtn = [[UIButton alloc] initWithFrame:CGRectMake(30, 200, 30, 30)];
-    [favbtn setBackgroundImage:[UIImage imageNamed:@"u630.png"] forState:UIControlStateNormal];
-    [favbtn setBackgroundImage:[UIImage imageNamed:@"u648.png"] forState:UIControlStateSelected];
+    [favbtn setBackgroundImage:[UIImage imageNamed:@""] forState:UIControlStateNormal];
+    
+    [favbtn addSubview:innerView];
+    
+    [favbtn setBackgroundImage:[UIImage imageNamed:@"Selected_CheckBox.png"] forState:UIControlStateSelected];
     [favbtn addTarget:self action:@selector(favbtnPressed:) forControlEvents:UIControlEventTouchUpInside];
     favbtn.selected = NO;
     [self.view addSubview:favbtn];
@@ -186,8 +198,11 @@
     UIButton* favBtn = (UIButton*)sender;
     if(favBtn.selected){
         favBtn.selected = NO;
+        [favBtn addSubview:self.buttonInnerView];
     }else{
         favBtn.selected = YES;
+        [self.buttonInnerView removeFromSuperview];
+        
     }
     [favBtn setNeedsDisplay];
 }

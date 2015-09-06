@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="49e-Tb-3d3">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7702" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="49e-Tb-3d3">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -20,80 +20,26 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" translatesAutoresizingMaskIntoConstraints="NO" id="eSh-Ao-XXk">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                                <color key="backgroundColor" white="0.9631983901515152" alpha="1" colorSpace="calibratedWhite"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" translatesAutoresizingMaskIntoConstraints="NO" id="Q5o-kW-YMV">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="8rJ-Kc-sve" id="HXi-ih-qIW"/>
+                                    <outlet property="delegate" destination="8rJ-Kc-sve" id="Yjj-qk-kby"/>
+                                </connections>
                             </tableView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="The sample sounds and exercises below are easy to use and can be helpful right away for some people." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HKm-yJ-eL6">
-                                <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" id="vMS-7A-CZg">
-                                        <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
-                                    </constraint>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="vMS-7A-CZg"/>
-                                    </mask>
-                                </variation>
-                                <variation key="heightClass=regular-widthClass=compact">
-                                    <mask key="constraints">
-                                        <include reference="vMS-7A-CZg"/>
-                                    </mask>
-                                </variation>
-                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="eSh-Ao-XXk" secondAttribute="trailing" id="4Zs-iE-OxJ"/>
-                            <constraint firstItem="eSh-Ao-XXk" firstAttribute="top" secondItem="HKm-yJ-eL6" secondAttribute="bottom" constant="17" id="6PC-Qe-bnq">
-                                <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
-                            </constraint>
-                            <constraint firstAttribute="bottom" secondItem="eSh-Ao-XXk" secondAttribute="bottom" id="LY1-dW-6qh"/>
-                            <constraint firstItem="HKm-yJ-eL6" firstAttribute="top" secondItem="L7p-HK-0SC" secondAttribute="bottom" constant="8" symbolic="YES" id="cok-z6-ELg">
-                                <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
-                            </constraint>
-                            <constraint firstItem="HKm-yJ-eL6" firstAttribute="centerX" secondItem="eSh-Ao-XXk" secondAttribute="centerX" id="xbh-Yv-IdF"/>
-                            <constraint firstItem="eSh-Ao-XXk" firstAttribute="leading" secondItem="QS5-Rx-YEW" secondAttribute="leading" id="xdR-k5-58g"/>
-                            <constraint firstItem="HKm-yJ-eL6" firstAttribute="leading" secondItem="QS5-Rx-YEW" secondAttribute="leadingMargin" id="xhY-eU-j6R"/>
+                            <constraint firstAttribute="trailing" secondItem="Q5o-kW-YMV" secondAttribute="trailing" id="LDy-4S-Qaz"/>
+                            <constraint firstItem="Q5o-kW-YMV" firstAttribute="top" secondItem="QS5-Rx-YEW" secondAttribute="top" id="PPY-W9-4aA"/>
+                            <constraint firstItem="Q5o-kW-YMV" firstAttribute="leading" secondItem="QS5-Rx-YEW" secondAttribute="leading" id="gQm-Nw-mAe"/>
+                            <constraint firstAttribute="bottom" secondItem="Q5o-kW-YMV" secondAttribute="bottom" id="kJ2-Ry-65w"/>
                         </constraints>
-                        <variation key="default">
-                            <mask key="subviews">
-                                <exclude reference="eSh-Ao-XXk"/>
-                                <exclude reference="HKm-yJ-eL6"/>
-                            </mask>
-                            <mask key="constraints">
-                                <exclude reference="cok-z6-ELg"/>
-                                <exclude reference="xbh-Yv-IdF"/>
-                                <exclude reference="xhY-eU-j6R"/>
-                                <exclude reference="4Zs-iE-OxJ"/>
-                                <exclude reference="6PC-Qe-bnq"/>
-                                <exclude reference="LY1-dW-6qh"/>
-                                <exclude reference="xdR-k5-58g"/>
-                            </mask>
-                        </variation>
-                        <variation key="heightClass=regular-widthClass=compact">
-                            <mask key="subviews">
-                                <include reference="eSh-Ao-XXk"/>
-                                <include reference="HKm-yJ-eL6"/>
-                            </mask>
-                            <mask key="constraints">
-                                <include reference="cok-z6-ELg"/>
-                                <include reference="xbh-Yv-IdF"/>
-                                <include reference="xhY-eU-j6R"/>
-                                <include reference="4Zs-iE-OxJ"/>
-                                <include reference="6PC-Qe-bnq"/>
-                                <include reference="LY1-dW-6qh"/>
-                                <include reference="xdR-k5-58g"/>
-                            </mask>
-                        </variation>
                     </view>
                     <navigationItem key="navigationItem" id="coD-EH-AwO"/>
                     <connections>
-                        <outlet property="samplerTableView" destination="eSh-Ao-XXk" id="UzN-Ll-Spo"/>
+                        <outlet property="samplerTableView" destination="Q5o-kW-YMV" id="FEm-FZ-x1H"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4Nw-L8-lE0" sceneMemberID="firstResponder"/>
