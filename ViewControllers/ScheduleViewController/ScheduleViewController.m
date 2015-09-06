@@ -91,11 +91,48 @@ else
 
 - (IBAction)DeleteReminder:(id)sender {
     
+    
     NSString *skillName = [PersistenceStorage getObjectForKey:@"skillName"];
     
     if([skillName isEqualToString:@"Deep Breathing"]
        || [skillName isEqualToString:@"Imagery"]
        || [skillName isEqualToString:@"Guided Meditation"]){
+        
+        if(self.delegate
+           && [self.delegate respondsToSelector:@selector(didTapDelete:)]){
+            
+            [self.delegate didTapDelete:self];
+            
+            UILabel *tlabel = [self.view viewWithTag:555];
+            
+            tlabel.hidden = true;
+            
+            [PersistenceStorage setObject:@"NO" andKey:@"showCancelActivityButton"];
+        }
+        
+        return;
+        
+        
+    }
+    
+    CalenderEventID = nil;
+    
+    [self writeSkillReminderToggle:@"Turned Off Reminder"];
+    
+    CalenderEventID = [self eventPAExists];
+    if (CalenderEventID != nil) {
+        EKEventStore *store = [EKEventStore new];
+        NSError* err = nil;
+        EKEvent* eventToRemove = [store eventWithIdentifier:CalenderEventID];
+        [store removeEvent:eventToRemove span:EKSpanFutureEvents commit:YES error:&err];
+        if(err != nil){
+            NSLog(@"Error in deletining event from calender:%@", [eventToRemove description]);
+        }
+    }
+    NSString *queryClear = [NSString stringWithFormat:@"delete from MyReminders where ActName = '%@' and SkillName ='%@' and PlanName = '%@'",[PersistenceStorage getObjectForKey:@"activityName"],@"Pleasant Activities",[PersistenceStorage getObjectForKey:@"planName"]];
+    
+    
+    if ([remindersArray count]== 1) {
         
         if(self.delegate
            && [self.delegate respondsToSelector:@selector(didTapDelete:)]){
@@ -219,6 +256,13 @@ else
    
     [self writeSkillReminderToggle:@"Turned Off Reminder"];
 
+    
+    //clear notification
+    [self deleteExistingPAEventNotitfication];
+    [self.manager executeQuery:queryClear];
+    
+    
+    [self.navigationController popViewControllerAnimated:YES];
     
     
 }

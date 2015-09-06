@@ -567,46 +567,10 @@ audioPanning.videoURL = @"ImageryLesson.mp4";
 
 
 - (IBAction)DeleteReminder:(id)sender {
-    
-    NSString *query = [NSString stringWithFormat: @"select * from MySkillReminders where SkillName = 'Imagery' and PlanName = \'%@\'",[PersistenceStorage getObjectForKey:@"planName"]];
-    
-    self.manager = [[DBManager alloc]initWithDatabaseFileName:@"GNResoundDB.sqlite"];
-    remindersArray = [[NSArray alloc] initWithArray:[self.manager loadDataFromDB:query]];
-    
-    
-    if ([remindersArray count]== 1) {
-        
-        
-        NSDictionary *dict = [remindersArray objectAtIndex:0];
-        NSString *strAct = [dict valueForKey:@"CalendarEventID"];
-        [PersistenceStorage setObject:strAct andKey:@"EventID"];
-    }
-    
-    NSString *query1 = [NSString stringWithFormat:@"delete from MySkillReminders where SkillName = 'Imagery' and PlanName = \'%@\'",[PersistenceStorage getObjectForKey:@"planName"]];;
-    
-    [self.manager executeQuery:query1];
-    
-    
-    
-    //clear reminder
-    
-    
-    NSArray *notificationArray = [[UIApplication sharedApplication] scheduledLocalNotifications];
-    NSLog(@"notify array %@",notificationArray);
-    
-    for(UILocalNotification *notification in notificationArray){
-        if ([notification.alertBody containsString:@"'Imagery'"])
-        
-     //   if (([[notification.userInfo valueForKey:@"Type"] isEqualToString:@"Imagery"]) && [[PersistenceStorage getObjectForKey:@"planName"] valueForKey:@"PlanName"])
-            
-        
-        
-        
-        {
-            [[UIApplication sharedApplication] cancelLocalNotification:notification] ;
-        }
-        
-        
+    NSString *queryClear = [NSString stringWithFormat:@"delete from MySkillReminders where SkillName = 'Imagery' and PlanName = '%@'",[PersistenceStorage getObjectForKey:@"planName"]];
+    CalenderEventID = [self eventExists];
+    if(CalenderEventID != nil){
+        [self removeEventFromCalender];
     }
     // now delete notification
     [self deleteExistingEventNotitfication];
