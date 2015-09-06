@@ -288,11 +288,11 @@
     
     [pageInfos addObject:info];
     
-    IntroPageInfo *info2 = [[IntroPageInfo alloc] initWithimage:[UIImage imageNamed:@"Intro6image2.png"] title: @"What are  \"Thought Errors\" ?" description:@"Thoughts that are not helpful or unhealthy are called \"thought errors\". Many people make thought errors that cause them to feel sad or upset. If you are aware of the most common thought errors, you can catch yourself and correct your thinking."];
+    IntroPageInfo *info2 = [[IntroPageInfo alloc] initWithimage:[UIImage imageNamed:@"Intro6image2.png"] title: @"What are \"thought errors\" ?" description:@"Thoughts that are not helpful or unhealthy are called \"thought errors.\" Many people make thought errors that cause them to feel sad or upset. If you are aware of the most common thought errors, you can catch yourself and correct your thinking."];
     
     [pageInfos addObject:info2];
     
-    IntroPageInfo *info3 = [[IntroPageInfo alloc] initWithimage:[UIImage imageNamed:@"Intro6image3.png"] title: @"How do thoughts affect my feelings?" description:@"What you think affects how you feel. Imagine you are expecting guests for dinner, and they are late. If you think \"it's rude to be late\" you might be worried. Different thoughts about the same situation lead to different feelings."];
+    IntroPageInfo *info3 = [[IntroPageInfo alloc] initWithimage:[UIImage imageNamed:@"Intro6image3.png"] title: @"How do thoughts affect my feelings?" description:@"Different thoughts about the same situation lead to different feelings. Imagine you are expecting guests for dinner, and they are late. If you think “it’s rude to be late,” then you might get angry. If you think “they could have been in an accident,” you might be worried."];
     
     [pageInfos addObject:info3];
     
