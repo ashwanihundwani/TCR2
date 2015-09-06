@@ -235,15 +235,27 @@
     //  [thoughtList appendString:[[emotionsArray objectAtIndex:indexPath.row] valueForKey:@"rating"]];
     
     
-    UIButton* deleteBtn = [[UIButton alloc] initWithFrame:CGRectMake(4, cell.frame.origin.y+8, 25, 25)];
-    [deleteBtn setBackgroundImage:[UIImage imageNamed:@"Active_Trash_Button.png"] forState:UIControlStateNormal];
-    deleteBtn.tag = indexPath.row;
-    [deleteBtn addTarget:self action:@selector(deleteBtnPressed:) forControlEvents:UIControlEventTouchUpInside];
-    [cell addSubview:deleteBtn];
-    UILabel* emotioTextLabel = [[UILabel alloc] initWithFrame:CGRectMake(35, cell.frame.origin.y+5, 200, 35)];
+    UIButton* deleteBtn = (UIButton*)[cell viewWithTag:1089];
+    if(deleteBtn == nil){
+        deleteBtn = [[UIButton alloc] initWithFrame:CGRectMake(4, cell.frame.origin.y+8, 25, 25)];
+        [deleteBtn setBackgroundImage:[UIImage imageNamed:@"Active_Trash_Button.png"] forState:UIControlStateNormal];
+        deleteBtn.tag = 1089;
+        [deleteBtn addTarget:self action:@selector(deleteBtnPressed:) forControlEvents:UIControlEventTouchUpInside];
+        [cell addSubview:deleteBtn];
+
+    }
+    
+    
+    UILabel* emotioTextLabel = (UILabel*)[cell viewWithTag:1090];
+    if(emotioTextLabel == nil){
+        emotioTextLabel = [[UILabel alloc] initWithFrame:CGRectMake(35, cell.frame.origin.y+5, 200, 35)];
+        emotioTextLabel.tag = 1090;
+        [cell addSubview:emotioTextLabel];
+    }
+    
     emotioTextLabel.textColor = [UIColor blackColor];
     emotioTextLabel.text = [[emotionsArray objectAtIndex:indexPath.row] valueForKey:@"thoughtText"];
-    [cell addSubview:emotioTextLabel];
+    
     
     //cell.textLabel.text = [[emotionsArray objectAtIndex:indexPath.row] valueForKey:@"thoughtText"];
     cell.detailTextLabel.text = [[emotionsArray objectAtIndex:indexPath.row] valueForKey:@"rating"];
@@ -423,7 +435,9 @@
 
 
 -(void)deleteBtnPressed:(UIView*)sender{
-    NSInteger rowIndex = sender.tag;
+    UITableViewCell* cell = (UITableViewCell*)[sender superview];
+    NSIndexPath* indexPath = [self.EmotionsTableView indexPathForCell:cell];
+    NSInteger rowIndex = indexPath.row;
     [emotionsArray removeObjectAtIndex:rowIndex];
     [self.EmotionsTableView reloadData];
 }

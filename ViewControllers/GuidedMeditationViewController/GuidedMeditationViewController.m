@@ -23,6 +23,7 @@
 
 @interface GuidedMeditationViewController ()<ScheduleViewControllerDelegate>
 {NSArray *remindersArray;
+    NSString* CalenderEventID;
 }
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 
@@ -43,7 +44,7 @@
     
     self.exercises = @[@"Progressive Muscle Relaxation", @"Passive Muscle Relaxation", @"Body Scan", @"Mountain Stream Strategy", @"Mindful Breathing"];
     
-    
+    self.manager = [[DBManager alloc]initWithDatabaseFileName:@"GNResoundDB.sqlite"];
     
     
 //    UIImageView *backLabel = [[UIImageView alloc]initWithFrame:CGRectMake(20, 10, 15, 20)];
@@ -467,42 +468,11 @@
         
         
     }
-    
-    
-    
-    
+    // now delete notification
+    [self deleteExistingEventNotitfication];
+    [self.manager executeQuery:queryClear];
     [self RefreshScheduleData];
-    
-    
-    
-    EKEventStore *store = [[EKEventStore alloc] init];
-    [store requestAccessToEntityType:EKEntityTypeEvent completion:^(BOOL granted, NSError *error) {
-        if (!granted) return;
-        EKEvent* eventToRemove = [store eventWithIdentifier:[PersistenceStorage getObjectForKey:@"EventID"]];
-        if (eventToRemove) {
-            NSError* err = nil;
-            //    [store removeEvent:eventToRemove span:EKSpanThisEvent commit:YES error:&err];
-            [store removeEvent:eventToRemove span:EKSpanFutureEvents commit:YES error:&err];
-            
-            
-            
-            //            EKSpanFutureEvents
-            
-             
-            
-        }
-        
-        
-        
-    }
-     
-     
-     
-     ];
-    
-    
     [self writeDeletedReminder];
-
     
 }
 
@@ -614,6 +584,52 @@
         NSFileHandle *myHandle = [NSFileHandle fileHandleForWritingAtPath:documentTXTPath];
         [myHandle seekToEndOfFile];
         [myHandle writeData:[finalStr dataUsingEncoding:NSUTF8StringEncoding]];
+        
+    }
+    
+}
+
+-(NSString*)eventExists{
+    //check for the Event
+    //get the skill first
+    NSString* calEvent = nil;
+    NSString* reminderQuery = [NSString stringWithFormat:@"select CalendarEventID from MySkillReminders where SkillName = \"%@\" and  PlanName = \"%@\"",[PersistenceStorage getObjectForKey:@"skillName"],[PersistenceStorage getObjectForKey:@"planName"]];
+    NSArray* calenderEventsArray = [NSArray arrayWithArray:[self.manager loadDataFromDB:reminderQuery]];
+    if(calenderEventsArray != nil && calenderEventsArray.count > 0){
+        //get the calender event and return it back for rescheduling
+        calEvent = [[calenderEventsArray objectAtIndex:0] objectForKey:@"CalendarEventID"];
+        
+    }
+    return calEvent;
+}
+
+-(void)removeEventFromCalender{
+    EKEventStore *store = [[EKEventStore alloc] init];
+    [store requestAccessToEntityType:EKEntityTypeEvent completion:^(BOOL granted, NSError *error) {
+        if (!granted) return;
+        NSError* err = nil;
+        EKEvent* eventToRemove = [store eventWithIdentifier:CalenderEventID];
+        [store removeEvent:eventToRemove span:EKSpanFutureEvents commit:YES error:&err];
+        if(err != nil){
+            NSLog(@"Error in deletining event from calender:%@", [eventToRemove description]);
+        }
+    }
+     
+     
+     ];
+    
+}
+
+-(void)deleteExistingEventNotitfication{
+    NSArray *notificationArray = [[UIApplication sharedApplication] scheduledLocalNotifications];
+    NSString* skillName = [PersistenceStorage getObjectForKey:@"skillName"];
+    NSString* planName = [PersistenceStorage getObjectForKey:@"planName"];
+    for(UILocalNotification *notification in notificationArray){
+        if ([[notification.userInfo valueForKey:@"PlanName"] isEqualToString:planName] && [[notification.userInfo valueForKey:@"Type"] isEqualToString:skillName]) {
+            NSLog(@"Cancelling local notification for skill:%@ in Plan:%@", skillName, planName);
+            [[UIApplication sharedApplication] cancelLocalNotification:notification] ;
+            break;
+        }
         
     }
     

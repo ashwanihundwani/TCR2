@@ -458,7 +458,7 @@
 -(NSArray *)getSelectedTips
 {
     
-    NSString *myTipsQuery = @"select * from My_Tips";
+    NSString *myTipsQuery =  [NSString stringWithFormat:@"select * from My_Tips where planID = %@ and skillID = %@",[PersistenceStorage getObjectForKey:@"currentPlanID"],[PersistenceStorage getObjectForKey:@"currentSkillID"]] ;
     NSArray *myTipsArray = [self.dbManager loadDataFromDB:myTipsQuery];
     
     allMyTips = [NSArray arrayWithArray:myTipsArray];
@@ -529,7 +529,7 @@
     }
     
     
-    NSString *deleteQquery = [NSString stringWithFormat:@"delete from My_Tips where ID=%@",ID];
+    NSString *deleteQquery = [NSString stringWithFormat:@"delete from My_Tips where ID=%@ , skillID = %@ and planID =%@",ID,[PersistenceStorage getObjectForKey:@"currentSkillID"],[PersistenceStorage getObjectForKey:@"currentPlanID"]];
     
     
     

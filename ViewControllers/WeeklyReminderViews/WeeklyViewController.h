@@ -14,6 +14,8 @@
 @property (weak, nonatomic) IBOutlet UITableView *tableview;
 @property (weak, nonatomic) IBOutlet UIButton* previousBtn;
 @property (weak, nonatomic) IBOutlet UIButton* nextBtn;
+@property (weak, nonatomic) IBOutlet UIButton* submittBtn;
+
 
 -(IBAction)barButtonPressed:(id)sender;
 
