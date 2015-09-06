@@ -17,7 +17,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
+    [Utils addSwipeGestureToView:self.view target:self selector:@selector(understoodButtonClicked:)];
+
     
 }
 
