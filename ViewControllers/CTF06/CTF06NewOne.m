@@ -338,37 +338,6 @@
     
     // If the query was successfully executed then pop the view controller.
     
-    
-    NSString *query = [NSString stringWithFormat:@"insert into My_TF_Set ('planID','situationDescription', 'thoughtDescription', 'emotionsList','thoughtError', 'newThought', 'newEmotionsList', 'dateTime','dateTimeSeconds') values ('%@','%@', '%@', '%@','%@', '%@', '%@','%@','%@')",
-                       [PersistenceStorage getObjectForKey:@"currentPlanID"],
-                       [PersistenceStorage getObjectForKey:@"ctf01text"],
-                       [PersistenceStorage getObjectForKey:@"ctf02text"],
-                       [PersistenceStorage getObjectForKey:@"ctf03text"],
-                       [PersistenceStorage getObjectForKey:@"ctf04text"],
-                       [PersistenceStorage getObjectForKey:@"ctf05text"],
-                       [PersistenceStorage getObjectForKey:@"ctf06text"],
-                       currentTime,intervalString
-                       
-                       ];
-    
-    
-    BOOL isDone = [self.dbManager executeQuery:query];
-    
-    
-    if (self.dbManager.affectedRows != 0) {
-        
-    }
-    else{
-        NSLog(@"Could not execute the query.,,");
-    }
-    
-    
-
-    
-    
-    
-    
-    
     NSString *myTFQuery = @"select * from My_TF where thoughtCategory='step6'";
     
     NSArray *myTFArray = [self.dbManager loadDataFromDB:myTFQuery];
@@ -400,7 +369,28 @@
         
         
     }
+    NSString *query = [NSString stringWithFormat:@"insert into My_TF_Set ('planID','situationDescription', 'thoughtDescription', 'emotionsList','thoughtError', 'newThought', 'newEmotionsList', 'dateTime','dateTimeSeconds') values ('%@','%@', '%@', '%@','%@', '%@', '%@','%@','%@')",
+                       [PersistenceStorage getObjectForKey:@"currentPlanID"],
+                       [PersistenceStorage getObjectForKey:@"ctf01text"],
+                       [PersistenceStorage getObjectForKey:@"ctf02text"],
+                       [PersistenceStorage getObjectForKey:@"ctf03text"],
+                       [PersistenceStorage getObjectForKey:@"ctf04text"],
+                       [PersistenceStorage getObjectForKey:@"ctf05text"],
+                       [PersistenceStorage getObjectForKey:@"ctf06text"],
+                       currentTime,intervalString
+                       
+                       ];
     
+    
+    BOOL isDone = [self.dbManager executeQuery:query];
+    
+    
+    if (self.dbManager.affectedRows != 0) {
+        
+    }
+    else{
+        NSLog(@"Could not execute the query.,,");
+    }
     
     [PersistenceStorage setObject:@"ctf06" andKey:@"summaryReferer"];
 

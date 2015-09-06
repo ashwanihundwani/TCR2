@@ -140,9 +140,6 @@
     [PersistenceStorage setObject:@"preventries" andKey:@"summaryReferer"];
 
     CTFSummary *ratingsView = [[UIStoryboard storyboardWithName:@"Main"bundle:nil]instantiateViewControllerWithIdentifier:@"CTFSummary"];
-    
-    
-    [self.navigationController pushViewController:ratingsView animated:YES];
 
 
     
@@ -156,7 +153,7 @@
 
     [PersistenceStorage setObject: [[CTFListArray objectAtIndex:indexPath.row] valueForKey:@"newEmotionsList"] andKey:@"ctf06text"];
 
- 
+ [self.navigationController pushViewController:ratingsView animated:YES];
     
     
     
