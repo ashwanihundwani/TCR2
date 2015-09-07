@@ -452,6 +452,7 @@
 		CD7D80371B8F7FB700D77939 /* OtherSoundsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CD7D80311B8F7FB700D77939 /* OtherSoundsCell.xib */; };
 		CD7D803A1B8F7FC900D77939 /* BaseSoundCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CD7D80391B8F7FC900D77939 /* BaseSoundCell.m */; };
 		CD7D803C1B8FA52D00D77939 /* ActivityCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CD7D803B1B8FA52D00D77939 /* ActivityCell.xib */; };
+		CD9113F61B9BE70A00F924B9 /* ChangingThoughtsViewController+Table.m in Sources */ = {isa = PBXBuildFile; fileRef = CD9113F51B9BE70A00F924B9 /* ChangingThoughtsViewController+Table.m */; };
 		CDE963FE1B8D8B8F00B84E57 /* AddUsePlansSelected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CDE963FA1B8D8B8F00B84E57 /* AddUsePlansSelected@2x.png */; };
 		CDE963FF1B8D8B8F00B84E57 /* LearnSelected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CDE963FB1B8D8B8F00B84E57 /* LearnSelected@2x.png */; };
 		CDE964001B8D8B8F00B84E57 /* SamplerSelected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CDE963FC1B8D8B8F00B84E57 /* SamplerSelected@2x.png */; };
@@ -1087,6 +1088,8 @@
 		CD7D80381B8F7FC900D77939 /* BaseSoundCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseSoundCell.h; sourceTree = "<group>"; };
 		CD7D80391B8F7FC900D77939 /* BaseSoundCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseSoundCell.m; sourceTree = "<group>"; };
 		CD7D803B1B8FA52D00D77939 /* ActivityCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ActivityCell.xib; sourceTree = "<group>"; };
+		CD9113F41B9BE70A00F924B9 /* ChangingThoughtsViewController+Table.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "ChangingThoughtsViewController+Table.h"; path = "Extensions/ChangingThoughtsViewController+Table.h"; sourceTree = "<group>"; };
+		CD9113F51B9BE70A00F924B9 /* ChangingThoughtsViewController+Table.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "ChangingThoughtsViewController+Table.m"; path = "Extensions/ChangingThoughtsViewController+Table.m"; sourceTree = "<group>"; };
 		CDE963FA1B8D8B8F00B84E57 /* AddUsePlansSelected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AddUsePlansSelected@2x.png"; sourceTree = "<group>"; };
 		CDE963FB1B8D8B8F00B84E57 /* LearnSelected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "LearnSelected@2x.png"; sourceTree = "<group>"; };
 		CDE963FC1B8D8B8F00B84E57 /* SamplerSelected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SamplerSelected@2x.png"; sourceTree = "<group>"; };
@@ -2752,6 +2755,8 @@
 				CD39CDF31B8EF05C00E61F51 /* DeepBreathingViewController+Table.m */,
 				CD39CDD01B8DD3F200E61F51 /* UIView+Extensions.h */,
 				CD39CDD11B8DD3F200E61F51 /* UIView+Extensions.m */,
+				CD9113F41B9BE70A00F924B9 /* ChangingThoughtsViewController+Table.h */,
+				CD9113F51B9BE70A00F924B9 /* ChangingThoughtsViewController+Table.m */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -3227,6 +3232,7 @@
 				04B8F7941B13930F008D54D0 /* NookCTF.m in Sources */,
 				04B0F1B51AEF1138005BCEA5 /* ContactListViewController.m in Sources */,
 				04E044EB1B1868E300F4DBD1 /* CTF05.m in Sources */,
+				CD9113F61B9BE70A00F924B9 /* ChangingThoughtsViewController+Table.m in Sources */,
 				042DDC891AEC13A50023910B /* SamplerVideoViewController.m in Sources */,
 				CD39CDC21B8DBC6000E61F51 /* IntroPageInfo.m in Sources */,
 				CDFFBFBD1B8F68F600BD2445 /* PleasantActivityViewController+Table.m in Sources */,

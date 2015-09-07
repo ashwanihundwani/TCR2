@@ -36,7 +36,7 @@
 
 #define USING_SOUND_INTRO_PAGE_TITLE_1 @"What is \"Using Sound\"?"
 
-#define G_M_INTRO_PAGE_2 @"What will I be doing in these exercises?" description:@"For three of these exercises you will focus on relaxing different parts of the body where you feel stress. The other two exercises focus on \"mindfulness\". Mindfulness means paying attention to the present moment."
+#define G_M_INTRO_PAGE_2 @"For three of these exercises you will focus on relaxing different parts of the body where you feel stress. The other two exercises focus on \"mindfulness\". Mindfulness means paying attention to the present moment."
 
 #define P_A_PAGE1_TITLE @"What are \"Pleasant Activities\"?"
 #define P_A_PAGE3_TITLE @"What are \"values\"?"

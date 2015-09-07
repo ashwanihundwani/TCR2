@@ -373,7 +373,7 @@
     NSString *query6 = [NSString stringWithFormat:@"delete from MyActivities where planID = '%@'",planID];
     
     
-    NSString *query7 = [NSString stringWithFormat:@"delete from My_Tips where planID = '%@'",planID];
+    NSString *query7 = [NSString stringWithFormat:@"delete from My_Tips where planID = %@",planID];
     
     NSString *query8 = [NSString stringWithFormat:@"delete from My_Contacts "];
     NSString *query9 = [NSString stringWithFormat:@"delete from MyDevices where planID = '%@'",planID];
@@ -859,9 +859,22 @@
     timeFormatter.dateFormat = @"HH:mm:ss";
     NSString *timeString = [timeFormatter stringFromDate: date];
     NSString *type = @"Navigation";
-    
     NSString *str = @"Plans";
-    NSString   *finalStr = [NSString stringWithFormat:@"\r%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@",dateString,timeString,type,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil];
+    NSString * navMethod = @"";
+    if([PersistenceStorage getIntegerForKey:@"HomeButtonTapped"] == self.tabBarController.selectedIndex ){
+        navMethod = @"Navigated from Home Screen";
+        [PersistenceStorage setInteger:-1 andKey:@"HomeButtonTapped"];
+    }else if([PersistenceStorage getIntegerForKey:@"HomeButtonTapped"] == -2){
+        navMethod = nil;
+        [PersistenceStorage setInteger:-1 andKey:@"HomeButtonTapped"];
+    }
+    else if(self.tabBarController.selectedIndex == 2){
+        navMethod = @"Navigated from Nav Bar";
+    }else{
+        navMethod = nil;
+    }
+    NSLog(@"navigation method is:%@ and parent controller is: %@", navMethod, [[self parentViewController] class]);
+    NSString   *finalStr = [NSString stringWithFormat:@"\r%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@",dateString,timeString,type,navMethod,str,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil];
     
     NSFileManager *fileManager = [NSFileManager defaultManager];
     if(![fileManager fileExistsAtPath:documentTXTPath])

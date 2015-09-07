@@ -163,7 +163,7 @@
     NSString *skillName = [[filteredArray objectAtIndex:indexPath.row] valueForKey:@"skillName"];
     
     
-    CGFloat labelHeight = [Utils heightForLabelForString:skillName width:200 font:TITLE_LABEL_FONT];
+    CGFloat labelHeight = [Utils heightForLabelForString:skillName width:210 font:TITLE_LABEL_FONT];
     
     constant += labelHeight;
     
@@ -329,6 +329,7 @@
     NSString* skillName = [skillDict valueForKey:@"skillName"];
     NSInteger planID = [PersistenceStorage getIntegerForKey:@"currentPlanID"];
     NSString* planName = self.planName;
+    NSLog(@"Deleting Skill id:%@ having name:%@ from Plan ID:%ld Name:%@",skillID,skillName,planID,planName);
     if (![skillName isEqualToString:@"Tips for Better Sleep"]) {
         //remove the notfications, if any related to this skill
         NSArray *notificationArray = [[UIApplication sharedApplication] scheduledLocalNotifications];
@@ -341,9 +342,6 @@
             
         }
     }
-
-    
-    NSLog(@"Deleting Skill id:%@ having name:%@ from Plan ID:%ld Name:%@",skillID,skillName,planID,planName);
     
     NSString *query = [NSString stringWithFormat:@"delete from MySkills where SkillID=%@ and planID = %ld",skillID,planID];
     
@@ -366,6 +364,7 @@
     NSString *query5 = [NSString stringWithFormat:@"delete from MySkillReminders where SkillName=\"%@\" and PlanName = \"%@\"",skillName, planName];
     
     NSString *query5_1 = @"delete from MySkillReminders where SkillName = 'Tips for Better Sleep'";
+    NSString *query6 = [NSString stringWithFormat:@"delete from My_Tips where SkillID=%@ and planID = %ld",skillID,planID];
     
     [self.dbManagerMySkills executeQuery:query01];
     [self.dbManagerMySkills executeQuery:query1];
@@ -373,6 +372,7 @@
     [self.dbManagerMySkills executeQuery:query2];
     [self.dbManagerMySkills executeQuery:query3];
     [self.dbManagerMySkills executeQuery:query4];
+    [self.dbManagerMySkills executeQuery:query6];
     if(![skillName isEqualToString:@"Tips for Better Sleep"]) {
         [self.dbManagerMySkills executeQuery:query5];
     }
@@ -442,38 +442,40 @@
     DeleteCormationManager *manager = [DeleteCormationManager getInstance];
     
     [manager showAlertwithPositiveBlock:^(BOOL positive) {
-    
-    
-    UITableViewCell *cell = (UITableViewCell *)[[sender view] superview];
-    
-    NSIndexPath *indexPath = [self.skillsListTableView indexPathForCell:cell];
-        NSLog(@"%@",skillListArray);
-    
-      //  [PersistenceStorage setObject:sName andKey:@"skillName"];
-
-        [PersistenceStorage setObject:[[skillListArray objectAtIndex:indexPath.section]valueForKey:@"skillName"] andKey:@"deletingSkillName"];
-//[PersistenceStorage setObject:[[skillListArray objectAtIndex:indexPath.section]valueForKey:@"planName"] andKey:@"planName"];
-      //  [PersistenceStorage setObject:[[skillListArray objectAtIndex:indexPath.section]valueForKey:@"situationName"] andKey:@"situationName"];
-
         
         
+        UITableViewCell *cell = (UITableViewCell *)[[sender view] superview];
         
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF.groupID == %@",[[groupListArray objectAtIndex:indexPath.section]valueForKey:@"ID"]];
-    NSArray *filteredArray = [skillListArray filteredArrayUsingPredicate:predicate];
+        NSIndexPath *indexPath = [self.skillsListTableView indexPathForCell:cell];
+        NSInteger rowNum = indexPath.row;
+        NSInteger secNum = indexPath.section;
+        //get the groupID
+        NSString* groupID = [[groupListArray objectAtIndex:secNum] valueForKey:@"ID"];
+        //get the filteredarray
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF.groupID == %@",groupID];
+        NSArray *filteredArray = [skillListArray filteredArrayUsingPredicate:predicate];
+        
+        //get the skill diictionary to be deleted
+        NSDictionary* skillDictToDelete = [filteredArray objectAtIndex:rowNum];
+        NSString* sKillNameToDelete = [skillDictToDelete valueForKey:@"skillName"];
+        NSString* skillIDToDelete = [skillDictToDelete valueForKey:@"ID"];
+        NSLog(@"ON Delete Called for SkillID:%@ and skillName:%@",skillIDToDelete,sKillNameToDelete);
+        [PersistenceStorage setObject:sKillNameToDelete andKey:@"deletingSkillName"];
+        
         [self writeDeletedSkill];
         
-     //before deleting lets fetch the calender even, if any
+        //before deleting lets fetch the calender even, if any
         CalEventsArray = [[NSMutableArray alloc] init];
-        NSString* reminderQuery = [NSString stringWithFormat:@"select CalendarEventID from MySkillReminders where SkillName = \"%@\" and  PlanName = \"%@\"",[[skillListArray objectAtIndex:indexPath.section]valueForKey:@"skillName"],self.planName ];
+        NSString* reminderQuery = [NSString stringWithFormat:@"select CalendarEventID from MySkillReminders where SkillName = \"%@\" and  PlanName = \"%@\"",sKillNameToDelete,self.planName ];
         NSArray* calenderEventsArray = [self.dbManagerMySkills loadDataFromDB:reminderQuery];
         if(calenderEventsArray.count > 0){
             [CalEventsArray addObjectsFromArray:calenderEventsArray];
         }
-        if([[[skillListArray objectAtIndex:indexPath.section]valueForKey:@"skillName"]  isEqualToString:@"Tips for Better Sleep"]){
+        if([sKillNameToDelete isEqualToString:@"Tips for Better Sleep"]){
             isTBSDeleted = YES;
         }else{
             isTBSDeleted = NO;
-            if([[[skillListArray objectAtIndex:indexPath.section]valueForKey:@"skillName"]  isEqualToString:@"Pleasant Activities"]){
+            if([sKillNameToDelete isEqualToString:@"Pleasant Activities"]){
                 reminderQuery = [NSString stringWithFormat:@"select CalendarEventID from MyReminders where PlanName = \"%@\"",self.planName ];
                 NSArray* arr2 = [self.dbManagerMySkills loadDataFromDB:reminderQuery];
                 if(arr2.count > 0){
@@ -481,28 +483,29 @@
                 }
             }
         }
-    [self deleteSkillFromDB:[filteredArray objectAtIndex:indexPath.row] andCompletion:^(BOOL success)
-     {
-         if (success) {
-             [self loadMySkillsData];
-             [self.skillsListTableView reloadData];
-             if(isTBSDeleted){
-                 [self checkAndDeleteTBSReminders];
-             }else{
-                 [self removeEventFromCalender];
+        [self deleteSkillFromDB:skillDictToDelete andCompletion:^(BOOL success)
+         {
+             if (success) {
+                 [self loadMySkillsData];
+                 [self.skillsListTableView reloadData];
+                 if(isTBSDeleted){
+                     [self checkAndDeleteTBSReminders];
+                 }else{
+                     [self removeEventFromCalender];
+                 }
+                 
              }
              
-         }
-         
-     }];
+         }];
     } negativeBlock:^(BOOL negative) {
         
         //DO nothing
     }];
-
+    
 }
 
 -(void)removeEventFromCalender{
+    NSLog(@"Removing calender events:%ld from calender",CalEventsArray.count);
     EKEventStore *store = [[EKEventStore alloc] init];
     [store requestAccessToEntityType:EKEntityTypeEvent completion:^(BOOL granted, NSError *error) {
         if (!granted) return;
@@ -513,8 +516,10 @@
                 continue;
             }
             EKEvent* eventToRemove = [store eventWithIdentifier:calEventID];
-            if(eventToRemove != nil)
+            if(eventToRemove != nil){
+                NSLog(@"Calender Event with ID:%@ removed", calEventID);
                 [eventList addObject:eventToRemove];
+            }
         }
         
         for (EKEvent* eventToRemove in eventList) {

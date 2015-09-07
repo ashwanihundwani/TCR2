@@ -94,7 +94,7 @@
 -(void)setData
 {
     NSString *query = @"SELECT thoughtText,rating FROM My_TF where thoughtCategory = 'step6'";
-    emotionsArray = [self.dbManager loadDataFromDB:query];
+    emotionsArray = [NSMutableArray arrayWithArray:[self.dbManager loadDataFromDB:query]];
     //[emotionsArray removeAllObjects];
     //   for (NSDictionary *emotion in allRecordsArray) {
     
@@ -115,7 +115,7 @@
             //self.textLabel.text =@"Segment 1 selected.";
             
         { NSString *query = @"SELECT thoughtText,rating FROM My_TF where thoughtCategory = 'step6'";
-            emotionsArray = [self.dbManager loadDataFromDB:query];
+            emotionsArray = [NSMutableArray arrayWithArray:[self.dbManager loadDataFromDB:query]];
             [[self.view viewWithTag:335] setHidden:NO];
 
             break;}
@@ -124,7 +124,7 @@
             //self.textLabel.text =@"Segment 2 selected.";
             
         {NSString *query1 = @"SELECT thoughtText,rating FROM My_TF where thoughtCategory = 'step3'";
-            emotionsArray = [self.dbManager loadDataFromDB:query1];
+            emotionsArray = [NSMutableArray arrayWithArray:[self.dbManager loadDataFromDB:query1]];
             [[self.view viewWithTag:335] setHidden:YES];
 
             break;}
@@ -235,15 +235,27 @@
     //  [thoughtList appendString:[[emotionsArray objectAtIndex:indexPath.row] valueForKey:@"rating"]];
     
     
-    UIButton* deleteBtn = [[UIButton alloc] initWithFrame:CGRectMake(4, cell.frame.origin.y+8, 25, 25)];
-    [deleteBtn setBackgroundImage:[UIImage imageNamed:@"Active_Trash_Button.png"] forState:UIControlStateNormal];
-    deleteBtn.tag = indexPath.row;
-    [deleteBtn addTarget:self action:@selector(deleteBtnPressed:) forControlEvents:UIControlEventTouchUpInside];
-    [cell addSubview:deleteBtn];
-    UILabel* emotioTextLabel = [[UILabel alloc] initWithFrame:CGRectMake(35, cell.frame.origin.y+5, 200, 35)];
+    UIButton* deleteBtn = (UIButton*)[cell viewWithTag:1089];
+    if(deleteBtn == nil){
+        deleteBtn = [[UIButton alloc] initWithFrame:CGRectMake(4, cell.frame.origin.y+8, 25, 25)];
+        [deleteBtn setBackgroundImage:[UIImage imageNamed:@"Active_Trash_Button.png"] forState:UIControlStateNormal];
+        deleteBtn.tag = 1089;
+        [deleteBtn addTarget:self action:@selector(deleteBtnPressed:) forControlEvents:UIControlEventTouchUpInside];
+        [cell addSubview:deleteBtn];
+
+    }
+    
+    
+    UILabel* emotioTextLabel = (UILabel*)[cell viewWithTag:1090];
+    if(emotioTextLabel == nil){
+        emotioTextLabel = [[UILabel alloc] initWithFrame:CGRectMake(35, cell.frame.origin.y+5, 200, 35)];
+        emotioTextLabel.tag = 1090;
+        [cell addSubview:emotioTextLabel];
+    }
+    
     emotioTextLabel.textColor = [UIColor blackColor];
     emotioTextLabel.text = [[emotionsArray objectAtIndex:indexPath.row] valueForKey:@"thoughtText"];
-    [cell addSubview:emotioTextLabel];
+    
     
     //cell.textLabel.text = [[emotionsArray objectAtIndex:indexPath.row] valueForKey:@"thoughtText"];
     cell.detailTextLabel.text = [[emotionsArray objectAtIndex:indexPath.row] valueForKey:@"rating"];
@@ -326,37 +338,6 @@
     
     // If the query was successfully executed then pop the view controller.
     
-    
-    NSString *query = [NSString stringWithFormat:@"insert into My_TF_Set ('planID','situationDescription', 'thoughtDescription', 'emotionsList','thoughtError', 'newThought', 'newEmotionsList', 'dateTime','dateTimeSeconds') values ('%@','%@', '%@', '%@','%@', '%@', '%@','%@','%@')",
-                       [PersistenceStorage getObjectForKey:@"currentPlanID"],
-                       [PersistenceStorage getObjectForKey:@"ctf01text"],
-                       [PersistenceStorage getObjectForKey:@"ctf02text"],
-                       [PersistenceStorage getObjectForKey:@"ctf03text"],
-                       [PersistenceStorage getObjectForKey:@"ctf04text"],
-                       [PersistenceStorage getObjectForKey:@"ctf05text"],
-                       [PersistenceStorage getObjectForKey:@"ctf06text"],
-                       currentTime,intervalString
-                       
-                       ];
-    
-    
-    BOOL isDone = [self.dbManager executeQuery:query];
-    
-    
-    if (self.dbManager.affectedRows != 0) {
-        
-    }
-    else{
-        NSLog(@"Could not execute the query.,,");
-    }
-    
-    
-
-    
-    
-    
-    
-    
     NSString *myTFQuery = @"select * from My_TF where thoughtCategory='step6'";
     
     NSArray *myTFArray = [self.dbManager loadDataFromDB:myTFQuery];
@@ -388,7 +369,28 @@
         
         
     }
+    NSString *query = [NSString stringWithFormat:@"insert into My_TF_Set ('planID','situationDescription', 'thoughtDescription', 'emotionsList','thoughtError', 'newThought', 'newEmotionsList', 'dateTime','dateTimeSeconds') values ('%@','%@', '%@', '%@','%@', '%@', '%@','%@','%@')",
+                       [PersistenceStorage getObjectForKey:@"currentPlanID"],
+                       [PersistenceStorage getObjectForKey:@"ctf01text"],
+                       [PersistenceStorage getObjectForKey:@"ctf02text"],
+                       [PersistenceStorage getObjectForKey:@"ctf03text"],
+                       [PersistenceStorage getObjectForKey:@"ctf04text"],
+                       [PersistenceStorage getObjectForKey:@"ctf05text"],
+                       [PersistenceStorage getObjectForKey:@"ctf06text"],
+                       currentTime,intervalString
+                       
+                       ];
     
+    
+    BOOL isDone = [self.dbManager executeQuery:query];
+    
+    
+    if (self.dbManager.affectedRows != 0) {
+        
+    }
+    else{
+        NSLog(@"Could not execute the query.,,");
+    }
     
     [PersistenceStorage setObject:@"ctf06" andKey:@"summaryReferer"];
 
@@ -423,9 +425,30 @@
 
 
 -(void)deleteBtnPressed:(UIView*)sender{
-    NSInteger rowIndex = sender.tag;
-    [emotionsArray removeObjectAtIndex:rowIndex];
-    [self.EmotionsTableView reloadData];
+    UITableViewCell* cell = (UITableViewCell*)[sender superview];
+    NSIndexPath* indexPath = [self.EmotionsTableView indexPathForCell:cell];
+    NSInteger rowIndex = indexPath.row;
+    NSDictionary* emotionDict = [emotionsArray objectAtIndex:rowIndex];
+    NSString* deleteQuery = @"";[NSString stringWithFormat:@"delete from My_TF where thoughtCategory = 'step3' and thoughtText = '%@' and rating = '%@'",[emotionDict valueForKey:@"thoughtText"],[emotionDict valueForKey:@"rating"]];
+    if(self.segmentedControl.selectedSegmentIndex == 0){
+        deleteQuery = [NSString stringWithFormat:@"delete from My_TF where thoughtCategory = 'step6' and thoughtText = '%@' and rating = '%@'",[emotionDict valueForKey:@"thoughtText"],[emotionDict valueForKey:@"rating"]];
+    }else{
+        deleteQuery = [NSString stringWithFormat:@"delete from My_TF where thoughtCategory = 'step3' and thoughtText = '%@' and rating = '%@'",[emotionDict valueForKey:@"thoughtText"],[emotionDict valueForKey:@"rating"]];
+    }
+    [self.dbManager executeQuery:deleteQuery];
+    if(self.dbManager.affectedRows > 0){
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark.png"] ];
+        
+        hud.mode = MBProgressHUDModeCustomView;
+        
+        hud.labelText = @"Removed";
+        
+        [hud show:YES];
+        [hud hide:YES afterDelay:1];
+        [emotionsArray removeObjectAtIndex:rowIndex];
+        [self.EmotionsTableView reloadData];
+    }
 }
 
 

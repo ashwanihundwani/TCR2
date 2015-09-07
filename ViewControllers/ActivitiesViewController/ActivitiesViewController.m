@@ -17,11 +17,14 @@
 #import "NewPlanAddedViewController.h"
 #import "DeleteCormationManager.h"
 #import "MBProgressHUD.h"
+#import <EventKit/EventKit.h>
+
 
 @interface ActivitiesViewController ()<UITableViewDataSource,UITableViewDelegate,UIActionSheetDelegate>{
     NSArray *activityArray;
     NSArray *favoritesArray;
     NSString *strAct;
+    NSString* CalenderEventID;
 }
 @end
 
@@ -539,9 +542,25 @@
             
             
             NSString *query = [NSString stringWithFormat:@"delete from  Plan_Activities where ActivityName = '%@' and cantDelete is not 1",[dict valueForKey:@"activityName"]];
+            NSString *queryFav = [NSString stringWithFormat:@"delete from  MyActivities where ActivityName = '%@' and skillID = %@ and planID = %@",[dict valueForKey:@"activityName"],[PersistenceStorage getObjectForKey:@"currentSkillID"], [PersistenceStorage getObjectForKey:@"currentPlanID"]];
             
+            NSString *queryClear = [NSString stringWithFormat:@"delete from MyReminders where ActName = '%@' and PlanName = '%@' and SkillName = 'Pleasant Activities'",[dict valueForKey:@"activityName"],[PersistenceStorage getObjectForKey:@"planName"]];
             // Execute the query.
             [self.manager executeQuery:query];
+            if(self.manager.affectedRows > 0){
+                //activity was deleted
+                // lets delete it from favourite as well
+                [self.manager executeQuery:queryFav];
+                // get the calenderID
+                CalenderEventID = [self eventPAExists:[dict valueForKey:@"activityName"]];
+                if(CalenderEventID != nil){
+                    [self removeEventFromCalender];
+                }
+                [self deleteExistingPAEventNotitfication:[dict valueForKey:@"activityName"]];
+                
+                // now delete the entry
+                [self.manager executeQuery:queryClear];
+            }
             [self.activityTableView reloadData];
             
             // If the query was successfully executed then pop the view controller.
@@ -596,9 +615,26 @@
         
         
         NSString *query = [NSString stringWithFormat:@"delete from  Plan_Activities where ActivityName = '%@' and cantDelete is not 1",[dict valueForKey:@"activityName"]];
+        NSString *queryFav = [NSString stringWithFormat:@"delete from  MyActivities where ActivityName = '%@' and skillID = %@ and planID = %@",[dict valueForKey:@"activityName"],[PersistenceStorage getObjectForKey:@"currentSkillID"], [PersistenceStorage getObjectForKey:@"currentPlanID"]];
+        
+        NSString *queryClear = [NSString stringWithFormat:@"delete from MyReminders where ActName = '%@' and PlanName = '%@' and SkillName = 'Pleasant Activities'",[dict valueForKey:@"activityName"],[PersistenceStorage getObjectForKey:@"planName"]];
         
         // Execute the query.
         [self.manager executeQuery:query];
+        if(self.manager.affectedRows > 0){
+            //activity was deleted
+            // lets delete it from favourite as well
+            [self.manager executeQuery:queryFav];
+            // get the calenderID
+            CalenderEventID = [self eventPAExists:[dict valueForKey:@"activityName"]];
+            if(CalenderEventID != nil){
+                [self removeEventFromCalender];
+            }
+            [self deleteExistingPAEventNotitfication:[dict valueForKey:@"activityName"]];
+            
+            // now delete the entry
+            [self.manager executeQuery:queryClear];
+        }
         [self.activityTableView reloadData];
         
         // If the query was successfully executed then pop the view controller.
@@ -825,6 +861,50 @@
  
  }
  */
+-(NSString*)eventPAExists:(NSString*)activityName{
+    //check for the Event
+    //get the skill first
+    NSString* calEvent = nil;
+    NSString* reminderQuery = [NSString stringWithFormat:@"select CalendarEventID from MyReminders where SkillName = \"%@\" and PlanName = \"%@\" and ActName = '%@'",[PersistenceStorage getObjectForKey:@"skillName"],[PersistenceStorage getObjectForKey:@"planName"],activityName];
+    NSArray* calenderEventsArray = [NSArray arrayWithArray:[self.manager loadDataFromDB:reminderQuery]];
+    if(calenderEventsArray != nil && calenderEventsArray.count > 0){
+        //get the calender event and return it back for rescheduling
+        calEvent = [[calenderEventsArray objectAtIndex:0] objectForKey:@"CalendarEventID"];
+        
+    }
+    return calEvent;
+}
 
+-(void)removeEventFromCalender{
+    EKEventStore *store = [[EKEventStore alloc] init];
+    [store requestAccessToEntityType:EKEntityTypeEvent completion:^(BOOL granted, NSError *error) {
+        if (!granted) return;
+        NSError* err = nil;
+        EKEvent* eventToRemove = [store eventWithIdentifier:CalenderEventID];
+        [store removeEvent:eventToRemove span:EKSpanFutureEvents commit:YES error:&err];
+        if(err != nil){
+            NSLog(@"Error in deletining event from calender:%@", [eventToRemove description]);
+        }
+    }
+     
+     
+     ];
+    
+}
+
+-(void)deleteExistingPAEventNotitfication:(NSString*)activityName{
+    NSArray *notificationArray = [[UIApplication sharedApplication] scheduledLocalNotifications];
+    NSString* skillName = [PersistenceStorage getObjectForKey:@"skillName"];
+    NSString* planName = [PersistenceStorage getObjectForKey:@"planName"];
+    for(UILocalNotification *notification in notificationArray){
+        if ([[notification.userInfo valueForKey:@"PlanName"] isEqualToString:planName] && [[notification.userInfo valueForKey:@"Type"] isEqualToString:skillName] && [[notification.userInfo valueForKey:@"Activity"] isEqualToString:activityName]) {
+            NSLog(@"Cancelling local notification for skill:%@ in Plan:%@  Activity: %@" , skillName, planName,activityName);
+            [[UIApplication sharedApplication] cancelLocalNotification:notification] ;
+            break;
+        }
+        
+    }
+    
+}
 
 @end

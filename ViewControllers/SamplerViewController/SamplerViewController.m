@@ -37,6 +37,29 @@
 
 @implementation SamplerViewController
 
+-(UIView *)tableHeaderView
+{
+    UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 86)];
+    
+    UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(20, 13, 280, 60)
+                           ];
+    
+    titleLabel.numberOfLines = 100;
+    
+    titleLabel.backgroundColor = [UIColor clearColor];
+    view.backgroundColor = [Utils colorWithHexValue:@"EFEFF4"];
+    
+    titleLabel.text = @"The sample sounds and exercises below are easy to use and can be helpful right away for some people.";
+    
+    Pair *pallete = [Utils getColorFontPair:eCFS_PALLETE_2];
+    
+    titleLabel.font = pallete.secondObj;
+    titleLabel.textColor = pallete.firstObj;
+    
+    [view addSubview:titleLabel];
+    
+    return view;
+}
 
 
 
@@ -313,13 +336,64 @@
 
 
 
-
-
+-(void)goToHome
+{
+    self.tabBarController.selectedIndex = 0;
+    
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.title = @"Sampler";
+    self.samplerTableView.backgroundColor = [UIColor whiteColor];
+    
+    [self.samplerTableView setSeparatorInset:UIEdgeInsetsMake(0, 66, 0, 0)];
+    
+    self.headerLabel.hidden = TRUE;
+    //self.headerLabel.backgroundColor = [Utils colorWithHexValue:@"EFEFF4"];
+    
+    // Do any additional setup after loading the view.
+    
+    UIView *titleView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 100, 44)];
+    
+    titleView.backgroundColor = [Utils colorWithHexValue:NAV_BAR_BLACK_COLOR];
+    
+    UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 100, 44)];
+    
+    Pair *pallete = [Utils getColorFontPair:eCFS_PALLETE_1];
+    
+    titleLabel.font = pallete.secondObj;
+    titleLabel.textColor = pallete.firstObj;
+    
+    titleLabel.textAlignment = NSTextAlignmentCenter;
+    
+    //titleLabel.textColor = [UIColor colorWithHexValue:@"797979"];
+    titleLabel.backgroundColor = [UIColor clearColor];
+    titleLabel.text = @"Sampler";
+    
+    [titleView addSubview:titleLabel];
+    
+    self.navigationItem.titleView = titleView;
+    
+    UIImageView *backLabel = [[UIImageView alloc]initWithFrame:CGRectMake(10, 10, 15, 20)];
+    
+    backLabel.image = [UIImage imageNamed:@"Active_Back-Arrow.png"];
+    
+    [Utils addTapGestureToView:backLabel target:self
+                      selector:@selector(goToHome)];
+    
+    UIBarButtonItem *item = [[UIBarButtonItem alloc]initWithCustomView:backLabel];
+    
+    UIBarButtonItem *negativeSpacer = [[UIBarButtonItem alloc]
+                                       initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace
+                                       target:nil action:nil];
+    negativeSpacer.width = -8;
+    
+    self.navigationItem.leftBarButtonItems = [NSArray arrayWithObjects:negativeSpacer, item, nil];
+    
+    
+    
+    self.samplerTableView.tableHeaderView = [self tableHeaderView];
     // Do any additional setup after loading the view.
     [self.samplerTableView setDataSource:self];
     [self.samplerTableView setDelegate:self ];
@@ -358,32 +432,6 @@
     self.dbManagerForVideo = [[DBManager alloc]initWithDatabaseFileName:@"GNResoundDB.sqlite"];
     [self loadSoundData];
     [self loadVideoData];
-    
-    
-    UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 86)];
-    
-    UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(20, 13, 280, 60)
-                           ];
-    
-    titleLabel.numberOfLines = 3;
-    
-    titleLabel.backgroundColor = [UIColor clearColor];
-    view.backgroundColor = [Utils colorWithHexValue:@"EFEFF4"];
-    
-    titleLabel.text = @"The sample sounds and exercises below are easy to use and can be helpful right away for some people.";
-    
-    Pair *pallete = [Utils getColorFontPair:eCFS_PALLETE_2];
-    
-    titleLabel.font = pallete.secondObj;
-    titleLabel.textColor = pallete.firstObj;
-    
-    [view addSubview:titleLabel];
-    self.samplerTableView.tableHeaderView = view;
-    
-    
-    
-    
-    
 }
 
 
@@ -532,11 +580,21 @@
                     //                    int indexOfSoundname = [self.dbManagerForSound.arrColumnNames indexOfObject:@"soundName"];
                     if (cell == nil) {
                         cell =  [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Cell"];
+                        
+                        UIImageView *accessory = [[UIImageView alloc]initWithFrame:CGRectMake(286, 15, 13, 13)];
+                        
+                        [accessory setImage:[UIImage imageNamed:@"Active_Next-Arrow.png"]];
+                        
+                        accessory.tag = ACCESSORY_IMAGE_TAG;
+                        
+                        [cell addSubview:accessory];
                     }
+                    
+                    
                     cell.imageView.image = [UIImage imageNamed:@"samplersounds"];
                     cell.textLabel.font= [UIFont systemFontOfSize:16];
                     
-                    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+                    //cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
                     
                     //[NSString stringWithFormat:@"%@ %@", [[self.arrPeopleInfo objectAtIndex:indexPath.row] objectAtIndex:indexOfFirstname]
                     cell.textLabel.text = [dict valueForKey:@"soundName"];
@@ -703,6 +761,39 @@
         break;
     }
     return nil;
+}
+
+-(UIView*)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
+    switch (tableView.tag) {
+        case 200:{
+            switch (section) {
+                case 0:{
+                    UIView *soundHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, 300.0, 60.0)];
+                    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(20.0, 10.0, 280, 60.0)];
+                    label.text = @"To hear more sounds, go to \"Add and Use Plans\" from the home page, and add \"Using Sound\" to a plan.";
+                    label.font = [UIFont systemFontOfSize:12];
+                    label.textColor= [UIColor darkGrayColor];
+                    label.numberOfLines =3;
+                    [soundHeaderView addSubview:label];
+                    return soundHeaderView;
+                }
+                default:
+                    return nil;
+            }
+        }
+
+        default:
+            return nil;
+    }
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
+    switch (tableView.tag) {
+        case 200:
+            return 60;
+            default:
+            return 0;
+    }
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -990,9 +1081,18 @@
     timeFormatter.dateFormat = @"HH:mm:ss";
     NSString *timeString = [timeFormatter stringFromDate: date];
     NSString *type = @"Navigation";
-    
     NSString *str = @"Sampler";
-    NSString   *finalStr = [NSString stringWithFormat:@"\r%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@",dateString,timeString,type,nil,str,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil];
+    NSString * navMethod = @"";
+    if([PersistenceStorage getIntegerForKey:@"HomeButtonTapped"] == self.tabBarController.selectedIndex ){
+        navMethod = @"Navigated from Home Screen";
+        [PersistenceStorage setInteger:-1 andKey:@"HomeButtonTapped"];
+    }else if(self.tabBarController.selectedIndex == 1){
+        navMethod = @"Navigated from Nav Bar";
+    }else{
+        navMethod = nil;
+    }
+    NSLog(@"navigation method is:%@ and parent controller is: %@ and isMovingToParentViewController is:%@", navMethod, [[self parentViewController] class], [[self presentingViewController] class]);
+    NSString   *finalStr = [NSString stringWithFormat:@"\r%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@",dateString,timeString,type,navMethod,str,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil];
     
     NSFileManager *fileManager = [NSFileManager defaultManager];
     if(![fileManager fileExistsAtPath:documentTXTPath])

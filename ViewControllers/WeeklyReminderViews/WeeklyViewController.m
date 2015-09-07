@@ -50,6 +50,11 @@
     currentPlanIndex = 0;
     self.previousBtn.hidden = YES;
     [self.tableview registerNib:[UINib nibWithNibName:@"FeedbackTableViewCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"FeedbackCellIdentifier"];
+    if(categorizedSkills != nil && categorizedSkills.count > 1){
+        self.submittBtn.hidden = YES;
+    }else{
+        self.submittBtn.hidden = NO;
+    }
     
     [self resetWeeklyReminderEventForFutureDate];
     
@@ -991,6 +996,14 @@
 
 - (IBAction)cancelTapped:(id)sender {
     
+    [self performSelector:@selector(dismissSelf) withObject:nil afterDelay:1.2];
+
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark.png"] ];
+    hud.mode = MBProgressHUDModeCustomView;
+    hud.labelText = @"Thanks for the feedback!";
+    [hud show:YES];
+    [hud hide:YES afterDelay:1];
     
     for (NSDictionary *myskills in selectedSkills) {
         NSString *sName = [myskills valueForKey:@"skillName"];
@@ -1061,7 +1074,7 @@
     
     
     
-    [self dismissViewControllerAnimated:YES completion:^{
+    //[self dismissViewControllerAnimated:YES completion:^{
         //
         //        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         //        hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark.png"] ];
@@ -1089,7 +1102,11 @@
         
         
         
-    }];
+   // }];
+}
+
+-(void)dismissSelf{
+    [self dismissViewControllerAnimated:YES completion:^{}];
 }
 
 
@@ -1115,6 +1132,7 @@
         currentPlanIndex--;
         if(currentPlanIndex == 0)
             self.previousBtn.hidden = YES;
+        self.submittBtn.hidden = YES;
         [self.tableview reloadData];
     }
     
@@ -1127,8 +1145,12 @@
             self.previousBtn.hidden = NO;
         }
         currentPlanIndex++;
-        if(currentPlanIndex == maxMyPlan -1)
+        if(currentPlanIndex == maxMyPlan -1){
             self.nextBtn.hidden = YES;
+            self.submittBtn.hidden = NO;
+        }else{
+            self.submittBtn.hidden = YES;
+        }
         [self.tableview reloadData];
     }
 }

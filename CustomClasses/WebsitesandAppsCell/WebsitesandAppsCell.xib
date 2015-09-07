@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6250" systemVersion="14A389" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7702" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
@@ -38,13 +38,19 @@
                         <constraints>
                             <constraint firstAttribute="height" constant="40" id="rx0-vo-xKB"/>
                         </constraints>
-                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="rx0-vo-xKB"/>
+                            </mask>
+                        </variation>
                     </label>
                 </subviews>
                 <constraints>
                     <constraint firstItem="Jpq-8n-iQ5" firstAttribute="top" secondItem="TKV-Rg-9ko" secondAttribute="bottom" constant="3" id="FFg-fM-6QW"/>
+                    <constraint firstAttribute="bottom" secondItem="Jpq-8n-iQ5" secondAttribute="bottom" constant="-1" id="HWf-ga-5o8"/>
                     <constraint firstItem="TKV-Rg-9ko" firstAttribute="leading" secondItem="6MX-s8-9Nj" secondAttribute="trailing" constant="21" id="Thc-xQ-scz"/>
                     <constraint firstAttribute="trailing" secondItem="Jpq-8n-iQ5" secondAttribute="trailing" constant="8" id="Xpb-Wg-uEs"/>
                     <constraint firstItem="Jpq-8n-iQ5" firstAttribute="leading" secondItem="6MX-s8-9Nj" secondAttribute="trailing" constant="21" id="cxm-rq-KPS"/>

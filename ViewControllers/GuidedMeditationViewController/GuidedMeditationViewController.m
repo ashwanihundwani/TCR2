@@ -21,14 +21,20 @@
 #import "SwiperViewController.h"
 #import "IntroPageInfo.h"
 
-@interface GuidedMeditationViewController ()
+@interface GuidedMeditationViewController ()<ScheduleViewControllerDelegate>
 {NSArray *remindersArray;
+    NSString* CalenderEventID;
 }
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 
 @end
 
 @implementation GuidedMeditationViewController
+
+-(void)didTapDelete:(id)sender
+{
+    [self DeleteReminder:self];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -38,7 +44,7 @@
     
     self.exercises = @[@"Progressive Muscle Relaxation", @"Passive Muscle Relaxation", @"Body Scan", @"Mountain Stream Strategy", @"Mindful Breathing"];
     
-    
+    self.manager = [[DBManager alloc]initWithDatabaseFileName:@"GNResoundDB.sqlite"];
     
     
 //    UIImageView *backLabel = [[UIImageView alloc]initWithFrame:CGRectMake(20, 10, 15, 20)];
@@ -100,13 +106,13 @@
     [self.scrollView setFrame:CGRectMake(0.0, 0.0, self.view.frame.size.width, self.view.frame.size.height)];
     [self.scrollView setContentSize:CGSizeMake(320,800)];
     if ([[PersistenceStorage getObjectForKey:@"Referer"] isEqualToString:@"AudioPlayerTwoViewController"]) {
-//        SkillRatingsViewController *ratingsView = [[UIStoryboard storyboardWithName:@"Main"bundle:nil]instantiateViewControllerWithIdentifier:@"SkillRatingsViewController"];
-//        
-//        //ratingsView.skillSection = @"Sounds";
-//        //  ratingsView.skillDetail = self.name;
-//        
-//        //[self.navigationController pushViewController:ratingsView animated:YES];
-//        [self.navigationController presentModalViewController:ratingsView animated:YES];
+        SkillRatingsViewController *ratingsView = [[UIStoryboard storyboardWithName:@"Main"bundle:nil]instantiateViewControllerWithIdentifier:@"SkillRatingsViewController"];
+        
+        //ratingsView.skillSection = @"Sounds";
+        //  ratingsView.skillDetail = self.name;
+        
+        //[self.navigationController pushViewController:ratingsView animated:YES];
+        [self.navigationController presentModalViewController:ratingsView animated:YES];
     }
     
     
@@ -220,19 +226,38 @@
     
     if ([buttonTitle isEqualToString:@"Schedule Skill Reminder"]) {
         UILabel *label = (UILabel *)[self.view viewWithTag:333];
-        if (![label.text isEqualToString:@"No reminders"])
+//        if (![label.text isEqualToString:@"No reminders"])
+//        {
+//        }
+//        
+//        else
+//        {
+        
+        NSString *query = [NSString stringWithFormat: @"select * from MySkillReminders where SkillName = 'Guided Meditation' and PlanName = \'%@\'",[PersistenceStorage getObjectForKey:@"planName"]];
+        
+        self.manager = [[DBManager alloc]initWithDatabaseFileName:@"GNResoundDB.sqlite"];
+        
+        NSArray *reminders = [[NSArray alloc] initWithArray:[self.manager loadDataFromDB:query]];
+        
+        if(reminders.count > 0)
         {
+            [PersistenceStorage setObject:@"YES" andKey:@"showCancelActivityButton"];
+        }
+        else{
+            
+            [PersistenceStorage setObject:@"NO" andKey:@"showCancelActivityButton"];
         }
         
-        else
-        {  [PersistenceStorage setObject:nil andKey:@"skillDetail1"];
+
+        [PersistenceStorage setObject:nil andKey:@"skillDetail1"];
         
         [self writeClickedNextSteps];
         
    ScheduleViewController *svc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"ScheduleViewController"];
         //     svc.name = strAct;
+            svc.delegate= self;
         [self.navigationController pushViewController:svc animated:YES];
-        }
+        //}
     }
     
     
@@ -259,7 +284,7 @@
     
     [pageInfos addObject:info];
     
-    IntroPageInfo *info2 = [[IntroPageInfo alloc] initWithimage:[UIImage imageNamed:@"Intro4image2.png"] title: @"What will I be doing in these exercises?" description:@"For three of these exercises you will focus on relaxing different parts of the body where you feel stress. The other two exercises focus on 'mindfulness'. Mindfulness means paying attention to the present moment."];
+    IntroPageInfo *info2 = [[IntroPageInfo alloc] initWithimage:[UIImage imageNamed:@"Intro4image2.png"] title: @"What will I be doing in these exercises?" description:G_M_INTRO_PAGE_2];
     
     [pageInfos addObject:info2];
     
@@ -350,10 +375,7 @@
 
 -(void)RefreshScheduleData
 {
-    NSString *query = [NSString stringWithFormat:@"select * from MySkillReminders where SkillName = 'Guided Meditation'"];
-    
-    
-    
+    NSString *query = [NSString stringWithFormat: @"select * from MySkillReminders where SkillName = 'Guided Meditation' and PlanName = \'%@\'",[PersistenceStorage getObjectForKey:@"planName"]];
     
     self.manager = [[DBManager alloc]initWithDatabaseFileName:@"GNResoundDB.sqlite"];
     remindersArray = [[NSArray alloc] initWithArray:[self.manager loadDataFromDB:query]];
@@ -402,6 +424,8 @@
 -(IBAction)goToScheduler:(id)sender
 {
     ScheduleViewController *favc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"ScheduleViewController"];
+    
+    favc.delegate = self;
     [self.navigationController pushViewController:favc animated:YES];
 }
 
@@ -409,77 +433,16 @@
 
 
 - (IBAction)DeleteReminder:(id)sender {
-    
-    NSString *query = [NSString stringWithFormat: @"select * from MySkillReminders where SkillName = 'Guided Meditation'"];
-    
-    
-    self.manager = [[DBManager alloc]initWithDatabaseFileName:@"GNResoundDB.sqlite"];
-    remindersArray = [[NSArray alloc] initWithArray:[self.manager loadDataFromDB:query]];
-    
-    
-    if ([remindersArray count]== 1) {
-        
-        
-        NSDictionary *dict = [remindersArray objectAtIndex:0];
-        NSString *strAct = [dict valueForKey:@"CalendarEventID"];
-        [PersistenceStorage setObject:strAct andKey:@"EventID"];
+    NSString *queryClear = [NSString stringWithFormat:@"delete from MySkillReminders where SkillName = 'Guided Meditation' and PlanName = '%@'",[PersistenceStorage getObjectForKey:@"planName"]];
+    CalenderEventID = [self eventExists];
+    if(CalenderEventID != nil){
+        [self removeEventFromCalender];
     }
-    
-    NSString *query1 = [NSString stringWithFormat:@"delete from MySkillReminders where SkillName = 'Guided Meditation'"];
-    
-    [self.manager executeQuery:query1];
-    
-    
-    
-    //clear reminder
-    
-    
-    NSArray *notificationArray = [[UIApplication sharedApplication] scheduledLocalNotifications];
-    NSLog(@"notify array %@",notificationArray);
-    
-    for(UILocalNotification *notification in notificationArray){
-        if ([notification.alertBody containsString:@"'Guided Meditation'"]) {
-            [[UIApplication sharedApplication] cancelLocalNotification:notification] ;
-        }
-        
-        
-    }
-    
-    
-    
-    
+    // now delete notification
+    [self deleteExistingEventNotitfication];
+    [self.manager executeQuery:queryClear];
     [self RefreshScheduleData];
-    
-    
-    
-    EKEventStore *store = [[EKEventStore alloc] init];
-    [store requestAccessToEntityType:EKEntityTypeEvent completion:^(BOOL granted, NSError *error) {
-        if (!granted) return;
-        EKEvent* eventToRemove = [store eventWithIdentifier:[PersistenceStorage getObjectForKey:@"EventID"]];
-        if (eventToRemove) {
-            NSError* err = nil;
-            //    [store removeEvent:eventToRemove span:EKSpanThisEvent commit:YES error:&err];
-            [store removeEvent:eventToRemove span:EKSpanFutureEvents commit:YES error:&err];
-            
-            
-            
-            //            EKSpanFutureEvents
-            
-             
-            
-        }
-        
-        
-        
-    }
-     
-     
-     
-     ];
-    
-    
     [self writeDeletedReminder];
-
     
 }
 
@@ -591,6 +554,52 @@
         NSFileHandle *myHandle = [NSFileHandle fileHandleForWritingAtPath:documentTXTPath];
         [myHandle seekToEndOfFile];
         [myHandle writeData:[finalStr dataUsingEncoding:NSUTF8StringEncoding]];
+        
+    }
+    
+}
+
+-(NSString*)eventExists{
+    //check for the Event
+    //get the skill first
+    NSString* calEvent = nil;
+    NSString* reminderQuery = [NSString stringWithFormat:@"select CalendarEventID from MySkillReminders where SkillName = \"%@\" and  PlanName = \"%@\"",[PersistenceStorage getObjectForKey:@"skillName"],[PersistenceStorage getObjectForKey:@"planName"]];
+    NSArray* calenderEventsArray = [NSArray arrayWithArray:[self.manager loadDataFromDB:reminderQuery]];
+    if(calenderEventsArray != nil && calenderEventsArray.count > 0){
+        //get the calender event and return it back for rescheduling
+        calEvent = [[calenderEventsArray objectAtIndex:0] objectForKey:@"CalendarEventID"];
+        
+    }
+    return calEvent;
+}
+
+-(void)removeEventFromCalender{
+    EKEventStore *store = [[EKEventStore alloc] init];
+    [store requestAccessToEntityType:EKEntityTypeEvent completion:^(BOOL granted, NSError *error) {
+        if (!granted) return;
+        NSError* err = nil;
+        EKEvent* eventToRemove = [store eventWithIdentifier:CalenderEventID];
+        [store removeEvent:eventToRemove span:EKSpanFutureEvents commit:YES error:&err];
+        if(err != nil){
+            NSLog(@"Error in deletining event from calender:%@", [eventToRemove description]);
+        }
+    }
+     
+     
+     ];
+    
+}
+
+-(void)deleteExistingEventNotitfication{
+    NSArray *notificationArray = [[UIApplication sharedApplication] scheduledLocalNotifications];
+    NSString* skillName = [PersistenceStorage getObjectForKey:@"skillName"];
+    NSString* planName = [PersistenceStorage getObjectForKey:@"planName"];
+    for(UILocalNotification *notification in notificationArray){
+        if ([[notification.userInfo valueForKey:@"PlanName"] isEqualToString:planName] && [[notification.userInfo valueForKey:@"Type"] isEqualToString:skillName]) {
+            NSLog(@"Cancelling local notification for skill:%@ in Plan:%@", skillName, planName);
+            [[UIApplication sharedApplication] cancelLocalNotification:notification] ;
+            break;
+        }
         
     }
     

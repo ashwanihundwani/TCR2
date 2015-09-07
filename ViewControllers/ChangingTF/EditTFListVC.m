@@ -603,10 +603,9 @@
 
         
         [cell.imgCategory setImage:[UIImage imageNamed:SELECTED_IMAGE]];
-        CTFRatingsViewController *addvc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"CTFRatingsViewController"];
+        [cell.btnToggleCategory setBackgroundImage:[UIImage imageNamed:@"selectedCircle"] forState:UIControlStateNormal];
         
-        
-        [self presentModalViewController:addvc animated:YES];
+        [self performSelector:@selector(navigateToRatings) withObject:nil afterDelay:.5];
     }
 }
 
@@ -746,5 +745,12 @@
     // Pass the selected object to the new view controller.
 }
 */
+
+-(void)navigateToRatings{
+    CTFRatingsViewController *addvc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"CTFRatingsViewController"];
+    
+    
+    [self presentModalViewController:addvc animated:YES];
+}
 
 @end

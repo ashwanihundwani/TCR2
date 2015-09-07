@@ -456,6 +456,7 @@
         cell.nameLabel.text = [[websitesandAppsSoundsArray objectAtIndex:indexPath.row] valueForKey:@"waName"];
         
         cell.descriptionLabel.text =[[websitesandAppsSoundsArray objectAtIndex:indexPath.row] valueForKey:@"waDetail"];
+        cell.descriptionLabel.numberOfLines = 10;
         //cell.index = indexPath.row;
         cell.commentsTextField.text = [self.commentsArray objectAtIndex:indexPath.row];
         
@@ -469,6 +470,8 @@
         WebsitesandAppsCell *cell= [tableView dequeueReusableCellWithIdentifier:@"WebsitesandAppsCell" forIndexPath:indexPath];
         
         cell.nameLabel.text = [[websitesandAppsSoundsArray objectAtIndex:indexPath.row] valueForKey:@"waName"];
+        
+        cell.descriptionLabel.numberOfLines = 10;
         
         cell.descriptionLabel.text =[[websitesandAppsSoundsArray objectAtIndex:indexPath.row] valueForKey:@"waDetail"];
         
@@ -486,12 +489,17 @@
 
 #pragma mark - UITableViewDelegate
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    NSString *desc =[[websitesandAppsSoundsArray objectAtIndex:indexPath.row] valueForKey:@"waDetail"];
+    
+    CGFloat subTitleHeight = [Utils heightForLabelForString:desc width:234 font:SUB_TITLE_LABEL_FONT];
+    
     if ([[self.checkFlagArray objectAtIndex:indexPath.row] boolValue]) {
-        return 100.0f;
+        return 80 + subTitleHeight;
     }
     else
     {
-        return 70.0f;
+        return 60 + subTitleHeight;
     }
 }
 
