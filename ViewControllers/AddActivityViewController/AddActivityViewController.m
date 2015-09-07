@@ -147,8 +147,8 @@
             NSString *dateString = [formatter stringFromDate:date];
             
             NSTimeInterval  today = [[NSDate date] timeIntervalSince1970];
-            NSString *CurrentTime = [NSString stringWithFormat:@"%d", today];
-            NSString *query = [NSString stringWithFormat:@"insert into Plan_Activities (valueName,activityName,isActive,createdDate) values('%@','%@',%i,'%@')",[PersistenceStorage getObjectForKey:@"valueName"],self.nameTextField.text,YES,CurrentTime];
+            //NSString *CurrentTime = [NSString stringWithFormat:@"%lf", today];
+            NSString *query = [NSString stringWithFormat:@"insert into Plan_Activities (valueName,activityName,isActive,createdDate) values('%@','%@',%i,'%lf')",[PersistenceStorage getObjectForKey:@"valueName"],self.nameTextField.text,YES,today];
             
             [self.manager executeQuery:query];
             

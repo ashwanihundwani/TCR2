@@ -561,7 +561,7 @@
                 // now delete the entry
                 [self.manager executeQuery:queryClear];
             }
-            [self.activityTableView reloadData];
+            //[self.activityTableView reloadData];
             
             // If the query was successfully executed then pop the view controller.
             //    if (self.manager.affectedRows != 0) {
