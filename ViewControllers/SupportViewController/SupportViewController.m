@@ -749,7 +749,17 @@
     NSString *type = @"Navigation";
     
     NSString *str = @"Support";
-    NSString   *finalStr = [NSString stringWithFormat:@"\r%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@",dateString,timeString,type,nil,str,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil];
+    NSString * navMethod = @"";
+    if([PersistenceStorage getIntegerForKey:@"HomeButtonTapped"] == self.tabBarController.selectedIndex ){
+        navMethod = @"Navigated from Home Screen";
+        [PersistenceStorage setInteger:-1 andKey:@"HomeButtonTapped"];
+    }else if(self.tabBarController.selectedIndex == 4){
+        navMethod = @"Navigated from Nav Bar";
+    }else{
+        navMethod = nil;
+    }
+    NSLog(@"navigation method is:%@ and parent controller is: %@", navMethod, [[self parentViewController] class]);
+    NSString   *finalStr = [NSString stringWithFormat:@"\r%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@",dateString,timeString,type,navMethod,str,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil];
     
     NSFileManager *fileManager = [NSFileManager defaultManager];
     if(![fileManager fileExistsAtPath:documentTXTPath])

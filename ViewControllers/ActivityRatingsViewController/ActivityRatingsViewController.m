@@ -274,7 +274,8 @@
     
     
     NSString *str = @"Provided Rating";
-    NSString   *finalStr = [NSString stringWithFormat:@"\r%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@",dateString,timeString,type,str,nil,[PersistenceStorage getObjectForKey:@"planName"],[PersistenceStorage getObjectForKey:@"situationName"],[PersistenceStorage getObjectForKey:@"skillName"],[PersistenceStorage getObjectForKey:@"valueName"],[PersistenceStorage getObjectForKey:@"activityName"],@"Do Activity Now",nil,nil,nil,ratingName,newString];
+    NSString * activityString = [[PersistenceStorage getObjectForKey:@"activityName"] stringByReplacingOccurrencesOfString:@"," withString:@"|"];
+    NSString   *finalStr = [NSString stringWithFormat:@"\r%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@",dateString,timeString,type,str,nil,[PersistenceStorage getObjectForKey:@"planName"],[PersistenceStorage getObjectForKey:@"situationName"],[PersistenceStorage getObjectForKey:@"skillName"],[PersistenceStorage getObjectForKey:@"valueName"],activityString,@"Do Activity Now",nil,nil,nil,ratingName,newString];
     
     //   writedStr = [finalStr stringByAppendingString:eventString];
     //   writedStr = [writedStr stringByAppendingString:finalStr];

@@ -209,6 +209,7 @@
 
 
 - (IBAction)SamplerButtonTapped:(id)sender {
+    [PersistenceStorage setInteger:1 andKey:@"HomeButtonTapped"];
     [[self tabBarController] setSelectedIndex:1];
   
     
@@ -225,12 +226,20 @@
     
 }
 - (IBAction)PlansButtonTapped:(id)sender {
+    [PersistenceStorage setInteger:2 andKey:@"HomeButtonTapped"];
     [[self tabBarController] setSelectedIndex:2];
 }
 
 - (IBAction)NookButtonTapped:(id)sender {
-    
-    [[self tabBarController] setSelectedIndex:3];
+    if ([PersistenceStorage getBoolForKey:@"debugWR"]) {
+        UIStoryboard *storyBoard = [ UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        UIViewController *mySleepsViewCotroller = [storyBoard instantiateViewControllerWithIdentifier:@"TipsReminder"];
+        UIWindow *currentWindow = [[UIApplication sharedApplication].windows firstObject];
+        [currentWindow.rootViewController presentViewController:mySleepsViewCotroller animated:YES completion:nil];
+    }else{
+        [PersistenceStorage setInteger:3 andKey:@"HomeButtonTapped"];
+        [[self tabBarController] setSelectedIndex:3];
+    }
     
     
 }
@@ -243,6 +252,7 @@
         [currentWindow.rootViewController presentViewController:WeeklyReminder animated:YES completion:nil];
         
     }else{
+        [PersistenceStorage setInteger:4 andKey:@"HomeButtonTapped"];
         [[self tabBarController] setSelectedIndex:4];
     }
 //    UIStoryboard *storyBoard = [ UIStoryboard storyboardWithName:@"Main" bundle:nil];

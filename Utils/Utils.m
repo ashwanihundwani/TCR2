@@ -271,6 +271,19 @@
     [view addGestureRecognizer:tap];
 }
 
++(void)addSwipeGestureToView:(UIView *)view
+                    target:(id)target
+                  selector:(SEL)selector
+{
+    view.userInteractionEnabled = true;
+    
+    UISwipeGestureRecognizer *swipe = [[UISwipeGestureRecognizer alloc]initWithTarget:target action:selector];
+    
+    swipe.direction = UISwipeGestureRecognizerDirectionLeft | UISwipeGestureRecognizerDirectionRight;
+    
+    [view addGestureRecognizer:swipe];
+}
+
 +(UIFont *)helveticaNueueFontWithSize:(NSInteger)size
 {
     
