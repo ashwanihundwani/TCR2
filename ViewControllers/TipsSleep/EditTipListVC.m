@@ -6,8 +6,8 @@
 //  Copyright (c) 2015 Creospan. All rights reserved.
 //
 
-#define UN_SELECTED_IMAGE @"u630.png"
-#define SELECTED_IMAGE @"u648.png"
+#define UN_SELECTED_IMAGE @""
+#define SELECTED_IMAGE @"Selected_Checkbox.png"
 
 #import "EditTipListVC.h"
 #import "EditTipsCell.h"
@@ -324,9 +324,13 @@
     
     if ([selectedCategories containsObject:categoryDetails]) {
         
+        cell.checkImage.hidden = false;
         //        [self onClickToggleCategory:cell.btnToggleCategory];
-        [self toggleCategoryImage:YES andCell:cell];
+        //[self toggleCategoryImage:YES andCell:cell];
         
+    }
+    else{
+        cell.checkImage.hidden = true;
     }
     cell.lblTitle.text = [categoryDetails valueForKey:@"tipsText"];
     
@@ -389,10 +393,24 @@
     CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tableViewOutlet];
     NSIndexPath *indexPath = [self.tableViewOutlet indexPathForRowAtPoint:buttonPosition];
     EditTipsCell *cell = (EditTipsCell *)[self.tableViewOutlet cellForRowAtIndexPath:indexPath];
+    
+    UIButton *btn = (UIButton *)sender;
+    
+    
+    
+    if(cell.checkImage.hidden){
+    
+        cell.checkImage.hidden = false;
+    }
+    else{
+        cell.checkImage.hidden = true;
+    }
+    
+    
     [cell.btnToggleCategory setImage:[UIImage imageNamed:@"Selected_Checkbox.png"] forState:UIControlStateSelected | UIControlStateHighlighted];
     if (indexPath != nil)
     {
-        [self toggleCategoryImage:YES andCell:cell];
+        //[self toggleCategoryImage:YES andCell:cell];
     }
     
     NSDictionary *tipsDetailsDict = [allTipsArray objectAtIndex:indexPath.section-1];
