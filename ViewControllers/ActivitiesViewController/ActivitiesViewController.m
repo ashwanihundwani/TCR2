@@ -740,7 +740,7 @@
         
         
         
-        NSString *query = [NSString stringWithFormat:@"insert into MyActivities (valueID,activityID,isFavourite,isSchedule,timeStamp,valueName,activityName,skillID,planID) values(%i,%i,'%d',%i,'%@','%@','%@',%ld,%ld)",[PersistenceStorage getObjectForKey:@"valueID"],[[dict valueForKey:@"ID"] integerValue],1,YES,dateString,[PersistenceStorage getObjectForKey:@"valueName"],[PersistenceStorage getObjectForKey:@"activityName"],[PersistenceStorage getIntegerForKey:@"currentSkillID"],[PersistenceStorage getIntegerForKey:@"currentPlanID"]];
+        NSString *query = [NSString stringWithFormat:@"insert into MyActivities (valueID,activityID,isFavourite,isSchedule,timeStamp,valueName,activityName,skillID,planID) values(%i,%ld,'%d',%i,'%@','%@','%@',%ld,%ld)",0,[[dict valueForKey:@"ID"] integerValue],1,YES,dateString,[dict valueForKey:@"valueName"],[dict valueForKey:@"activityName"],[PersistenceStorage getIntegerForKey:@"currentSkillID"],[PersistenceStorage getIntegerForKey:@"currentPlanID"]];
         
         // Execute the query.
         [self.manager executeQuery:query];
