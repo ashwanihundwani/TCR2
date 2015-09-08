@@ -7,13 +7,21 @@
 
 #import "FeedbackTableViewCell.h"
 
+#define DOT_VIEW_TAG 121132
+
+@interface FeedbackTableViewCell()
+
+@property(nonatomic, weak)UIButton *selectedButton;
+
+@end
+
 @implementation FeedbackTableViewCell
 
 - (void)awakeFromNib {
     // Initialization code
-    self.secondaryView.backgroundColor = [UIColor lightGrayColor];
-    self.secondaryView.layer.cornerRadius = 5.0;
-    self.secondaryView.layer.masksToBounds = YES;
+    //self.secondaryView.backgroundColor = [UIColor lightGrayColor];
+    //self.secondaryView.layer.cornerRadius = 5.0;
+    //self.secondaryView.layer.masksToBounds = YES;
     self.feedbackTableView.delegate =self;
     self.feedbackTableView.dataSource = self;
 }
@@ -30,18 +38,32 @@
     self.itemSelectorBtn.hidden = YES;
     self.itemSelctorBtnImage.hidden = YES;
     
-    //resetting indicators
-    [self.noatallButton setBackgroundImage:[UIImage imageNamed:@"circle"] forState:UIControlStateNormal];
-    [self.alittleButton setBackgroundImage:[UIImage imageNamed:@"circle"] forState:UIControlStateNormal];
-    [self.moderatelyButton setBackgroundImage:[UIImage imageNamed:@"circle"] forState:UIControlStateNormal];
-    [self.veryMuchButton setBackgroundImage:[UIImage imageNamed:@"circle"] forState:UIControlStateNormal];
-    [self.extremelyButton setBackgroundImage:[UIImage imageNamed:@"circle"] forState:UIControlStateNormal];
  
 
 }
 
 
 -(IBAction)feedbackBtnPressed:(id)sender{
+    
+    UIButton *btn = (UIButton *)sender;
+    if(btn != self.selectedButton){
+        
+        btn.backgroundColor = [Utils colorWithHexValue:BUTTON_BLUE_COLOR_HEX_VALUE];
+        UIView *view = [[UIView alloc]initWithFrame:CGRectMake(6, 6, btn.width - 12, btn.height - 12)];
+        
+        view.backgroundColor = [UIColor whiteColor];
+        view.layer.cornerRadius = (btn.width - 12) / 2;
+        view.layer.masksToBounds = YES;
+        view.tag = DOT_VIEW_TAG;
+        
+        [btn addSubview:view];
+        
+        self.selectedButton.backgroundColor = [UIColor whiteColor];
+        [[self.selectedButton viewWithTag:DOT_VIEW_TAG] removeFromSuperview];
+        
+        self.selectedButton = btn;
+        
+    }
     
     NSLog(@"Feedback btn pressed having tag: %ld", ((UIButton*)sender).tag);
     [self.delegate itemClickedForRating:((UIButton*)sender).tag inCell:self];
