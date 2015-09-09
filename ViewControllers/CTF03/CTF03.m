@@ -96,7 +96,7 @@ self.dbManager = [[DBManager alloc] initWithDatabaseFileName:@"GNResoundDB.sqlit
   //  NSLog(@"%@",allRecordsArray);
 NSLog(@"''%@",emotionsArray);
 
-    
+    [self.EmotionsTableView reloadData];
 }
 
 
