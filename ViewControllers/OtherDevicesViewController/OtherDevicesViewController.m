@@ -145,7 +145,7 @@
             SoundActivitiesViewController *npsv = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"SoundActivitiesViewController"];
         
         [self.navigationController pushViewController:npsv animated:YES];
-        if (isDone == YES)
+        if (isDone)
 
         {
             
