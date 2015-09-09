@@ -5,7 +5,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "FeedbackDeviceTableViewCell.h"
 @protocol FeedbackTableViewCellDelegae <NSObject>
 
 @required
@@ -23,10 +23,11 @@
 -(NSString *)feedbackTableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section;
 @optional
 -(void)itemClickedForRating:(NSInteger)ratingIndex inCell:(id)cell;
+-(void)deviceItemClickedForRating:(NSInteger)rating :(NSIndexPath*)deviceIndexPath inCell:(id)cell;
 
 @end
 
-@interface FeedbackTableViewCell : UITableViewCell <UITableViewDelegate, UITableViewDataSource>
+@interface FeedbackTableViewCell : UITableViewCell <UITableViewDelegate, UITableViewDataSource, FeedBackDeviceTableViewCellDelegate>
 @property (weak, nonatomic) IBOutlet UIButton *noatallButton;
 @property (weak, nonatomic) IBOutlet UIButton *alittleButton;
 @property (weak, nonatomic) IBOutlet UIButton *moderatelyButton;
@@ -45,5 +46,7 @@
 @property (weak, nonatomic) id<FeedbackTableViewCellDelegae> delegate;
 
 -(void)reInitialize;
+
+-(void)fillbutton:(id)btn;
 
 @end

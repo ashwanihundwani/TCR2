@@ -12,6 +12,7 @@
 #import "FeedbackTableViewCell.h"
 #import "EditTipsCell.h"
 #import "MBProgressHUD.h"
+#import "FeedbackDeviceTableViewCell.h"
 
 
 @interface WeeklyViewController ()
@@ -20,6 +21,8 @@
     BOOL firtTimeLoad;
     NSMutableArray *selectedSkills;
     NSMutableArray *feedbackArray;
+    NSMutableArray *selectedDeviceArray;
+    NSMutableArray *feedbackDeviceArray;
     int maxNumberOfSkills,maxMyPlan;
     int currentPlanIndex;
     
@@ -110,6 +113,7 @@
     //self.title = @"Weekly Reminder";
     
     selectedSkills = [NSMutableArray new];
+    selectedDeviceArray = [NSMutableArray new];
     self.tableview.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     //[self.view setBackgroundColor:[UIColor colorWithRed:0.96078431 green:0.96078431 blue:0.96078431 alpha:1]];
@@ -457,27 +461,31 @@
             switch ([[skill valueForKey:@"rating"] intValue]) {
                 case 1:
                 {
-                    //[cell.noatallButton setBackgroundImage:[UIImage imageNamed:@"selectedCircle"] forState:UIControlStateNormal];
+                    [cell fillbutton:cell.noatallButton];
                     break;
                 }
                 case 2:
                 {
                     //[cell.alittleButton setBackgroundImage:[UIImage imageNamed:@"selectedCircle"] forState:UIControlStateNormal];
+                    [cell fillbutton:cell.alittleButton];
+
                     break;
                 }
                 case 3:
                 {
+                    [cell fillbutton:cell.moderatelyButton];
                     //[cell.moderatelyButton setBackgroundImage:[UIImage imageNamed:@"selectedCircle"] forState:UIControlStateNormal];
                     break;
                 }
                 case 4:
                 {
-                    
+                    [cell fillbutton:cell.veryMuchButton];
                     //[cell.veryMuchButton setBackgroundImage:[UIImage imageNamed:@"selectedCircle"] forState:UIControlStateNormal];
                     break;
                 }
                 case 5:
                 {
+                    [cell fillbutton:cell.extremelyButton];
                     //[cell.extremelyButton setBackgroundImage:[UIImage imageNamed:@"selectedCircle"] forState:UIControlStateNormal];
                     break;
                 }
@@ -491,6 +499,7 @@
             if(devicesArray.count > 0 || websitesArray.count > 0){
                 cell.feedbackTableView.hidden = NO;
                 cell.feedbackTableView.tag = indexPath.row;
+                cell.feedbackTableView.scrollEnabled = NO;
                 [cell.feedbackTableView reloadData];
             }else{
                 cell.feedbackTableView.hidden = YES;
@@ -554,17 +563,29 @@
     NSDictionary* skill = [[categorizedSkills objectAtIndex:currentPlanIndex] objectAtIndex:indexPath.row];
     if([selectedSkills containsObject:skill]){
         NSInteger baseHeight = 180;
-        NSInteger deviceCount = [(NSArray*)[skill objectForKey:@"devices"] count];
-        NSInteger websitesCount = [(NSArray*)[skill objectForKey:@"websitesAndApps"] count];
-        if(deviceCount > 0 ){
-            baseHeight += 40; // header height
-            baseHeight += (deviceCount*40);
-            //return 315;
+        NSArray* deviceArray= (NSArray*)[skill objectForKey:@"devices"];
+        NSArray* websiteArray = (NSArray*)[skill objectForKey:@"websitesAndApps"];
+        for (NSDictionary* deviceDict in deviceArray) {
+            if([selectedDeviceArray containsObject:deviceDict]){
+                baseHeight += 190;
+            }else{
+                baseHeight += 60;
+            }
         }
-        if(websitesCount > 0){
-            baseHeight += 40; // header height
-            baseHeight += (websitesCount*40);
+        for (NSDictionary* deviceDict in websiteArray) {
+            if([selectedDeviceArray containsObject:deviceDict]){
+                baseHeight += 190;
+            }else{
+                baseHeight += 60;
+            }
         }
+        if(deviceArray.count > 0){
+            baseHeight += 40;
+        }
+        if(websiteArray.count > 0){
+            baseHeight += 40;
+        }
+
         NSLog(@"returning height as %ld for index:%ld", baseHeight, indexPath.row);
         return baseHeight;
     }else{
@@ -1100,20 +1121,42 @@
         NSString   *finalStr = [NSString stringWithFormat:@"\r%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@",dateString,timeString,type,str,nil,pName,sitName,sName,nil,nil,nil,nil,nil,nil,rating,@""];
         
         NSLog(@"%@",finalStr);
-        
+        // now check for the devices and websites
+        NSMutableArray* combinedStringArray = [[NSMutableArray alloc] init];
+        [combinedStringArray addObject:finalStr];
+        NSArray* deviceArray = [myskills objectForKey:@"devices"];
+        NSArray* websiteArray = [myskills objectForKey:@"websitesAndApps"];
+        for (NSDictionary* deviceDict in deviceArray) {
+            if([selectedDeviceArray containsObject:deviceDict]){
+                // log this device in file
+                NSString   *finalDeviceStr = [NSString stringWithFormat:@"\r%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@",dateString,timeString,type,str,nil,pName,sitName,sName,@"Devices",[deviceDict valueForKey:@"deviceName"],nil,nil,nil,nil,[deviceDict valueForKey:@"rating"],@""];
+                [combinedStringArray addObject:finalDeviceStr];
+            }
+        }
+        for (NSDictionary* deviceDict in websiteArray) {
+            if([selectedDeviceArray containsObject:deviceDict]){
+                // log this device in file
+                NSString   *finalDeviceStr = [NSString stringWithFormat:@"\r%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@",dateString,timeString,type,str,nil,pName,sitName,sName,@"Websites & Apps",[deviceDict valueForKey:@"waName"],nil,nil,nil,nil,[deviceDict valueForKey:@"rating"],@""];
+                [combinedStringArray addObject:finalDeviceStr];
+            }
+        }
         NSFileManager *fileManager = [NSFileManager defaultManager];
-        if(![fileManager fileExistsAtPath:documentTXTPath])
-        {
-            [finalStr writeToFile:documentTXTPath atomically:YES];
-        }
-        else
-        {
-            NSFileHandle *myHandle = [NSFileHandle fileHandleForWritingAtPath:documentTXTPath];
-            [myHandle seekToEndOfFile];
-            [myHandle writeData:[finalStr dataUsingEncoding:NSUTF8StringEncoding]];
-            
+        for (NSString* str in combinedStringArray) {
+            if(![fileManager fileExistsAtPath:documentTXTPath])
+            {
+                [str writeToFile:documentTXTPath atomically:YES];
+            }
+            else
+            {
+                NSFileHandle *myHandle = [NSFileHandle fileHandleForWritingAtPath:documentTXTPath];
+                [myHandle seekToEndOfFile];
+                [myHandle writeData:[str dataUsingEncoding:NSUTF8StringEncoding]];
+                
+            }
+
         }
         
+
     }
     
     
@@ -1226,8 +1269,36 @@
 #pragma mark -
 
 - (CGFloat)feeedbackTableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 40.0;
+    
+    NSDictionary* skillDict = [[categorizedSkills objectAtIndex:currentPlanIndex] objectAtIndex:tableView.tag];
+    NSArray* deviceArray = [skillDict objectForKey:@"devices"];
+    NSArray* websiteArray = [skillDict objectForKey:@"websitesAndApps"];
+    NSInteger section = indexPath.section;
+    if(deviceArray.count > 0){
+        if(section == 0){
+            if([selectedDeviceArray containsObject:[deviceArray objectAtIndex:indexPath.row]]){
+                return 190;
+            }else{
+                return 45;
+            }
+        }else{
+            if([selectedDeviceArray containsObject:[websiteArray objectAtIndex:indexPath.row]]){
+                return 190;
+            }else{
+                return 45;
+            }
+        }
+    }else{
+        if([selectedDeviceArray containsObject:[websiteArray objectAtIndex:indexPath.row]]){
+            return 190;
+        }else{
+            return 45;
+        }
+    }
+    
 }
+    
+
 
 - (UIView *)feeedbackTableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 30)];
@@ -1307,37 +1378,98 @@
 
 - (UITableViewCell *)feeedbackTableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"devicefeedbackcell"];
-    
-    if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"devicefeedbackcell"];
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        //cell.contentView.backgroundColor = [UIColor colorWithRed:0.890625 green:0.890625 blue:0.890625 alpha:1.0];
-        //cell.contentView.frame = CGRectMake(5, 0, 310, 44);
-        
-        cell.backgroundColor = [UIColor whiteColor];
-        
-        cell.contentView.layer.masksToBounds = YES;
-        cell.textLabel.font = [UIFont systemFontOfSize:15];
+    static NSString *feedbackCellIdentifier = @"FeedbackDeviceCellIdentifier";
+    FeedbackDeviceTableViewCell *cell = (FeedbackDeviceTableViewCell *)[tableView dequeueReusableCellWithIdentifier:feedbackCellIdentifier];
+    if(cell == nil)
+    {
+        NSArray *nibs = [[NSBundle mainBundle] loadNibNamed:@"FeedbackDeviceTableViewCell" owner:nil options:nil];
+        cell = [nibs firstObject];
+        // [cell.contentView setBackgroundColor:[UIColor greenColor]];
+        cell.contentView.layer.cornerRadius = 5;
+        //cell.contentView.layer.masksToBounds = YES;
         
         
     }
+    // reinitialize this cell
+    [cell reInitialize];
     NSInteger section = indexPath.section;
     NSInteger row = indexPath.row;
+    // get the current item from array
     NSDictionary* skillDict = [[categorizedSkills objectAtIndex:currentPlanIndex] objectAtIndex:tableView.tag];
     NSArray* deviceArray = [skillDict objectForKey:@"devices"];
     NSArray* websiteArray = [skillDict objectForKey:@"websitesAndApps"];
+    NSDictionary* deviceDict = nil;
     if(deviceArray.count > 0){
         if(section == 0){
-            cell.textLabel.text = [[deviceArray objectAtIndex:indexPath.row] valueForKey:@"deviceName"];
+            deviceDict = [deviceArray objectAtIndex:indexPath.row];
+            cell.skillNameLabel.text = [deviceDict valueForKey:@"deviceName"];
         }else{
-            cell.textLabel.text = [[websiteArray objectAtIndex:row] valueForKey:@"waName"];
+            deviceDict = [websiteArray objectAtIndex:indexPath.row];
+            cell.skillNameLabel.text = [deviceDict valueForKey:@"waName"];
         }
     }else{
-        cell.textLabel.text = [[websiteArray objectAtIndex:row] valueForKey:@"waName"];
+        deviceDict = [websiteArray objectAtIndex:indexPath.row];
+        cell.skillNameLabel.text = [deviceDict valueForKey:@"waName"];
     }
     
+    cell.itemSelectorBtn.hidden = NO;
+    cell.itemSelctorBtnImage.hidden = NO;
+    // further check if this has been already selected
+    if([selectedDeviceArray containsObject:deviceDict]){
+        [cell.itemSelctorBtnImage  setImage:[UIImage imageNamed:SELECTED_IMAGE]];
+        //show the expanded view
+        cell.secondaryView.hidden = NO;
+        cell.secondaryView.userInteractionEnabled = YES;
+        // lets show the correct color of the selcted indiccator
+        //cell.feedbackTableView.hidden =YES;
+        switch ([[deviceDict valueForKey:@"rating"] intValue]) {
+            case 1:
+            {
+                [cell fillbutton:cell.noatallButton];
+                //[cell.noatallButton setBackgroundImage:[UIImage imageNamed:@"selectedCircle"] forState:UIControlStateNormal];
+                break;
+            }
+            case 2:
+            {
+                [cell fillbutton:cell.alittleButton];
+                //[cell.alittleButton setBackgroundImage:[UIImage imageNamed:@"selectedCircle"] forState:UIControlStateNormal];
+                break;
+            }
+            case 3:
+            {
+                [cell fillbutton:cell.moderatelyButton];
+                //[cell.moderatelyButton setBackgroundImage:[UIImage imageNamed:@"selectedCircle"] forState:UIControlStateNormal];
+                break;
+            }
+            case 4:
+            {
+                [cell fillbutton:cell.veryMuchButton];
+                //[cell.veryMuchButton setBackgroundImage:[UIImage imageNamed:@"selectedCircle"] forState:UIControlStateNormal];
+                break;
+            }
+            case 5:
+            {
+                [cell fillbutton:cell.extremelyButton];
+                //[cell.extremelyButton setBackgroundImage:[UIImage imageNamed:@"selectedCircle"] forState:UIControlStateNormal];
+                break;
+            }
+            default:
+                break;
+        }
+        
+        
+    }else{
+        // skill is not selected.
+        [cell.itemSelctorBtnImage  setImage:[UIImage imageNamed:UN_SELECTED_IMAGE]];
+        
+    }
+    cell.itemSelectorBtn.tag = indexPath.row;
+    // add selector for itemselector
+    [cell.itemSelectorBtn addTarget:self action:@selector(onClickToggleDeviceCategory:) forControlEvents:UIControlEventTouchUpInside];
+    
+    
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    
     return cell;
 }
 
@@ -1365,5 +1497,107 @@
     
     
 }
+
+-(void)deviceItemClickedForRating:(NSInteger)rating :(NSIndexPath *)deviceIndexPath inCell:(id)cell{
+    // get the main cell indexpath
+    NSIndexPath* indexPath = [self.tableview indexPathForCell:cell];
+    //get the skill item
+    NSMutableDictionary *skillDict = [[categorizedSkills objectAtIndex:currentPlanIndex] objectAtIndex:indexPath.row];
+    NSArray* deviceArray = [skillDict objectForKey:@"devices"];
+    NSArray* websiteArray = [skillDict objectForKey:@"websitesAndApps"];
+    if(![feedbackDeviceArray containsObject:skillDict]){
+        [feedbackDeviceArray addObject:skillDict];
+    }
+    if(deviceArray.count > 0){
+        if(deviceIndexPath.section == 0){
+            // device item rated
+            NSMutableDictionary* deviceDict =[deviceArray objectAtIndex:deviceIndexPath.row];
+            if(![feedbackDeviceArray containsObject:deviceDict]){
+                [feedbackDeviceArray addObject:deviceDict];
+            }
+            [deviceDict setObject:[NSString stringWithFormat:@"%ld",(rating - 100)] forKey:@"rating"];
+        }else{
+            // website item rated
+            NSMutableDictionary* deviceDict =[websiteArray objectAtIndex:deviceIndexPath.row];
+            if(![feedbackDeviceArray containsObject:deviceDict]){
+                [feedbackDeviceArray addObject:deviceDict];
+            }
+            [deviceDict setObject:[NSString stringWithFormat:@"%ld",(rating - 100)] forKey:@"rating"];
+        }
+    }else{
+        // website item rated
+        NSMutableDictionary* deviceDict =[websiteArray objectAtIndex:deviceIndexPath.row];
+        if(![feedbackDeviceArray containsObject:deviceDict]){
+            [feedbackDeviceArray addObject:deviceDict];
+        }
+        [deviceDict setObject:[NSString stringWithFormat:@"%ld",(rating - 100)] forKey:@"rating"];
+        
+    }
+}
+
+
+-(void)onClickToggleDeviceCategory:(UIButton *)sender
+{
+    FeedbackDeviceTableViewCell* deviceCell = (FeedbackDeviceTableViewCell*)[self getDeviceCellView:sender];
+    FeedbackTableViewCell* cell = (FeedbackTableViewCell*)[self getCellView:deviceCell];
+    NSIndexPath* deviceIndexPath = [cell.feedbackTableView indexPathForCell:deviceCell];
+    NSIndexPath* cellIndexPath = [self.tableview indexPathForCell:cell];
+    NSDictionary* skillDict = [[categorizedSkills objectAtIndex:currentPlanIndex] objectAtIndex:cellIndexPath.row];
+    NSArray* deviceArray = [skillDict objectForKey:@"devices"];
+    NSArray* websiteArray = [skillDict objectForKey:@"websitesAndApps"];
+    
+    if(deviceArray.count > 0){
+        if(deviceIndexPath.section == 0){
+            // add or remove the device to selected
+            NSDictionary* deviceDict = [deviceArray objectAtIndex:deviceIndexPath.row];
+            if([selectedDeviceArray containsObject:deviceDict]){
+                [selectedDeviceArray removeObject:deviceDict];
+            }else{
+                [selectedDeviceArray addObject:deviceDict];
+            }
+            
+        }else{
+            // add or remove website
+            NSDictionary* deviceDict = [websiteArray objectAtIndex:deviceIndexPath.row];
+            if([selectedDeviceArray containsObject:deviceDict]){
+                [selectedDeviceArray removeObject:deviceDict];
+            }else{
+                [selectedDeviceArray addObject:deviceDict];
+            }
+        }
+    }else{
+        // add  or remve website
+        NSDictionary* deviceDict = [websiteArray objectAtIndex:deviceIndexPath.row];
+        if([selectedDeviceArray containsObject:deviceDict]){
+            [selectedDeviceArray removeObject:deviceDict];
+        }else{
+            [selectedDeviceArray addObject:deviceDict];
+        }
+
+    }
+    [cell.feedbackTableView reloadData];
+    [self.tableview reloadData];
+}
+
+-(UIView*)getCellView:(id)view{
+    
+    while (view && [view isKindOfClass:[FeedbackTableViewCell class]] == NO) {
+        view = [view superview];
+    }
+    
+    FeedbackTableViewCell *FbCView = (FeedbackTableViewCell *)view;
+    return FbCView;
+}
+
+-(UIView*)getDeviceCellView:(id)view{
+    
+    while (view && [view isKindOfClass:[FeedbackDeviceTableViewCell class]] == NO) {
+        view = [view superview];
+    }
+    
+    FeedbackDeviceTableViewCell *FbCView = (FeedbackDeviceTableViewCell *)view;
+    return FbCView;
+}
+
 
 @end
