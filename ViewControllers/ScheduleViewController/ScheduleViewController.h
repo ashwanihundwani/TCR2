@@ -31,4 +31,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *deleteButton;
 -(void)doneClicked;
 @property (nonatomic,strong) NSString *name;
+
+@property (nonatomic, strong)NSDate *inputDate;
+@property (nonatomic, strong)NSString *repeatText;
 @end
