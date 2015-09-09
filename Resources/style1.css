@@ -73,6 +73,9 @@
 #afui .panel, #afui.ios7 .panel {
 	background-color: white;
 }
+p{
+    font-size: 16px !important;
+}
 .gray-font {
 	color: rgba(128, 128, 128, 0.28);
 }
