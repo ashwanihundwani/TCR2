@@ -239,8 +239,25 @@
         
         NSArray *reminders = [[NSArray alloc] initWithArray:[self.manager loadDataFromDB:query]];
         
+        NSDate *inputDate = nil;
+        NSString *repeatText = nil;
+        
         if(reminders.count > 0)
         {
+            NSDictionary *item = [reminders firstObject];
+            
+            NSString *date = [item objectForKey:@"ScheduledDate"];
+            
+            NSArray  *compo = [date componentsSeparatedByString:@"\n"];
+            
+            if(compo.count > 1){
+                date = [compo firstObject];
+                repeatText = [compo lastObject];
+            }
+            
+            inputDate = [Utils dateWithString:date inFormat:@"dd/MM/yy, hh:mm a"];
+            
+            
             [PersistenceStorage setObject:@"YES" andKey:@"showCancelActivityButton"];
         }
         else{
@@ -256,6 +273,8 @@
    ScheduleViewController *svc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"ScheduleViewController"];
         //     svc.name = strAct;
             svc.delegate= self;
+        svc.inputDate = inputDate;
+        svc.repeatText = repeatText;
         [self.navigationController pushViewController:svc animated:YES];
         //}
     }
