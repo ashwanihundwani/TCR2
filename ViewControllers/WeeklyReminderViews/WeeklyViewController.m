@@ -1244,7 +1244,6 @@
         currentPlanIndex--;
         if(currentPlanIndex == 0)
             self.previousBtn.hidden = YES;
-        self.submitLabel.hidden = YES;
         [self.tableview reloadData];
     }
     
