@@ -1129,14 +1129,16 @@
         for (NSDictionary* deviceDict in deviceArray) {
             if([selectedDeviceArray containsObject:deviceDict]){
                 // log this device in file
-                NSString   *finalDeviceStr = [NSString stringWithFormat:@"\r%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@",dateString,timeString,type,str,nil,pName,sitName,sName,@"Devices",[deviceDict valueForKey:@"deviceName"],nil,nil,nil,nil,[deviceDict valueForKey:@"rating"],@""];
+                NSString* deviceName = [[deviceDict valueForKey:@"deviceName"] stringByReplacingOccurrencesOfString:@"," withString:@"|"];
+                NSString   *finalDeviceStr = [NSString stringWithFormat:@"\r%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@",dateString,timeString,type,str,nil,pName,sitName,sName,@"Devices",deviceName,nil,nil,nil,nil,[deviceDict valueForKey:@"rating"],@""];
                 [combinedStringArray addObject:finalDeviceStr];
             }
         }
         for (NSDictionary* deviceDict in websiteArray) {
             if([selectedDeviceArray containsObject:deviceDict]){
                 // log this device in file
-                NSString   *finalDeviceStr = [NSString stringWithFormat:@"\r%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@",dateString,timeString,type,str,nil,pName,sitName,sName,@"Websites & Apps",[deviceDict valueForKey:@"waName"],nil,nil,nil,nil,[deviceDict valueForKey:@"rating"],@""];
+                NSString* websiteName = [[deviceDict valueForKey:@"waName"] stringByReplacingOccurrencesOfString:@"," withString:@"|"];
+                NSString   *finalDeviceStr = [NSString stringWithFormat:@"\r%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@",dateString,timeString,type,str,nil,pName,sitName,sName,@"Websites & Apps",websiteName,nil,nil,nil,nil,[deviceDict valueForKey:@"rating"],@""];
                 [combinedStringArray addObject:finalDeviceStr];
             }
         }
