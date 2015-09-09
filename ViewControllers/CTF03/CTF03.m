@@ -365,27 +365,34 @@ NSLog(@"''%@",emotionsArray);
     }
 
 -(void)deleteBtnPressed:(UIView*)sender{
-    //delete from db
-    UITableViewCell* cell = (UITableViewCell*)[sender superview];
-    NSIndexPath* indexPath = [self.EmotionsTableView indexPathForCell:cell];
-    NSInteger rowIndex = indexPath.row;
-    NSDictionary* emotionDict = [emotionsArray objectAtIndex:rowIndex];
-    NSString* deleteQuery = [NSString stringWithFormat:@"delete from My_TF where thoughtCategory = 'step3' and thoughtText = '%@' and rating = '%@'",[emotionDict valueForKey:@"thoughtText"],[emotionDict valueForKey:@"rating"]];
-    [self.dbManager executeQuery:deleteQuery];
-    if(self.dbManager.affectedRows > 0){
-        [emotionsArray removeObjectAtIndex:rowIndex];
-        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-        hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark.png"] ];
+    DeleteCormationManager *manager = [DeleteCormationManager getInstance];
+    
+    [manager showAlertwithPositiveBlock:^(BOOL positive) {
+        //delete from db
+        UITableViewCell* cell = (UITableViewCell*)[sender superview];
+        NSIndexPath* indexPath = [self.EmotionsTableView indexPathForCell:cell];
+        NSInteger rowIndex = indexPath.row;
+        NSDictionary* emotionDict = [emotionsArray objectAtIndex:rowIndex];
+        NSString* deleteQuery = [NSString stringWithFormat:@"delete from My_TF where thoughtCategory = 'step3' and thoughtText = '%@' and rating = '%@'",[emotionDict valueForKey:@"thoughtText"],[emotionDict valueForKey:@"rating"]];
+        [self.dbManager executeQuery:deleteQuery];
+        if(self.dbManager.affectedRows > 0){
+            [emotionsArray removeObjectAtIndex:rowIndex];
+            MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+            hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark.png"] ];
+            
+            hud.mode = MBProgressHUDModeCustomView;
+            
+            hud.labelText = @"Removed";
+            
+            [hud show:YES];
+            [hud hide:YES afterDelay:1];
+            
+        }
+        [self.EmotionsTableView reloadData];
+    } negativeBlock:^(BOOL negative) {
         
-        hud.mode = MBProgressHUDModeCustomView;
-        
-        hud.labelText = @"Removed";
-        
-        [hud show:YES];
-        [hud hide:YES afterDelay:1];
-
-    }
-    [self.EmotionsTableView reloadData];
+        //DO nothing
+    }];
 }
 
 

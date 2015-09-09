@@ -5,8 +5,8 @@
 //  Copyright (c) 2015 Creospan. All rights reserved.
 //
 
-#define UN_SELECTED_IMAGE @"u630.png"
-#define SELECTED_IMAGE @"u648.png"
+#define UN_SELECTED_IMAGE @""
+#define SELECTED_IMAGE @"Selected_CheckBox.png"
 
 #import "WeeklyViewController.h"
 #import "FeedbackTableViewCell.h"
@@ -25,6 +25,10 @@
     
 }
 
+
+@property(nonatomic, strong)UILabel *submitLabel;
+
+
 @end
 
 @implementation WeeklyViewController
@@ -32,17 +36,83 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    UIView *titleView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 64)];
+    
+    titleView.backgroundColor = [Utils colorWithHexValue:NAV_BAR_BLACK_COLOR];
+    
+    UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 30, 320, 24)];
+    
+    Pair *pallete = [Utils getColorFontPair:eCFS_PALLETE_1];
+    
+    titleLabel.font = pallete.secondObj;
+    titleLabel.textColor = pallete.firstObj;
+    
+    UILabel *submitLabel = [[UILabel alloc]initWithFrame:CGRectMake(230, 30, 70, 24)];
+    
+    [Utils addTapGestureToView:submitLabel target:self selector:@selector(cancelTapped:)];
+    
+    submitLabel.textAlignment = NSTextAlignmentRight;
+    
+    submitLabel.text = @"Submit";
+    
+    submitLabel.textColor = [Utils colorWithHexValue:BUTTON_BLUE_COLOR_HEX_VALUE];
+    
+    submitLabel.hidden = true;
+    
+    self.submitLabel = submitLabel;
+    
+    [titleView addSubview:submitLabel];
+    
+    [titleView addSubview:titleLabel];
+    
+    titleLabel.textAlignment = NSTextAlignmentCenter;
+    
+    //titleLabel.textColor = [UIColor colorWithHexValue:@"797979"];
+    titleLabel.backgroundColor = [UIColor clearColor];
+    titleLabel.text = @"Weekly Reminder";
+    
+    
+    UIView *line = [[UIView alloc]initWithFrame:CGRectMake(0, titleView.frame.size.height - 1, 320, 1)];
+    
+    line.backgroundColor = [UIColor colorWithRed:0.0/255.0 green:0.0/255.0 blue:0.098/255.0 alpha:0.22];;
+    
+    [titleView addSubview:line];
+    
+    [self.view addSubview:titleView];
+    
+    UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 65, 320, 64)];
+    
+    UILabel *headerLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 0, 300, 64)];
+    
+    pallete = [Utils getColorFontPair:eCFS_PALLETE_2];
+    
+    headerLabel.text = @"Select the skills you used in your plans in the past week. To change your list of skills for the upcoming week, visit the \"Plans\" section.";
+    
+    headerLabel.numberOfLines = 10;
+    
+    headerLabel.font = pallete.secondObj;
+    headerLabel.textColor = pallete.firstObj;
+    headerLabel.backgroundColor = [UIColor clearColor];
+    
+    headerView.backgroundColor = [Utils colorWithHexValue:@"EFEFF4"];
+    
+    [headerView addSubview:headerLabel];
+    
+    [self.view addSubview:headerView];
+    
     // Do any additional setup after loading the view.
     allSkillsArray = [NSMutableArray new];
     allMyPlanArray = [NSMutableArray new];
     categorizedSkills = [NSMutableArray new];
+    
     firtTimeLoad = YES;
-    self.title = @"Weekly Reminder";
+    //self.title = @"Weekly Reminder";
     
     selectedSkills = [NSMutableArray new];
     self.tableview.separatorStyle = UITableViewCellSeparatorStyleNone;
     
-    [self.view setBackgroundColor:[UIColor colorWithRed:0.96078431 green:0.96078431 blue:0.96078431 alpha:1]];
+    //[self.view setBackgroundColor:[UIColor colorWithRed:0.96078431 green:0.96078431 blue:0.96078431 alpha:1]];
     
     [self getAllSkillWithDetails];
     //[self.tableview setBackgroundColor:[UIColor redColor]];
@@ -51,9 +121,9 @@
     self.previousBtn.hidden = YES;
     [self.tableview registerNib:[UINib nibWithNibName:@"FeedbackTableViewCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"FeedbackCellIdentifier"];
     if(categorizedSkills != nil && categorizedSkills.count > 1){
-        self.submittBtn.hidden = YES;
+        self.submitLabel.hidden = YES;
     }else{
-        self.submittBtn.hidden = NO;
+        self.submitLabel.hidden = NO;
     }
     
     [self resetWeeklyReminderEventForFutureDate];
@@ -208,9 +278,6 @@
 //    return nil;
 //}
 //
-
-
-
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath;
 {
@@ -370,8 +437,8 @@
     // get the current item from array
     NSDictionary* skill = [[categorizedSkills objectAtIndex:currentPlanIndex] objectAtIndex:indexPath.row];
     cell.skillNameLabel.text = [skill valueForKey:@"skillName"];
-    UIFont* boldFont = [UIFont boldSystemFontOfSize:[UIFont systemFontSize]];
-    cell.skillNameLabel.font = boldFont;
+//    UIFont* boldFont = [UIFont boldSystemFontOfSize:[UIFont systemFontSize]];
+//    cell.skillNameLabel.font = boldFont;
     // check if skill is added in current plan
     if([self isSkilladdedToPlan:skill]){
         //skill is added to plan
@@ -390,28 +457,28 @@
             switch ([[skill valueForKey:@"rating"] intValue]) {
                 case 1:
                 {
-                    [cell.noatallButton setBackgroundImage:[UIImage imageNamed:@"selectedCircle"] forState:UIControlStateNormal];
+                    //[cell.noatallButton setBackgroundImage:[UIImage imageNamed:@"selectedCircle"] forState:UIControlStateNormal];
                     break;
                 }
                 case 2:
                 {
-                    [cell.alittleButton setBackgroundImage:[UIImage imageNamed:@"selectedCircle"] forState:UIControlStateNormal];
+                    //[cell.alittleButton setBackgroundImage:[UIImage imageNamed:@"selectedCircle"] forState:UIControlStateNormal];
                     break;
                 }
                 case 3:
                 {
-                    [cell.moderatelyButton setBackgroundImage:[UIImage imageNamed:@"selectedCircle"] forState:UIControlStateNormal];
+                    //[cell.moderatelyButton setBackgroundImage:[UIImage imageNamed:@"selectedCircle"] forState:UIControlStateNormal];
                     break;
                 }
                 case 4:
                 {
                     
-                    [cell.veryMuchButton setBackgroundImage:[UIImage imageNamed:@"selectedCircle"] forState:UIControlStateNormal];
+                    //[cell.veryMuchButton setBackgroundImage:[UIImage imageNamed:@"selectedCircle"] forState:UIControlStateNormal];
                     break;
                 }
                 case 5:
                 {
-                    [cell.extremelyButton setBackgroundImage:[UIImage imageNamed:@"selectedCircle"] forState:UIControlStateNormal];
+                    //[cell.extremelyButton setBackgroundImage:[UIImage imageNamed:@"selectedCircle"] forState:UIControlStateNormal];
                     break;
                 }
                 default:
@@ -446,7 +513,7 @@
         
     }
     
-    
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
     return cell;
 }
@@ -479,7 +546,7 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    return 40;
+    return 30;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -594,7 +661,7 @@
      
      */
     UILabel* label = [[UILabel alloc] initWithFrame:CGRectMake(2, 2, 320, 40)];
-    label.backgroundColor = [UIColor grayColor];
+    label.backgroundColor = [Utils colorWithHexValue:@"EEEEEE"];
     if (allMyPlanArray != nil && allMyPlanArray.count > 0) {
         label.text = [NSString stringWithFormat:@"Plan for %@",[[allMyPlanArray objectAtIndex:currentPlanIndex] objectForKey:@"planName"]];
         label.textAlignment = NSTextAlignmentCenter;
@@ -1132,7 +1199,7 @@
         currentPlanIndex--;
         if(currentPlanIndex == 0)
             self.previousBtn.hidden = YES;
-        self.submittBtn.hidden = YES;
+        self.submitLabel.hidden = YES;
         [self.tableview reloadData];
     }
     
@@ -1147,9 +1214,9 @@
         currentPlanIndex++;
         if(currentPlanIndex == maxMyPlan -1){
             self.nextBtn.hidden = YES;
-            self.submittBtn.hidden = NO;
+            self.submitLabel.hidden = NO;
         }else{
-            self.submittBtn.hidden = YES;
+            self.submitLabel.hidden = YES;
         }
         [self.tableview reloadData];
     }
@@ -1163,8 +1230,16 @@
 }
 
 - (UIView *)feeedbackTableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
-    UILabel* label = [[UILabel alloc] initWithFrame:CGRectMake(2, 2, 320, 30)];
-    label.backgroundColor = [UIColor lightGrayColor];
+    UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 30)];
+    
+    view.backgroundColor = [UIColor whiteColor];
+    
+    UILabel* label = [[UILabel alloc] initWithFrame:CGRectMake(15, 2, 290, 30)];
+    label.backgroundColor = [UIColor whiteColor];
+    label.font = [UIFont systemFontOfSize:18];
+    
+    label.textColor = [Utils colorWithHexValue:BUTTON_BLUE_COLOR_HEX_VALUE];
+    
     NSDictionary* skillDict = [[categorizedSkills objectAtIndex:currentPlanIndex] objectAtIndex:tableView.tag];
     NSInteger deviceCount = [(NSArray*)[skillDict objectForKey:@"devices"] count];
     //NSInteger websitesCount = [(NSArray*)[skillDict objectForKey:@"websitesAndApps"] count];
@@ -1179,7 +1254,9 @@
         label.text = @"This plan has these websites";
     }
     
-    return label;
+    [view addSubview:label];
+    
+    return view;
 }
 
 -(NSString *)feedbackTableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
@@ -1235,8 +1312,15 @@
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"devicefeedbackcell"];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        cell.contentView.backgroundColor = [UIColor colorWithRed:0.890625 green:0.890625 blue:0.890625 alpha:1.0];
+        //cell.contentView.backgroundColor = [UIColor colorWithRed:0.890625 green:0.890625 blue:0.890625 alpha:1.0];
+        //cell.contentView.frame = CGRectMake(5, 0, 310, 44);
+        
+        cell.backgroundColor = [UIColor whiteColor];
+        
         cell.contentView.layer.masksToBounds = YES;
+        cell.textLabel.font = [UIFont systemFontOfSize:15];
+        
+        
     }
     NSInteger section = indexPath.section;
     NSInteger row = indexPath.row;
@@ -1253,6 +1337,7 @@
         cell.textLabel.text = [[websiteArray objectAtIndex:row] valueForKey:@"waName"];
     }
     
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
 }
 
