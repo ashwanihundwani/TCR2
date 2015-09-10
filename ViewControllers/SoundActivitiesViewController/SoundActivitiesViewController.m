@@ -713,12 +713,8 @@
     
     
     if ([[PersistenceStorage getObjectForKey:@"Referer"] isEqual: @"AudioPlayerThreeViewController"]) {
-        RatingsViewController *ratingsView = [[UIStoryboard storyboardWithName:@"Main"bundle:nil]instantiateViewControllerWithIdentifier:@"RatingsViewController"];
-        
-        //ratingsView.skillSection = @"Sounds";
-        //  ratingsView.skillDetail = self.name;
-        
-        //[self.navigationController pushViewController:ratingsView animated:YES];
+        SkillRatingsViewController *ratingsView = [[UIStoryboard storyboardWithName:@"Main"bundle:nil]instantiateViewControllerWithIdentifier:@"SkillRatingsViewController"];
+
         [self.navigationController presentModalViewController:ratingsView animated:YES];
     }
 

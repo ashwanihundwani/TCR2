@@ -727,6 +727,7 @@
     [PersistenceStorage setObject:[self getPlanIDForName:npav.planName] andKey:@"currentPlanID"];
  
     [PersistenceStorage setObject:sitName andKey:@"situationName"];
+    [PersistenceStorage setObject:sitName andKey:@"sitName"];
 
       [PersistenceStorage setObject:[[userPlansArray objectAtIndex:indexPath.row] valueForKey:@"planName"] andKey:@"planName"];
     
