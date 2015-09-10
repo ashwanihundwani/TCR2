@@ -24,6 +24,7 @@
     //self.secondaryView.layer.masksToBounds = YES;
     self.feedbackTableView.delegate =self;
     self.feedbackTableView.dataSource = self;
+    [self.feedbackTableView registerNib:[UINib nibWithNibName:@"FeedbackDeviceTableViewCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"FeedbackDeviceCellIdentifier"];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -37,15 +38,15 @@
     self.secondaryView.hidden = YES;
     self.itemSelectorBtn.hidden = YES;
     self.itemSelctorBtnImage.hidden = YES;
-    
+    self.selectedButton.backgroundColor = [UIColor whiteColor];
+    [[self.selectedButton viewWithTag:DOT_VIEW_TAG] removeFromSuperview];
+    self.selectedButton = nil;
  
 
 }
 
-
--(IBAction)feedbackBtnPressed:(id)sender{
-    
-    UIButton *btn = (UIButton *)sender;
+-(void)fillbutton:(id)button{
+    UIButton *btn = (UIButton *)button;
     if(btn != self.selectedButton){
         
         btn.backgroundColor = [Utils colorWithHexValue:BUTTON_BLUE_COLOR_HEX_VALUE];
@@ -64,6 +65,9 @@
         self.selectedButton = btn;
         
     }
+}
+
+-(IBAction)feedbackBtnPressed:(id)sender{
     
     NSLog(@"Feedback btn pressed having tag: %ld", ((UIButton*)sender).tag);
     [self.delegate itemClickedForRating:((UIButton*)sender).tag inCell:self];
@@ -73,7 +77,7 @@
 #pragma mark - UITableViewDelegate
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 44;
+    return [self.delegate feeedbackTableView:tableView heightForRowAtIndexPath:indexPath];
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
@@ -103,10 +107,20 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return [self.delegate feeedbackTableView:tableView cellForRowAtIndexPath:indexPath];
+    FeedbackDeviceTableViewCell* cell = (FeedbackDeviceTableViewCell*)[self.delegate feeedbackTableView:tableView cellForRowAtIndexPath:indexPath];
+    cell.delegate = self;
+    return cell;
 }
 
 
+#pragma mark - FeedBackDeviceTableViewCellDelegate
+
+-(void) ratingRecieved:(NSInteger)rating inCell:(id)cell{
+    // get the index path of the cell
+    // and pass the same to controller
+    NSIndexPath* indexPath = [self.feedbackTableView indexPathForCell:cell];
+    [self.delegate deviceItemClickedForRating:rating :indexPath inCell:self];
+}
 
 
 

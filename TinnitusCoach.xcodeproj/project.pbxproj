@@ -368,6 +368,8 @@
 		15A2E8CC1ACDC39300587F23 /* SoundTypeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 15A2E8CA1ACDC39300587F23 /* SoundTypeView.xib */; };
 		15A5E4C71ACB116800639FA4 /* imagery.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 15A5E4C61ACB116800639FA4 /* imagery.mp4 */; };
 		15A5E4C81ACB118F00639FA4 /* deep_breathing.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 4A4A3B491AC73A5800F2AEF6 /* deep_breathing.mp4 */; };
+		2864766B1B9F68820069ECFB /* FeedbackDeviceTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 286476691B9F68820069ECFB /* FeedbackDeviceTableViewCell.m */; };
+		2864766C1B9F68820069ECFB /* FeedbackDeviceTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2864766A1B9F68820069ECFB /* FeedbackDeviceTableViewCell.xib */; };
 		39953FC81B7A5D66004F4990 /* ThoughtErrorCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 39953FC61B7A5D66004F4990 /* ThoughtErrorCell.m */; };
 		39953FC91B7A5D66004F4990 /* ThoughtErrorCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 39953FC71B7A5D66004F4990 /* ThoughtErrorCell.xib */; };
 		4A4A3AC31ABEE9CD00F2AEF6 /* circlingSleep.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A4A3ABF1ABEE9CD00F2AEF6 /* circlingSleep.png */; };
@@ -962,6 +964,9 @@
 		15A2E8C91ACDC39300587F23 /* SoundTypeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SoundTypeView.m; sourceTree = "<group>"; };
 		15A2E8CA1ACDC39300587F23 /* SoundTypeView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SoundTypeView.xib; sourceTree = "<group>"; };
 		15A5E4C61ACB116800639FA4 /* imagery.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = imagery.mp4; sourceTree = "<group>"; };
+		286476681B9F68820069ECFB /* FeedbackDeviceTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FeedbackDeviceTableViewCell.h; path = "Device Cells/FeedbackDeviceTableViewCell.h"; sourceTree = "<group>"; };
+		286476691B9F68820069ECFB /* FeedbackDeviceTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FeedbackDeviceTableViewCell.m; path = "Device Cells/FeedbackDeviceTableViewCell.m"; sourceTree = "<group>"; };
+		2864766A1B9F68820069ECFB /* FeedbackDeviceTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = FeedbackDeviceTableViewCell.xib; path = "Device Cells/FeedbackDeviceTableViewCell.xib"; sourceTree = "<group>"; };
 		39953FC51B7A5D66004F4990 /* ThoughtErrorCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThoughtErrorCell.h; sourceTree = "<group>"; };
 		39953FC61B7A5D66004F4990 /* ThoughtErrorCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThoughtErrorCell.m; sourceTree = "<group>"; };
 		39953FC71B7A5D66004F4990 /* ThoughtErrorCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ThoughtErrorCell.xib; sourceTree = "<group>"; };
@@ -1276,6 +1281,9 @@
 		043F8E921B2E391F00595D38 /* WeeklyReminderViews */ = {
 			isa = PBXGroup;
 			children = (
+				286476681B9F68820069ECFB /* FeedbackDeviceTableViewCell.h */,
+				286476691B9F68820069ECFB /* FeedbackDeviceTableViewCell.m */,
+				2864766A1B9F68820069ECFB /* FeedbackDeviceTableViewCell.xib */,
 				043F8E931B2E391F00595D38 /* Custome Cells */,
 				043F8E971B2E391F00595D38 /* WeeklyViewController.h */,
 				043F8E981B2E391F00595D38 /* WeeklyViewController.m */,
@@ -3166,6 +3174,7 @@
 				CDF03B551B9772D400FF962F /* MyOwnSoundCell.xib in Resources */,
 				4A8C5E901AB35250001FC7F4 /* Images.xcassets in Resources */,
 				04508BDD1AEB7AD1008B6F1C /* Devices.png in Resources */,
+				2864766C1B9F68820069ECFB /* FeedbackDeviceTableViewCell.xib in Resources */,
 				04C286031AF79D7B002E3347 /* downArrow.png in Resources */,
 				043DA2311B1A88CD009A0480 /* af.actionsheet.js in Resources */,
 				15156B611ABEFE9F009F4489 /* u263.png in Resources */,
@@ -3270,6 +3279,7 @@
 				04B0F1B21AEF1138005BCEA5 /* AddressBookData.m in Sources */,
 				15156B251ABEFC52009F4489 /* DeepBreathingViewController.m in Sources */,
 				046D59891B1DC85500041FCE /* emotionsTableViewCell.m in Sources */,
+				2864766B1B9F68820069ECFB /* FeedbackDeviceTableViewCell.m in Sources */,
 				04D5B1981B107B3F00BA1C14 /* MyTFHeaderView.m in Sources */,
 				042EBB351AF29C1500C90A96 /* CoundownTimerViewController.m in Sources */,
 				042110D31B2C87EC00337854 /* TipsReminder.m in Sources */,

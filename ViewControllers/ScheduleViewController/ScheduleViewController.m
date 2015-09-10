@@ -28,11 +28,14 @@
 
 @implementation ScheduleViewController
 
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"Add Event";
     // Do any additional setup after loading the view.
     [self setUpView];
+    
+    
     self.manager = [[DBManager alloc]initWithDatabaseFileName:@"GNResoundDB.sqlite"];
 }
 
@@ -42,6 +45,30 @@
     self.navigationItem.rightBarButtonItem = doneButton;
     self.activityName.text = self.name;
     self.datePicker.minimumDate =[NSDate date];
+    
+    if(self.inputDate){
+        
+        NSDateFormatter *outputFormatter = [[NSDateFormatter alloc] init];
+        [outputFormatter setDateFormat:@"MMM dd,yyy hh:mm a"];
+        
+        NSString *title = [outputFormatter stringFromDate:self.inputDate];
+        self.startDate = self.inputDate;
+        
+        [self.startButton setTitle:title forState:UIControlStateNormal];
+        //end date
+        self.endDate = [[NSDate alloc]initWithTimeInterval:3600 sinceDate:self.startDate];
+        NSString *endTitle = [outputFormatter stringFromDate:self.endDate ];
+        [self.endButton setTitle:endTitle forState:UIControlStateNormal];
+        self.datePicker.date = self.inputDate;
+    }
+    
+    if(self.repeatText){
+        UIButton *repeatLabel = (UIButton *)[self.view viewWithTag:355];
+        
+        [repeatLabel setTitle:self.repeatText forState:UIControlStateNormal];
+    }
+    
+    
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
@@ -464,7 +491,7 @@ if (self.datePicker.hidden==0)
         
     }
     
-    if ([[PersistenceStorage getObjectForKey:@"skillName"] isEqualToString:@"Imagery"] && ![[PersistenceStorage getObjectForKey:@"showCancelActivityButton"] isEqualToString:@"YES"]){
+    if ([[PersistenceStorage getObjectForKey:@"skillName"] isEqualToString:@"Imagery"]){
         
         NSString * schDate = self.startDate;
         
@@ -597,7 +624,7 @@ if (self.datePicker.hidden==0)
     
     
     
-    if ([[PersistenceStorage getObjectForKey:@"skillName"] isEqualToString:@"Guided Meditation"] && ![[PersistenceStorage getObjectForKey:@"showCancelActivityButton"] isEqualToString:@"YES"]){
+    if ([[PersistenceStorage getObjectForKey:@"skillName"] isEqualToString:@"Guided Meditation"]){
         
         NSString * schDate = self.startDate;
         
@@ -839,7 +866,7 @@ if (self.datePicker.hidden==0)
     
     
     
-    if ([[PersistenceStorage getObjectForKey:@"skillName"] isEqualToString:@"Deep Breathing"] && ![[PersistenceStorage getObjectForKey:@"showCancelActivityButton"] isEqualToString:@"YES"]){
+    if ([[PersistenceStorage getObjectForKey:@"skillName"] isEqualToString:@"Deep Breathing"]){
         
         NSString * schDate = self.startDate;
         

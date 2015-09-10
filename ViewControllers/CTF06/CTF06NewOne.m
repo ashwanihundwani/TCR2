@@ -104,7 +104,7 @@
     
     //  NSLog(@"%@",allRecordsArray);
     NSLog(@"''%@",emotionsArray);
-    
+    [self.EmotionsTableView reloadData];
     
 }
 
