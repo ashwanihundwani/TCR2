@@ -348,7 +348,11 @@
         
         //TODO
         //[PersistenceStorage setObject:[soundDict valueForKey:@"URL"] andKey:@"mediaURL" ];
-        
+        [PersistenceStorage setObject:info.url andKey:@"mediaURL"];
+        [PersistenceStorage setObject:info.title andKey:@"mediaName"];
+        [PersistenceStorage setObject:@"My Own Sounds" andKey:@"skillDetail2"];
+        [PersistenceStorage setObject:info.title  andKey:@"skillDetail4"];
+        [self setSoundType:indexPath];
         [self playAud:nil];
     }
     
@@ -372,10 +376,29 @@
         [PersistenceStorage setObject:[[mySoundsArray valueForKey:@"soundURL"] objectAtIndex:0] andKey:@"USsoundURL"];
         
         [PersistenceStorage setObject:[[mySoundsArray valueForKey:@"soundName"] objectAtIndex:0] andKey:@"USsoundName"];
-        
+        [self setSoundType:indexPath];
+        [PersistenceStorage setObject:@"Tinnitus Coach Sounds" andKey:@"skillDetail2"];
+        [PersistenceStorage setObject:[[mySoundsArray valueForKey:@"soundName"] objectAtIndex:0] andKey:@"skillDetail4"];
         [self.navigationController presentModalViewController:audioPanning animated:YES];
     }
 
+}
+
+-(void)setSoundType:(NSIndexPath*)indexPath{
+    switch (indexPath.section) {
+        case 1:
+            [PersistenceStorage setObject:@"Soothing Sound" andKey:@"skillDetail1"];
+            break;
+        case 2:
+            [PersistenceStorage setObject:@"Interesting Sound" andKey:@"skillDetail1"];
+            break;
+        case 3:
+            [PersistenceStorage setObject:@"Background Sound" andKey:@"skillDetail1"];
+            break;
+    
+        default:
+            break;
+    }
 }
 
 -(void)didTapDelete:(id)sender
