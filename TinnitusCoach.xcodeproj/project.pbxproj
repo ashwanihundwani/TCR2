@@ -18,7 +18,6 @@
 		042EBB351AF29C1500C90A96 /* CoundownTimerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 042EBB341AF29C1500C90A96 /* CoundownTimerViewController.m */; };
 		0432626B1AE4E6DC00C4C47A /* sampler.png in Resources */ = {isa = PBXBuildFile; fileRef = 0432626A1AE4E6DC00C4C47A /* sampler.png */; };
 		0432626D1AE4E94400C4C47A /* nook.png in Resources */ = {isa = PBXBuildFile; fileRef = 0432626C1AE4E94400C4C47A /* nook.png */; };
-		0432626F1AE5015F00C4C47A /* support.png in Resources */ = {isa = PBXBuildFile; fileRef = 0432626E1AE5015F00C4C47A /* support.png */; };
 		043262771AE5051A00C4C47A /* Checkmark.png in Resources */ = {isa = PBXBuildFile; fileRef = 043262701AE5051A00C4C47A /* Checkmark.png */; };
 		043262781AE5051A00C4C47A /* Clock.png in Resources */ = {isa = PBXBuildFile; fileRef = 043262711AE5051A00C4C47A /* Clock.png */; };
 		043262791AE5051A00C4C47A /* EarLeftBlack.png in Resources */ = {isa = PBXBuildFile; fileRef = 043262721AE5051A00C4C47A /* EarLeftBlack.png */; };
@@ -2848,7 +2847,7 @@
 		4A8C5E741AB3524F001FC7F4 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0610;
+				LastUpgradeCheck = 0630;
 				ORGANIZATIONNAME = Creospan;
 				TargetAttributes = {
 					4A8C5E7B1AB3524F001FC7F4 = {
@@ -3169,7 +3168,6 @@
 				04841D6F1AF8F54200BA4725 /* TCAppIcon.png in Resources */,
 				04D5B1991B107B3F00BA1C14 /* MyTFHeaderView.xib in Resources */,
 				04372E1C1AED386B00B30BC7 /* 2PassiveMuscleRelaxation.mp3 in Resources */,
-				0432626F1AE5015F00C4C47A /* support.png in Resources */,
 				4A90176C1AB8B87F00AE4B9D /* half_selected_star.png in Resources */,
 				CDF03B551B9772D400FF962F /* MyOwnSoundCell.xib in Resources */,
 				4A8C5E901AB35250001FC7F4 /* Images.xcassets in Resources */,
@@ -3480,14 +3478,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Cyberbridge International Inc., d/b/a Creospan Inc (3HRX2SU6VP)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PREFIX_HEADER = TinnitusCoach/PrefixHeader.pch;
 				INFOPLIST_FILE = TinnitusCoach/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "671cba19-cc2e-4e76-80e0-8e6b72e24184";
 			};
 			name = Debug;
 		};
@@ -3495,14 +3493,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Cyberbridge International Inc., d/b/a Creospan Inc (3HRX2SU6VP)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PREFIX_HEADER = TinnitusCoach/PrefixHeader.pch;
 				INFOPLIST_FILE = TinnitusCoach/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "671cba19-cc2e-4e76-80e0-8e6b72e24184";
 			};
 			name = Release;
 		};
