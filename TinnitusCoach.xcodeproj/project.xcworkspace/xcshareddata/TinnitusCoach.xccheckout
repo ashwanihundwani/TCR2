@@ -7,14 +7,14 @@
 	<key>IDESourceControlProjectIdentifier</key>
 	<string>9BDAD1A0-1A40-47B4-910A-DD4473DF2CC8</string>
 	<key>IDESourceControlProjectName</key>
-	<string>project</string>
+	<string>TinnitusCoach</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>834F090AC5B9B788F889388E022BB8B1FDC2AE7A</key>
 		<string>https://github.com/creospan/TCR2</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>TinnitusCoach.xcodeproj/project.xcworkspace</string>
+	<string>TinnitusCoach.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>834F090AC5B9B788F889388E022BB8B1FDC2AE7A</key>
