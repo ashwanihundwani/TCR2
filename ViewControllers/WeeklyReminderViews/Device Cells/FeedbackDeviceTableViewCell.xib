@@ -34,6 +34,9 @@
                                         <integer key="value" value="1"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="selectBtnPressed:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="MFb-cE-8Oy"/>
+                                </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This i slong category description . Please ingnore this is testing text.." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="onE-ho-6vg">
                                 <rect key="frame" x="8" y="3" width="253" height="37"/>
@@ -391,24 +394,14 @@
                             </mask>
                         </variation>
                     </view>
-                    <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Rz4-he-HHX" userLabel="Seperator">
-                        <rect key="frame" x="0.0" y="311" width="320" height="3"/>
-                        <color key="backgroundColor" red="0.93333333333333335" green="0.93333333333333335" blue="0.93333333333333335" alpha="1" colorSpace="calibratedRGB"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="3" id="ivz-wk-mdg"/>
-                        </constraints>
-                    </view>
                 </subviews>
                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 <constraints>
                     <constraint firstItem="aH1-O9-8kl" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="2" id="3hd-X4-xq7"/>
-                    <constraint firstAttribute="trailing" secondItem="Rz4-he-HHX" secondAttribute="trailing" id="8Vv-Gg-B1Q"/>
-                    <constraint firstItem="Rz4-he-HHX" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="D2I-gl-U6V"/>
                     <constraint firstItem="aH1-O9-8kl" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="-3" id="JUZ-wD-Hq3"/>
                     <constraint firstItem="AhB-9m-rb0" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="-3" id="S85-Ol-M1n"/>
                     <constraint firstItem="AhB-9m-rb0" firstAttribute="top" secondItem="aH1-O9-8kl" secondAttribute="bottom" constant="4" id="SrL-JZ-Qnd"/>
-                    <constraint firstAttribute="bottom" secondItem="Rz4-he-HHX" secondAttribute="bottom" id="pxN-6r-zAU"/>
                     <constraint firstAttribute="trailingMargin" secondItem="AhB-9m-rb0" secondAttribute="trailing" constant="7" id="uZP-BG-HEp"/>
                     <constraint firstAttribute="trailingMargin" secondItem="aH1-O9-8kl" secondAttribute="trailing" constant="7" id="xRO-OY-a57"/>
                 </constraints>
