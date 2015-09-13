@@ -519,7 +519,7 @@
     }
     
     [self.tableview reloadData];
-    
+    [self reloadAllInnerTableViews];
     
 }
 
@@ -1091,6 +1091,7 @@
         if(currentPlanIndex == 0)
             self.previousBtn.hidden = YES;
         [self.tableview reloadData];
+        [self reloadAllInnerTableViews];
     }
     
     
@@ -1109,7 +1110,21 @@
             self.submitLabel.hidden = YES;
         }
         [self.tableview reloadData];
+        [self reloadAllInnerTableViews];
     }
+}
+
+-(void)reloadAllInnerTableViews{
+    for (int section = 0; section < [self.tableview numberOfSections]; section++) {
+        for (int row = 0; row < [self.tableview numberOfRowsInSection:section]; row++) {
+            NSIndexPath* cellPath = [NSIndexPath indexPathForRow:row inSection:section];
+            UITableViewCell* cell = [self.tableview cellForRowAtIndexPath:cellPath];
+            if([cell isKindOfClass:[UsingSoundFeedbackCell class]]){
+                [((UsingSoundFeedbackCell*)cell).usingSoundTableView reloadData];
+            }
+        }
+    }
+
 }
 
 
@@ -1500,6 +1515,7 @@
     }
     
     [self.tableview reloadData];
+    [self reloadAllInnerTableViews];
 }
 
 - (CGFloat)usingSoundTableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath inUsingSound:(id)cell{
