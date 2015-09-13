@@ -134,7 +134,7 @@
     
     [self.view addSubview:titleView];
     
-    UILabel *backLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 30, 60, 20)];
+    UILabel *backLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 32, 60, 20)];
     
     backLabel.text = @"Cancel";
     
@@ -149,7 +149,7 @@
     [self.view addSubview:backLabel];
     
     
-    UILabel *doneLabel = [[UILabel alloc]initWithFrame:CGRectMake(250, 30, 60, 20)];
+    UILabel *doneLabel = [[UILabel alloc]initWithFrame:CGRectMake(250, 32, 60, 20)];
     
     doneLabel.textAlignment = NSTextAlignmentRight;
     

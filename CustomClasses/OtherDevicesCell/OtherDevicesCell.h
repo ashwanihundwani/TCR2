@@ -8,8 +8,16 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol OtherDevicesCellDelegate <NSObject>
+
+-(void)didTapCheckBox:(id)sender;
+
+@end
+
 @interface OtherDevicesCell : UITableViewCell
-@property (weak, nonatomic) IBOutlet UIButton *checkBoxButton;
+@property (weak, nonatomic) IBOutlet UIView *checkView;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
+
+@property(nonatomic, weak)id<OtherDevicesCellDelegate> delegate;
 
 @end
