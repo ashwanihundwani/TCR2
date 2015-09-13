@@ -925,13 +925,13 @@
             
             if(![fileManager fileExistsAtPath:documentTXTPath])
             {
-                [str writeToFile:documentTXTPath atomically:YES];
+                [finalStr writeToFile:documentTXTPath atomically:YES];
             }
             else
             {
                 NSFileHandle *myHandle = [NSFileHandle fileHandleForWritingAtPath:documentTXTPath];
                 [myHandle seekToEndOfFile];
-                [myHandle writeData:[str dataUsingEncoding:NSUTF8StringEncoding]];
+                [myHandle writeData:[finalStr dataUsingEncoding:NSUTF8StringEncoding]];
                 
             }
 
