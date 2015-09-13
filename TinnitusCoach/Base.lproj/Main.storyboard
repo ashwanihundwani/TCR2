@@ -2732,9 +2732,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="56" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="AIs-rv-F7W">
-                                <rect key="frame" x="0.0" y="110" width="600" height="490"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" translatesAutoresizingMaskIntoConstraints="NO" id="AIs-rv-F7W">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <variation key="widthClass=compact" misplaced="YES">
                                     <rect key="frame" x="0.0" y="123" width="400" height="478"/>
                                 </variation>
@@ -2743,7 +2743,7 @@
                                     <outlet property="delegate" destination="6IC-w1-bE5" id="r7p-gi-hAy"/>
                                 </connections>
                             </tableView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Below are 4 different sound sources for you to explore to come up with ideas to add to your plan." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="n5D-Y9-yBY">
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Below are 4 different sound sources for you to explore to come up with ideas to add to your plan." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="n5D-Y9-yBY">
                                 <rect key="frame" x="16" y="30" width="568" height="72"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="72" id="5bc-Xr-TMv"/>
@@ -2752,7 +2752,7 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView userInteractionEnabled="NO" alpha="0.5" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="rgo-12-oLE">
+                            <imageView hidden="YES" userInteractionEnabled="NO" alpha="0.5" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="rgo-12-oLE">
                                 <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="13" id="yGH-qy-WpJ">
@@ -2778,6 +2778,7 @@
                         </subviews>
                         <color key="backgroundColor" white="0.95999999999999996" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="AIs-rv-F7W" firstAttribute="top" secondItem="HDP-Ew-ozs" secondAttribute="top" id="7Uf-eu-HXJ"/>
                             <constraint firstItem="rgo-12-oLE" firstAttribute="top" secondItem="Hj7-KV-X0z" secondAttribute="bottom" constant="102" id="Ael-EX-GzQ">
                                 <variation key="widthClass=compact" constant="50"/>
                             </constraint>
@@ -2805,6 +2806,7 @@
                                 <exclude reference="Ael-EX-GzQ"/>
                                 <exclude reference="N38-em-fRg"/>
                                 <exclude reference="szq-T8-BBf"/>
+                                <exclude reference="R00-Up-129"/>
                             </mask>
                         </variation>
                         <variation key="widthClass=compact">
@@ -3629,7 +3631,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hzN-yT-oZr">
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hzN-yT-oZr">
                                 <rect key="frame" x="10" y="20" width="580" height="80"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="100" id="0cw-Nn-IE0"/>
@@ -3640,7 +3642,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="Cbn-Qy-tSE">
-                                <rect key="frame" x="0.0" y="140" width="600" height="460"/>
+                                <rect key="frame" x="0.0" y="64" width="600" height="536"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <connections>
                                     <outlet property="dataSource" destination="kCS-be-7nJ" id="d8w-2A-6iJ"/>
@@ -3672,6 +3674,7 @@
                                 <variation key="widthClass=compact" constant="10"/>
                             </constraint>
                             <constraint firstAttribute="trailing" secondItem="Cbn-Qy-tSE" secondAttribute="trailing" id="1Es-Qb-GeL"/>
+                            <constraint firstItem="Cbn-Qy-tSE" firstAttribute="top" secondItem="07s-Vp-QKs" secondAttribute="top" constant="64" id="62r-s2-Sqy"/>
                             <constraint firstItem="XZj-2O-Tru" firstAttribute="top" secondItem="s88-Ev-W4s" secondAttribute="bottom" id="BsR-wz-E9O">
                                 <variation key="widthClass=compact" constant="10"/>
                             </constraint>
@@ -3700,6 +3703,7 @@
                                 <exclude reference="tiJ-O9-ZDR"/>
                                 <exclude reference="BsR-wz-E9O"/>
                                 <exclude reference="PKP-CA-Nnz"/>
+                                <exclude reference="0bc-qy-BSd"/>
                             </mask>
                         </variation>
                         <variation key="widthClass=compact">

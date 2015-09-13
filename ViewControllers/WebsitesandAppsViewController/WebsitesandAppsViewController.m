@@ -12,7 +12,7 @@
 #import "SoundActivitiesViewController.h"
 #import "MBProgressHUD.h"
 
-@interface WebsitesandAppsViewController ()<UITableViewDelegate, UITableViewDataSource>
+@interface WebsitesandAppsViewController ()<UITableViewDelegate, UITableViewDataSource, WebsitesandAppsCellDelegate, WebsitesandAppsWithCommentsCellDelegate, WebSiteCaptureCommentsDelegate>
 {
     NSArray *websitesandAppsSoundsArray;
 }
@@ -27,35 +27,84 @@
 
 @implementation WebsitesandAppsViewController
 
+-(UIView *)tableHeaderView
+{
+    UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 30)];
+    
+    UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(22, 15, 276, 20)
+                           ];
+    
+    titleLabel.numberOfLines = 1000;
+    
+    titleLabel.backgroundColor = [UIColor clearColor];
+    view.backgroundColor = [Utils colorWithHexValue:@"EFEFF4"];
+    
+    titleLabel.text = [NSString stringWithFormat: @"Below are websites and apps with music, podcasts and other sounds. Select the websites and apps with %@ that you would like to add to your plan.", self.soundType];
+    
+    Pair *pallete = [Utils getColorFontPair:eCFS_PALLETE_2];
+    
+    titleLabel.font = pallete.secondObj;
+    titleLabel.textColor = pallete.firstObj;
+    
+    CGFloat height = [Utils heightForLabelForString:titleLabel.text width:276 font:pallete.secondObj];
+    
+    titleLabel.height = height;
+    
+    view.height += height;
+    
+    [view addSubview:titleLabel];
+    
+    return view;
+}
 
+
+-(CGFloat)heightForIndexPath:(NSIndexPath *)indexPath
+{
+    CGFloat constant = 37;
+    
+    if ([[self.checkFlagArray objectAtIndex:indexPath.row] boolValue]) {
+        constant = 90;
+    }
+    else
+    {
+        constant = 40;
+    }
+    
+    NSString *title = [[websitesandAppsSoundsArray objectAtIndex:indexPath.row] valueForKey:@"waName"];
+    
+    NSString *desc =[[websitesandAppsSoundsArray objectAtIndex:indexPath.row] valueForKey:@"waDetail"];
+    
+    CGFloat titleHeight = [Utils heightForLabelForString:title width:234 font:TITLE_LABEL_FONT];
+    
+    CGFloat subTitleHeight = [Utils heightForLabelForString:desc width:234 font:SUB_TITLE_LABEL_FONT];
+    
+    
+    constant += titleHeight + subTitleHeight;
+    
+    return constant;
+    
+}
 
 -(void)dismissKeyboard {
     [self.view endEditing:YES];}
+
+-(void)cancel
+{
+    [self.navigationController popViewControllerAnimated:YES];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     //  [commentsTextField SetDelegate:self];
     
-    UINavigationBar *myBar = [[UINavigationBar alloc]initWithFrame:CGRectMake(0, 0, 320, 50)];
-    [self.view addSubview:myBar];
+    self.websitesandAppsSoundTableView.backgroundColor = [Utils colorWithHexValue:@"EFEFF4"];
     
+    self.websitesandAppsSoundTableView.tableHeaderView = [self tableHeaderView];
     
-    UINavigationItem *item = [[UINavigationItem alloc] initWithTitle:@"Add Websites & Apps"];
+    self.websitesandAppsSoundTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
+    //  [commentsTextField SetDelegate:self];
     
-    UIBarButtonItem *leftButton = [[UIBarButtonItem alloc] initWithTitle:@"Cancel"
-                                                                   style:UIBarButtonItemStylePlain target:nil action:@selector(cancelTapped:)];
-    item.leftBarButtonItem = leftButton;
-    
-    
-    UIBarButtonItem *rightButton = [[UIBarButtonItem alloc] initWithTitle:@"Done"
-                                                                    style:UIBarButtonItemStyleDone target:nil action:@selector(addTapped:)];
-    item.rightBarButtonItem = rightButton;
-    
-    
-    
-    
-    [myBar pushNavigationItem:item animated:NO];
     
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]
@@ -64,12 +113,57 @@
     
     [self.view addGestureRecognizer:tap];
     
+    UIView *titleView = [[UIView alloc]initWithFrame:CGRectMake(0, 20, 320, 44)];
+    
+    //titleView.backgroundColor = [Utils colorWithHexValue:NAV_BAR_BLACK_COLOR];
+    
+    UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(60, 0, 200, 44)];
+    
+    Pair *pallete = [Utils getColorFontPair:eCFS_PALLETE_1];
+    
+    titleLabel.font = pallete.secondObj;
+    titleLabel.textColor = pallete.firstObj;
+    
+    titleLabel.textAlignment = NSTextAlignmentCenter;
+    
+    //titleLabel.textColor = [UIColor colorWithHexValue:@"797979"];
+    titleLabel.backgroundColor = [UIColor clearColor];
+    titleLabel.text = [NSString stringWithFormat:@"Add %@", self.soundType];
+    
+    [titleView addSubview:titleLabel];
+    
+    [self.view addSubview:titleView];
+    
+    UILabel *backLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 30, 60, 20)];
+    
+    backLabel.text = @"Cancel";
+    
+    pallete = [Utils getColorFontPair:eCFS_PALLETE_3];
+    
+    backLabel.font = pallete.secondObj;
+    backLabel.textColor = pallete.firstObj;
+    
+    [Utils addTapGestureToView:backLabel target:self
+                      selector:@selector(cancelTapped:)];
+    
+    [self.view addSubview:backLabel];
     
     
+    UILabel *doneLabel = [[UILabel alloc]initWithFrame:CGRectMake(250, 30, 60, 20)];
     
+    doneLabel.textAlignment = NSTextAlignmentRight;
     
+    doneLabel.text = @"Done";
     
+    pallete = [Utils getColorFontPair:eCFS_PALLETE_3];
     
+    doneLabel.font = pallete.secondObj;
+    doneLabel.textColor = pallete.firstObj;
+    
+    [Utils addTapGestureToView:doneLabel target:self
+                      selector:@selector(addWebsitesandApps)];
+    
+    [self.view addSubview:doneLabel];
     
     self.websitesandAppsSoundDescriptionLabel.text = [NSString stringWithFormat:@"Below are websites and apps with music, podcasts and other sounds. Select the websites and apps with %@ that you would like to add to your plan.",self.soundType];
     
@@ -153,7 +247,7 @@
         //     SoundActivitiesViewController *npsv = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"SoundActivitiesViewController"];
         
         
-        if (isDone == YES)
+        if (isDone)
             
         {
             
@@ -196,6 +290,8 @@
         // [self.navigationController pushViewController:npsv animated:YES];
         
     }
+    
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 
@@ -455,13 +551,13 @@
         WebsitesandAppsWithCommentsCell *cell = [tableView dequeueReusableCellWithIdentifier:@"WebsitesandAppsWithCommentsCell" forIndexPath:indexPath];
         cell.nameLabel.text = [[websitesandAppsSoundsArray objectAtIndex:indexPath.row] valueForKey:@"waName"];
         
+         cell.titleHeightConst.constant = [Utils heightForLabelForString:cell.nameLabel.text width:234 font:TITLE_LABEL_FONT];
+        
         cell.descriptionLabel.text =[[websitesandAppsSoundsArray objectAtIndex:indexPath.row] valueForKey:@"waDetail"];
         cell.descriptionLabel.numberOfLines = 10;
         //cell.index = indexPath.row;
         cell.commentsTextField.text = [self.commentsArray objectAtIndex:indexPath.row];
-        
-        cell.checkBoxButton.tag = indexPath.row;
-        [cell.checkBoxButton addTarget:self action:@selector(checkBoxButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+        cell.checkDelegate = self;
         cell.delegate = self;
         return cell;
     }
@@ -473,11 +569,11 @@
         
         cell.descriptionLabel.numberOfLines = 10;
         
+         cell.titleHeightConst.constant = [Utils heightForLabelForString:cell.nameLabel.text width:234 font:TITLE_LABEL_FONT];
+        
         cell.descriptionLabel.text =[[websitesandAppsSoundsArray objectAtIndex:indexPath.row] valueForKey:@"waDetail"];
         
-        
-        cell.checkBoxButton.tag = indexPath.row;
-        [cell.checkBoxButton addTarget:self action:@selector(checkBoxButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+        cell.delegate = self;
         return cell;
     }
     
@@ -490,17 +586,7 @@
 #pragma mark - UITableViewDelegate
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    NSString *desc =[[websitesandAppsSoundsArray objectAtIndex:indexPath.row] valueForKey:@"waDetail"];
-    
-    CGFloat subTitleHeight = [Utils heightForLabelForString:desc width:234 font:SUB_TITLE_LABEL_FONT];
-    
-    if ([[self.checkFlagArray objectAtIndex:indexPath.row] boolValue]) {
-        return 80 + subTitleHeight;
-    }
-    else
-    {
-        return 60 + subTitleHeight;
-    }
+    return [self heightForIndexPath:indexPath];
 }
 
 - (void)checkBoxButtonClicked:(id)sender
@@ -522,6 +608,8 @@
 }
 
 
+
+
 /*
  #pragma mark - Navigation
  
@@ -531,6 +619,30 @@
  // Pass the selected object to the new view controller.
  }
  */
+
+-(void)didTapCheckBox:(id)sender{
+    
+    UITableViewCell *cell = (UITableViewCell *)sender;
+    
+    NSIndexPath *path = [self.websitesandAppsSoundTableView indexPathForCell:cell];
+    
+    NSInteger index = path.row;
+    
+    if ([[self.checkFlagArray objectAtIndex:index]boolValue]) {
+        [self.checkFlagArray replaceObjectAtIndex:index withObject:[NSNumber numberWithBool:NO]];
+        [self.websitesandAppsSoundTableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:index inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
+        //  cell.commentsTextField.text
+        
+        //   cell.commentsTextField.text = [[websitesandAppsSoundsArray objectAtIndex:indexPath.row] valueForKey:@"waName"];
+        
+    }
+    else
+    {
+        [self.checkFlagArray replaceObjectAtIndex:index withObject:[NSNumber numberWithBool:YES]];
+        [self.websitesandAppsSoundTableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:index inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
+    }
+    
+}
 
 #pragma mark - WebSiteCaptureCommentsDelegate
 

@@ -344,7 +344,7 @@
     CGFloat subTitleHeight = [Utils heightForLabelForString:desc width:264 font:TITLE_LABEL_FONT];
     
     if ([[self.checkFlagArray objectAtIndex:indexPath.row] boolValue]) {
-        return 55 + subTitleHeight;
+        return 75 + subTitleHeight;
     }
     else
     {
