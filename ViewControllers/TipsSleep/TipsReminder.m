@@ -5,8 +5,8 @@
 //  Created by Jiten on 02/05/15.
 //  Copyright (c) 2015 Creospan. All rights reserved.
 //
-#define UN_SELECTED_IMAGE @"u630.png"
-#define SELECTED_IMAGE @"u648.png"
+#define UN_SELECTED_IMAGE @""
+#define SELECTED_IMAGE @"Selected_CheckBox.png.png"
 
 #define EMPTY_TABLEVIEW @"You have no sleep tips added to \nyour list. Please add at least \none tip to proceed!"
 
@@ -468,7 +468,14 @@ else
         if ([_selectedMyTipsArray containsObject:tipsDetailsDict]) {
             
             //        [self onClickToggleCategory:cell.btnToggleCategory];
-            [self toggleCategoryImage:YES andCell:cell];
+            cell.checkImage.image = [UIImage imageNamed:SELECTED_IMAGE];
+            cell.checkImage.hidden = FALSE;
+            
+        }
+        else{
+            
+            cell.checkImage.image = [UIImage imageNamed:UN_SELECTED_IMAGE];
+            cell.checkImage.hidden = TRUE;
             
         }
         //        NSString *tipNmaeStr = [tipName  stringByReplacingOccurrencesOfString:@" " withString:@""];

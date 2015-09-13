@@ -126,7 +126,7 @@
         
         NSString *actionSheetTitle = @"Where would you like to go now?"; //Action Sheet Title
         NSString *other0 = @"Repeat This Exercise"; //Action Sheet Button Titles
-        NSString *other1 = @"Know About This Exercise";
+        NSString *other1 = @"Learn About This Exercise";
         NSString *other2 = @"Try Another Exercise";
         NSString *other3 = @"Return Home";
         //   NSString *other4 = @"Return Home";
@@ -242,7 +242,7 @@
         
         
     }
-    if ([buttonTitle isEqualToString:@"Know About This Exercise"]) {
+    if ([buttonTitle isEqualToString:@"Learn About This Exercise"]) {
         //NookUS *samplerView = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"NookUS"];
         //[self.navigationController pushViewController:samplerView animated:NO];
         [PersistenceStorage setObject:nil andKey:@"skillDetail1"];

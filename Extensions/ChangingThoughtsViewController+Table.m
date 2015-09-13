@@ -171,7 +171,7 @@
     
     UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(20.0, 24.0, 300.0, 20.0)];
     
-    label.text = @"Schedule Pleasant Activities";
+    label.text = @"Changing Thoughts & Feelings";
     
     Pair *pallete = [Utils getColorFontPair:eCFS_PALLETE_3];
     
