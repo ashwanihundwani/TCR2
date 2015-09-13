@@ -296,7 +296,7 @@
     
     [pageInfos addObject:info3];
     
-    IntroPageInfo *info4 = [[IntroPageInfo alloc] initWithimage:[UIImage imageNamed:@"Intro6image4.png"] title: @"How can I change my negative feelings?" description:@"You may not be able to change events in your life, or your tinnitus. However, the way you think about events is under your control. Change your thoughts, and your feelings will change too. With this skill, you will learn aa step-by-step approach to changing thoughts."];
+    IntroPageInfo *info4 = [[IntroPageInfo alloc] initWithimage:[UIImage imageNamed:@"Intro6image4.png"] title: @"How can I change my negative feelings?" description:@"You may not be able to change events in your life, or your tinnitus. However, the way you think about events is under your control. Change your thoughts, and your feelings will change too. With this skill, you will learn a step-by-step approach to changing thoughts."];
     
     [pageInfos addObject:info4];
     

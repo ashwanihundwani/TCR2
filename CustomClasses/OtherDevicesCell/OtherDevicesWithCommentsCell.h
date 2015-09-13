@@ -16,10 +16,19 @@
 
 @end
 
+@protocol OtherDevicesWithCommentsCellDelegate<NSObject>
+
+-(void)didTapCheckBox:(id)sender;
+
+@end
+
 @interface OtherDevicesWithCommentsCell : UITableViewCell<UITextFieldDelegate>
-@property (weak, nonatomic) IBOutlet UIButton *checkBoxButton;
+
+@property (weak, nonatomic) IBOutlet UIImageView *checkImageView;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UITextField *commentsTextField;
 @property (weak, nonatomic) id<AddDeviceCaptureCommentsDelegate> delegate;
+
+@property (weak , nonatomic) id<OtherDevicesWithCommentsCellDelegate> checkDelegate;
 
 @end

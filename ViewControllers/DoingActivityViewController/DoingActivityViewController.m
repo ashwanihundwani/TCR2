@@ -57,7 +57,7 @@
     
     //        [self writeVisitedPlans];
     
-    NSString *alertMsg = [NSString stringWithFormat:@"You are at the moment enaged with the activity '%@'. If you are finished, tap on “I’m Done Now” to provide some feedback.\n\n Alternatively, you can cancel the current activity.",[PersistenceStorage getObjectForKey:@"activityName"]];
+    NSString *alertMsg = [NSString stringWithFormat:@"When you are done with the activity %@ tap on \"I am Done Now.\"\n\n Alternatively, you can cancel the current activity.",[PersistenceStorage getObjectForKey:@"activityName"]];
     UILabel *theText = (UILabel *)[self.view viewWithTag:100];
     
     theText.numberOfLines = 1000;
