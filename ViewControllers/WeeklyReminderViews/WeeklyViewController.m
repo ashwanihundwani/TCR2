@@ -937,20 +937,26 @@
 
         }else{
             // using sound skill
+            BOOL isSoundLoggable = NO;
+            BOOL isDeviceLoggable = NO;
+            BOOL isWebLoggable = NO;
             //get the sound rating
             NSString* soundRating = nil;
             if([[myskills valueForKey:@"group0"] isEqualToString:@"YES"]){
                 soundRating = [myskills valueForKey:@"group0rating"];
+                isSoundLoggable = YES;
             }
             // get devices rating
             NSString* deviceRating = nil;
             if([[myskills valueForKey:@"group1"] isEqualToString:@"YES"]){
                 deviceRating = [myskills valueForKey:@"group1rating"];
+                isDeviceLoggable = YES;
             }
             // get websites and apps rating
             NSString* webRating = nil;
             if([[myskills valueForKey:@"group2"] isEqualToString:@"YES"]){
                 webRating = [myskills valueForKey:@"group2rating"];
+                isWebLoggable = YES;
             }
             // now check for the devices and websites
             NSMutableString* selectedDeviceNames = [[NSMutableString alloc] init];
@@ -976,13 +982,16 @@
             NSMutableArray* combinedStringArray = [[NSMutableArray alloc] init];
             // create sound log string
             NSString* soundLogString = [NSString stringWithFormat:@"\r%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@",dateString,timeString,type,str,nil,pName,sitName,sName,@"Tinnitus Coach Sounds and My Own Sounds",nil,nil,nil,nil,nil,soundRating,@""];
-            [combinedStringArray addObject:soundLogString];
+            if(isSoundLoggable)
+                [combinedStringArray addObject:soundLogString];
             //create device log string
             NSString* deviceLogString = [NSString stringWithFormat:@"\r%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@",dateString,timeString,type,str,nil,pName,sitName,sName,@"Devices",selectedDeviceNames,nil,nil,nil,nil,deviceRating,@""];
-            [combinedStringArray addObject:deviceLogString];
+            if(isDeviceLoggable)
+                [combinedStringArray addObject:deviceLogString];
             //create website log string
             NSString* webLogString = [NSString stringWithFormat:@"\r%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@",dateString,timeString,type,str,nil,pName,sitName,sName,@"Websites & Apps",selectedWebNames,nil,nil,nil,nil,webRating,@""];
-            [combinedStringArray addObject:webLogString];
+            if(isWebLoggable)
+                [combinedStringArray addObject:webLogString];
             
             for (NSString* str in combinedStringArray) {
                 if(![fileManager fileExistsAtPath:documentTXTPath])
