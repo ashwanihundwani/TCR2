@@ -7,8 +7,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" restorationIdentifier="FeedbackCellIdentifier" selectionStyle="default" indentationWidth="10" reuseIdentifier="FeedbackCellIdentifier" rowHeight="315" id="KGk-i7-Jjw" customClass="FeedbackTableViewCell">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="315"/>
+        <tableViewCell contentMode="scaleToFill" restorationIdentifier="SkillFeedbackCell" selectionStyle="default" indentationWidth="10" reuseIdentifier="SkillFeedbackCell" rowHeight="194" id="KGk-i7-Jjw" customClass="SkillFeedbackCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="194"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
                 <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
@@ -17,8 +17,8 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aH1-O9-8kl">
                         <rect key="frame" x="5" y="10" width="300" height="45"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="o6c-Sq-E2j">
-                                <rect key="frame" x="274" y="7" width="24" height="24"/>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="o6c-Sq-E2j">
+                                <rect key="frame" x="260" y="5" width="24" height="24"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="24" id="N6L-O6-7Cj"/>
                                     <constraint firstAttribute="width" constant="24" id="YeW-hw-woU"/>
@@ -34,9 +34,6 @@
                                         <integer key="value" value="1"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
-                                <connections>
-                                    <action selector="itemSelected:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="eia-yC-U0q"/>
-                                </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This i slong category description . Please ingnore this is testing text.." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="onE-ho-6vg">
                                 <rect key="frame" x="8" y="3" width="253" height="37"/>
@@ -102,10 +99,10 @@
                     <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AhB-9m-rb0">
                         <rect key="frame" x="5" y="59" width="300" height="120"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YX5-Tr-ehG">
-                                <rect key="frame" x="8" y="2" width="275" height="17"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YX5-Tr-ehG">
+                                <rect key="frame" x="8" y="2" width="241" height="17"/>
                                 <attributedString key="attributedText">
-                                    <fragment content="How helpful was this category? (Check one)">
+                                    <fragment content="How helpful was this skill? (Check one)">
                                         <attributes>
                                             <font key="NSFont" size="14" name="HelveticaNeue"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
@@ -394,48 +391,31 @@
                             </mask>
                         </variation>
                     </view>
-                    <tableView hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="grouped" separatorStyle="none" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" translatesAutoresizingMaskIntoConstraints="NO" id="hul-Xf-2Um">
-                        <rect key="frame" x="-7" y="189" width="334" height="117"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Rz4-he-HHX" userLabel="Seperator">
+                        <rect key="frame" x="0.0" y="190" width="320" height="3"/>
+                        <color key="backgroundColor" red="0.93333333333333335" green="0.93333333333333335" blue="0.93333333333333335" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="300" id="GiJ-RF-k93"/>
+                            <constraint firstAttribute="height" constant="3" id="ivz-wk-mdg"/>
                         </constraints>
-                        <variation key="default">
-                            <mask key="constraints">
-                                <exclude reference="GiJ-RF-k93"/>
-                            </mask>
-                        </variation>
-                        <connections>
-                            <outlet property="dataSource" destination="KGk-i7-Jjw" id="NkC-LA-noV"/>
-                            <outlet property="delegate" destination="KGk-i7-Jjw" id="ksC-mG-rim"/>
-                        </connections>
-                    </tableView>
+                    </view>
                 </subviews>
                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 <constraints>
                     <constraint firstItem="aH1-O9-8kl" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="2" id="3hd-X4-xq7"/>
+                    <constraint firstAttribute="trailing" secondItem="Rz4-he-HHX" secondAttribute="trailing" id="8Vv-Gg-B1Q"/>
+                    <constraint firstItem="Rz4-he-HHX" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="D2I-gl-U6V"/>
                     <constraint firstItem="aH1-O9-8kl" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="-3" id="JUZ-wD-Hq3"/>
                     <constraint firstItem="AhB-9m-rb0" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="-3" id="S85-Ol-M1n"/>
                     <constraint firstItem="AhB-9m-rb0" firstAttribute="top" secondItem="aH1-O9-8kl" secondAttribute="bottom" constant="4" id="SrL-JZ-Qnd"/>
-                    <constraint firstItem="hul-Xf-2Um" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="-15" id="SwI-cj-Nz0"/>
-                    <constraint firstItem="hul-Xf-2Um" firstAttribute="top" secondItem="AhB-9m-rb0" secondAttribute="bottom" constant="10" id="TLg-Vp-SKO"/>
-                    <constraint firstAttribute="bottomMargin" secondItem="hul-Xf-2Um" secondAttribute="bottom" id="VMz-yt-W7u"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="hul-Xf-2Um" secondAttribute="trailing" constant="-15" id="WVu-8G-gkJ"/>
+                    <constraint firstAttribute="bottom" secondItem="Rz4-he-HHX" secondAttribute="bottom" id="pxN-6r-zAU"/>
                     <constraint firstAttribute="trailingMargin" secondItem="AhB-9m-rb0" secondAttribute="trailing" constant="7" id="uZP-BG-HEp"/>
                     <constraint firstAttribute="trailingMargin" secondItem="aH1-O9-8kl" secondAttribute="trailing" constant="7" id="xRO-OY-a57"/>
-                    <constraint firstItem="hul-Xf-2Um" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="2" id="xfF-aU-FiZ"/>
                 </constraints>
-                <variation key="default">
-                    <mask key="constraints">
-                        <exclude reference="xfF-aU-FiZ"/>
-                    </mask>
-                </variation>
             </tableViewCellContentView>
             <connections>
                 <outlet property="alittleButton" destination="dDb-4T-L01" id="ayA-5e-NDl"/>
                 <outlet property="extremelyButton" destination="gov-aI-kHo" id="DlM-bl-qiz"/>
-                <outlet property="feedbackTableView" destination="hul-Xf-2Um" id="5Vl-lT-R7S"/>
                 <outlet property="itemSelctorBtnImage" destination="RmV-Dp-cSJ" id="ybG-LG-My9"/>
                 <outlet property="itemSelectorBtn" destination="o6c-Sq-E2j" id="Md0-Of-FBO"/>
                 <outlet property="moderatelyButton" destination="2Qf-5r-Qfe" id="and-Wg-NrI"/>
@@ -444,7 +424,7 @@
                 <outlet property="skillNameLabel" destination="onE-ho-6vg" id="ySQ-xp-a4y"/>
                 <outlet property="veryMuchButton" destination="yF7-fE-oKA" id="AIW-Rg-Qtc"/>
             </connections>
-            <point key="canvasLocation" x="160" y="293.5"/>
+            <point key="canvasLocation" x="160" y="233"/>
         </tableViewCell>
     </objects>
 </document>

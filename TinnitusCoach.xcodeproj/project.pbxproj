@@ -369,6 +369,10 @@
 		15A5E4C81ACB118F00639FA4 /* deep_breathing.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 4A4A3B491AC73A5800F2AEF6 /* deep_breathing.mp4 */; };
 		2864766B1B9F68820069ECFB /* FeedbackDeviceTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 286476691B9F68820069ECFB /* FeedbackDeviceTableViewCell.m */; };
 		2864766C1B9F68820069ECFB /* FeedbackDeviceTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2864766A1B9F68820069ECFB /* FeedbackDeviceTableViewCell.xib */; };
+		286476781BA451A90069ECFB /* SkillFeedbackCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 286476761BA451A90069ECFB /* SkillFeedbackCell.m */; };
+		286476791BA451A90069ECFB /* SkillFeedbackCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 286476771BA451A90069ECFB /* SkillFeedbackCell.xib */; };
+		2864767E1BA479B30069ECFB /* UsingSoundFeedbackCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2864767D1BA479B30069ECFB /* UsingSoundFeedbackCell.xib */; };
+		286476811BA479F40069ECFB /* UsingSoundFeedbackCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 286476801BA479F40069ECFB /* UsingSoundFeedbackCell.m */; };
 		39953FC81B7A5D66004F4990 /* ThoughtErrorCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 39953FC61B7A5D66004F4990 /* ThoughtErrorCell.m */; };
 		39953FC91B7A5D66004F4990 /* ThoughtErrorCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 39953FC71B7A5D66004F4990 /* ThoughtErrorCell.xib */; };
 		4A4A3AC31ABEE9CD00F2AEF6 /* circlingSleep.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A4A3ABF1ABEE9CD00F2AEF6 /* circlingSleep.png */; };
@@ -966,6 +970,12 @@
 		286476681B9F68820069ECFB /* FeedbackDeviceTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FeedbackDeviceTableViewCell.h; path = "Device Cells/FeedbackDeviceTableViewCell.h"; sourceTree = "<group>"; };
 		286476691B9F68820069ECFB /* FeedbackDeviceTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FeedbackDeviceTableViewCell.m; path = "Device Cells/FeedbackDeviceTableViewCell.m"; sourceTree = "<group>"; };
 		2864766A1B9F68820069ECFB /* FeedbackDeviceTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = FeedbackDeviceTableViewCell.xib; path = "Device Cells/FeedbackDeviceTableViewCell.xib"; sourceTree = "<group>"; };
+		286476751BA451A90069ECFB /* SkillFeedbackCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SkillFeedbackCell.h; sourceTree = "<group>"; };
+		286476761BA451A90069ECFB /* SkillFeedbackCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SkillFeedbackCell.m; sourceTree = "<group>"; };
+		286476771BA451A90069ECFB /* SkillFeedbackCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SkillFeedbackCell.xib; sourceTree = "<group>"; };
+		2864767D1BA479B30069ECFB /* UsingSoundFeedbackCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UsingSoundFeedbackCell.xib; sourceTree = "<group>"; };
+		2864767F1BA479F40069ECFB /* UsingSoundFeedbackCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UsingSoundFeedbackCell.h; sourceTree = "<group>"; };
+		286476801BA479F40069ECFB /* UsingSoundFeedbackCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UsingSoundFeedbackCell.m; sourceTree = "<group>"; };
 		39953FC51B7A5D66004F4990 /* ThoughtErrorCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThoughtErrorCell.h; sourceTree = "<group>"; };
 		39953FC61B7A5D66004F4990 /* ThoughtErrorCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThoughtErrorCell.m; sourceTree = "<group>"; };
 		39953FC71B7A5D66004F4990 /* ThoughtErrorCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ThoughtErrorCell.xib; sourceTree = "<group>"; };
@@ -1293,9 +1303,15 @@
 		043F8E931B2E391F00595D38 /* Custome Cells */ = {
 			isa = PBXGroup;
 			children = (
+				2864767D1BA479B30069ECFB /* UsingSoundFeedbackCell.xib */,
+				286476751BA451A90069ECFB /* SkillFeedbackCell.h */,
+				286476761BA451A90069ECFB /* SkillFeedbackCell.m */,
+				286476771BA451A90069ECFB /* SkillFeedbackCell.xib */,
 				043F8E941B2E391F00595D38 /* FeedbackTableViewCell.h */,
 				043F8E951B2E391F00595D38 /* FeedbackTableViewCell.m */,
 				043F8E961B2E391F00595D38 /* FeedbackTableViewCell.xib */,
+				2864767F1BA479F40069ECFB /* UsingSoundFeedbackCell.h */,
+				286476801BA479F40069ECFB /* UsingSoundFeedbackCell.m */,
 			);
 			path = "Custome Cells";
 			sourceTree = "<group>";
@@ -2950,6 +2966,7 @@
 				0432627A1AE5051A00C4C47A /* EarLeftGray.png in Resources */,
 				043F8E9D1B2E8C7300595D38 /* TipsReminder.xib in Resources */,
 				049C74151B249F8B00AE984E /* Active_Back-Arrow.png in Resources */,
+				286476791BA451A90069ECFB /* SkillFeedbackCell.xib in Resources */,
 				04DF9A8F1B3C61B600989E2B /* thoughterror6.html in Resources */,
 				4A4A3ACF1ABEEE7E00F2AEF6 /* lightbulb.png in Resources */,
 				0438955C1B261F14005B74B1 /* SamplerCustomCell.xib in Resources */,
@@ -3064,6 +3081,7 @@
 				049C74131B249F8B00AE984E /* Active_Next-Arrow.png in Resources */,
 				04372E1D1AED386B00B30BC7 /* 5MindfulBreathing.mp3 in Resources */,
 				0467DDCF1AEAB8A10021784B /* home_sampler.png in Resources */,
+				2864767E1BA479B30069ECFB /* UsingSoundFeedbackCell.xib in Resources */,
 				1550E5D71AC9537800E36C90 /* u630.png in Resources */,
 				043DA2381B1A88CD009A0480 /* af.selectBox.js in Resources */,
 				043C2DAB1AE542F20040BF2D /* homesamplericon.png in Resources */,
@@ -3210,6 +3228,7 @@
 				15156B2F1ABEFC52009F4489 /* RatingsViewController.m in Sources */,
 				048EF9031AEA64CA001D70C6 /* ThoughtsIntroDetailViewController.m in Sources */,
 				CDF03B531B9772D400FF962F /* MyOwnSoundCell.m in Sources */,
+				286476811BA479F40069ECFB /* UsingSoundFeedbackCell.m in Sources */,
 				04AB4BC01B16ABF200446EC4 /* CTF03.m in Sources */,
 				1550E5E11AC9ACE200E36C90 /* WebsitesandAppsWithCommentsCell.m in Sources */,
 				048EF8E61AEA6497001D70C6 /* TipsSkillDetailViewController.m in Sources */,
@@ -3241,6 +3260,7 @@
 				04E044EB1B1868E300F4DBD1 /* CTF05.m in Sources */,
 				CD9113F61B9BE70A00F924B9 /* ChangingThoughtsViewController+Table.m in Sources */,
 				042DDC891AEC13A50023910B /* SamplerVideoViewController.m in Sources */,
+				286476781BA451A90069ECFB /* SkillFeedbackCell.m in Sources */,
 				CD39CDC21B8DBC6000E61F51 /* IntroPageInfo.m in Sources */,
 				CDFFBFBD1B8F68F600BD2445 /* PleasantActivityViewController+Table.m in Sources */,
 				048EF8E71AEA6497001D70C6 /* ThoughtsSkillDetailViewController.m in Sources */,

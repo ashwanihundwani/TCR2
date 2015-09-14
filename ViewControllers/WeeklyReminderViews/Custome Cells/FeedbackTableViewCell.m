@@ -41,7 +41,6 @@
     self.selectedButton.backgroundColor = [UIColor whiteColor];
     [[self.selectedButton viewWithTag:DOT_VIEW_TAG] removeFromSuperview];
     self.selectedButton = nil;
- 
 
 }
 
@@ -72,6 +71,11 @@
     NSLog(@"Feedback btn pressed having tag: %ld", ((UIButton*)sender).tag);
     [self.delegate itemClickedForRating:((UIButton*)sender).tag inCell:self];
     
+}
+
+-(IBAction)itemSelected:(id)sender{
+    
+    [self.delegate groupItemSelected:self];
 }
 
 #pragma mark - UITableViewDelegate
@@ -122,6 +126,10 @@
     [self.delegate deviceItemClickedForRating:rating :indexPath inCell:self];
 }
 
+-(void)onToggleSelectionInCell:(id)cell{
+    NSIndexPath* indexPath = [self.feedbackTableView indexPathForCell:cell];
+    [self.delegate deviceItemSelected:indexPath inCell:self];
+}
 
 
 

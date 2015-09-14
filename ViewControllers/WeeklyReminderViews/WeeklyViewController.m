@@ -123,7 +123,8 @@
     feedbackArray = [NSMutableArray new];
     currentPlanIndex = 0;
     self.previousBtn.hidden = YES;
-    [self.tableview registerNib:[UINib nibWithNibName:@"FeedbackTableViewCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"FeedbackCellIdentifier"];
+    [self.tableview registerNib:[UINib nibWithNibName:@"SkillFeedbackCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"SkillFeedbackCell"];
+    [self.tableview registerNib:[UINib nibWithNibName:@"UsingSoundFeedbackCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"UsingSoundFeedbackCell"];
     if(categorizedSkills != nil && categorizedSkills.count > 1){
         self.submitLabel.hidden = YES;
     }else{
@@ -285,164 +286,48 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath;
 {
-    /*
-     if (indexPath.row == 0) {
-     
-     
-     static NSString *feedbackCellIdentifier = @"FeedbackCellIdentifier";
-     FeedbackTableViewCell *cell = (FeedbackTableViewCell *)[tableView dequeueReusableCellWithIdentifier:feedbackCellIdentifier];
-     if(cell == nil)
-     {
-     NSArray *nibs = [[NSBundle mainBundle] loadNibNamed:@"FeedbackTableViewCell" owner:nil options:nil];
-     cell = [nibs lastObject];
-     [cell.contentView setBackgroundColor:[UIColor lightGrayColor]];
-     cell.contentView.layer.cornerRadius = 5;
-     cell.contentView.layer.masksToBounds = YES;
-     
-     
-     }
-     
-     [cell.noatallButton setBackgroundImage:[UIImage imageNamed:@"circle"] forState:UIControlStateNormal];
-     [cell.alittleButton setBackgroundImage:[UIImage imageNamed:@"circle"] forState:UIControlStateNormal];
-     [cell.moderatelyButton setBackgroundImage:[UIImage imageNamed:@"circle"] forState:UIControlStateNormal];
-     [cell.veryMuchButton setBackgroundImage:[UIImage imageNamed:@"circle"] forState:UIControlStateNormal];
-     [cell.extremelyButton setBackgroundImage:[UIImage imageNamed:@"circle"] forState:UIControlStateNormal];
-     //        [cell.noatallButton setBackgroundImage:[UIImage imageNamed:@"selectedCircle1"] forState:UIControlStateSelected];
-     //        [cell.alittleButton setBackgroundImage:[UIImage imageNamed:@"selectedCircle1"] forState:UIControlStateSelected];
-     //        [cell.moderatelyButton setBackgroundImage:[UIImage imageNamed:@"selectedCircle1"] forState:UIControlStateSelected];
-     //        [cell.veryMuchButton setBackgroundImage:[UIImage imageNamed:@"selectedCircle1"] forState:UIControlStateSelected];
-     //        [cell.extremelyButton setBackgroundImage:[UIImage imageNamed:@"selectedCircle1"] forState:UIControlStateSelected];
-     
-     [cell.noatallButton setTag:indexPath.section];
-     [cell.alittleButton setTag:indexPath.section];
-     [cell.moderatelyButton setTag:indexPath.section];
-     [cell.veryMuchButton setTag:indexPath.section];
-     [cell.extremelyButton setTag:indexPath.section];
-     
-     [cell.noatallButton addTarget:self action:@selector(noatallButtonAction:) forControlEvents:UIControlEventTouchUpInside];
-     [cell.alittleButton addTarget:self action:@selector(alittleButtonButtonAction:) forControlEvents:UIControlEventTouchUpInside];
-     [cell.moderatelyButton addTarget:self action:@selector(moderatelyButtonAction:) forControlEvents:UIControlEventTouchUpInside];
-     [cell.veryMuchButton addTarget:self action:@selector(veryMuchButtonAction:) forControlEvents:UIControlEventTouchUpInside];
-     [cell.extremelyButton addTarget:self action:@selector(extremelyButtonAction:) forControlEvents:UIControlEventTouchUpInside];
-     
-     int sectionForSkill = indexPath.section - ((indexPath.section) / (maxNumberOfSkills + 1) + 1);
-     
-     //    NSDictionary *skilDict = [allSkillsArray objectAtIndex:sectionForSkill];
-     
-     
-     NSDictionary *skilDict = [allSkillsArray objectAtIndex:indexPath.section];
-     
-     
-     //  NSPredicate *predicate = [NSPredicate predicateWithFormat:@"self.skillID=%@",[skilDict valueForKey:@"skillID"]];
-     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF =%@",@"skillID"];
-     NSArray *filteredArray = [feedbackArray filteredArrayUsingPredicate:predicate];
-     NSLog(@"FILEERD %@",[skilDict valueForKey:@"skillID"]);
-     
-     if (filteredArray.count > 0) {
-     NSMutableArray *fDict = [filteredArray objectAtIndex:0];
-     
-     int rating = [[fDict valueForKey:@"rating"] intValue];
-     
-     NSLog(@"RATINGGG %d",rating);
-     
-     
-     switch (rating) {
-     case 1:
-     {
-     [cell.noatallButton setBackgroundImage:[UIImage imageNamed:@"selectedCircle"] forState:UIControlStateNormal];
-     break;
-     }
-     case 2:
-     {
-     [cell.alittleButton setBackgroundImage:[UIImage imageNamed:@"selectedCircle"] forState:UIControlStateNormal];
-     break;
-     }
-     case 3:
-     {
-     [cell.moderatelyButton setBackgroundImage:[UIImage imageNamed:@"selectedCircle"] forState:UIControlStateNormal];
-     break;
-     }
-     case 4:
-     {
-     
-     [cell.veryMuchButton setBackgroundImage:[UIImage imageNamed:@"selectedCircle"] forState:UIControlStateNormal];
-     break;
-     }
-     case 5:
-     {
-     [cell.extremelyButton setBackgroundImage:[UIImage imageNamed:@"selectedCircle"] forState:UIControlStateNormal];
-     break;
-     }
-     
-     default:
-     break;
-     }
-     }
-     
-     return cell;
-     
-     
-     }
-     else
-     {
-     static NSString *cellIdentifier = @"CellIdentifier";
-     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-     if(cell == nil)
-     {
-     cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
-     //    cell.contentView.backgroundColor = [UIColor lightGrayColor];
-     
-     
-     }
-     
-     
-     
-     if (indexPath.row == 1) {
-     cell.textLabel.text = @"This plan has these devices";
-     
-     }
-     else
-     {
-     int sectionForSkill = indexPath.section - ((indexPath.section) / (maxNumberOfSkills + 1) + 1);
-     
-     
-     NSArray *devicesArray = [[allSkillsArray objectAtIndex:sectionForSkill] valueForKey:@"devices"];
-     NSDictionary *deviceDict = [ devicesArray objectAtIndex:indexPath.row-2];
-     cell.textLabel.text = [deviceDict valueForKey:@"deviceName"];
-     cell.textLabel.font = [UIFont systemFontOfSize:13.0];
-     cell.contentView.backgroundColor = [UIColor grayColor];
-     
-     }
-     
-     return cell;
-     
-     }
-     
-     
-     
-     return nil;
-     
-     */
-    
-    static NSString *feedbackCellIdentifier = @"FeedbackCellIdentifier";
-    FeedbackTableViewCell *cell = (FeedbackTableViewCell *)[tableView dequeueReusableCellWithIdentifier:feedbackCellIdentifier];
-    if(cell == nil)
-    {
-        NSArray *nibs = [[NSBundle mainBundle] loadNibNamed:@"FeedbackTableViewCell" owner:nil options:nil];
-        cell = [nibs firstObject];
-        [cell.contentView setBackgroundColor:[UIColor greenColor]];
-        cell.contentView.layer.cornerRadius = 5;
-        //cell.contentView.layer.masksToBounds = YES;
-        
-        
-    }
-    // reinitialize this cell
-    [cell reInitialize];
+    UITableViewCell* cell = nil;
     // get the current item from array
     NSDictionary* skill = [[categorizedSkills objectAtIndex:currentPlanIndex] objectAtIndex:indexPath.row];
+    if ([[skill valueForKey:@"skillName"] isEqualToString:@"Using Sound"]) {
+        static NSString *feedbackCellIdentifier = @"UsingSoundFeedbackCell";
+        cell = [tableView dequeueReusableCellWithIdentifier:feedbackCellIdentifier];
+        if(cell == nil)
+        {
+            NSArray *nibs = [[NSBundle mainBundle] loadNibNamed:@"UsingSoundFeedbackCell" owner:nil options:nil];
+            cell = [nibs firstObject];
+            [cell.contentView setBackgroundColor:[UIColor greenColor]];
+            cell.contentView.layer.cornerRadius = 5;
+            //cell.contentView.layer.masksToBounds = YES;
+            
+            
+        }
+        [self initUsingSoundCell:(UsingSoundFeedbackCell*)cell ForSkill:skill atRow:indexPath.row];
+    }else{
+        static NSString *feedbackCellIdentifier = @"SkillFeedbackCell";
+        cell = [tableView dequeueReusableCellWithIdentifier:feedbackCellIdentifier];
+        if(cell == nil)
+        {
+            NSArray *nibs = [[NSBundle mainBundle] loadNibNamed:@"SkillFeedbackCell" owner:nil options:nil];
+            cell = [nibs firstObject];
+            [cell.contentView setBackgroundColor:[UIColor greenColor]];
+            cell.contentView.layer.cornerRadius = 5;
+            //cell.contentView.layer.masksToBounds = YES;
+        }
+        [self initSkillFeedbackCell:(SkillFeedbackCell*)cell ForSkill:skill atRow:indexPath.row];
+    }
+    
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    [cell setBackgroundColor:[UIColor brownColor]];
+    return cell;
+}
+
+-(void)initSkillFeedbackCell:(SkillFeedbackCell*)cell ForSkill:(NSDictionary*)skill atRow:(NSInteger)row{
+    // reinitialize this cell
+    [cell reInitialize];
     cell.skillNameLabel.text = [skill valueForKey:@"skillName"];
-//    UIFont* boldFont = [UIFont boldSystemFontOfSize:[UIFont systemFontSize]];
-//    cell.skillNameLabel.font = boldFont;
+    //    UIFont* boldFont = [UIFont boldSystemFontOfSize:[UIFont systemFontSize]];
+    //    cell.skillNameLabel.font = boldFont;
     // check if skill is added in current plan
     if([self isSkilladdedToPlan:skill]){
         //skill is added to plan
@@ -468,7 +353,7 @@
                 {
                     //[cell.alittleButton setBackgroundImage:[UIImage imageNamed:@"selectedCircle"] forState:UIControlStateNormal];
                     [cell fillbutton:cell.alittleButton];
-
+                    
                     break;
                 }
                 case 3:
@@ -493,24 +378,12 @@
                     break;
             }
             
-            //now check for devices also
-            NSArray *devicesArray = [skill valueForKey:@"devices"];
-            NSArray *websitesArray = [skill valueForKey:@"websitesAndApps"];
-            if(devicesArray.count > 0 || websitesArray.count > 0){
-                cell.feedbackTableView.hidden = NO;
-                cell.feedbackTableView.tag = indexPath.row;
-                cell.feedbackTableView.scrollEnabled = NO;
-                [cell.feedbackTableView reloadData];
-            }else{
-                cell.feedbackTableView.hidden = YES;
-            }
-            
         }else{
             // skill is not selected.
             [cell.itemSelctorBtnImage  setImage:[UIImage imageNamed:UN_SELECTED_IMAGE]];
             
         }
-        cell.itemSelectorBtn.tag = indexPath.row;
+        cell.itemSelectorBtn.tag = row;
         // add selector for itemselector
         [cell.itemSelectorBtn addTarget:self action:@selector(onClickToggleCategory:) forControlEvents:UIControlEventTouchUpInside];
         
@@ -518,14 +391,40 @@
         // skill not added
         // let it be unselcted
         // nothing to do.
-        
-        
     }
     
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    
-    return cell;
 }
+
+-(void)initUsingSoundCell:(UsingSoundFeedbackCell*)cell ForSkill:(NSDictionary*)skill atRow:(NSInteger)row{
+    // reinitialize this cell
+    [cell reInitialize];
+    cell.skillNameLabel.text = [skill valueForKey:@"skillName"];
+    if([self isSkilladdedToPlan:skill]){
+        //skill is added to plan
+        // let's enable the review process
+        cell.itemSelectorBtn.hidden = NO;
+        cell.itemSelctorBtnImage.hidden = NO;
+        // further check if this has been already selected
+        if([self isSkillAlreadySelected:skill]){
+            [cell.itemSelctorBtnImage  setImage:[UIImage imageNamed:SELECTED_IMAGE]];
+            cell.usingSoundTableView.hidden = NO;
+            cell.usingSoundTableView.scrollEnabled = NO;
+            cell.usingSoundTableView.tag = (100 + row);
+            [cell.usingSoundTableView reloadData];
+
+        }else{
+            // skill is not selected.
+            [cell.itemSelctorBtnImage  setImage:[UIImage imageNamed:UN_SELECTED_IMAGE]];
+        }
+        cell.itemSelectorBtn.tag = row;
+        // add selector for itemselector
+        [cell.itemSelectorBtn addTarget:self action:@selector(onClickToggleCategory:) forControlEvents:UIControlEventTouchUpInside];
+        cell.delegate = self;
+    }
+    
+        
+}
+
 
 -(BOOL)isSkilladdedToPlan:(NSDictionary*) skill{
     NSPredicate* predicateForSKill = [NSPredicate predicateWithFormat:@"self.skillID = %@ AND self.planID = %@",[skill valueForKey:@"skillID"],[[allMyPlanArray objectAtIndex:currentPlanIndex] valueForKey:@"ID"]];
@@ -561,126 +460,32 @@
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSDictionary* skill = [[categorizedSkills objectAtIndex:currentPlanIndex] objectAtIndex:indexPath.row];
-    if([selectedSkills containsObject:skill]){
-        NSInteger baseHeight = 180;
-        NSArray* deviceArray= (NSArray*)[skill objectForKey:@"devices"];
-        NSArray* websiteArray = (NSArray*)[skill objectForKey:@"websitesAndApps"];
-        for (NSDictionary* deviceDict in deviceArray) {
-            if([selectedDeviceArray containsObject:deviceDict]){
-                baseHeight += 190;
-            }else{
-                baseHeight += 60;
-            }
-        }
-        for (NSDictionary* deviceDict in websiteArray) {
-            if([selectedDeviceArray containsObject:deviceDict]){
-                baseHeight += 190;
-            }else{
-                baseHeight += 60;
-            }
-        }
-        if(deviceArray.count > 0){
-            baseHeight += 40;
-        }
-        if(websiteArray.count > 0){
-            baseHeight += 40;
+    if([[skill valueForKey:@"skillName"] isEqualToString:@"Using Sound"]){
+        if([selectedSkills containsObject:skill]){
+            NSInteger baseHeight = 560 + 55;
+            NSArray* deviceArray= (NSArray*)[skill objectForKey:@"devices"];
+            NSArray* websiteArray = (NSArray*)[skill objectForKey:@"websitesAndApps"];
+            baseHeight = baseHeight + 40*deviceArray.count;
+            baseHeight = baseHeight + 40*websiteArray.count;
+            baseHeight = deviceArray.count > 0 ? baseHeight + 50:baseHeight;
+            baseHeight = websiteArray.count > 0 ? baseHeight + 50:baseHeight;
+            NSLog(@"returning height as %ld for index:%ld", baseHeight, indexPath.row);
+            return baseHeight;
+        }else{
+            NSLog(@"returning height as 60 for index:%ld", indexPath.row);
+            return 60;
         }
 
-        NSLog(@"returning height as %ld for index:%ld", baseHeight, indexPath.row);
-        return baseHeight;
     }else{
-        NSLog(@"returning height as 60 for index:%ld", indexPath.row);
-        return 60;
+        if([selectedSkills containsObject:skill]){
+            return 190;
+        }else{
+            return 60;
+        }
     }
-    
 }
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
-{   /*
-     if (section%(maxNumberOfSkills+1) == 0) {
-     
-     UILabel *planTitle = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.tableview.frame.size.width, 44)];
-     [planTitle setBackgroundColor:[UIColor lightGrayColor]];
-     planTitle.numberOfLines = 1;
-     planTitle.textAlignment = NSTextAlignmentCenter;
-     planTitle.textColor = [UIColor whiteColor];
-     planTitle.font = [UIFont boldSystemFontOfSize:16];
-     NSDictionary *planDict = [ allMyPlanArray objectAtIndex:(section + 1)/(maxNumberOfSkills)];
-     
-     NSString *tStr = [@"Plan for " stringByAppendingFormat:@"%@", [planDict valueForKey:@"planName"]];
-     
-     planTitle.text = tStr;
-     
-     
-     
-     
-     
-     return planTitle;
-     }
-     
-     
-     
-     NSArray *nibs = [[NSBundle mainBundle] loadNibNamed:@"EditTipsCell" owner:nil options:nil];
-     EditTipsCell *cell = [nibs lastObject];
-     [cell.btnToggleCategory addTarget:self action:@selector(onClickToggleCategory:) forControlEvents:UIControlEventTouchUpInside];
-     [cell.btnToggleCategory setTag:section];
-     [cell.imgCategory setHidden:YES];
-     [cell.contentView setBackgroundColor:[UIColor whiteColor]];
-     
-     int sectionForSkill = section - ((section) / (maxNumberOfSkills + 1) + 1);
-     
-     //  NSDictionary *skillDict = [allSkillsArray objectAtIndex:section];
-     
-     
-     NSDictionary *skillDict = [allSkillsArray objectAtIndex:sectionForSkill];
-     cell.lblTitle.text = [skillDict valueForKey:@"skillName"];
-     
-     cell.lblTitle.font = [UIFont systemFontOfSize:16.0f];
-     if (![activeSkillsArray containsObject:skillDict]) {
-     //   [cell.btnToggleCategory setBackgroundImage:[UIImage imageNamed:UN_SELECTED_IMAGE] forState:UIControlStateNormal];
-     
-     
-     
-     
-     cell.btnToggleCategory.hidden=YES;
-     cell.lblTitle.alpha=.3;
-     //  [cell setAlpha:0.4];
-     //      cell.btnToggleCategory.alpha=0;
-     
-     }
-     else
-     {
-     //     [cell.btnToggleCategory setBackgroundImage:[UIImage imageNamed:SELECTED_IMAGE] forState:UIControlStateNormal];
-     cell.btnToggleCategory.hidden=NO;
-     cell.lblTitle.font = [UIFont boldSystemFontOfSize:16.0f];
-     // cell.btnToggleCategory.alpha=1;
-     
-     
-     if (![selectedSkills containsObject:skillDict]) {
-     
-     
-     [cell.btnToggleCategory setBackgroundImage:[UIImage imageNamed:UN_SELECTED_IMAGE] forState:UIControlStateNormal];}
-     else
-     {
-     [cell.btnToggleCategory setBackgroundImage:[UIImage imageNamed:SELECTED_IMAGE] forState:UIControlStateNormal];}
-     
-     
-     }
-     
-     
-     //  [cell setAlpha:1.0];
-     
-     
-     //[cell.btnToggleCategory setBackgroundImage:[UIImage imageNamed:SELECTED_IMAGE] forState:UIControlStateNormal];
-     
-     
-     
-     
-     return cell.contentView;
-     
-     
-     
-     
-     */
+{
     UILabel* label = [[UILabel alloc] initWithFrame:CGRectMake(2, 2, 320, 40)];
     label.backgroundColor = [Utils colorWithHexValue:@"EEEEEE"];
     if (allMyPlanArray != nil && allMyPlanArray.count > 0) {
@@ -714,7 +519,7 @@
     }
     
     [self.tableview reloadData];
-    
+    [self reloadAllInnerTableViews];
     
 }
 
@@ -1111,52 +916,102 @@
         timeFormatter.dateFormat = @"HH:mm:ss";
         NSString *timeString = [timeFormatter stringFromDate: date];
         NSString *type = @"Weekly Reminder";
-        
-        NSCharacterSet *doNotWant = [NSCharacterSet characterSetWithCharactersInString:@"/:,"];
-        //    s = [[s componentsSeparatedByCharactersInSet: doNotWant] componentsJoinedByString: @"|"];
-        
-        
-        
         NSString *str = @"Provided Rating";
-        NSString   *finalStr = [NSString stringWithFormat:@"\r%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@",dateString,timeString,type,str,nil,pName,sitName,sName,nil,nil,nil,nil,nil,nil,rating,@""];
-        
-        NSLog(@"%@",finalStr);
-        // now check for the devices and websites
-        NSMutableArray* combinedStringArray = [[NSMutableArray alloc] init];
-        [combinedStringArray addObject:finalStr];
-        NSArray* deviceArray = [myskills objectForKey:@"devices"];
-        NSArray* websiteArray = [myskills objectForKey:@"websitesAndApps"];
-        for (NSDictionary* deviceDict in deviceArray) {
-            if([selectedDeviceArray containsObject:deviceDict]){
-                // log this device in file
-                NSString* deviceName = [[deviceDict valueForKey:@"deviceName"] stringByReplacingOccurrencesOfString:@"," withString:@"|"];
-                NSString   *finalDeviceStr = [NSString stringWithFormat:@"\r%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@",dateString,timeString,type,str,nil,pName,sitName,sName,@"Devices",deviceName,nil,nil,nil,nil,[deviceDict valueForKey:@"rating"],@""];
-                [combinedStringArray addObject:finalDeviceStr];
-            }
-        }
-        for (NSDictionary* deviceDict in websiteArray) {
-            if([selectedDeviceArray containsObject:deviceDict]){
-                // log this device in file
-                NSString* websiteName = [[deviceDict valueForKey:@"waName"] stringByReplacingOccurrencesOfString:@"," withString:@"|"];
-                NSString   *finalDeviceStr = [NSString stringWithFormat:@"\r%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@",dateString,timeString,type,str,nil,pName,sitName,sName,@"Websites & Apps",websiteName,nil,nil,nil,nil,[deviceDict valueForKey:@"rating"],@""];
-                [combinedStringArray addObject:finalDeviceStr];
-            }
-        }
         NSFileManager *fileManager = [NSFileManager defaultManager];
-        for (NSString* str in combinedStringArray) {
+        
+        if(![sName isEqualToString:@"Using Sound"]){
+           NSString   *finalStr = [NSString stringWithFormat:@"\r%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@",dateString,timeString,type,str,nil,pName,sitName,sName,nil,nil,nil,nil,nil,nil,rating,@""];
+            NSLog(@"%@",finalStr);
+            
             if(![fileManager fileExistsAtPath:documentTXTPath])
             {
-                [str writeToFile:documentTXTPath atomically:YES];
+                [finalStr writeToFile:documentTXTPath atomically:YES];
             }
             else
             {
                 NSFileHandle *myHandle = [NSFileHandle fileHandleForWritingAtPath:documentTXTPath];
                 [myHandle seekToEndOfFile];
-                [myHandle writeData:[str dataUsingEncoding:NSUTF8StringEncoding]];
+                [myHandle writeData:[finalStr dataUsingEncoding:NSUTF8StringEncoding]];
                 
             }
 
+        }else{
+            // using sound skill
+            BOOL isSoundLoggable = NO;
+            BOOL isDeviceLoggable = NO;
+            BOOL isWebLoggable = NO;
+            //get the sound rating
+            NSString* soundRating = nil;
+            if([[myskills valueForKey:@"group0"] isEqualToString:@"YES"]){
+                soundRating = [myskills valueForKey:@"group0rating"];
+                isSoundLoggable = YES;
+            }
+            // get devices rating
+            NSString* deviceRating = nil;
+            if([[myskills valueForKey:@"group1"] isEqualToString:@"YES"]){
+                deviceRating = [myskills valueForKey:@"group1rating"];
+                isDeviceLoggable = YES;
+            }
+            // get websites and apps rating
+            NSString* webRating = nil;
+            if([[myskills valueForKey:@"group2"] isEqualToString:@"YES"]){
+                webRating = [myskills valueForKey:@"group2rating"];
+                isWebLoggable = YES;
+            }
+            // now check for the devices and websites
+            NSMutableString* selectedDeviceNames = [[NSMutableString alloc] init];
+            NSMutableString* selectedWebNames = [[NSMutableString alloc] init];
+
+            NSArray* deviceArray = [myskills objectForKey:@"devices"];
+            for (NSDictionary* deviceDict in deviceArray) {
+                if([[deviceDict valueForKey:@"selected"] isEqualToString:@"YES"]){
+                    [selectedDeviceNames appendString:@"("];
+                    [selectedDeviceNames appendString:[deviceDict valueForKey:@"deviceName"]];
+                    [selectedDeviceNames appendString:@") "];
+                }
+            }
+            
+            NSArray* websiteArray = [myskills objectForKey:@"websitesAndApps"];
+            for (NSDictionary* webDict in websiteArray) {
+                if([[webDict valueForKey:@"selected"] isEqualToString:@"YES"]){
+                    [selectedWebNames appendString:@"("];
+                    [selectedWebNames appendString:[webDict valueForKey:@"waName"]];
+                    [selectedWebNames appendString:@") "];
+                }
+            }
+            NSMutableArray* combinedStringArray = [[NSMutableArray alloc] init];
+            // create sound log string
+            NSString* soundLogString = [NSString stringWithFormat:@"\r%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@",dateString,timeString,type,str,nil,pName,sitName,sName,@"Tinnitus Coach Sounds and My Own Sounds",nil,nil,nil,nil,nil,soundRating,@""];
+            if(isSoundLoggable)
+                [combinedStringArray addObject:soundLogString];
+            //create device log string
+            NSString* deviceLogString = [NSString stringWithFormat:@"\r%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@",dateString,timeString,type,str,nil,pName,sitName,sName,@"Devices",selectedDeviceNames,nil,nil,nil,nil,deviceRating,@""];
+            if(isDeviceLoggable)
+                [combinedStringArray addObject:deviceLogString];
+            //create website log string
+            NSString* webLogString = [NSString stringWithFormat:@"\r%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@",dateString,timeString,type,str,nil,pName,sitName,sName,@"Websites & Apps",selectedWebNames,nil,nil,nil,nil,webRating,@""];
+            if(isWebLoggable)
+                [combinedStringArray addObject:webLogString];
+            
+            for (NSString* str in combinedStringArray) {
+                if(![fileManager fileExistsAtPath:documentTXTPath])
+                {
+                    [str writeToFile:documentTXTPath atomically:YES];
+                }
+                else
+                {
+                    NSFileHandle *myHandle = [NSFileHandle fileHandleForWritingAtPath:documentTXTPath];
+                    [myHandle seekToEndOfFile];
+                    [myHandle writeData:[str dataUsingEncoding:NSUTF8StringEncoding]];
+                    
+                }
+                
+            }
+
+            
         }
+        
+        
         
 
     }
@@ -1245,6 +1100,7 @@
         if(currentPlanIndex == 0)
             self.previousBtn.hidden = YES;
         [self.tableview reloadData];
+        [self reloadAllInnerTableViews];
     }
     
     
@@ -1263,121 +1119,100 @@
             self.submitLabel.hidden = YES;
         }
         [self.tableview reloadData];
+        [self reloadAllInnerTableViews];
     }
+}
+
+-(void)reloadAllInnerTableViews{
+    for (int section = 0; section < [self.tableview numberOfSections]; section++) {
+        for (int row = 0; row < [self.tableview numberOfRowsInSection:section]; row++) {
+            NSIndexPath* cellPath = [NSIndexPath indexPathForRow:row inSection:section];
+            UITableViewCell* cell = [self.tableview cellForRowAtIndexPath:cellPath];
+            if([cell isKindOfClass:[UsingSoundFeedbackCell class]]){
+                [((UsingSoundFeedbackCell*)cell).usingSoundTableView reloadData];
+            }
+        }
+    }
+
 }
 
 
 #pragma mark -
 
-- (CGFloat)feeedbackTableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+- (CGFloat)feeedbackTableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath inUsingSound:(id)cell{
     
-    NSDictionary* skillDict = [[categorizedSkills objectAtIndex:currentPlanIndex] objectAtIndex:tableView.tag];
-    NSArray* deviceArray = [skillDict objectForKey:@"devices"];
-    NSArray* websiteArray = [skillDict objectForKey:@"websitesAndApps"];
-    NSInteger section = indexPath.section;
-    if(deviceArray.count > 0){
-        if(section == 0){
-            if([selectedDeviceArray containsObject:[deviceArray objectAtIndex:indexPath.row]]){
-                return 190;
-            }else{
-                return 45;
-            }
-        }else{
-            if([selectedDeviceArray containsObject:[websiteArray objectAtIndex:indexPath.row]]){
-                return 190;
-            }else{
-                return 45;
-            }
-        }
-    }else{
-        if([selectedDeviceArray containsObject:[websiteArray objectAtIndex:indexPath.row]]){
-            return 190;
-        }else{
-            return 45;
-        }
-    }
-    
+    return 40;
 }
     
 
 
-- (UIView *)feeedbackTableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
-    UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 30)];
+- (UIView *)feeedbackTableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section inUsingSound:(id)cell{
+
+        UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 30)];
     
     view.backgroundColor = [UIColor whiteColor];
     
     UILabel* label = [[UILabel alloc] initWithFrame:CGRectMake(15, 2, 290, 30)];
     label.backgroundColor = [UIColor whiteColor];
-    label.font = [UIFont systemFontOfSize:18];
-    
+    label.font = [UIFont systemFontOfSize:15];
+    label.numberOfLines = 2;
     label.textColor = [Utils colorWithHexValue:BUTTON_BLUE_COLOR_HEX_VALUE];
     
-    NSDictionary* skillDict = [[categorizedSkills objectAtIndex:currentPlanIndex] objectAtIndex:tableView.tag];
-    NSInteger deviceCount = [(NSArray*)[skillDict objectForKey:@"devices"] count];
-    //NSInteger websitesCount = [(NSArray*)[skillDict objectForKey:@"websitesAndApps"] count];
-    if(deviceCount > 0){
-        if(section == 0){
-            label.text = @"This plan has these devices";
+        if(tableView.tag == 1001){
+            label.text = @"Which devices did you use?";
             
-        }else{
-            label.text = @"This plan has these websites";
+        }else if(tableView.tag == 1002){
+            label.text = @"Which websites & apps did you use?";
         }
-    }else{
-        label.text = @"This plan has these websites";
-    }
-    
+
     [view addSubview:label];
     
     return view;
+ 
 }
 
--(NSString *)feedbackTableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
-    if(section == 0){
-        return @"This plan has these devices";
+-(NSString *)feedbackTableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section inUsingSound:(id)cell{
+    if(tableView.tag == 1001){
+        return @"Which devices did you use?";
+    }else if(tableView.tag ==2){
+        return @"Which websites & apps did you use?";
     }else{
-        return @"This plan has these websites";
+        return @"Hello there";
     }
+  
+}
+
+- (void)feeedbackTableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath inUsingSound:(id)cell{
     
 }
 
-- (void)feeedbackTableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    
-}
 
-
-- (NSInteger)feeedbackTableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+- (NSInteger)feeedbackTableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section inUsingSound:(id)cell{
+    NSInteger index = tableView.tag;
+    NSLog(@"feedback cell index: %ld", tableView.tag);
+    NSIndexPath* cellIndexPath = [self.tableview indexPathForCell:cell];
     //get the current skill
-    NSDictionary* skillDict = [[categorizedSkills objectAtIndex:currentPlanIndex] objectAtIndex:tableView.tag];
+    NSDictionary* skillDict = [[categorizedSkills objectAtIndex:currentPlanIndex] objectAtIndex:cellIndexPath.row];
     NSArray* deviceArray = [skillDict objectForKey:@"devices"];
     NSArray* websiteArray = [skillDict objectForKey:@"websitesAndApps"];
-    if(deviceArray.count > 0){
-        if(section == 0){
+        if(tableView.tag == 1001){
             return deviceArray.count;
-        }else if(section == 1){
+        }else if(tableView.tag == 1002){
             return websiteArray.count;
         }else{
             return 0;
         }
-    }else{
-        return  websiteArray.count;
-    }
-    
+
+
 }
 
 
 
-- (NSInteger)numberOfSectionsInFeeedbackTableView:(UITableView *)tableView{
-    //get the current skill
-    int sectionCount = 0;
-    NSDictionary* skillDict = [[categorizedSkills objectAtIndex:currentPlanIndex] objectAtIndex:tableView.tag];
-    NSArray* deviceArray = [skillDict objectForKey:@"devices"];
-    NSArray* websitesArray = [skillDict objectForKey:@"websitesAndApps"];
-    sectionCount = deviceArray.count > 0 ? sectionCount+1 : sectionCount;
-    sectionCount = websitesArray.count > 0 ? sectionCount +1 : sectionCount;
-    return sectionCount;
+- (NSInteger)numberOfSectionsInFeeedbackTableView:(UITableView *)tableView inUsingSound:(id)cell{
+    return 1;
 }
 
-- (UITableViewCell *)feeedbackTableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+- (UITableViewCell *)feeedbackTableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath inUsingSound:(id)usingSoundCell{
     
     static NSString *feedbackCellIdentifier = @"FeedbackDeviceCellIdentifier";
     FeedbackDeviceTableViewCell *cell = (FeedbackDeviceTableViewCell *)[tableView dequeueReusableCellWithIdentifier:feedbackCellIdentifier];
@@ -1393,72 +1228,30 @@
     }
     // reinitialize this cell
     [cell reInitialize];
-    NSInteger section = indexPath.section;
-    NSInteger row = indexPath.row;
-    // get the current item from array
-    NSDictionary* skillDict = [[categorizedSkills objectAtIndex:currentPlanIndex] objectAtIndex:tableView.tag];
+    NSIndexPath* cellIndexPath = [self.tableview indexPathForCell:usingSoundCell];
+    //get the current skill
+    NSDictionary* skillDict = [[categorizedSkills objectAtIndex:currentPlanIndex] objectAtIndex:cellIndexPath.row];
     NSArray* deviceArray = [skillDict objectForKey:@"devices"];
     NSArray* websiteArray = [skillDict objectForKey:@"websitesAndApps"];
     NSDictionary* deviceDict = nil;
-    if(deviceArray.count > 0){
-        if(section == 0){
+        if(tableView.tag == 1001){
             deviceDict = [deviceArray objectAtIndex:indexPath.row];
             cell.skillNameLabel.text = [deviceDict valueForKey:@"deviceName"];
         }else{
             deviceDict = [websiteArray objectAtIndex:indexPath.row];
             cell.skillNameLabel.text = [deviceDict valueForKey:@"waName"];
         }
-    }else{
-        deviceDict = [websiteArray objectAtIndex:indexPath.row];
-        cell.skillNameLabel.text = [deviceDict valueForKey:@"waName"];
-    }
     
     cell.itemSelectorBtn.hidden = NO;
     cell.itemSelctorBtnImage.hidden = NO;
     // further check if this has been already selected
-    if([selectedDeviceArray containsObject:deviceDict]){
+    if([[deviceDict valueForKey:@"selected"] isEqualToString:@"YES"]){
         [cell.itemSelctorBtnImage  setImage:[UIImage imageNamed:SELECTED_IMAGE]];
         //show the expanded view
-        cell.secondaryView.hidden = NO;
-        cell.secondaryView.userInteractionEnabled = YES;
+        cell.secondaryView.hidden = YES;
+        cell.secondaryView.userInteractionEnabled = NO;
         // lets show the correct color of the selcted indiccator
         //cell.feedbackTableView.hidden =YES;
-        switch ([[deviceDict valueForKey:@"rating"] intValue]) {
-            case 1:
-            {
-                [cell fillbutton:cell.noatallButton];
-                //[cell.noatallButton setBackgroundImage:[UIImage imageNamed:@"selectedCircle"] forState:UIControlStateNormal];
-                break;
-            }
-            case 2:
-            {
-                [cell fillbutton:cell.alittleButton];
-                //[cell.alittleButton setBackgroundImage:[UIImage imageNamed:@"selectedCircle"] forState:UIControlStateNormal];
-                break;
-            }
-            case 3:
-            {
-                [cell fillbutton:cell.moderatelyButton];
-                //[cell.moderatelyButton setBackgroundImage:[UIImage imageNamed:@"selectedCircle"] forState:UIControlStateNormal];
-                break;
-            }
-            case 4:
-            {
-                [cell fillbutton:cell.veryMuchButton];
-                //[cell.veryMuchButton setBackgroundImage:[UIImage imageNamed:@"selectedCircle"] forState:UIControlStateNormal];
-                break;
-            }
-            case 5:
-            {
-                [cell fillbutton:cell.extremelyButton];
-                //[cell.extremelyButton setBackgroundImage:[UIImage imageNamed:@"selectedCircle"] forState:UIControlStateNormal];
-                break;
-            }
-            default:
-                break;
-        }
-        
-        
     }else{
         // skill is not selected.
         [cell.itemSelctorBtnImage  setImage:[UIImage imageNamed:UN_SELECTED_IMAGE]];
@@ -1466,74 +1259,83 @@
     }
     cell.itemSelectorBtn.tag = indexPath.row;
     // add selector for itemselector
-    [cell.itemSelectorBtn addTarget:self action:@selector(onClickToggleDeviceCategory:) forControlEvents:UIControlEventTouchUpInside];
-    
-    
+   // [cell.itemSelectorBtn addTarget:self action:@selector(onClickToggleDeviceCategory:) forControlEvents:UIControlEventTouchUpInside];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    
+    [cell setBackgroundColor:[UIColor redColor]];
     return cell;
 }
 
--(void)itemClickedForRating:(NSInteger)ratingIndex inCell:(id)cell{
-    NSIndexPath* indexPath = [self.tableview indexPathForCell:(UITableViewCell *)cell];
+-(void)itemClickedForRating:(NSInteger)ratingIndex inCell:(id)cell inUsingSound:(id)usCell{
+    NSIndexPath* indexPath = [self.tableview indexPathForCell:usCell];
+    NSIndexPath* groupIndexPath = [((UsingSoundFeedbackCell*)usCell).usingSoundTableView indexPathForCell:cell];
+    //get the skill
+    //get the skill item
+    NSMutableDictionary *skillDict = [[categorizedSkills objectAtIndex:currentPlanIndex] objectAtIndex:indexPath.row];
+    // select group if not already
+    NSString* key = [NSString stringWithFormat:@"group%ld",groupIndexPath.row];
+    [skillDict setValue:@"YES" forKey:key];
+    key = [NSString stringWithFormat:@"group%ldrating",groupIndexPath.row];
     switch (ratingIndex) {
         case 101:
-            [self noatallButtonAction:indexPath.row];
+            [skillDict setValue:@"1" forKey:key];
             break;
         case 102:
-            [self alittleButtonButtonAction:indexPath.row];
+            [skillDict setValue:@"2" forKey:key];
             break;
         case 103:
-            [self moderatelyButtonAction:indexPath.row];
+            [skillDict setValue:@"3" forKey:key];
             break;
         case 104:
-            [self veryMuchButtonAction:indexPath.row];
+            [skillDict setValue:@"4" forKey:key];
             break;
         case 105:
-            [self extremelyButtonAction:indexPath.row];
+            [skillDict setValue:@"5" forKey:key];
             break;
         default:
             break;
     }
     
+    [self.tableview reloadData];
     
 }
 
--(void)deviceItemClickedForRating:(NSInteger)rating :(NSIndexPath *)deviceIndexPath inCell:(id)cell{
+-(void)deviceItemClickedForRating:(NSInteger)rating :(NSIndexPath *)deviceIndexPath inCell:(id)cell inUsingSound:(id)usCell{
     // get the main cell indexpath
-    NSIndexPath* indexPath = [self.tableview indexPathForCell:cell];
+    NSIndexPath* indexPath = [self.tableview indexPathForCell:usCell];
     //get the skill item
     NSMutableDictionary *skillDict = [[categorizedSkills objectAtIndex:currentPlanIndex] objectAtIndex:indexPath.row];
-    NSArray* deviceArray = [skillDict objectForKey:@"devices"];
-    NSArray* websiteArray = [skillDict objectForKey:@"websitesAndApps"];
-    if(![feedbackDeviceArray containsObject:skillDict]){
-        [feedbackDeviceArray addObject:skillDict];
+    if(![selectedSkills containsObject:skillDict]){
+        [selectedSkills addObject:skillDict];
+    }
+
+    NSIndexPath* groupIndexPath = [((UsingSoundFeedbackCell*)usCell).usingSoundTableView indexPathForCell:cell];
+    // select the group
+    NSString* key = [NSString stringWithFormat:@"group%ld",groupIndexPath.row];
+    [skillDict setValue:@"YES" forKey:key];
+    NSArray* deviceArray = nil;
+    switch (groupIndexPath.row) {
+        case 1:
+            deviceArray = [skillDict objectForKey:@"devices"];
+            break;
+        case 2:
+            deviceArray = [skillDict objectForKey:@"websitesAndApps"];
+            break;
+        default:
+            break;
     }
     if(deviceArray.count > 0){
-        if(deviceIndexPath.section == 0){
-            // device item rated
-            NSMutableDictionary* deviceDict =[deviceArray objectAtIndex:deviceIndexPath.row];
-            if(![feedbackDeviceArray containsObject:deviceDict]){
-                [feedbackDeviceArray addObject:deviceDict];
-            }
-            [deviceDict setObject:[NSString stringWithFormat:@"%ld",(rating - 100)] forKey:@"rating"];
-        }else{
-            // website item rated
-            NSMutableDictionary* deviceDict =[websiteArray objectAtIndex:deviceIndexPath.row];
-            if(![feedbackDeviceArray containsObject:deviceDict]){
-                [feedbackDeviceArray addObject:deviceDict];
-            }
-            [deviceDict setObject:[NSString stringWithFormat:@"%ld",(rating - 100)] forKey:@"rating"];
-        }
-    }else{
-        // website item rated
-        NSMutableDictionary* deviceDict =[websiteArray objectAtIndex:deviceIndexPath.row];
-        if(![feedbackDeviceArray containsObject:deviceDict]){
-            [feedbackDeviceArray addObject:deviceDict];
-        }
-        [deviceDict setObject:[NSString stringWithFormat:@"%ld",(rating - 100)] forKey:@"rating"];
         
+        NSMutableDictionary* deviceDict = [deviceArray objectAtIndex:deviceIndexPath.row];
+        if([[deviceDict valueForKey:@"selected"] isEqualToString:@"YES"]){
+            [deviceDict setValue:@"NO" forKey:@"selected"];
+ 
+        }else{
+            [deviceDict setValue:@"YES" forKey:@"selected"];
+
+        }
     }
+    [((FeedbackTableViewCell*)cell).feedbackTableView reloadData];
+    [self.tableview reloadData];
 }
 
 
@@ -1600,5 +1402,185 @@
     return FbCView;
 }
 
+
+#pragma mark - UsingSoundTableViewDelegate
+
+- (UITableViewCell *)usingSoundTableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath inUsingSound:(id)usCell{
+    
+    static NSString *feedbackCellIdentifier = @"FeedbackCellIdentifier";
+    FeedbackTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:feedbackCellIdentifier];
+    if(cell == nil)
+    {
+        NSArray *nibs = [[NSBundle mainBundle] loadNibNamed:@"FeedbackCellIdentifier" owner:nil options:nil];
+        cell = [nibs firstObject];
+        [cell.contentView setBackgroundColor:[UIColor greenColor]];
+        cell.contentView.layer.cornerRadius = 5;
+        //cell.contentView.layer.masksToBounds = YES;
+        
+        
+    }
+    [cell reInitialize];
+    cell.skillNameLabel.font = [UIFont systemFontOfSize:15];
+    cell.skillNameLabel.numberOfLines = 2;
+    cell.skillNameLabel.textColor = [Utils colorWithHexValue:BUTTON_BLUE_COLOR_HEX_VALUE];
+    
+    switch (indexPath.row) {
+        case 0:
+            cell.skillNameLabel.text = @"Tinnitus Coach Sounds & My Own Sounds";
+            break;
+        case 1:
+            cell.skillNameLabel.text = @"Devices";
+            break;
+        case 2:
+            cell.skillNameLabel.text = @"Websites & Apps";
+            break;
+        default:
+            cell.skillNameLabel.text = @"";
+            break;
+    }
+    cell.itemSelectorBtn.hidden = NO;
+    cell.itemSelctorBtnImage.hidden = NO;
+    //show the expanded view
+    cell.secondaryView.hidden = NO;
+    cell.secondaryView.userInteractionEnabled = YES;
+    NSInteger rowNumm = tableView.tag - 100;
+    NSIndexPath* cellIndexPath = [self.tableview indexPathForCell:usCell];
+    NSDictionary* skill = nil;
+    if(indexPath.row != 0 && rowNumm >= 0){
+        //now check for devices also
+        skill =[[categorizedSkills objectAtIndex:currentPlanIndex] objectAtIndex:cellIndexPath.row];
+        NSArray *devicesArray = [skill valueForKey:@"devices"];
+        NSArray *websitesArray = [skill valueForKey:@"websitesAndApps"];
+        if(devicesArray.count > 0 || websitesArray.count > 0){
+            cell.feedbackTableView.hidden = NO;
+            cell.feedbackTableView.tag = 1000 + indexPath.row;
+            cell.feedbackTableView.scrollEnabled = NO;
+            [cell.feedbackTableView reloadData];
+        }else{
+            cell.feedbackTableView.hidden = YES;
+        }
+    }else if(indexPath.row == 0){
+        skill = [[categorizedSkills objectAtIndex:currentPlanIndex] objectAtIndex:cellIndexPath.row];
+    }
+    NSString* key = [NSString stringWithFormat:@"group%ld",indexPath.row];
+    if ([[skill valueForKey:key] isEqualToString:@"YES"]) {
+        [cell.itemSelctorBtnImage  setImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@", SELECTED_IMAGE]]];
+    }else{
+        [cell.itemSelctorBtnImage  setImage:[UIImage imageNamed:UN_SELECTED_IMAGE]];
+    }
+    key = [NSString stringWithFormat:@"group%ldrating",indexPath.row];
+    switch ([[skill valueForKey:key] intValue]) {
+        case 1:
+        {
+            [cell fillbutton:cell.noatallButton];
+            break;
+        }
+        case 2:
+        {
+            //[cell.alittleButton setBackgroundImage:[UIImage imageNamed:@"selectedCircle"] forState:UIControlStateNormal];
+            [cell fillbutton:cell.alittleButton];
+            
+            break;
+        }
+        case 3:
+        {
+            [cell fillbutton:cell.moderatelyButton];
+            //[cell.moderatelyButton setBackgroundImage:[UIImage imageNamed:@"selectedCircle"] forState:UIControlStateNormal];
+            break;
+        }
+        case 4:
+        {
+            [cell fillbutton:cell.veryMuchButton];
+            //[cell.veryMuchButton setBackgroundImage:[UIImage imageNamed:@"selectedCircle"] forState:UIControlStateNormal];
+            break;
+        }
+        case 5:
+        {
+            [cell fillbutton:cell.extremelyButton];
+            //[cell.extremelyButton setBackgroundImage:[UIImage imageNamed:@"selectedCircle"] forState:UIControlStateNormal];
+            break;
+        }
+        default:
+            break;
+    }
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    return cell;
+    
+}
+
+-(void)groupItemSelected:(NSIndexPath*)groupIndexPath inCell:(id)usingSoundCell{
+    NSInteger rowNum = groupIndexPath.row;
+    NSIndexPath* cellIndexPath = [self.tableview indexPathForCell:usingSoundCell];
+    //get the skill
+    NSMutableDictionary* skill =[[categorizedSkills objectAtIndex:currentPlanIndex] objectAtIndex:cellIndexPath.row];
+    if(![selectedSkills containsObject:skill]){
+        [selectedSkills addObject:skill];
+    }
+    NSString* key = [NSString stringWithFormat:@"group%ld",rowNum];
+    if ([[skill valueForKey:key] isEqualToString:@"YES"]) {
+        [skill setValue:@"NO" forKey:key];
+    }else{
+        [skill setValue:@"YES" forKey:key];
+    }
+    
+    [self.tableview reloadData];
+    [self reloadAllInnerTableViews];
+}
+
+- (CGFloat)usingSoundTableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath inUsingSound:(id)cell{
+    // get the skill
+    NSIndexPath* cellIndexPath = [self.tableview indexPathForCell:cell];
+    NSDictionary* skill =[[categorizedSkills objectAtIndex:currentPlanIndex] objectAtIndex:cellIndexPath.row];
+    NSArray *devicesArray = [skill valueForKey:@"devices"];
+    NSArray *websitesArray = [skill valueForKey:@"websitesAndApps"];
+
+    CGFloat height = 0.0;
+    switch (indexPath.row) {
+        case 0:
+            height = 180;
+            break;
+        case 1:
+        {
+            height = 180 + (devicesArray.count*40);
+            height = devicesArray.count > 0 ? height + 50:height;
+        }
+            break;
+        case 2:
+        {
+            height = 180 + (websitesArray.count*40);
+            height = websitesArray.count > 0 ? height + 50:height;
+        }
+        default:
+            break;
+    }
+    
+    return height;
+}
+
+#pragma mark - SkillFeedbackCellDelegate
+
+-(void)ratingRecieved:(NSInteger)rating inCell:(id)cell{
+    NSIndexPath* indexPath = [self.tableview indexPathForCell:(UITableViewCell *)cell];
+    switch (rating) {
+        case 101:
+            [self noatallButtonAction:indexPath.row];
+            break;
+        case 102:
+            [self alittleButtonButtonAction:indexPath.row];
+            break;
+        case 103:
+            [self moderatelyButtonAction:indexPath.row];
+            break;
+        case 104:
+            [self veryMuchButtonAction:indexPath.row];
+            break;
+        case 105:
+            [self extremelyButtonAction:indexPath.row];
+            break;
+        default:
+            break;
+    }
+
+}
 
 @end

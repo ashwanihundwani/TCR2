@@ -24,6 +24,8 @@
 @optional
 -(void)itemClickedForRating:(NSInteger)ratingIndex inCell:(id)cell;
 -(void)deviceItemClickedForRating:(NSInteger)rating :(NSIndexPath*)deviceIndexPath inCell:(id)cell;
+-(void)deviceItemSelected:(NSIndexPath*)deviceIndexPath inCell:(id)feedbackCell;
+-(void)groupItemSelected:(id)feedbackCell;
 
 @end
 
@@ -41,7 +43,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *itemSelctorBtnImage;
 
 -(IBAction)feedbackBtnPressed:(id)sender;
-
+-(IBAction)itemSelected:(id)sender;
 
 @property (weak, nonatomic) id<FeedbackTableViewCellDelegae> delegate;
 
