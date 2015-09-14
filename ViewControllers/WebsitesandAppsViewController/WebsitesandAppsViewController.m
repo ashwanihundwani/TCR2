@@ -134,9 +134,15 @@
     
     [self.view addSubview:titleView];
     
+    UIImageView *backImg = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 15, 20)];
+    
+    backImg.image = [UIImage imageNamed:@"Active_Back-Arrow.png"];
+    
     UILabel *backLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 32, 60, 20)];
     
-    backLabel.text = @"Cancel";
+    [backLabel addSubview:backImg];
+    
+    backLabel.text = @"";
     
     pallete = [Utils getColorFontPair:eCFS_PALLETE_3];
     
