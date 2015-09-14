@@ -425,6 +425,7 @@
 		4AF9E8C71AB415E100C73A45 /* SamplerCustomCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AF9E8C51AB415E100C73A45 /* SamplerCustomCell.m */; };
 		4AF9E8CA1AB4346000C73A45 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4AF9E8C91AB4346000C73A45 /* libsqlite3.dylib */; };
 		4AF9E8CE1AB434DB00C73A45 /* DBManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AF9E8CD1AB434DB00C73A45 /* DBManager.m */; };
+		CD27E6F81BA7218D00355709 /* SkillReminderCell_Tips.xib in Resources */ = {isa = PBXBuildFile; fileRef = CD27E6F71BA7218D00355709 /* SkillReminderCell_Tips.xib */; };
 		CD39CDC21B8DBC6000E61F51 /* IntroPageInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = CD39CDBA1B8DBC6000E61F51 /* IntroPageInfo.m */; };
 		CD39CDC31B8DBC6000E61F51 /* IntroPageView.m in Sources */ = {isa = PBXBuildFile; fileRef = CD39CDBC1B8DBC6000E61F51 /* IntroPageView.m */; };
 		CD39CDC41B8DBC6000E61F51 /* IntroPageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CD39CDBD1B8DBC6000E61F51 /* IntroPageView.xib */; };
@@ -1047,6 +1048,7 @@
 		4AF9E8C91AB4346000C73A45 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		4AF9E8CC1AB434DB00C73A45 /* DBManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBManager.h; sourceTree = "<group>"; };
 		4AF9E8CD1AB434DB00C73A45 /* DBManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBManager.m; sourceTree = "<group>"; };
+		CD27E6F71BA7218D00355709 /* SkillReminderCell_Tips.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SkillReminderCell_Tips.xib; path = SkillDetailCells/SkillReminderCell_Tips.xib; sourceTree = "<group>"; };
 		CD39CDB91B8DBC6000E61F51 /* IntroPageInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IntroPageInfo.h; sourceTree = "<group>"; };
 		CD39CDBA1B8DBC6000E61F51 /* IntroPageInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IntroPageInfo.m; sourceTree = "<group>"; };
 		CD39CDBB1B8DBC6000E61F51 /* IntroPageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IntroPageView.h; sourceTree = "<group>"; };
@@ -2796,6 +2798,7 @@
 		CD39CDDA1B8E435E00E61F51 /* Skill Detail Cells */ = {
 			isa = PBXGroup;
 			children = (
+				CD27E6F71BA7218D00355709 /* SkillReminderCell_Tips.xib */,
 				CD39CDDB1B8E438C00E61F51 /* SkillIntroductionCell.h */,
 				CD39CDDC1B8E438C00E61F51 /* SkillIntroductionCell.m */,
 				CD39CDDD1B8E438C00E61F51 /* SkillIntroductionCell.xib */,
@@ -3032,6 +3035,7 @@
 				153A474D1AD6D70F0011B6A1 /* info.png in Resources */,
 				0467DDD01AEAB8A10021784B /* home_findsupport.png in Resources */,
 				CD7D80351B8F7FB700D77939 /* WebsiteSoundCell.xib in Resources */,
+				CD27E6F81BA7218D00355709 /* SkillReminderCell_Tips.xib in Resources */,
 				0432627C1AE5051A00C4C47A /* Mute.png in Resources */,
 				043F8E9A1B2E391F00595D38 /* FeedbackTableViewCell.xib in Resources */,
 				0436A2911B2AE65E002AAE63 /* ctf04.png in Resources */,
