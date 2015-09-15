@@ -37,7 +37,7 @@
 
 - (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController
 {
-    if (tabBarController.selectedIndex == 0) {
+/*    if (tabBarController.selectedIndex == 0) {
         
         
         NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
@@ -213,7 +213,7 @@
     }
 
     
-    
+*/
         
     }
     
