@@ -35,6 +35,23 @@
     // Dispose of any resources that can be recreated.
 }
 
+-(void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item{
+    if([item.title isEqualToString:@"Sampler"]){
+       [PersistenceStorage setInteger:1 andKey:@"TabBarButtonTapped"];
+    }else if([item.title isEqualToString:@"Plans"]){
+        [PersistenceStorage setInteger:2 andKey:@"TabBarButtonTapped"];
+    }else if([item.title isEqualToString:@"Learning Nook"] || [item.title isEqualToString:@"Learn"] ){
+        [PersistenceStorage setInteger:3 andKey:@"TabBarButtonTapped"];
+    }else if([item.title isEqualToString:@"Support"]){
+        [PersistenceStorage setInteger:4 andKey:@"TabBarButtonTapped"];
+    }else if([item.title isEqualToString:@"Home"]){
+        [PersistenceStorage setInteger:0 andKey:@"TabBarButtonTapped"];
+    }else{
+        [PersistenceStorage setInteger:-1 andKey:@"TabBarButtonTapped"];
+    }
+    
+}
+
 - (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController
 {
 /*    if (tabBarController.selectedIndex == 0) {
