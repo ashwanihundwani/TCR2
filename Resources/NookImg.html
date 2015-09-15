@@ -85,7 +85,7 @@
                   <br />
                     <p> For videos on deep breathing, you can use the 'Imagery' skill in a plan.</p>
                       <br />
-                      <video width=300 controls>
+                      <video width=300 controls onplay="playVideo('Imagery-Video')">
                         <source src="ImageryLesson.mp4"></video></p>
 
                     <p> Many more relaxation videos are available online at websites like YouTube.com.</p>
@@ -131,7 +131,7 @@
 
                     <div class="panel" title="   " id="item3" data-footer="none">
                     <br />
-                    <p> You can preview the 'Imagery' video below:</p>  <br /> <video width = 300 controls>
+                    <p> You can preview the 'Imagery' video below:</p>  <br /> <video width = 300 controls onplay="playVideo('Imagery-Video')">
                         <source src="ImageryLesson.mp4"></video></p>
                     <br />
                     <p> Many more relaxation videos are available online at websites like YouTube.com. </p>
@@ -177,5 +177,10 @@
 
                 </div>
             </div>
+            <script>
+                function playVideo(videoName) {
+                    window.location.href = "tcappweb://" + "Played-Video/" + videoName;
+                }
+            </script>
             </body>
 </html>

@@ -373,6 +373,7 @@
 		286476791BA451A90069ECFB /* SkillFeedbackCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 286476771BA451A90069ECFB /* SkillFeedbackCell.xib */; };
 		2864767E1BA479B30069ECFB /* UsingSoundFeedbackCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2864767D1BA479B30069ECFB /* UsingSoundFeedbackCell.xib */; };
 		286476811BA479F40069ECFB /* UsingSoundFeedbackCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 286476801BA479F40069ECFB /* UsingSoundFeedbackCell.m */; };
+		286476841BA886FC0069ECFB /* TCNSURLProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = 286476831BA886FC0069ECFB /* TCNSURLProtocol.m */; };
 		39953FC81B7A5D66004F4990 /* ThoughtErrorCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 39953FC61B7A5D66004F4990 /* ThoughtErrorCell.m */; };
 		39953FC91B7A5D66004F4990 /* ThoughtErrorCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 39953FC71B7A5D66004F4990 /* ThoughtErrorCell.xib */; };
 		4A4A3AC31ABEE9CD00F2AEF6 /* circlingSleep.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A4A3ABF1ABEE9CD00F2AEF6 /* circlingSleep.png */; };
@@ -977,6 +978,8 @@
 		2864767D1BA479B30069ECFB /* UsingSoundFeedbackCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UsingSoundFeedbackCell.xib; sourceTree = "<group>"; };
 		2864767F1BA479F40069ECFB /* UsingSoundFeedbackCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UsingSoundFeedbackCell.h; sourceTree = "<group>"; };
 		286476801BA479F40069ECFB /* UsingSoundFeedbackCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UsingSoundFeedbackCell.m; sourceTree = "<group>"; };
+		286476821BA886FC0069ECFB /* TCNSURLProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCNSURLProtocol.h; sourceTree = "<group>"; };
+		286476831BA886FC0069ECFB /* TCNSURLProtocol.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCNSURLProtocol.m; sourceTree = "<group>"; };
 		39953FC51B7A5D66004F4990 /* ThoughtErrorCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThoughtErrorCell.h; sourceTree = "<group>"; };
 		39953FC61B7A5D66004F4990 /* ThoughtErrorCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThoughtErrorCell.m; sourceTree = "<group>"; };
 		39953FC71B7A5D66004F4990 /* ThoughtErrorCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ThoughtErrorCell.xib; sourceTree = "<group>"; };
@@ -2023,6 +2026,8 @@
 		1550E5781AC7E20800E36C90 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				286476821BA886FC0069ECFB /* TCNSURLProtocol.h */,
+				286476831BA886FC0069ECFB /* TCNSURLProtocol.m */,
 				049C74161B24A21400AE984E /* Pair.h */,
 				049C74171B24A21400AE984E /* Pair.m */,
 				1550E57B1AC7E20800E36C90 /* PersistenceStorage.h */,
@@ -3225,6 +3230,7 @@
 				1550E5F51AC9C82200E36C90 /* OtherDevicesWithCommentsCell.m in Sources */,
 				04401B081B1612CF00B3C6A3 /* CTF01.m in Sources */,
 				4A9017541AB8AD7800AE4B9D /* MixerHostAudio.m in Sources */,
+				286476841BA886FC0069ECFB /* TCNSURLProtocol.m in Sources */,
 				04412E671B133C270028A2CB /* NookFAQ.m in Sources */,
 				4A4A3B221AC68A5500F2AEF6 /* ValueAndActivitiesViewController.m in Sources */,
 				1550E5A21AC894D200E36C90 /* CEPlayer.m in Sources */,

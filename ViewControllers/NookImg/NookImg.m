@@ -1,5 +1,6 @@
  
 #import "NookImg.h"
+#import "TCNSURLProtocol.h"
 
 @interface NookImg ()
 
@@ -10,6 +11,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [NSURLProtocol registerClass:[TCNSURLProtocol class]];
      //NSURL *url = [NSURL URLWithString:fullURL];
 //    NSURL *url = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"NookImg" ofType:@"html" inDirectory:@"www"]];
   //  NSURL *url = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"2views" ofType:@"png" inDirectory:@"www"]];
