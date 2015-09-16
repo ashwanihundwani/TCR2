@@ -130,7 +130,10 @@
     }else{
         self.submitLabel.hidden = NO;
     }
-    
+    if(categorizedSkills != nil && categorizedSkills.count ==1){
+        self.nextBtn.hidden = YES;
+        [self.topleftconstraint setConstant:130];
+    }
     [self resetWeeklyReminderEventForFutureDate];
     
     
