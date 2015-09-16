@@ -13,6 +13,8 @@
 #import "SamplerViewController.h"
 #import "NookViewController.h"
 #import "PlansViewController.h"
+
+#define NUMBER_OF_LOOPS -1
 //#import "SupportViewController.h"
 //@interface CountdownTimerViewController ()
 //@end
@@ -96,7 +98,7 @@
     
     UILabel *firstLabel = (UILabel *)[self.view viewWithTag:77];
     firstLabel.text = @"Babbling Brook";
-    self.audioPlayer.numberOfLoops = 0;
+    self.audioPlayer.numberOfLoops = NUMBER_OF_LOOPS;
     
     NSString *beasMonoPath  =[[NSBundle mainBundle]pathForResource:@"BabblingBrook.mp3"  ofType:nil];
     NSURL *url = [NSURL URLWithString:beasMonoPath];
@@ -191,7 +193,7 @@ int secondsLeft;
      [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:&sessionError];
     
     
-    self.audioPlayer.numberOfLoops = -1;
+    self.audioPlayer.numberOfLoops = NUMBER_OF_LOOPS;
     
     NSString *beasMonoPath  =[[NSBundle mainBundle]pathForResource:@"BabblingBrook.mp3"  ofType:nil];
     NSURL *url = [NSURL URLWithString:beasMonoPath];
@@ -274,8 +276,12 @@ self.timerLabel.text= @"00:00 min";
     NSDate *currentDate1 = [NSDate date];
     self.startDate = [currentDate1 dateByAddingTimeInterval:tDurationDouble];
 
+    self.audioPlayer.numberOfLoops = NUMBER_OF_LOOPS;
+    
+    
+    NSInteger numberOfLoops = self.audioPlayer.numberOfLoops;
    
-
+    NSLog(@"loops : %d", numberOfLoops);
     [self.audioPlayer play];
 
     [self updateCounter];
@@ -407,7 +413,7 @@ self.timerLabel.text= @"00:00 min";
         if  ([buttonTitle isEqualToString:@"Babbling Brook"]) {
             
             self.soundLabel.text = @"Babbling Brook";
-            self.audioPlayer.numberOfLoops = 0;
+            self.audioPlayer.numberOfLoops = NUMBER_OF_LOOPS;
             
             //
             UILabel *firstLabel = (UILabel *)[self.view viewWithTag:77];
@@ -425,7 +431,7 @@ self.timerLabel.text= @"00:00 min";
         if  ([buttonTitle isEqualToString:@"Crackling Fire"]) {
             
             self.soundLabel.text = @"Crackling Fire";
-            self.audioPlayer.numberOfLoops = 0;
+            self.audioPlayer.numberOfLoops = NUMBER_OF_LOOPS;
             
             //
             UILabel *firstLabel = (UILabel *)[self.view viewWithTag:77];
@@ -448,7 +454,7 @@ self.timerLabel.text= @"00:00 min";
             
             self.soundLabel.text = @"Frogs";
             
-            self.audioPlayer.numberOfLoops = 0;
+            self.audioPlayer.numberOfLoops = NUMBER_OF_LOOPS;
             
             //
             UILabel *firstLabel = (UILabel *)[self.view viewWithTag:77];
@@ -468,7 +474,7 @@ self.timerLabel.text= @"00:00 min";
 
             self.soundLabel.text = @"Ocean Waves";
     
-            self.audioPlayer.numberOfLoops = 0;
+            self.audioPlayer.numberOfLoops = NUMBER_OF_LOOPS;
             
             //
             UILabel *firstLabel = (UILabel *)[self.view viewWithTag:77];
@@ -487,7 +493,7 @@ self.timerLabel.text= @"00:00 min";
         if  ([buttonTitle isEqualToString:@"Pink Noise"]) {
             
             self.soundLabel.text = @"Pink Noise";
-            self.audioPlayer.numberOfLoops = 0;
+            self.audioPlayer.numberOfLoops = NUMBER_OF_LOOPS;
 
             //
             UILabel *firstLabel = (UILabel *)[self.view viewWithTag:77];
@@ -730,7 +736,7 @@ self.timerLabel.text= @"00:00 min";
     
     
     self.audioSeekSlider.value = 0;
-    self.audioPlayer.numberOfLoops = 0;
+    self.audioPlayer.numberOfLoops = NUMBER_OF_LOOPS;
     self.audioSeekSlider.minimumValue = 0;
     self.audioSeekSlider.maximumValue = self.audioPlayer.duration;
     

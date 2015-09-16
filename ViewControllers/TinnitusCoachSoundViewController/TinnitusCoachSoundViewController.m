@@ -39,8 +39,20 @@
     [self.view addSubview:myBar];
     
     
-    UIBarButtonItem *leftButton = [[UIBarButtonItem alloc] initWithTitle:@"Cancel"
-                                                                    style:UIBarButtonItemStylePlain target:nil action:@selector(cancelTapped)];
+    UIImageView *backImg = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 15, 20)];
+    
+    backImg.image = [UIImage imageNamed:@"Active_Back-Arrow.png"];
+    
+    UILabel *backLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 32, 60, 20)];
+    
+    [backLabel addSubview:backImg];
+    
+    backLabel.text = @"";
+    [Utils addTapGestureToView:backLabel target:self selector:@selector(cancelTapped)];
+    
+    
+    UIBarButtonItem *leftButton = [[UIBarButtonItem alloc] initWithCustomView:backLabel];
+    
     UINavigationItem *item = [[UINavigationItem alloc] initWithTitle:@"Add Tinnitus Coach Sound"];
     item.leftBarButtonItem = leftButton;
    // item.hidesBackButton = YES;

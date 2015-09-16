@@ -18,7 +18,6 @@
 		042EBB351AF29C1500C90A96 /* CoundownTimerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 042EBB341AF29C1500C90A96 /* CoundownTimerViewController.m */; };
 		0432626B1AE4E6DC00C4C47A /* sampler.png in Resources */ = {isa = PBXBuildFile; fileRef = 0432626A1AE4E6DC00C4C47A /* sampler.png */; };
 		0432626D1AE4E94400C4C47A /* nook.png in Resources */ = {isa = PBXBuildFile; fileRef = 0432626C1AE4E94400C4C47A /* nook.png */; };
-		0432626F1AE5015F00C4C47A /* support.png in Resources */ = {isa = PBXBuildFile; fileRef = 0432626E1AE5015F00C4C47A /* support.png */; };
 		043262771AE5051A00C4C47A /* Checkmark.png in Resources */ = {isa = PBXBuildFile; fileRef = 043262701AE5051A00C4C47A /* Checkmark.png */; };
 		043262781AE5051A00C4C47A /* Clock.png in Resources */ = {isa = PBXBuildFile; fileRef = 043262711AE5051A00C4C47A /* Clock.png */; };
 		043262791AE5051A00C4C47A /* EarLeftBlack.png in Resources */ = {isa = PBXBuildFile; fileRef = 043262721AE5051A00C4C47A /* EarLeftBlack.png */; };
@@ -370,6 +369,11 @@
 		15A5E4C81ACB118F00639FA4 /* deep_breathing.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 4A4A3B491AC73A5800F2AEF6 /* deep_breathing.mp4 */; };
 		2864766B1B9F68820069ECFB /* FeedbackDeviceTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 286476691B9F68820069ECFB /* FeedbackDeviceTableViewCell.m */; };
 		2864766C1B9F68820069ECFB /* FeedbackDeviceTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2864766A1B9F68820069ECFB /* FeedbackDeviceTableViewCell.xib */; };
+		286476781BA451A90069ECFB /* SkillFeedbackCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 286476761BA451A90069ECFB /* SkillFeedbackCell.m */; };
+		286476791BA451A90069ECFB /* SkillFeedbackCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 286476771BA451A90069ECFB /* SkillFeedbackCell.xib */; };
+		2864767E1BA479B30069ECFB /* UsingSoundFeedbackCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2864767D1BA479B30069ECFB /* UsingSoundFeedbackCell.xib */; };
+		286476811BA479F40069ECFB /* UsingSoundFeedbackCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 286476801BA479F40069ECFB /* UsingSoundFeedbackCell.m */; };
+		286476841BA886FC0069ECFB /* TCNSURLProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = 286476831BA886FC0069ECFB /* TCNSURLProtocol.m */; };
 		39953FC81B7A5D66004F4990 /* ThoughtErrorCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 39953FC61B7A5D66004F4990 /* ThoughtErrorCell.m */; };
 		39953FC91B7A5D66004F4990 /* ThoughtErrorCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 39953FC71B7A5D66004F4990 /* ThoughtErrorCell.xib */; };
 		4A4A3AC31ABEE9CD00F2AEF6 /* circlingSleep.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A4A3ABF1ABEE9CD00F2AEF6 /* circlingSleep.png */; };
@@ -422,6 +426,7 @@
 		4AF9E8C71AB415E100C73A45 /* SamplerCustomCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AF9E8C51AB415E100C73A45 /* SamplerCustomCell.m */; };
 		4AF9E8CA1AB4346000C73A45 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4AF9E8C91AB4346000C73A45 /* libsqlite3.dylib */; };
 		4AF9E8CE1AB434DB00C73A45 /* DBManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AF9E8CD1AB434DB00C73A45 /* DBManager.m */; };
+		CD27E6F81BA7218D00355709 /* SkillReminderCell_Tips.xib in Resources */ = {isa = PBXBuildFile; fileRef = CD27E6F71BA7218D00355709 /* SkillReminderCell_Tips.xib */; };
 		CD39CDC21B8DBC6000E61F51 /* IntroPageInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = CD39CDBA1B8DBC6000E61F51 /* IntroPageInfo.m */; };
 		CD39CDC31B8DBC6000E61F51 /* IntroPageView.m in Sources */ = {isa = PBXBuildFile; fileRef = CD39CDBC1B8DBC6000E61F51 /* IntroPageView.m */; };
 		CD39CDC41B8DBC6000E61F51 /* IntroPageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CD39CDBD1B8DBC6000E61F51 /* IntroPageView.xib */; };
@@ -967,6 +972,14 @@
 		286476681B9F68820069ECFB /* FeedbackDeviceTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FeedbackDeviceTableViewCell.h; path = "Device Cells/FeedbackDeviceTableViewCell.h"; sourceTree = "<group>"; };
 		286476691B9F68820069ECFB /* FeedbackDeviceTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FeedbackDeviceTableViewCell.m; path = "Device Cells/FeedbackDeviceTableViewCell.m"; sourceTree = "<group>"; };
 		2864766A1B9F68820069ECFB /* FeedbackDeviceTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = FeedbackDeviceTableViewCell.xib; path = "Device Cells/FeedbackDeviceTableViewCell.xib"; sourceTree = "<group>"; };
+		286476751BA451A90069ECFB /* SkillFeedbackCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SkillFeedbackCell.h; sourceTree = "<group>"; };
+		286476761BA451A90069ECFB /* SkillFeedbackCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SkillFeedbackCell.m; sourceTree = "<group>"; };
+		286476771BA451A90069ECFB /* SkillFeedbackCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SkillFeedbackCell.xib; sourceTree = "<group>"; };
+		2864767D1BA479B30069ECFB /* UsingSoundFeedbackCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UsingSoundFeedbackCell.xib; sourceTree = "<group>"; };
+		2864767F1BA479F40069ECFB /* UsingSoundFeedbackCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UsingSoundFeedbackCell.h; sourceTree = "<group>"; };
+		286476801BA479F40069ECFB /* UsingSoundFeedbackCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UsingSoundFeedbackCell.m; sourceTree = "<group>"; };
+		286476821BA886FC0069ECFB /* TCNSURLProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCNSURLProtocol.h; sourceTree = "<group>"; };
+		286476831BA886FC0069ECFB /* TCNSURLProtocol.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCNSURLProtocol.m; sourceTree = "<group>"; };
 		39953FC51B7A5D66004F4990 /* ThoughtErrorCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThoughtErrorCell.h; sourceTree = "<group>"; };
 		39953FC61B7A5D66004F4990 /* ThoughtErrorCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThoughtErrorCell.m; sourceTree = "<group>"; };
 		39953FC71B7A5D66004F4990 /* ThoughtErrorCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ThoughtErrorCell.xib; sourceTree = "<group>"; };
@@ -1038,6 +1051,7 @@
 		4AF9E8C91AB4346000C73A45 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		4AF9E8CC1AB434DB00C73A45 /* DBManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBManager.h; sourceTree = "<group>"; };
 		4AF9E8CD1AB434DB00C73A45 /* DBManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBManager.m; sourceTree = "<group>"; };
+		CD27E6F71BA7218D00355709 /* SkillReminderCell_Tips.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SkillReminderCell_Tips.xib; path = SkillDetailCells/SkillReminderCell_Tips.xib; sourceTree = "<group>"; };
 		CD39CDB91B8DBC6000E61F51 /* IntroPageInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IntroPageInfo.h; sourceTree = "<group>"; };
 		CD39CDBA1B8DBC6000E61F51 /* IntroPageInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IntroPageInfo.m; sourceTree = "<group>"; };
 		CD39CDBB1B8DBC6000E61F51 /* IntroPageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IntroPageView.h; sourceTree = "<group>"; };
@@ -1294,9 +1308,15 @@
 		043F8E931B2E391F00595D38 /* Custome Cells */ = {
 			isa = PBXGroup;
 			children = (
+				2864767D1BA479B30069ECFB /* UsingSoundFeedbackCell.xib */,
+				286476751BA451A90069ECFB /* SkillFeedbackCell.h */,
+				286476761BA451A90069ECFB /* SkillFeedbackCell.m */,
+				286476771BA451A90069ECFB /* SkillFeedbackCell.xib */,
 				043F8E941B2E391F00595D38 /* FeedbackTableViewCell.h */,
 				043F8E951B2E391F00595D38 /* FeedbackTableViewCell.m */,
 				043F8E961B2E391F00595D38 /* FeedbackTableViewCell.xib */,
+				2864767F1BA479F40069ECFB /* UsingSoundFeedbackCell.h */,
+				286476801BA479F40069ECFB /* UsingSoundFeedbackCell.m */,
 			);
 			path = "Custome Cells";
 			sourceTree = "<group>";
@@ -2006,6 +2026,8 @@
 		1550E5781AC7E20800E36C90 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				286476821BA886FC0069ECFB /* TCNSURLProtocol.h */,
+				286476831BA886FC0069ECFB /* TCNSURLProtocol.m */,
 				049C74161B24A21400AE984E /* Pair.h */,
 				049C74171B24A21400AE984E /* Pair.m */,
 				1550E57B1AC7E20800E36C90 /* PersistenceStorage.h */,
@@ -2781,6 +2803,7 @@
 		CD39CDDA1B8E435E00E61F51 /* Skill Detail Cells */ = {
 			isa = PBXGroup;
 			children = (
+				CD27E6F71BA7218D00355709 /* SkillReminderCell_Tips.xib */,
 				CD39CDDB1B8E438C00E61F51 /* SkillIntroductionCell.h */,
 				CD39CDDC1B8E438C00E61F51 /* SkillIntroductionCell.m */,
 				CD39CDDD1B8E438C00E61F51 /* SkillIntroductionCell.xib */,
@@ -2848,12 +2871,12 @@
 		4A8C5E741AB3524F001FC7F4 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0610;
+				LastUpgradeCheck = 0630;
 				ORGANIZATIONNAME = Creospan;
 				TargetAttributes = {
 					4A8C5E7B1AB3524F001FC7F4 = {
 						CreatedOnToolsVersion = 6.1;
-						DevelopmentTeam = 76M3A55Z4V;
+						DevelopmentTeam = 3HRX2SU6VP;
 					};
 					4A8C5E971AB35250001FC7F4 = {
 						CreatedOnToolsVersion = 6.1;
@@ -2951,6 +2974,7 @@
 				0432627A1AE5051A00C4C47A /* EarLeftGray.png in Resources */,
 				043F8E9D1B2E8C7300595D38 /* TipsReminder.xib in Resources */,
 				049C74151B249F8B00AE984E /* Active_Back-Arrow.png in Resources */,
+				286476791BA451A90069ECFB /* SkillFeedbackCell.xib in Resources */,
 				04DF9A8F1B3C61B600989E2B /* thoughterror6.html in Resources */,
 				4A4A3ACF1ABEEE7E00F2AEF6 /* lightbulb.png in Resources */,
 				0438955C1B261F14005B74B1 /* SamplerCustomCell.xib in Resources */,
@@ -3016,6 +3040,7 @@
 				153A474D1AD6D70F0011B6A1 /* info.png in Resources */,
 				0467DDD01AEAB8A10021784B /* home_findsupport.png in Resources */,
 				CD7D80351B8F7FB700D77939 /* WebsiteSoundCell.xib in Resources */,
+				CD27E6F81BA7218D00355709 /* SkillReminderCell_Tips.xib in Resources */,
 				0432627C1AE5051A00C4C47A /* Mute.png in Resources */,
 				043F8E9A1B2E391F00595D38 /* FeedbackTableViewCell.xib in Resources */,
 				0436A2911B2AE65E002AAE63 /* ctf04.png in Resources */,
@@ -3065,6 +3090,7 @@
 				049C74131B249F8B00AE984E /* Active_Next-Arrow.png in Resources */,
 				04372E1D1AED386B00B30BC7 /* 5MindfulBreathing.mp3 in Resources */,
 				0467DDCF1AEAB8A10021784B /* home_sampler.png in Resources */,
+				2864767E1BA479B30069ECFB /* UsingSoundFeedbackCell.xib in Resources */,
 				1550E5D71AC9537800E36C90 /* u630.png in Resources */,
 				043DA2381B1A88CD009A0480 /* af.selectBox.js in Resources */,
 				043C2DAB1AE542F20040BF2D /* homesamplericon.png in Resources */,
@@ -3169,7 +3195,6 @@
 				04841D6F1AF8F54200BA4725 /* TCAppIcon.png in Resources */,
 				04D5B1991B107B3F00BA1C14 /* MyTFHeaderView.xib in Resources */,
 				04372E1C1AED386B00B30BC7 /* 2PassiveMuscleRelaxation.mp3 in Resources */,
-				0432626F1AE5015F00C4C47A /* support.png in Resources */,
 				4A90176C1AB8B87F00AE4B9D /* half_selected_star.png in Resources */,
 				CDF03B551B9772D400FF962F /* MyOwnSoundCell.xib in Resources */,
 				4A8C5E901AB35250001FC7F4 /* Images.xcassets in Resources */,
@@ -3205,6 +3230,7 @@
 				1550E5F51AC9C82200E36C90 /* OtherDevicesWithCommentsCell.m in Sources */,
 				04401B081B1612CF00B3C6A3 /* CTF01.m in Sources */,
 				4A9017541AB8AD7800AE4B9D /* MixerHostAudio.m in Sources */,
+				286476841BA886FC0069ECFB /* TCNSURLProtocol.m in Sources */,
 				04412E671B133C270028A2CB /* NookFAQ.m in Sources */,
 				4A4A3B221AC68A5500F2AEF6 /* ValueAndActivitiesViewController.m in Sources */,
 				1550E5A21AC894D200E36C90 /* CEPlayer.m in Sources */,
@@ -3212,6 +3238,7 @@
 				15156B2F1ABEFC52009F4489 /* RatingsViewController.m in Sources */,
 				048EF9031AEA64CA001D70C6 /* ThoughtsIntroDetailViewController.m in Sources */,
 				CDF03B531B9772D400FF962F /* MyOwnSoundCell.m in Sources */,
+				286476811BA479F40069ECFB /* UsingSoundFeedbackCell.m in Sources */,
 				04AB4BC01B16ABF200446EC4 /* CTF03.m in Sources */,
 				1550E5E11AC9ACE200E36C90 /* WebsitesandAppsWithCommentsCell.m in Sources */,
 				048EF8E61AEA6497001D70C6 /* TipsSkillDetailViewController.m in Sources */,
@@ -3243,6 +3270,7 @@
 				04E044EB1B1868E300F4DBD1 /* CTF05.m in Sources */,
 				CD9113F61B9BE70A00F924B9 /* ChangingThoughtsViewController+Table.m in Sources */,
 				042DDC891AEC13A50023910B /* SamplerVideoViewController.m in Sources */,
+				286476781BA451A90069ECFB /* SkillFeedbackCell.m in Sources */,
 				CD39CDC21B8DBC6000E61F51 /* IntroPageInfo.m in Sources */,
 				CDFFBFBD1B8F68F600BD2445 /* PleasantActivityViewController+Table.m in Sources */,
 				048EF8E71AEA6497001D70C6 /* ThoughtsSkillDetailViewController.m in Sources */,
@@ -3417,6 +3445,7 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Cyberbridge International Inc., d/b/a Creospan Inc (3HRX2SU6VP)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -3437,6 +3466,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				PROVISIONING_PROFILE = "671cba19-cc2e-4e76-80e0-8e6b72e24184";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -3458,6 +3488,7 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Cyberbridge International Inc., d/b/a Creospan Inc (3HRX2SU6VP)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
@@ -3471,6 +3502,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				PROVISIONING_PROFILE = "671cba19-cc2e-4e76-80e0-8e6b72e24184";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -3480,14 +3512,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Swipe Video Labs Private Limited (76M3A55Z4V)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Swipe Video Labs Private Limited (76M3A55Z4V)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Cyberbridge International Inc., d/b/a Creospan Inc (3HRX2SU6VP)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PREFIX_HEADER = TinnitusCoach/PrefixHeader.pch;
 				INFOPLIST_FILE = TinnitusCoach/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "9bcc7adf-e194-4f0b-a075-eb8a1f5b7390";
+				PROVISIONING_PROFILE = "671cba19-cc2e-4e76-80e0-8e6b72e24184";
 			};
 			name = Debug;
 		};
@@ -3495,14 +3527,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Swipe Video Labs Private Limited (76M3A55Z4V)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Swipe Video Labs Private Limited (76M3A55Z4V)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Cyberbridge International Inc., d/b/a Creospan Inc (3HRX2SU6VP)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PREFIX_HEADER = TinnitusCoach/PrefixHeader.pch;
 				INFOPLIST_FILE = TinnitusCoach/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "9bcc7adf-e194-4f0b-a075-eb8a1f5b7390";
+				PROVISIONING_PROFILE = "671cba19-cc2e-4e76-80e0-8e6b72e24184";
 			};
 			name = Release;
 		};

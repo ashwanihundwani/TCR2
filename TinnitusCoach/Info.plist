@@ -9,7 +9,7 @@
 	<key>CFBundleIconFile</key>
 	<string>TCAppIcon.png</string>
 	<key>CFBundleIdentifier</key>
-	<string>$((PRODUCT_NAME:rfc1034identifier)com.tinnituscoach.32</string>
+	<string>$((PRODUCT_NAME:rfc1034identifier)com.tinnitus.2</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>

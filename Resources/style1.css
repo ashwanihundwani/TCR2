@@ -74,7 +74,7 @@
 	background-color: white;
 }
 p{
-    font-size: 16px !important;
+    font-size: 18px !important;
 }
 .gray-font {
 	color: rgba(128, 128, 128, 0.28);
@@ -118,6 +118,7 @@ header a {
 .bullet-lists li {
  padding-left:1px;
  padding-bottom: 4px;
+ font-size: 18px !important;
 }
 /*#afui .header {
 	height: 60px;

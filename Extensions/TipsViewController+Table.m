@@ -55,11 +55,11 @@
     }
     else if(indexPath.section == 1)
     {
-        SkillReminderCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"SkillReminderCell"];
+        SkillReminderCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"SkillReminderCell_Tips"];
         
         if(!cell)
         {
-            cell = [[[NSBundle mainBundle] loadNibNamed:@"SkillReminderCell" owner:nil options:nil] objectAtIndex:0];
+            cell = [[[NSBundle mainBundle] loadNibNamed:@"SkillReminderCell_Tips" owner:nil options:nil] objectAtIndex:0];
         }
         
         id reminder = nil;
@@ -219,7 +219,7 @@
             return 100;
         }
          */
-        return 100;
+        return 140;
     }
     else
     {

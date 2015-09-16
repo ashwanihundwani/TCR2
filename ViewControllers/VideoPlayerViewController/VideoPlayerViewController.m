@@ -112,7 +112,10 @@
 
 
 - (void)playbackDidFinish:(NSNotification*)aNotification
-{}
+{
+
+    [self.videoPlayer setCurrentPlaybackTime:self.videoPlayer.endPlaybackTime];
+}
 
 -(void)movieFinishedCallback:(NSNotification*)aNotification {
     // [self dismissMoviePlayerViewControllerAnimated];

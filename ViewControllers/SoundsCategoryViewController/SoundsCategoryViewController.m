@@ -28,10 +28,114 @@
 
 @implementation SoundsCategoryViewController
 
+-(CGFloat)heightForIndexPath:(NSIndexPath *)indexPath
+{
+    CGFloat constant = 27;
+    
+    NSString *str = [[[[arrayOfSoundCategories objectAtIndex:indexPath.section] valueForKey:@"soundCategories"] objectAtIndex:indexPath.row] valueForKey:@"text"];
+    CGFloat labelHeight = [Utils heightForLabelForString:str width:200 font:TITLE_LABEL_FONT];
+    
+    constant += labelHeight;
+    
+    return constant;
+    
+}
+
+
+-(UIView *)tableHeaderView
+{
+    UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 30)];
+    
+    UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(22, 15, 276, 20)
+                           ];
+    
+    titleLabel.numberOfLines = 1000;
+    
+    titleLabel.backgroundColor = [UIColor clearColor];
+    view.backgroundColor = [Utils colorWithHexValue:@"EFEFF4"];
+    
+    titleLabel.text = @"Below are four different Soothing Sound sources for you to explore to come up with ideas to add to your plan.";;
+    
+    Pair *pallete = [Utils getColorFontPair:eCFS_PALLETE_2];
+    
+    titleLabel.font = pallete.secondObj;
+    titleLabel.textColor = pallete.firstObj;
+    
+    CGFloat height = [Utils heightForLabelForString:titleLabel.text width:276 font:pallete.secondObj];
+    
+    titleLabel.height = height;
+    
+    view.height += height;
+    
+    [view addSubview:titleLabel];
+    
+    return view;
+}
+
+-(void)cancel
+{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 - (void)viewDidLoad {
     
-  arrayOfSoundCategories = [NSArray arrayWithObjects:@{@"sectionText":[NSString stringWithFormat: @"Pick %@ stored on your phone:",self.soundType], @"soundCategories":@[@{@"text":[NSString stringWithFormat:@"Tinnitus Coach %@ ",self.soundType], @"image":@"TCSounds.png"}, @{@"text":@"My Own Sounds", @"image":@"MyOwn.png"} ]}, @{@"sectionText":[NSString stringWithFormat:@"Pick %@ from the Internet:", self.soundType], @"soundCategories":@[@{@"text":@"Website & Apps", @"image":@"Website.png"}]}, @{@"sectionText":[NSString stringWithFormat:@"Make a list of %@ played from other devices you own:",self.soundType], @"soundCategories":@[@{@"text":@"Other Devices", @"image":@"Devices.png"}]}, nil];
     [super viewDidLoad];
+    
+    self.soundCategoryTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    
+    self.soundCategoryTableView.tableHeaderView = [self tableHeaderView];
+    
+    self.soundCategoryTableView.backgroundColor = [UIColor whiteColor];
+    
+    UIView *titleView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 200, 44)];
+    
+    titleView.backgroundColor = [Utils colorWithHexValue:NAV_BAR_BLACK_COLOR];
+    
+    UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 200, 44)];
+    
+    Pair *pallete = [Utils getColorFontPair:eCFS_PALLETE_1];
+    
+    titleLabel.font = pallete.secondObj;
+    titleLabel.textColor = pallete.firstObj;
+    
+    titleLabel.textAlignment = NSTextAlignmentCenter;
+    
+    //titleLabel.textColor = [UIColor colorWithHexValue:@"797979"];
+    titleLabel.backgroundColor = [UIColor clearColor];
+    titleLabel.text = [NSString stringWithFormat:@"Add %@", self.soundType];
+    
+    [titleView addSubview:titleLabel];
+    
+    self.navigationItem.titleView = titleView;
+    
+    UIImageView *backImg = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 15, 20)];
+    
+    backImg.image = [UIImage imageNamed:@"Active_Back-Arrow.png"];
+    
+    UILabel *backLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 32, 60, 20)];
+    
+    [backLabel addSubview:backImg];
+    
+    backLabel.text = @"";
+       
+    pallete = [Utils getColorFontPair:eCFS_PALLETE_3];
+    
+    backLabel.font = pallete.secondObj;
+    backLabel.textColor = pallete.firstObj;
+    
+    [Utils addTapGestureToView:backLabel target:self
+                      selector:@selector(cancel)];
+    
+    UIBarButtonItem *item = [[UIBarButtonItem alloc]initWithCustomView:backLabel];
+    
+    UIBarButtonItem *negativeSpacer = [[UIBarButtonItem alloc]
+                                       initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace
+                                       target:nil action:nil];
+    negativeSpacer.width = -8;
+    
+    self.navigationItem.leftBarButtonItems = [NSArray arrayWithObjects:negativeSpacer, item, nil];
+    
+    arrayOfSoundCategories = [NSArray arrayWithObjects:@{@"sectionText":[NSString stringWithFormat: @"Pick %@ stored on your phone:",self.soundType], @"soundCategories":@[@{@"text":[NSString stringWithFormat:@"Tinnitus Coach %@ ",self.soundType], @"image":@"TCSounds.png"}, @{@"text":@"My Own Sounds", @"image":@"MyOwn.png"} ]}, @{@"sectionText":[NSString stringWithFormat:@"Pick %@ from the Internet:", self.soundType], @"soundCategories":@[@{@"text":@"Website & Apps", @"image":@"Website.png"}]}, @{@"sectionText":[NSString stringWithFormat:@"Make a list of %@ played from other devices you own:",self.soundType], @"soundCategories":@[@{@"text":@"Other Devices", @"image":@"Devices.png"}]}, nil];
     
     self.dbManager = [[DBManager alloc]initWithDatabaseFileName:@"GNResoundDB.sqlite"];
     
@@ -131,18 +235,58 @@
     if (cell == nil) {
         cell =  [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"Cell"];
         
-        UIImageView *accessory = [[UIImageView alloc]initWithFrame:CGRectMake(293, 15, 13, 13)];
+        UIImageView *accessory = [[UIImageView alloc]initWithFrame:CGRectMake(286, 15, 13, 13)];
         
         [accessory setImage:[UIImage imageNamed:@"Active_Next-Arrow.png"]];
         
         [cell addSubview:accessory];
         
+        UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(13, 8, 26, 26)];
+        
+        imageView.tag = 1006;
+        
+        [cell addSubview:imageView];
+        
+        UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(55 , 11, 200, 20)];
+        
+        titleLabel.numberOfLines = 1000;
+        
+        titleLabel.tag = 1007;
+        
+        Pair *pallete = [Utils getColorFontPair:eCFS_PALLETE_4];
+        
+        titleLabel.font = pallete.secondObj;
+        titleLabel.textColor = pallete.firstObj;
+        
+        [cell addSubview:titleLabel];
+        
+        UIView *separator = [[UIView alloc]initWithFrame:CGRectMake(55, 43, 298, 1)];
+        
+        separator.tag = 1234;
+        separator.backgroundColor = [Utils colorWithHexValue:@"EEEEEE"];
+        
+        [cell addSubview:separator];
     }
-    cell.textLabel.text =[[[[arrayOfSoundCategories objectAtIndex:indexPath.section] valueForKey:@"soundCategories"] objectAtIndex:indexPath.row] valueForKey:@"text"];
-    cell.textLabel.font = [UIFont boldSystemFontOfSize:14.0];
-    cell.imageView.frame = CGRectMake(5.0, 5.0, 19.0, 19.0);
-    cell.imageView.image = [UIImage imageNamed:[[[[arrayOfSoundCategories objectAtIndex:indexPath.section] valueForKey:@"soundCategories"] objectAtIndex:indexPath.row] valueForKey:@"image"]];
-  //  cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    UILabel *titleLabel = (UILabel *)[cell viewWithTag:1007];
+    
+    titleLabel.text = [[[[arrayOfSoundCategories objectAtIndex:indexPath.section] valueForKey:@"soundCategories"] objectAtIndex:indexPath.row] valueForKey:@"text"];
+    
+    CGFloat labelHeight = [Utils heightForLabelForString:titleLabel.text width:200 font:TITLE_LABEL_FONT];
+    
+    
+    titleLabel.height = labelHeight;
+    
+    UIView *separator = [cell viewWithTag:1234];
+    
+    CGFloat height = [self heightForIndexPath:indexPath];
+    
+    separator.y = height - 1;
+    
+    UIImageView *imageView = (UIImageView *)[cell viewWithTag:1006];
+    
+    imageView.image = [UIImage imageNamed:[[[[arrayOfSoundCategories objectAtIndex:indexPath.section] valueForKey:@"soundCategories"] objectAtIndex:indexPath.row] valueForKey:@"image"]];
+    
+    //cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     return cell;
     
 }
@@ -150,31 +294,50 @@
 
 #pragma mark - UITableViewDelegate
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 38.0f;
+    return [self heightForIndexPath:indexPath];
 }
+
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    return 60.0f;
+    CGFloat constant = 22;
+    
+    Pair *pallete = [Utils getColorFontPair:eCFS_PALLETE_3];
+    
+    CGFloat height = [Utils heightForLabelForString:[[arrayOfSoundCategories objectAtIndex:section] valueForKey:@"sectionText"] width:276 font:pallete.secondObj];
+    
+    return constant + height;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
-    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, self.soundCategoryTableView.frame.size.width-15, 60.0)];
-    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(10.0, 5.0, self.soundCategoryTableView.frame.size.width-15, 50.0)];
-    label.textColor = [UIColor grayColor];
-    label.font = [UIFont boldSystemFontOfSize:14.0];
-    label.numberOfLines = 0;
+    
+    UIView *videoHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 22)];
+    
+    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(22.0, 13.0, 276, 20)];
+    label.numberOfLines = 1000;
     label.text = [[arrayOfSoundCategories objectAtIndex:section] valueForKey:@"sectionText"];
+    
     Pair *pallete = [Utils getColorFontPair:eCFS_PALLETE_3];
-   // label.font = pallete.secondObj;
+    label.font = pallete.secondObj;
     label.textColor = pallete.firstObj;
     
+    CGFloat height = [Utils heightForLabelForString:label.text width:276 font:label.font];
     
+    label.height = height;
     
-    [headerView addSubview:label];
-    return headerView;
+    videoHeaderView.height += height;
+    
+    UIView *line = [[UIView alloc]initWithFrame:CGRectMake(20, videoHeaderView.frame.size.height - 1, 300, 1)];
+    
+    line.backgroundColor = [UIColor colorWithRed:0.0/255.0 green:0.0/255.0 blue:0.098/255.0 alpha:0.22];;
+    
+    [videoHeaderView addSubview:line];
+    
+    [videoHeaderView addSubview:label];
+    return videoHeaderView;
     
 }
+
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     

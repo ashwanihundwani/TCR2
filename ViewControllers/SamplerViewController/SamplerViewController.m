@@ -126,7 +126,7 @@
         
         NSString *actionSheetTitle = @"Where would you like to go now?"; //Action Sheet Title
         NSString *other0 = @"Repeat This Exercise"; //Action Sheet Button Titles
-        NSString *other1 = @"Know About This Exercise";
+        NSString *other1 = @"Learn About This Exercise";
         NSString *other2 = @"Try Another Exercise";
         NSString *other3 = @"Return Home";
         //   NSString *other4 = @"Return Home";
@@ -242,7 +242,7 @@
         
         
     }
-    if ([buttonTitle isEqualToString:@"Know About This Exercise"]) {
+    if ([buttonTitle isEqualToString:@"Learn About This Exercise"]) {
         //NookUS *samplerView = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"NookUS"];
         //[self.navigationController pushViewController:samplerView animated:NO];
         [PersistenceStorage setObject:nil andKey:@"skillDetail1"];
@@ -1086,10 +1086,12 @@
     if([PersistenceStorage getIntegerForKey:@"HomeButtonTapped"] == self.tabBarController.selectedIndex ){
         navMethod = @"Navigated from Home Screen";
         [PersistenceStorage setInteger:-1 andKey:@"HomeButtonTapped"];
-    }else if(self.tabBarController.selectedIndex == 1){
+    }else if([PersistenceStorage getIntegerForKey:@"TabBarButtonTapped"] == self.tabBarController.selectedIndex){
         navMethod = @"Navigated from Nav Bar";
+        [PersistenceStorage setInteger:-1 andKey:@"TabBarButtonTapped"];
     }else{
         navMethod = nil;
+        return;
     }
     NSLog(@"navigation method is:%@ and parent controller is: %@ and isMovingToParentViewController is:%@", navMethod, [[self parentViewController] class], [[self presentingViewController] class]);
     NSString   *finalStr = [NSString stringWithFormat:@"\r%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@",dateString,timeString,type,navMethod,str,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil];

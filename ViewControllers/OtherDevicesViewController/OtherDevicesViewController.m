@@ -12,7 +12,7 @@
 #import "SoundActivitiesViewController.h"
 #import "MBProgressHUD.h"
 
-@interface OtherDevicesViewController ()
+@interface OtherDevicesViewController ()<OtherDevicesCellDelegate, OtherDevicesWithCommentsCellDelegate>
 {
     NSArray *otherDevicesSoundsArray;
     NSArray *selectCountArray;
@@ -27,55 +27,169 @@
 
 @implementation OtherDevicesViewController
 
+-(void)didTapCheckBox:(id)sender{
+    
+    UITableViewCell *cell = (UITableViewCell *)sender;
+    
+    NSIndexPath *path = [self.otherDevicesSoundTableView indexPathForCell:cell];
+    
+    NSInteger index = path.row;
+    
+    if ([[self.checkFlagArray objectAtIndex:index]boolValue]) {
+        [self.checkFlagArray replaceObjectAtIndex:index withObject:[NSNumber numberWithBool:NO]];
+        //WebsitesandAppsCell *cell = [self.websitesandAppsSoundTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:index inSection:0]];
+        [self.otherDevicesSoundTableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:index inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
+        
+    }
+    else
+    {
+        [self.checkFlagArray replaceObjectAtIndex:index withObject:[NSNumber numberWithBool:YES]];
+        [self.otherDevicesSoundTableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:index inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
+    }
+
+}
+
+-(CGFloat)heightForIndexPath:(NSIndexPath *)indexPath
+{
+    CGFloat constant = 37;
+    
+    if ([[self.checkFlagArray objectAtIndex:indexPath.row] boolValue]) {
+        constant = 87;
+    }
+    else
+    {
+        constant = 36;
+        
+        
+    }
+    
+    NSString *planName = [[otherDevicesSoundsArray objectAtIndex:indexPath.row] valueForKey:@"deviceName"];
+    
+    CGFloat labelHeight = [Utils heightForLabelForString:planName width:238 font:TITLE_LABEL_FONT];
+    
+    constant += labelHeight;
+    
+    return constant;
+    
+}
+
+-(UIView *)tableHeaderView
+{
+    UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 30)];
+    
+    UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(22, 15, 276, 20)
+                           ];
+    
+    titleLabel.numberOfLines = 1000;
+    
+    titleLabel.backgroundColor = [UIColor clearColor];
+    view.backgroundColor = [Utils colorWithHexValue:@"EFEFF4"];
+    
+    titleLabel.text = [NSString stringWithFormat:@"Are there other devices you own that you can use to play %@? (Example: CD player to listen to music from your own collection or to use a fan for sound.) Select and add them to your plan.",self.soundType];
+    
+    Pair *pallete = [Utils getColorFontPair:eCFS_PALLETE_2];
+    
+    titleLabel.font = pallete.secondObj;
+    titleLabel.textColor = pallete.firstObj;
+    
+    CGFloat height = [Utils heightForLabelForString:titleLabel.text width:276 font:pallete.secondObj];
+    
+    titleLabel.height = height;
+    
+    view.height += height;
+    
+    [view addSubview:titleLabel];
+    
+    return view;
+}
+
 
 -(void)dismissKeyboard {
     [self.view endEditing:YES];}
 
 
+-(void)cancel
+{
+    [self.navigationController popViewControllerAnimated:YES];
+}
 
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
     
+    self.otherDevicesSoundTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
-    UINavigationBar *myBar = [[UINavigationBar alloc]initWithFrame:CGRectMake(0, 0, 320, 50)];
-    [self.view addSubview:myBar];
-    
-    
-    UINavigationItem *item = [[UINavigationItem alloc] initWithTitle:@"Add Devices"];
-    
-    
-    UIBarButtonItem *leftButton = [[UIBarButtonItem alloc] initWithTitle:@"Cancel"
-                                                                   style:UIBarButtonItemStylePlain target:nil action:@selector(cancelTapped)];
-    item.leftBarButtonItem = leftButton;
-    
-    
-    UIBarButtonItem *rightButton = [[UIBarButtonItem alloc] initWithTitle:@"Done"
-                                                                    style:UIBarButtonItemStyleDone target:nil action:@selector(addTapped)];
-    item.rightBarButtonItem = rightButton;
-    
-    
-    
-    
-    [myBar pushNavigationItem:item animated:NO];
-    
-    
-    
+    self.otherDevicesSoundTableView.backgroundColor = [Utils colorWithHexValue:@"EFEFF4"];
+    self.otherDevicesSoundTableView.tableHeaderView = [self tableHeaderView];
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]
                                    initWithTarget:self
                                    action:@selector(dismissKeyboard)];
     
     [self.view addGestureRecognizer:tap];
-
     
+    UIView *titleView = [[UIView alloc]initWithFrame:CGRectMake(0, 20, 320, 44)];
+    
+    //titleView.backgroundColor = [Utils colorWithHexValue:NAV_BAR_BLACK_COLOR];
+    
+    UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(60, 0, 200, 44)];
+    
+    Pair *pallete = [Utils getColorFontPair:eCFS_PALLETE_1];
+    
+    titleLabel.font = pallete.secondObj;
+    titleLabel.textColor = pallete.firstObj;
+    
+    titleLabel.textAlignment = NSTextAlignmentCenter;
+    
+    //titleLabel.textColor = [UIColor colorWithHexValue:@"797979"];
+    titleLabel.backgroundColor = [UIColor clearColor];
+    titleLabel.text = [NSString stringWithFormat:@"Add %@", self.soundType];
+    
+    [titleView addSubview:titleLabel];
+    
+    [self.view addSubview:titleView];
+    
+    UIImageView *backImg = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 15, 20)];
+    
+    backImg.image = [UIImage imageNamed:@"Active_Back-Arrow.png"];
+    
+    UILabel *backLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 32, 60, 20)];
+    
+    [backLabel addSubview:backImg];
+    
+    backLabel.text = @"";
+    
+    pallete = [Utils getColorFontPair:eCFS_PALLETE_3];
+    
+    backLabel.font = pallete.secondObj;
+    backLabel.textColor = pallete.firstObj;
+    
+    [Utils addTapGestureToView:backLabel target:self
+                      selector:@selector(cancelTapped)];
+    
+    [self.view addSubview:backLabel];
+    
+    
+    UILabel *doneLabel = [[UILabel alloc]initWithFrame:CGRectMake(250, 32, 60, 20)];
+    
+    doneLabel.textAlignment = NSTextAlignmentRight;
+    
+    doneLabel.text = @"Done";
+    
+    pallete = [Utils getColorFontPair:eCFS_PALLETE_3];
+    
+    doneLabel.font = pallete.secondObj;
+    doneLabel.textColor = pallete.firstObj;
+    
+    [Utils addTapGestureToView:doneLabel target:self
+                      selector:@selector(addTapped)];
+    
+    [self.view addSubview:doneLabel];
     
     
     
     self.otherDevicesSoundDescriptionLabel.text = [NSString stringWithFormat:@"Are there other devices you own that you can use to play %@? (Example: CD player to listen to music from your own collection or to use a fan for sound.) Select and add them to your plan.",self.soundType];
- 
-     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStylePlain target:self action:@selector(addOtherDevices)];
+    
 //    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStylePlain target:self action:@selector(addOtherDevices)];
     
     // Do any additional setup after loading the view.
@@ -190,7 +304,7 @@
             
             
                         [self writeModifiedResource];
-            [self performSelector:@selector(navigateBack) withObject:nil afterDelay:1.1];
+            
             MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
             hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark.png"] ];
             
@@ -218,6 +332,7 @@
         [alert show];
     }
     
+    [self performSelector:@selector(navigateBack) withObject:nil afterDelay:1.1];
 }
 
 -(void)navigateBack{
@@ -308,9 +423,8 @@
         cell.nameLabel.text = [[otherDevicesSoundsArray objectAtIndex:indexPath.row] valueForKey:@"deviceName"];
         cell.commentsTextField.text = [self.commentsArray objectAtIndex:indexPath.row];
         
-        cell.checkBoxButton.tag = indexPath.row;
-        [cell.checkBoxButton addTarget:self action:@selector(checkBoxButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
         cell.delegate = self;
+        cell.checkDelegate = self;
         return cell;
     }
     else
@@ -321,12 +435,9 @@
         }
         
         
-        
+        cell.delegate = self;
         cell.nameLabel.text = [[otherDevicesSoundsArray objectAtIndex:indexPath.row] valueForKey:@"deviceName"];
         
-        
-        cell.checkBoxButton.tag = indexPath.row;
-        [cell.checkBoxButton addTarget:self action:@selector(checkBoxButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
         return cell;
     }
     
@@ -339,18 +450,10 @@
 #pragma mark - UITableViewDelegate
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    NSString *desc = [[otherDevicesSoundsArray objectAtIndex:indexPath.row] valueForKey:@"deviceName"];
-    
-    CGFloat subTitleHeight = [Utils heightForLabelForString:desc width:264 font:TITLE_LABEL_FONT];
-    
-    if ([[self.checkFlagArray objectAtIndex:indexPath.row] boolValue]) {
-        return 55 + subTitleHeight;
-    }
-    else
-    {
-        return 35 + subTitleHeight;
-    }
+    return [self heightForIndexPath:indexPath];
 }
+
+
 
 - (void)checkBoxButtonClicked:(id)sender
 {

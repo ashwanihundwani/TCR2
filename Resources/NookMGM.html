@@ -139,7 +139,7 @@
                         <br>
                         <p><b>Mindful Breathing</b></p>
                          Allow yourself to find a quiet place in your mind by focusing on your breathing.
-                        <p><audio controls autoplay onplaying="playAudio('200')" id = "200">
+                        <p><audio controls autoplay onplaying="playAudio('200', 'Mindful-Breathing')" id = "200">
                             <source src="5MindfulBreathing.mp3" type="audio/mpeg" />
                         </audio>
                         <br>
@@ -147,14 +147,14 @@
 
 
                         Visualize your breath moving through parts of your body while becoming aware of all sensations you feel.
-                        <p><audio controls autoplay onplaying="playAudio('201')" id = "201" >
+                        <p><audio controls autoplay onplaying="playAudio('201', 'Body-Scan')" id = "201" >
                             <source src="3BodyScan.mp3" type="audio/mpeg" />
                         </audio>
                         <br>
                         <br><p><b>Passive Muscle Relaxation</b></p>
 
 
-Focus on parts of your body while breathing deeply to induce relaxation.                        <p><audio controls autoplay onplaying="playAudio('202')" id = "202">
+Focus on parts of your body while breathing deeply to induce relaxation.                        <p><audio controls autoplay onplaying="playAudio('202', 'Passive-Muscle-Relaxation')" id = "202">
                             <source src="2PassiveMuscleRelaxation.mp3" type="audio/mpeg" />
                         </audio>
 
@@ -162,7 +162,7 @@ Focus on parts of your body while breathing deeply to induce relaxation.        
                         <br><p><b> Progressive Muscle Relaxation</b></p>
 
 
-In this exercise, you tense each part of the body in turn and then let the tension go.                          <p><audio controls autoplay onplaying="playAudio('203')" id = "203">
+In this exercise, you tense each part of the body in turn and then let the tension go.                          <p><audio controls autoplay onplaying="playAudio('203','Progressive-Muscle-Relaxation')" id = "203">
                             <source src="1ProgressiveMuscleRelaxation.mp3" type="audio/mpeg" />
                         </audio>
 
@@ -170,7 +170,7 @@ In this exercise, you tense each part of the body in turn and then let the tensi
                         <br><p><b>Mountain Stream Imagery</b></p>
 
 
-Use the power of visualization to follow a path to a cool mountain stream where you will be calm, relaxed and refreshed.                         <p><audio controls autoplay onplaying="playAudio('204')" id = "204">
+Use the power of visualization to follow a path to a cool mountain stream where you will be calm, relaxed and refreshed.                         <p><audio controls autoplay onplaying="playAudio('204','Mountain-Stream-Imagery')" id = "204">
                             <source src="4MountainStreamImagery.mp3" type="audio/mpeg" />
                         </audio>
 
@@ -179,7 +179,7 @@ Use the power of visualization to follow a path to a cool mountain stream where 
 
 
                         This will guide you through a visualization exercise to help you grow tired and sleepy. Listen to this recording to help you fall asleep.
-                        <p><audio controls autoplay id = "205" onplaying="playAudio('205')">
+                        <p><audio controls autoplay id = "205" onplaying="playAudio('205','Circling-to-Sleep')">
                             <source src="CirclingToSleep.mp3" type="audio/mpeg" />
                         </audio>
 
@@ -193,9 +193,9 @@ Use the power of visualization to follow a path to a cool mountain stream where 
                     <script>
                         
                         var playingAudioId = "";
-                        function playAudio(audioID)
+                        function playAudio(audioID, audioName)
                         {
-                            
+                            window.location.href = "tcappweb://" + "Played-Sound/" + audioName;
                             if(playingAudioId == audioID) return;
                             
                             if(playingAudioId == "")

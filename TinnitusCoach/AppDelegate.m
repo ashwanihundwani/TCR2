@@ -117,6 +117,7 @@
     [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
     
     [PersistenceStorage setInteger:-1 andKey:@"HomeButtonTapped"];
+    [PersistenceStorage setInteger:-1 andKey:@"TabBarButtonTapped"];
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {

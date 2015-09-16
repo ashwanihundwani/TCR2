@@ -90,7 +90,7 @@
                   <br />
                   <p> You can preview the 'Deep Breathing' video below:</p>
 
-                    <video width = 300 controls>
+                    <video width = 300 controls onplay="playVideo('Deep-Breathing-Video')">
                       <source src="DeepBreathingLesson.mp4">
                     </video>
 
@@ -129,7 +129,7 @@
                   <br />
                     <p> For videos on deep breathing, you can use the 'Deep Breathing' skill in a plan. </p>
                       <br />
-                      <video width=300 controls>
+                      <video width=300 controls onplay="playVideo('Deep-Breathing-Video')">
                       <source src="DeepBreathingLesson.mp4"></video>
 
 
@@ -156,5 +156,10 @@
 
             </div>
         </div>
+        <script>
+            function playVideo(videoName) {
+                window.location.href = "tcappweb://" + "Played-Video/" + videoName;
+            }
+        </script>
     </body>
 </html>

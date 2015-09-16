@@ -1,21 +1,21 @@
 //
-//  FeedbackTableViewCell.m
+//  SkillFeedbackCell.m
 //  TinnitusCoach
 //
  //  Copyright (c) 2015 Creospan. All rights reserved.
 //
 
-#import "FeedbackDeviceTableViewCell.h"
+#import "SkillFeedbackCell.h"
 
 #define DOT_VIEW_TAG 121132
 
-@interface FeedbackDeviceTableViewCell()
+@interface SkillFeedbackCell()
 
 @property(nonatomic, weak)UIButton *selectedButton;
 
 @end
 
-@implementation FeedbackDeviceTableViewCell
+@implementation SkillFeedbackCell
 
 - (void)awakeFromNib {
     // Initialization code
@@ -91,10 +91,7 @@
     [self.delegate ratingRecieved:((UIButton*)sender).tag inCell:self];
 }
 
--(IBAction)selectBtnPressed:(id)sender{
-    
-    [self.delegate onToggleSelectionInCell:self];
-}
+
 
 
 
