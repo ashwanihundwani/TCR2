@@ -423,7 +423,8 @@ self.timerLabel.text= @"00:00 min";
             NSURL *url = [NSURL URLWithString:beasMonoPath];
             self.audioPlayer = [[AVAudioPlayer alloc]initWithContentsOfURL:url error:nil];
             [PersistenceStorage setObject:@"Babbling Brook" andKey:@"skillDetail2"];
-
+            [self writeTimerSoundSelected];
+            
         }
         
         
@@ -442,7 +443,7 @@ self.timerLabel.text= @"00:00 min";
             NSURL *url = [NSURL URLWithString:beasMonoPath];
             self.audioPlayer = [[AVAudioPlayer alloc]initWithContentsOfURL:url error:nil];
             [PersistenceStorage setObject:@"Crackling Fire" andKey:@"skillDetail2"];
-   
+               [self writeTimerSoundSelected];
 
         }
         
@@ -465,7 +466,7 @@ self.timerLabel.text= @"00:00 min";
             NSURL *url = [NSURL URLWithString:beasMonoPath];
             self.audioPlayer = [[AVAudioPlayer alloc]initWithContentsOfURL:url error:nil];
             [PersistenceStorage setObject:@"Frogs" andKey:@"skillDetail2"];
-
+            [self writeTimerSoundSelected];
         }
         
         
@@ -486,7 +487,8 @@ self.timerLabel.text= @"00:00 min";
             self.audioPlayer = [[AVAudioPlayer alloc]initWithContentsOfURL:url error:nil];
             [PersistenceStorage setObject:@"Ocean Waves" andKey:@"skillDetail2"];
 
-        }
+                    [self writeTimerSoundSelected];
+            }
         
         
         
@@ -504,7 +506,8 @@ self.timerLabel.text= @"00:00 min";
             NSURL *url = [NSURL URLWithString:beasMonoPath];
             self.audioPlayer = [[AVAudioPlayer alloc]initWithContentsOfURL:url error:nil];
             [PersistenceStorage setObject:@"Pink Noise" andKey:@"skillDetail2"];
-
+            [self writeTimerSoundSelected];
+        
         }
         
         
@@ -852,6 +855,52 @@ self.timerLabel.text= @"00:00 min";
     [self.audioPlayer stop]; // Or pause
     [self.videoPlayer stop];
 }
+
+
+
+-(void)writeTimerSoundSelected
+{
+    
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    NSString *documentTXTPath = [documentsDirectory stringByAppendingPathComponent:@"TinnitusCoachUsageData.csv"];
+    
+    NSDate *date = [NSDate date];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
+    dateFormatter.dateFormat = @"MM/dd/yy";
+    NSString *dateString = [dateFormatter stringFromDate: date];
+    NSDateFormatter *timeFormatter = [[NSDateFormatter alloc]init];
+    timeFormatter.dateFormat = @"HH:mm:ss";
+    NSString *timeString = [timeFormatter stringFromDate: date];
+    NSString *type = @"Skill";
+    NSString *str = @"Provided a Rating";
+    
+    NSString   *finalStr = [NSString stringWithFormat:@"\r%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@",dateString,timeString,type,str,nil,[PersistenceStorage getObjectForKey:@"planName"],[PersistenceStorage getObjectForKey:@"situationName"],[PersistenceStorage getObjectForKey:@"skillName"],@"Timer for Practice",[PersistenceStorage getObjectForKey:@"skillDetail2"],nil,nil,nil,nil,nil,nil];
+    
+    NSLog(@"%@",finalStr);
+    
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    if(![fileManager fileExistsAtPath:documentTXTPath])
+    {
+        [finalStr writeToFile:documentTXTPath atomically:YES];
+    }
+    else
+    {
+        NSFileHandle *myHandle = [NSFileHandle fileHandleForWritingAtPath:documentTXTPath];
+        [myHandle seekToEndOfFile];
+        [myHandle writeData:[finalStr dataUsingEncoding:NSUTF8StringEncoding]];
+        
+    }
+    
+}
+
+
+
+
+
+
+
+
 
 @end
 

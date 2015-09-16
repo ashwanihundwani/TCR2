@@ -327,7 +327,7 @@ myCounterLabel.text= @"00:00 min";
             
             [PersistenceStorage setObject:@"Babbling Brook" andKey:@"skillDetail2"];
             self.audioPlayer.numberOfLoops = 100;
-
+  [self writeTimerSoundSelected];
             
         }
         
@@ -345,7 +345,7 @@ myCounterLabel.text= @"00:00 min";
             self.audioPlayer = [[AVAudioPlayer alloc]initWithContentsOfURL:url error:nil];
             [PersistenceStorage setObject:@"Crackling Fire" andKey:@"skillDetail2"];
             self.audioPlayer.numberOfLoops = 100;
-
+  [self writeTimerSoundSelected];
         }
         
         
@@ -365,7 +365,7 @@ myCounterLabel.text= @"00:00 min";
             self.audioPlayer = [[AVAudioPlayer alloc]initWithContentsOfURL:url error:nil];
             [PersistenceStorage setObject:@"Frogs" andKey:@"skillDetail2"];
             self.audioPlayer.numberOfLoops = 100;
-
+  [self writeTimerSoundSelected];
         }
         
         
@@ -384,6 +384,7 @@ myCounterLabel.text= @"00:00 min";
             [PersistenceStorage setObject:@"Ocean Waves" andKey:@"skillDetail2"];
             self.audioPlayer.numberOfLoops = 100;
 
+          [self writeTimerSoundSelected];
         }
         
         
@@ -402,6 +403,7 @@ myCounterLabel.text= @"00:00 min";
             [PersistenceStorage setObject:@"Pink Noise" andKey:@"skillDetail2"];
             self.audioPlayer.numberOfLoops = 100;
 
+          [self writeTimerSoundSelected];
         }
         
         
