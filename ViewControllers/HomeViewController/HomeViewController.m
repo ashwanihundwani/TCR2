@@ -16,6 +16,12 @@
 #import "Utils.h"
 
 
+@interface HomeViewController()
+
+@property(nonatomic)BOOL firstLoad;
+
+@end
+
 
 //@end
 
@@ -23,6 +29,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.firstLoad = TRUE;
     
     UIView *titleView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 64)];
     
@@ -163,9 +171,60 @@
     //  [self setUpViews];
 }
 
+-(void)writeHomeVisited{
+    
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    NSString *documentTXTPath = [documentsDirectory stringByAppendingPathComponent:@"TinnitusCoachUsageData.csv"];
+    
+    NSDate *date = [NSDate date];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
+    dateFormatter.dateFormat = @"MM/dd/yy";
+    NSString *dateString = [dateFormatter stringFromDate: date];
+    NSDateFormatter *timeFormatter = [[NSDateFormatter alloc]init];
+    timeFormatter.dateFormat = @"HH:mm:ss";
+    NSString *timeString = [timeFormatter stringFromDate: date];
+    NSString *type = @"Navigation";
+    NSString *str = @"Home";
+    NSString * navMethod = @"";
+    if([PersistenceStorage getIntegerForKey:@"HomeButtonTapped"] == self.tabBarController.selectedIndex ){
+        navMethod = @"Navigated from Home Screen";
+        [PersistenceStorage setInteger:-1 andKey:@"HomeButtonTapped"];
+    }else if([PersistenceStorage getIntegerForKey:@"TabBarButtonTapped"] == self.tabBarController.selectedIndex){
+        navMethod = @"Navigated from Nav Bar";
+        [PersistenceStorage setInteger:-1 andKey:@"TabBarButtonTapped"];
+    }else{
+        navMethod = nil;
+        return;
+    }
+    NSLog(@"navigation method is:%@ and parent controller is: %@ and isMovingToParentViewController is:%@", navMethod, [[self parentViewController] class], [[self presentingViewController] class]);
+    NSString   *finalStr = [NSString stringWithFormat:@"\r%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@",dateString,timeString,type,navMethod,str,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil];
+    
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    if(![fileManager fileExistsAtPath:documentTXTPath])
+    {
+        [finalStr writeToFile:documentTXTPath atomically:YES];
+    }
+    else
+    {
+        NSFileHandle *myHandle = [NSFileHandle fileHandleForWritingAtPath:documentTXTPath];
+        [myHandle seekToEndOfFile];
+        [myHandle writeData:[finalStr dataUsingEncoding:NSUTF8StringEncoding]];
+        
+    }
+
+}
+
 
 -(void)viewDidAppear:(BOOL)animated
 {
+    if(!self.firstLoad){
+        
+        [self writeHomeVisited];
+        
+    }
+    self.firstLoad = FALSE;
+    
     NSLog(@"%@",[PersistenceStorage getObjectForKey:@"launchSleepTips"]);
   //  [[UIApplication sharedApplication] cancelAllLocalNotifications];
     

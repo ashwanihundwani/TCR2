@@ -431,6 +431,42 @@
     
 }
 
+-(void)writeModifiedResource{
+    //  NSURL *path = [self getUrlOfFiles:@"TinnitusCoachUsageData.csv"];
+    
+    
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    NSString *documentTXTPath = [documentsDirectory stringByAppendingPathComponent:@"TinnitusCoachUsageData.csv"];
+    
+    NSDate *date = [NSDate date];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
+    dateFormatter.dateFormat = @"MM/dd/yy";
+    NSString *dateString = [dateFormatter stringFromDate: date];
+    NSDateFormatter *timeFormatter = [[NSDateFormatter alloc]init];
+    timeFormatter.dateFormat = @"HH:mm:ss";
+    NSString *timeString = [timeFormatter stringFromDate: date];
+    NSString *type = @"Skill";
+    NSString *optionName = [PersistenceStorage getObjectForKey:@"optionName"];
+    NSString *str = [PersistenceStorage getObjectForKey:@"actionTypeForResource"];
+    
+    NSString   *finalStr = [NSString stringWithFormat:@"\r%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@",dateString,timeString,type,str,nil,[PersistenceStorage getObjectForKey:@"planName"],[PersistenceStorage getObjectForKey:@"situationName"],[PersistenceStorage getObjectForKey:@"skillName"],[PersistenceStorage getObjectForKey:@"skillDetail1"],[PersistenceStorage getObjectForKey:@"skillDetail2"],[PersistenceStorage getObjectForKey:@"skillDetail3"],nil,nil,nil,nil,nil];
+    
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    if(![fileManager fileExistsAtPath:documentTXTPath])
+    {
+        [finalStr writeToFile:documentTXTPath atomically:YES];
+    }
+    else
+    {
+        NSFileHandle *myHandle = [NSFileHandle fileHandleForWritingAtPath:documentTXTPath];
+        [myHandle seekToEndOfFile];
+        [myHandle writeData:[finalStr dataUsingEncoding:NSUTF8StringEncoding]];
+        
+    }
+    
+}
+
 -(void)didTapInformation:(id)sender
 {
     NSIndexPath *indexPath = [self.tableView indexPathForCell:sender];
@@ -495,7 +531,28 @@
 {
     if ([item isKindOfClass:[OtherSoundInfo class]]) {
         
+        OtherSoundInfo *info = (OtherSoundInfo *)item;
         
+        NSString *_soundTypeName;
+        
+        if ([info.typeId isEqualToString:@"1"])
+        {_soundTypeName=@"Soothing Sound";}
+        else
+            if ([info.typeId isEqualToString:@"2"])
+            {_soundTypeName=@"Interesting Sound";}
+        
+            else
+                
+                if ([info.typeId isEqualToString:@"3"])
+                {_soundTypeName=@"Background Sound";}
+        
+        
+        
+        [PersistenceStorage setObject:@"Removed Using Sound Other Devices Option" andKey:@"actionTypeForResource"];
+        [PersistenceStorage setObject:_soundTypeName andKey:@"skillDetail1"];
+        [PersistenceStorage setObject:@"Other Devices" andKey:@"skillDetail2"];
+        
+        [self writeModifiedResource];
         NSString *query = [NSString stringWithFormat:@"delete from MyDevices where deviceID=%@     and planID = %@", [item dbIdentifier], [PersistenceStorage getObjectForKey:@"currentPlanID"]];
         
         BOOL isDone = [self.dbManagerMySounds executeQuery:query];
@@ -512,6 +569,27 @@
     }
     else if ([item isKindOfClass:[WebsiteSoundInfo class]])
     {
+        WebsiteSoundInfo *info = (WebsiteSoundInfo *)item;
+        
+        NSString *_soundTypeName;
+        
+        if ([info.typeId isEqualToString:@"1"])
+        {_soundTypeName=@"Soothing Sound";}
+        else
+            if ([info.typeId isEqualToString:@"2"])
+            {_soundTypeName=@"Interesting Sound";}
+        
+            else
+                
+                if ([info.typeId isEqualToString:@"3"])
+                {_soundTypeName=@"Background Sound";}
+        
+        [PersistenceStorage setObject:@"Removed Using Sound Website Apps Option" andKey:@"actionTypeForResource"];
+        [PersistenceStorage setObject:_soundTypeName andKey:@"skillDetail1"];
+        [PersistenceStorage setObject:@"Websites & Apps" andKey:@"skillDetail2"];
+
+        [self writeModifiedResource];
+        
         NSString *query = [NSString stringWithFormat:@"delete from MyWebsites where websiteID=%@     and planID = %@", [item dbIdentifier], [PersistenceStorage getObjectForKey:@"currentPlanID"]];
         
         BOOL isDone = [self.dbManagerMySounds executeQuery:query];
@@ -529,6 +607,10 @@
     
     else
     {
+        
+        
+        TinnitusSoundInfo *info = (TinnitusSoundInfo *)item;
+        
         NSString *query = [NSString stringWithFormat:@"delete from MySounds where soundID=%@ and planID = %@", [item dbIdentifier] , [PersistenceStorage getObjectForKey:@"currentPlanID"]];
         
         BOOL isDone = [self.dbManagerMySounds executeQuery:query];
