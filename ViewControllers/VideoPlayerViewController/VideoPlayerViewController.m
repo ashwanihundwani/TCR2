@@ -176,7 +176,7 @@ self.navigationItem.hidesBackButton = YES;
     
     {
 
-        [PersistenceStorage setObject:@"NoOne" andKey:@"Referer"];
+        [PersistenceStorage setObject:@"VideoIntroduction" andKey:@"Referer"];
     }
     else
         

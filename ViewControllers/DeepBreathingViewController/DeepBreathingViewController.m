@@ -242,6 +242,17 @@
 
     
     
+    if ([[PersistenceStorage getObjectForKey:@"Referer"] isEqual: @"VideoIntroduction"])  {
+        [self writeViewedIntroduction];
+    }
+    
+    
+    
+    
+    
+    
+    
+    
     
     if ([[PersistenceStorage getObjectForKey:@"Referer"] isEqual: @"SkillRatingsViewController"]) {
         NSString *actionSheetTitle = @"Where would you like to go now?"; //Action Sheet Title
@@ -679,7 +690,7 @@
     NSString *optionName = [PersistenceStorage getObjectForKey:@"optionName"];
     NSString *str = @"Watched Skill Introduction";
     
-    NSString   *finalStr = [NSString stringWithFormat:@"\r%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@",dateString,timeString,type,str,nil,[PersistenceStorage getObjectForKey:@"planName"],[PersistenceStorage getObjectForKey:@"situationName"],[PersistenceStorage getObjectForKey:@"skillName"],nil,nil,nil,nil,nil,nil,nil,nil];
+    NSString   *finalStr = [NSString stringWithFormat:@"\r%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@",dateString,timeString,type,str,nil,[PersistenceStorage getObjectForKey:@"planName"],[PersistenceStorage getObjectForKey:@"situationName"],[PersistenceStorage getObjectForKey:@"skillName"],@"Video Introduction",nil,nil,nil,nil,nil,nil,nil];
     
     NSFileManager *fileManager = [NSFileManager defaultManager];
     if(![fileManager fileExistsAtPath:documentTXTPath])
