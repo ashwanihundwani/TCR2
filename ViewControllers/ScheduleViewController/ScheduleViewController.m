@@ -219,8 +219,6 @@ UIView *titleView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 130, 44)];
     
     CalenderEventID = nil;
     
-    [self writeSkillReminderToggle:@"Turned Off Reminder"];
-    
     CalenderEventID = [self eventPAExists];
     if (CalenderEventID != nil) {
         EKEventStore *store = [EKEventStore new];
