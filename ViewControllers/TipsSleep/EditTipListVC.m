@@ -293,6 +293,37 @@
     
     // return 4;
 }
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    CGFloat constant = 27;
+    
+    NSDictionary *tipsDetailsDict = [allTipsArray objectAtIndex:indexPath.section-1];
+    // NSPredicate *predicate = [ NSPredicate predicateWithFormat:[NSString stringWithFormat:@"self.tipsTypeID == %d",[[tipsDetailsDict valueForKey:@"ID"] intValue]]];
+    
+    //    NSDictionary *categoryDetails =  [[allTipsCategoriesArray filteredArrayUsingPredicate:predicate] objectAtIndex:indexPath.row];
+    
+    NSMutableArray *sortArray = [NSMutableArray new];
+    for(NSDictionary *categoriesDict in allTipsCategoriesArray) {
+        
+        if ([[categoriesDict valueForKey:@"tipsTypeID"] isEqualToString:[tipsDetailsDict valueForKey:@"ID"]]) {
+            [sortArray addObject:categoriesDict];
+            
+        }
+    }
+    
+    NSDictionary *categoryDetails =  [sortArray objectAtIndex:indexPath.row];
+    
+    NSString *string = [categoryDetails valueForKey:@"tipsText"];
+
+    
+    CGFloat labelHeight = [Utils heightForLabelForString:string width:255 font:TITLE_LABEL_FONT];
+    
+    constant += labelHeight;
+    
+    return constant;
+}
+
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *cellIdentifier = @"CellIdentifier";

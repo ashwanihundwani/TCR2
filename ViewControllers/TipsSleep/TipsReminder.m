@@ -499,11 +499,31 @@ else
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
-
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 61;
+    CGFloat constant = 27;
+    
+    NSString *tipName = [_numOfTips objectAtIndex:indexPath.section-1];
+    
+    if([_allMyTipsDetailDict valueForKey:tipName])
+        
+    {
+        NSDictionary *tipsDetailsDict = [[_allMyTipsDetailDict valueForKey:tipName] objectAtIndex:indexPath.row];
+        
+        NSString *string = [tipsDetailsDict valueForKey:@"category"];
+        
+        CGFloat labelHeight = [Utils heightForLabelForString:string width:255 font:TITLE_LABEL_FONT];
+        
+        constant += labelHeight;
+        
+        return constant;
+    }
+    
+    
+    return 0;
+   
 }
+
 #pragma mark Database Transaction
 -(NSMutableDictionary *)gettingMyTips
 {
