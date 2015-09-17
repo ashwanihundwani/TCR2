@@ -108,6 +108,7 @@
     {
         [self dismissViewControllerAnimated:YES completion:^{
             
+            self.dismissBlock();
         }];
         
         
@@ -318,7 +319,7 @@
         //        UIWindow *currentWindow = [[UIApplication sharedApplication].windows firstObject];
         //        [currentWindow.rootViewController presentViewController:mySleepsViewCotroller animated:YES completion:nil];
         
-        
+        self.dismissBlock();
         
         
         NSDateFormatter* day = [[NSDateFormatter alloc] init];
@@ -344,6 +345,7 @@ else
         UIViewController *mySleepsViewCotroller = [storyBoard instantiateViewControllerWithIdentifier:@"SkillRatingsViewController"];
         UIWindow *currentWindow = [[UIApplication sharedApplication].windows firstObject];
         [currentWindow.rootViewController presentViewController:mySleepsViewCotroller animated:YES completion:nil];
+        
         
         
         

@@ -113,7 +113,7 @@
     
     [self.view addGestureRecognizer:tap];
     
-    UIView *titleView = [[UIView alloc]initWithFrame:CGRectMake(0, 20, 320, 44)];
+    UIView *titleView = [[UIView alloc]initWithFrame:CGRectMake(0, 10, 320, 44)];
     
     //titleView.backgroundColor = [Utils colorWithHexValue:NAV_BAR_BLACK_COLOR];
     
@@ -131,6 +131,22 @@
     titleLabel.text = [NSString stringWithFormat:@"Add %@", self.soundType];
     
     [titleView addSubview:titleLabel];
+    
+    UILabel *situationLabel = [[UILabel alloc]initWithFrame:CGRectMake(60, 30
+                                                                       , 200, 20)];
+    
+    pallete = [Utils getColorFontPair:eCFS_PALLETE_2];
+    
+    situationLabel.font = pallete.secondObj;
+    situationLabel.textColor = pallete.firstObj;
+    
+    situationLabel.textAlignment = NSTextAlignmentCenter;
+    
+    //titleLabel.textColor = [UIColor colorWithHexValue:@"797979"];
+    situationLabel.backgroundColor = [UIColor clearColor];
+    situationLabel.text = @"Website & Apps";
+    
+    [titleView addSubview:situationLabel];
     
     [self.view addSubview:titleView];
     

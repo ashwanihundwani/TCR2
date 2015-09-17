@@ -10,6 +10,10 @@
 #import "DBManager.h"
 #import "EditTipListVC.h"
 
+
 @interface TipsReminder : UIViewController<EditRipsListDelegate>
+
+@property (nonatomic, strong) void (^dismissBlock)();
+
 
 @end

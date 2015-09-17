@@ -11,6 +11,7 @@
 
 #import "HomeNewViewController.h"
 #import "Utils.h"
+#import "TipsReminder.h"
 
 @interface AppDelegate ()
 
@@ -57,7 +58,9 @@
         if ([[PersistenceStorage getObjectForKey:@"TipsActivated"] isEqual: @"Yes"])
             
         {
-            [self showTipsReminderView];
+            [self showTipsReminderView:^() {
+                
+            }];
         
             [PersistenceStorage setObject:@"Yes" andKey:@"launchSleepTips"];
         }
@@ -119,9 +122,91 @@
     [PersistenceStorage setInteger:-1 andKey:@"HomeButtonTapped"];
 }
 
+
+-(BOOL)tipsReminderExists
+{
+    DBManager *manager = [[DBManager alloc]initWithDatabaseFileName:@"GNResoundDB.sqlite"];
+   
+    
+    NSString *queryForTips = @"select * from My_Tips";
+    
+    NSArray *allMyTips= [manager loadDataFromDB:queryForTips];
+    
+    if ([allMyTips count] == 0){
+        return NO;
+    }
+    
+        
+   NSString *query =  @"select * from MySkillReminders where SkillName = 'Tips for Better Sleep'";
+
+   return ([[manager loadDataFromDB:query] count] > 0)? true : false;
+
+}
+
+-(BOOL)dateChangedForTipsReminder{
+    
+    NSDate *currentDate = [NSDate date];
+    
+    NSDate *savedDate = [PersistenceStorage getObjectForKey:@"tipsReminderDate"];
+    
+    NSDateComponents *currentComponents = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear | NSCalendarUnitHour fromDate:currentDate];
+    
+    
+    NSDateComponents *savedComponents = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear | NSCalendarUnitHour fromDate:savedDate];
+    
+    return (savedComponents.day != currentComponents.day);
+}
+
 - (void)applicationDidBecomeActive:(UIApplication *)application {
+    
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-[UIApplication sharedApplication].applicationIconBadgeNumber = 0;
+    [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
+    
+    BOOL tipsRemShowing = FALSE;
+    BOOL tipsReminderExists = [self tipsReminderExists];
+    
+    if([PersistenceStorage getObjectForKey:@"tipsReminderDate"]){
+        
+        BOOL dateChanged = [self dateChangedForTipsReminder];
+        if(dateChanged){
+            
+            [PersistenceStorage setBool:NO andKey:@"shownTipsReminderToday"];
+        }
+    }
+    
+    if(tipsReminderExists
+       && ![PersistenceStorage getBoolForKey:@"shownTipsReminderToday"]){
+        
+        tipsRemShowing = TRUE;
+        [self showTipsReminderView:^(){
+            
+            NSArray *notificationArray = [application scheduledLocalNotifications];
+            
+            for(UILocalNotification *notification in notificationArray){
+                NSLog(@"notification with alert : %@ firedate: %@ and repeatInterval:%ld", notification.alertBody, notification.fireDate, notification.repeatInterval);
+                if([notification.alertBody isEqualToString:@"Weekly Reminder"] ){
+                    // get the fire date a
+                    if([[NSDate date] compare:notification.fireDate] == NSOrderedAscending){
+                        // positive case nothing to do
+                        NSLog(@"weekly reminder scheduled for:%@ ",notification.fireDate);
+                    }else{
+                        // missed reminder
+                        // lets force show weekly reminder
+                        NSLog(@"Detected missed WR notification, Launching WR ");
+                        if(!self.isLaunchWithNotification)
+                            [self showWeeklyReminderView];
+                    }
+                    break;
+                }
+                
+            }
+            
+            
+        }];
+        
+        [PersistenceStorage setBool:YES andKey:@"shownTipsReminderToday"];
+        [PersistenceStorage setObject:[NSDate date] andKey:@"tipsReminderDate"];
+    }
 
  //   [self showTipsReminderView];
     
@@ -139,7 +224,7 @@
                 // missed reminder
                 // lets force show weekly reminder
                 NSLog(@"Detected missed WR notification, Launching WR ");
-                if(!self.isLaunchWithNotification)
+                if(!self.isLaunchWithNotification && !tipsRemShowing)
                     [self showWeeklyReminderView];
             }
             break;
@@ -273,7 +358,10 @@
         
     {
 
-        [self showTipsReminderView];}
+        [self showTipsReminderView:^(){
+        
+        
+        }];}
     
     }
     
@@ -350,11 +438,14 @@
 
 
 
--(void)showTipsReminderView
+-(void)showTipsReminderView:(void (^)())block
 {
     
     UIStoryboard *storyBoard = [ UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    UIViewController *mySleepsViewCotroller = [storyBoard instantiateViewControllerWithIdentifier:@"TipsReminder"];
+    TipsReminder *mySleepsViewCotroller = [storyBoard instantiateViewControllerWithIdentifier:@"TipsReminder"];
+    
+    mySleepsViewCotroller.dismissBlock = block;
+    
     UIWindow *currentWindow = [[UIApplication sharedApplication].windows firstObject];
     [currentWindow.rootViewController presentViewController:mySleepsViewCotroller animated:YES completion:nil];
     
