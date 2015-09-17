@@ -341,14 +341,14 @@ NSArray *remindersArray;
                 repeatText = [compo lastObject];
             }
             
-            inputDate = [Utils dateWithString:date inFormat:@"dd/MM/yy, hh:mm a"];
+            inputDate = [Utils dateWithString:date inFormat:@"hh:mm a, MM/dd/yy"];
             
             
-            [PersistenceStorage setObject:@"YES" andKey:@"showCancelActivityButton"];
+            [PersistenceStorage setObject:@"Yes" andKey:@"showCancelActivityButton"];
         }
         else{
             
-            [PersistenceStorage setObject:@"NO" andKey:@"showCancelActivityButton"];
+            [PersistenceStorage setObject:@"No" andKey:@"showCancelActivityButton"];
         }
 
 //        UILabel *label = (UILabel *)[self.view viewWithTag:333];
@@ -363,7 +363,9 @@ NSArray *remindersArray;
 
         
         ScheduleViewController *svc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"ScheduleViewController"];
-            
+        
+        svc.activityText = @"Try Imagery";
+        
             svc.delegate = self;
         
         svc.repeatText = repeatText;
@@ -579,6 +581,7 @@ audioPanning.videoURL = @"ImageryLesson.mp4";
 {
     ScheduleViewController *favc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"ScheduleViewController"];
     
+    favc.activityText = @"Try Imagery";
     favc.delegate = self;
     [self.navigationController pushViewController:favc animated:YES];
 }

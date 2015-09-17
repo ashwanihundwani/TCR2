@@ -403,6 +403,9 @@ mySwitch.on = YES;
 -(IBAction)goToScheduler:(id)sender
 {
     ScheduleViewController *favc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"ScheduleViewController"];
+    
+    favc.activityText = @"Try Sleep Tips";
+    
     [self.navigationController pushViewController:favc animated:YES];
 }
 

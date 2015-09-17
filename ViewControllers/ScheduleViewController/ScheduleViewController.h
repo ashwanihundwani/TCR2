@@ -7,6 +7,24 @@
 //
 
 #import <UIKit/UIKit.h>
+typedef enum ReminderType
+{
+    eRT_NEVER,
+    eRT_DAILY,
+    eRT_WEEKLY,
+}EReminderType;
+
+@interface ScheduleInfo : NSObject
+
+@property(nonatomic, strong)NSString *startDateLabelText;
+@property(nonatomic, strong)NSString *endDateLabelText;
+@property(nonatomic, strong)NSString *startDate;
+@property(nonatomic, strong)NSString *endDate;
+@property(nonatomic)EReminderType remType;
+
+
+@end
+
 
 @protocol ScheduleViewControllerDelegate <NSObject>
 
@@ -34,4 +52,8 @@
 
 @property (nonatomic, strong)NSDate *inputDate;
 @property (nonatomic, strong)NSString *repeatText;
+
+@property(nonatomic, strong)NSString *activityText;
+
+@property (weak, nonatomic) IBOutlet UITableView *scheduleTableView;
 @end

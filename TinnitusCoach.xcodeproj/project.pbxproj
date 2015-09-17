@@ -426,6 +426,8 @@
 		4AF9E8C71AB415E100C73A45 /* SamplerCustomCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AF9E8C51AB415E100C73A45 /* SamplerCustomCell.m */; };
 		4AF9E8CA1AB4346000C73A45 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4AF9E8C91AB4346000C73A45 /* libsqlite3.dylib */; };
 		4AF9E8CE1AB434DB00C73A45 /* DBManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AF9E8CD1AB434DB00C73A45 /* DBManager.m */; };
+		CD0752181BAAAAFE00D7B72F /* RepeatCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CD0752151BAAAAFE00D7B72F /* RepeatCell.m */; };
+		CD0752191BAAAAFE00D7B72F /* DateCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CD0752171BAAAAFE00D7B72F /* DateCell.m */; };
 		CD27E6F81BA7218D00355709 /* SkillReminderCell_Tips.xib in Resources */ = {isa = PBXBuildFile; fileRef = CD27E6F71BA7218D00355709 /* SkillReminderCell_Tips.xib */; };
 		CD39CDC21B8DBC6000E61F51 /* IntroPageInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = CD39CDBA1B8DBC6000E61F51 /* IntroPageInfo.m */; };
 		CD39CDC31B8DBC6000E61F51 /* IntroPageView.m in Sources */ = {isa = PBXBuildFile; fileRef = CD39CDBC1B8DBC6000E61F51 /* IntroPageView.m */; };
@@ -1051,6 +1053,10 @@
 		4AF9E8C91AB4346000C73A45 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		4AF9E8CC1AB434DB00C73A45 /* DBManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBManager.h; sourceTree = "<group>"; };
 		4AF9E8CD1AB434DB00C73A45 /* DBManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBManager.m; sourceTree = "<group>"; };
+		CD0752141BAAAAFE00D7B72F /* RepeatCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RepeatCell.h; sourceTree = "<group>"; };
+		CD0752151BAAAAFE00D7B72F /* RepeatCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RepeatCell.m; sourceTree = "<group>"; };
+		CD0752161BAAAAFE00D7B72F /* DateCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DateCell.h; sourceTree = "<group>"; };
+		CD0752171BAAAAFE00D7B72F /* DateCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DateCell.m; sourceTree = "<group>"; };
 		CD27E6F71BA7218D00355709 /* SkillReminderCell_Tips.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SkillReminderCell_Tips.xib; path = SkillDetailCells/SkillReminderCell_Tips.xib; sourceTree = "<group>"; };
 		CD39CDB91B8DBC6000E61F51 /* IntroPageInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IntroPageInfo.h; sourceTree = "<group>"; };
 		CD39CDBA1B8DBC6000E61F51 /* IntroPageInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IntroPageInfo.m; sourceTree = "<group>"; };
@@ -1308,6 +1314,7 @@
 		043F8E931B2E391F00595D38 /* Custome Cells */ = {
 			isa = PBXGroup;
 			children = (
+				CD0752121BAAAAD400D7B72F /* New Group */,
 				2864767D1BA479B30069ECFB /* UsingSoundFeedbackCell.xib */,
 				286476751BA451A90069ECFB /* SkillFeedbackCell.h */,
 				286476761BA451A90069ECFB /* SkillFeedbackCell.m */,
@@ -2685,6 +2692,7 @@
 		4AF9E8C21AB4159C00C73A45 /* CustomClasses */ = {
 			isa = PBXGroup;
 			children = (
+				CD0752131BAAAAEB00D7B72F /* ScheduleCells */,
 				CD39CDDA1B8E435E00E61F51 /* Skill Detail Cells */,
 				CD39CDD61B8E14F400E61F51 /* Skill Cells */,
 				043F8EA21B2E967600595D38 /* DeleteCormationManager.m */,
@@ -2766,6 +2774,24 @@
 				4A9017511AB8AD7800AE4B9D /* MixerHostAudio */,
 			);
 			path = ThirdPartyClasses;
+			sourceTree = "<group>";
+		};
+		CD0752121BAAAAD400D7B72F /* New Group */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "New Group";
+			sourceTree = "<group>";
+		};
+		CD0752131BAAAAEB00D7B72F /* ScheduleCells */ = {
+			isa = PBXGroup;
+			children = (
+				CD0752141BAAAAFE00D7B72F /* RepeatCell.h */,
+				CD0752151BAAAAFE00D7B72F /* RepeatCell.m */,
+				CD0752161BAAAAFE00D7B72F /* DateCell.h */,
+				CD0752171BAAAAFE00D7B72F /* DateCell.m */,
+			);
+			name = ScheduleCells;
 			sourceTree = "<group>";
 		};
 		CD39CDCF1B8DD3E300E61F51 /* Extensions */ = {
@@ -3260,6 +3286,7 @@
 				39953FC81B7A5D66004F4990 /* ThoughtErrorCell.m in Sources */,
 				04B8F7AA1B13A57B008D54D0 /* NookDB.m in Sources */,
 				04B0F1B31AEF1138005BCEA5 /* AddressBookJsonResponse.m in Sources */,
+				CD0752181BAAAAFE00D7B72F /* RepeatCell.m in Sources */,
 				CDF03B541B9772D400FF962F /* MyOwnSoundInfo.m in Sources */,
 				043F0D711B3508430050D909 /* CTFPrevEntries.m in Sources */,
 				CD39CDF41B8EF05C00E61F51 /* DeepBreathingViewController+Table.m in Sources */,
@@ -3333,6 +3360,7 @@
 				04B8F7AD1B13A57B008D54D0 /* NookPA.m in Sources */,
 				049C74181B24A21500AE984E /* Pair.m in Sources */,
 				15156B241ABEFC52009F4489 /* AudioPanningViewController.m in Sources */,
+				CD0752191BAAAAFE00D7B72F /* DateCell.m in Sources */,
 				1550E5991AC8914B00E36C90 /* TinnitusCoachSoundCell.m in Sources */,
 				CD39CDEE1B8E44B400E61F51 /* BaseSkilDetailViewController.m in Sources */,
 				15156B3A1ABEFD1D009F4489 /* MYIntroductionView.m in Sources */,

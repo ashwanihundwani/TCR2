@@ -184,6 +184,10 @@
 {
     ScheduleViewController *favc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"ScheduleViewController"];
     favc.delegate = self;
+    
+    
+    favc.activityText = @"Try Deep Breathing";
+    
     [self.navigationController pushViewController:favc animated:YES];
 }
 
@@ -376,14 +380,14 @@
                 repeatText = [compo lastObject];
             }
             
-            inputDate = [Utils dateWithString:date inFormat:@"dd/MM/yy, hh:mm a"];
+            inputDate = [Utils dateWithString:date inFormat:@"hh:mm a, MM/dd/yy"];
             
             
-            [PersistenceStorage setObject:@"YES" andKey:@"showCancelActivityButton"];
+            [PersistenceStorage setObject:@"Yes" andKey:@"showCancelActivityButton"];
         }
         else{
             
-            [PersistenceStorage setObject:@"NO" andKey:@"showCancelActivityButton"];
+            [PersistenceStorage setObject:@"No" andKey:@"showCancelActivityButton"];
         }
 
         
@@ -397,6 +401,7 @@
         
         svc.inputDate = inputDate;
         svc.repeatText = repeatText;
+        svc.activityText = @"Try Deep Breathing";
         
         svc.delegate = self;
         [self.navigationController pushViewController:svc animated:YES];

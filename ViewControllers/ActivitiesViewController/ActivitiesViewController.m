@@ -394,12 +394,15 @@
         //  [PersistenceStorage setObject:@"Yes" andKey:@"showCancelActivityButton"];
         ScheduleViewController *svc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"ScheduleViewController"];
         svc.name = strAct;
+        svc.activityText = strAct;
         [self.navigationController pushViewController:svc animated:YES];
     }
     
     if ([buttonTitle isEqualToString:@"Cancel Scheduled Activity"]) {
         [PersistenceStorage setObject:@"Yes" andKey:@"showCancelActivityButton"];
         ScheduleViewController *svc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"ScheduleViewController"];
+        
+        svc.activityText = strAct;
         svc.name = strAct;
         [self.navigationController pushViewController:svc animated:YES];
     }

@@ -255,14 +255,14 @@
                 repeatText = [compo lastObject];
             }
             
-            inputDate = [Utils dateWithString:date inFormat:@"dd/MM/yy, hh:mm a"];
+            inputDate = [Utils dateWithString:date inFormat:@"hh:mm a, MM/dd/yy"];
             
             
-            [PersistenceStorage setObject:@"YES" andKey:@"showCancelActivityButton"];
+            [PersistenceStorage setObject:@"Yes" andKey:@"showCancelActivityButton"];
         }
         else{
             
-            [PersistenceStorage setObject:@"NO" andKey:@"showCancelActivityButton"];
+            [PersistenceStorage setObject:@"No" andKey:@"showCancelActivityButton"];
         }
         
 
@@ -274,6 +274,9 @@
         //     svc.name = strAct;
             svc.delegate= self;
         svc.inputDate = inputDate;
+        
+        svc.activityText = @"Try Guided Meditation";
+        
         svc.repeatText = repeatText;
         [self.navigationController pushViewController:svc animated:YES];
         //}
@@ -444,6 +447,7 @@
 {
     ScheduleViewController *favc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"ScheduleViewController"];
     
+    favc.activityText = @"Try Guided Meditation";
     favc.delegate = self;
     [self.navigationController pushViewController:favc animated:YES];
 }

@@ -6,14 +6,25 @@
 //  Copyright (c) 2015 Creospan. All rights reserved.
 //
 #import "MBProgressHUD.h"
+
+
+#import "DateCell.h"
+#import "RepeatCell.h"
+
+#define DATE_FORMAT @"hh:mm a, MM/dd/yy"
+
 #import "ActivitiesViewController.h"
 
 #import "ScheduleViewController.h"
 #import <EventKitUI/EventKitUI.h>
+#import "DeleteCormationManager.h"
+
+@implementation ScheduleInfo
 
 
+@end
 
-@interface ScheduleViewController ()
+@interface ScheduleViewController ()<UITableViewDataSource, UITableViewDelegate>
 {NSArray *remindersArray;
     NSString* CalenderEventID;
 }
@@ -21,16 +32,91 @@
 
 
 
-
-@property(nonatomic,strong) NSDate *startDate;
-@property(nonatomic,strong) NSDate  *endDate;
+@property(nonatomic, strong)ScheduleInfo *scheduleInfo;
 @end
 
 @implementation ScheduleViewController
+-(void)onDateSelected:(id)sender
+{
+    self.scheduleInfo.startDate = [Utils stringFromDate:self.datePicker.date inFormat:DATE_FORMAT];
+    
+    NSDate *date = [[NSDate alloc]initWithTimeInterval:3600 sinceDate:self.datePicker.date];
+    
+    self.scheduleInfo.endDate = [Utils stringFromDate:date inFormat:DATE_FORMAT];
+    
+    [self.scheduleTableView reloadData];
+}
+
+-(void)cancel
+{
+    [self.navigationController popViewControllerAnimated:YES];
+}
 
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+
+UIView *titleView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 130, 44)];
+    
+    titleView.backgroundColor = [Utils colorWithHexValue:NAV_BAR_BLACK_COLOR];
+    
+    UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 130, 44
+                                                                   )];
+    
+    Pair *pallete = [Utils getColorFontPair:eCFS_PALLETE_1];
+    
+    titleLabel.font = pallete.secondObj;
+    titleLabel.textColor = pallete.firstObj;
+    
+    titleLabel.textAlignment = NSTextAlignmentCenter;
+    
+    //titleLabel.textColor = [UIColor colorWithHexValue:@"797979"];
+    titleLabel.backgroundColor = [UIColor clearColor];
+    titleLabel.text = @"Add Event";
+    
+    [titleView addSubview:titleLabel];
+    
+    self.navigationItem.titleView = titleView;
+    
+    UILabel *backLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 0, 60, 20)];
+    
+    backLabel.text = @"Cancel";
+    
+    pallete = [Utils getColorFontPair:eCFS_PALLETE_3];
+    
+    backLabel.font = pallete.secondObj;
+    backLabel.textColor = pallete.firstObj;
+    
+    [Utils addTapGestureToView:backLabel target:self
+                      selector:@selector(cancel)];
+    
+    UIBarButtonItem *item = [[UIBarButtonItem alloc]initWithCustomView:backLabel];
+    
+    UIBarButtonItem *negativeSpacer = [[UIBarButtonItem alloc]
+                                       initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace
+                                       target:nil action:nil];
+    negativeSpacer.width = -8;
+    
+    self.navigationItem.leftBarButtonItems = [NSArray arrayWithObjects:negativeSpacer, item, nil];
+    
+    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc]initWithTitle:@"Done" style:UIBarButtonItemStyleDone target:self action:@selector(doneClicked)];
+    self.navigationItem.rightBarButtonItem = doneButton;
+    
+    self.scheduleTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    
+    self.scheduleInfo = [[ScheduleInfo alloc]init];
+    
+    self.scheduleInfo.startDate = [Utils stringFromDate:[NSDate date] inFormat:DATE_FORMAT];
+    
+    NSDate *date = [[NSDate alloc]initWithTimeInterval:3600 sinceDate:[NSDate date]];
+    
+    self.scheduleInfo.endDate = [Utils stringFromDate:date inFormat:DATE_FORMAT];
+    
+    [self.datePicker addTarget:self action:@selector(onDateSelected:) forControlEvents:UIControlEventValueChanged];
+    
+    self.datePicker.hidden = NO;
+    
+    self.scheduleInfo.remType = eRT_NEVER;
     self.title = @"Add Event";
     // Do any additional setup after loading the view.
     [self setUpView];
@@ -40,25 +126,24 @@
 }
 
 -(void)setUpView{
-    [self.datePicker setHidden:YES];
-    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc]initWithTitle:@"Done" style:UIBarButtonItemStyleDone target:self action:@selector(doneClicked)];
-    self.navigationItem.rightBarButtonItem = doneButton;
+    //[self.datePicker setHidden:YES];
     self.activityName.text = self.name;
     self.datePicker.minimumDate =[NSDate date];
     
     if(self.inputDate){
         
         NSDateFormatter *outputFormatter = [[NSDateFormatter alloc] init];
-        [outputFormatter setDateFormat:@"MMM dd,yyy hh:mm a"];
+        [outputFormatter setDateFormat:DATE_FORMAT];
         
         NSString *title = [outputFormatter stringFromDate:self.inputDate];
-        self.startDate = self.inputDate;
-        
+        self.scheduleInfo.startDate = title;
+
+        NSDate *date = [[NSDate alloc]initWithTimeInterval:3600 sinceDate:self.inputDate];
+    
+        self.scheduleInfo.endDate = [Utils stringFromDate:date inFormat:DATE_FORMAT];
         [self.startButton setTitle:title forState:UIControlStateNormal];
         //end date
-        self.endDate = [[NSDate alloc]initWithTimeInterval:3600 sinceDate:self.startDate];
-        NSString *endTitle = [outputFormatter stringFromDate:self.endDate ];
-        [self.endButton setTitle:endTitle forState:UIControlStateNormal];
+        
         self.datePicker.date = self.inputDate;
     }
     
@@ -66,6 +151,13 @@
         UIButton *repeatLabel = (UIButton *)[self.view viewWithTag:355];
         
         [repeatLabel setTitle:self.repeatText forState:UIControlStateNormal];
+        
+        if([self.repeatText isEqualToString:@"Daily"]){
+            self.scheduleInfo.remType = eRT_DAILY;
+        }
+        else if([self.repeatText isEqualToString:@"Weekly"]){
+            self.scheduleInfo.remType = eRT_WEEKLY;
+        }
     }
     
     
@@ -95,25 +187,8 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     
-    
     NSLog(@"%@",[PersistenceStorage getObjectForKey:@"skillName"]);
     
-    
-    UILabel *tlabel = [self.view viewWithTag:555];
-
-    
-if (![[PersistenceStorage getObjectForKey:@"showCancelActivityButton"] isEqualToString:@"No"])
-{
-     tlabel.hidden = NO;
-
-    
-}
-else
-{
-    tlabel.hidden  = YES;
-}
-
-
 }
 
 - (IBAction)DeleteReminder:(id)sender {
@@ -130,11 +205,11 @@ else
             
             [self.delegate didTapDelete:self];
             
-            UILabel *tlabel = [self.view viewWithTag:555];
+            [PersistenceStorage setObject:@"No" andKey:@"showCancelActivityButton"];
             
-            tlabel.hidden = true;
+            [self.scheduleTableView reloadData];
             
-            [PersistenceStorage setObject:@"NO" andKey:@"showCancelActivityButton"];
+            
         }
         
         return;
@@ -166,11 +241,11 @@ else
             
             [self.delegate didTapDelete:self];
             
-            UILabel *tlabel = [self.view viewWithTag:555];
+            [PersistenceStorage setObject:@"No" andKey:@"showCancelActivityButton"];
             
-            tlabel.hidden = true;
+            [self.scheduleTableView reloadData];
             
-            [PersistenceStorage setObject:@"NO" andKey:@"showCancelActivityButton"];
+            
         }
         
         
@@ -319,7 +394,7 @@ if (self.datePicker.hidden==0)
     
     
     
-    NSString * schDate = [formatter stringFromDate:self.datePicker.date];
+    NSString * schDate = self.scheduleInfo.startDate;
     
     
     [PersistenceStorage setObject:schDate andKey:@"localScheduledDate"];
@@ -339,7 +414,7 @@ if (self.datePicker.hidden==0)
         
         
 
-        NSString * schDate = self.startDate;
+        NSString * schDate = self.scheduleInfo.startDate;
         
      //   localScheduledDate
         
@@ -387,16 +462,16 @@ if (self.datePicker.hidden==0)
             
             
             
-            if  ([buttonTitle isEqualToString:@"Daily"]) {
+            if  (self.scheduleInfo.remType == eRT_DAILY) {
                 recurrance = [[EKRecurrenceRule alloc] initRecurrenceWithFrequency:EKRecurrenceFrequencyDaily interval:1 end:[EKRecurrenceEnd recurrenceEndWithEndDate:twoYearsFromNow]];
                 
             }
-            if ([buttonTitle isEqualToString:@"Weekly"]) {
+            else if (self.scheduleInfo.remType == eRT_WEEKLY) {
                 recurrance = [[EKRecurrenceRule alloc] initRecurrenceWithFrequency:EKRecurrenceFrequencyWeekly interval:1 end:[EKRecurrenceEnd recurrenceEndWithEndDate:twoYearsFromNow]];
                 
             }
             
-            if ([buttonTitle isEqualToString:@"None"]) {
+            else {
                 recurrance = [[EKRecurrenceRule alloc] initRecurrenceWithFrequency:EKRecurrenceFrequencyYearly interval:1 end:[EKRecurrenceEnd recurrenceEndWithEndDate:twoYearsFromNow]];
                 
                 
@@ -411,8 +486,8 @@ if (self.datePicker.hidden==0)
             NSString *TC = @"  Tinnitus Coach: ";
             event.title = [TC stringByAppendingString:self.name];
             //NSLog(@"%@",  event.title );
-            event.startDate = self.startDate ;//[NSDate date]; //today
-            event.endDate =  self.endDate;  //event.startDate dateByAddingTimeInterval:60*60];  //set 1 hour meeting
+            event.startDate = [Utils dateWithString:self.scheduleInfo.startDate inFormat:DATE_FORMAT] ;//[NSDate date]; //today
+            event.endDate =  [Utils dateWithString:self.scheduleInfo.endDate inFormat:DATE_FORMAT] ;  //event.startDate dateByAddingTimeInterval:60*60];  //set 1 hour meeting
             
             event.recurrenceRules=@[recurrance];
             
@@ -465,7 +540,7 @@ if (self.datePicker.hidden==0)
         // Schedule the notification
         
         UILocalNotification* localNotification = [[UILocalNotification alloc] init];
-        localNotification.fireDate = self.startDate ;
+        localNotification.fireDate = [Utils dateWithString:self.scheduleInfo.startDate inFormat:DATE_FORMAT] ;
         NSString *str = [NSString stringWithFormat:@"%@%@%@%@%@%@",@"\nThe '",[PersistenceStorage getObjectForKey:@"activityName"],@"' pleasant activity is scheduled now in '",[PersistenceStorage getObjectForKey:@"planName"],@"' plan.\n\n You can access and run this activity from this plan. In the plan, look for the skill 'Pleasant Activities' and the list of values: ",[PersistenceStorage getObjectForKey:@"valueName"]];
         localNotification.alertBody =  str;
         NSDictionary *infoDict = [NSDictionary dictionaryWithObjectsAndKeys:@"Pleasant Activities", @"Type", [PersistenceStorage getObjectForKey:@"planName"],@"PlanName",[PersistenceStorage getObjectForKey:@"activityName"],@"Activity",nil];
@@ -493,7 +568,7 @@ if (self.datePicker.hidden==0)
     
     if ([[PersistenceStorage getObjectForKey:@"skillName"] isEqualToString:@"Imagery"]){
         
-        NSString * schDate = self.startDate;
+        NSString * schDate = self.scheduleInfo.startDate;
         
         
         
@@ -536,16 +611,16 @@ if (self.datePicker.hidden==0)
             
             
             
-            if  ([buttonTitle isEqualToString:@"Daily"]) {
+            if  (self.scheduleInfo.remType == eRT_DAILY) {
                 recurrance = [[EKRecurrenceRule alloc] initRecurrenceWithFrequency:EKRecurrenceFrequencyDaily interval:1 end:[EKRecurrenceEnd recurrenceEndWithEndDate:twoYearsFromNow]];
                 
             }
-            if ([buttonTitle isEqualToString:@"Weekly"]) {
+            else if (self.scheduleInfo.remType == eRT_DAILY) {
                 recurrance = [[EKRecurrenceRule alloc] initRecurrenceWithFrequency:EKRecurrenceFrequencyWeekly interval:1 end:[EKRecurrenceEnd recurrenceEndWithEndDate:twoYearsFromNow]];
                 
             }
             
-            if ([buttonTitle isEqualToString:@"None"]) {
+            else {
                 recurrance = [[EKRecurrenceRule alloc] initRecurrenceWithFrequency:EKRecurrenceFrequencyYearly interval:1 end:[EKRecurrenceEnd recurrenceEndWithEndDate:twoYearsFromNow]];
                 
                 
@@ -559,8 +634,8 @@ if (self.datePicker.hidden==0)
             event.title = @"  Tinnitus Coach - Imagery Skill";///[TC stringByAppendingString:self.name];
             
             
-            event.startDate = self.startDate ;//[NSDate date]; //today
-            event.endDate =  self.endDate;  //event.startDate dateByAddingTimeInterval:60*60];  //set 1 hour meeting
+            event.startDate = [Utils dateWithString:self.scheduleInfo.startDate inFormat:DATE_FORMAT] ;//[NSDate date]; //today
+            event.endDate =  [Utils dateWithString:self.scheduleInfo.endDate inFormat:DATE_FORMAT] ; //event.startDate dateByAddingTimeInterval:60*60];  //set 1 hour meeting
             
             event.recurrenceRules=@[recurrance];
             
@@ -584,11 +659,23 @@ if (self.datePicker.hidden==0)
             
             NSString *dateWithRepeat = [PersistenceStorage getObjectForKey:@"localScheduledDate"];
             
-            if([repeatLabel.titleLabel.text isEqualToString:@"Daily"] ||
-               [repeatLabel.titleLabel.text isEqualToString:@"Weekly"])
+            NSString *text = nil;
+            
+            if(self.scheduleInfo.remType == eRT_DAILY)
             {
-                dateWithRepeat = [[[PersistenceStorage getObjectForKey:@"localScheduledDate"] stringByAppendingString:@"\n"] stringByAppendingString:repeatLabel.titleLabel.text];
+                text = @"Daily";
             }
+            else if(self.scheduleInfo.remType == eRT_WEEKLY){
+                
+                
+                text = @"Weekly";
+            }
+            
+            if(text){
+                
+                dateWithRepeat = [[[PersistenceStorage getObjectForKey:@"localScheduledDate"] stringByAppendingString:@"\n"] stringByAppendingString:text];
+            }
+            
             
             NSString *query = [NSString stringWithFormat:@"insert into MySkillReminders ('ID','SkillName','ScheduledDate','CalendarEventID','PlanName') values(1,'%@','%@','%@','%@' )",@"Imagery",dateWithRepeat,[PersistenceStorage getObjectForKey:@"lastEventIdentifer"],[PersistenceStorage getObjectForKey:@"planName"]];
             
@@ -604,7 +691,7 @@ if (self.datePicker.hidden==0)
             [self deleteExistingEventNotitfication];
         }
         UILocalNotification* localNotification = [[UILocalNotification alloc] init];
-        localNotification.fireDate = self.startDate ;
+        localNotification.fireDate = [Utils dateWithString:self.scheduleInfo.startDate inFormat:DATE_FORMAT] ;
         NSString *str = [NSString stringWithFormat:@"%@%@%@",@"\nThe 'Imagery' skill is scheduled now in '",[PersistenceStorage getObjectForKey:@"planName"],@"' plan.\n\n You can access and run this skill from this plan."];
         localNotification.alertBody =  str;
         localNotification.applicationIconBadgeNumber = [[UIApplication sharedApplication] applicationIconBadgeNumber] + 1;
@@ -626,7 +713,7 @@ if (self.datePicker.hidden==0)
     
     if ([[PersistenceStorage getObjectForKey:@"skillName"] isEqualToString:@"Guided Meditation"]){
         
-        NSString * schDate = self.startDate;
+        NSString * schDate = self.scheduleInfo.startDate;
         
         
         
@@ -666,16 +753,16 @@ if (self.datePicker.hidden==0)
             
             
             
-            if  ([buttonTitle isEqualToString:@"Daily"]) {
+            if  (self.scheduleInfo.remType == eRT_DAILY) {
                 recurrance = [[EKRecurrenceRule alloc] initRecurrenceWithFrequency:EKRecurrenceFrequencyDaily interval:1 end:[EKRecurrenceEnd recurrenceEndWithEndDate:twoYearsFromNow]];
                 
             }
-            if ([buttonTitle isEqualToString:@"Weekly"]) {
+            else if (self.scheduleInfo.remType == eRT_WEEKLY) {
                 recurrance = [[EKRecurrenceRule alloc] initRecurrenceWithFrequency:EKRecurrenceFrequencyWeekly interval:1 end:[EKRecurrenceEnd recurrenceEndWithEndDate:twoYearsFromNow]];
                 
             }
             
-            if ([buttonTitle isEqualToString:@"None"]) {
+            else {
                 recurrance = [[EKRecurrenceRule alloc] initRecurrenceWithFrequency:EKRecurrenceFrequencyYearly interval:1 end:[EKRecurrenceEnd recurrenceEndWithEndDate:twoYearsFromNow]];
                 
                 
@@ -686,8 +773,8 @@ if (self.datePicker.hidden==0)
             NSString *TC = @"Tinnitus Coach: SKILL  ";
             event.title = @"  Tinnitus Coach - Guided Meditation Skill";///[TC stringByAppendingString:self.name];
             //NSLog(@"%@",  event.title );
-            event.startDate = self.startDate ;//[NSDate date]; //today
-            event.endDate =  self.endDate;  //event.startDate dateByAddingTimeInterval:60*60];  //set 1 hour meeting
+            event.startDate = [Utils dateWithString:self.scheduleInfo.startDate inFormat:DATE_FORMAT] ;//[NSDate date]; //today
+            event.endDate =  [Utils dateWithString:self.scheduleInfo.endDate inFormat:DATE_FORMAT] ;  //event.startDate dateByAddingTimeInterval:60*60];  //set 1 hour meeting
             
             event.recurrenceRules=@[recurrance];
             
@@ -709,10 +796,21 @@ if (self.datePicker.hidden==0)
             
             NSString *dateWithRepeat = [PersistenceStorage getObjectForKey:@"localScheduledDate"];
             
-            if([repeatLabel.titleLabel.text isEqualToString:@"Daily"] ||
-               [repeatLabel.titleLabel.text isEqualToString:@"Weekly"])
+            NSString *text = nil;
+            
+            if(self.scheduleInfo.remType == eRT_DAILY)
             {
-                dateWithRepeat = [[[PersistenceStorage getObjectForKey:@"localScheduledDate"] stringByAppendingString:@"\n"] stringByAppendingString:repeatLabel.titleLabel.text];
+                text = @"Daily";
+            }
+            else if(self.scheduleInfo.remType == eRT_WEEKLY){
+                
+                
+                text = @"Weekly";
+            }
+            
+            if(text){
+                
+                dateWithRepeat = [[[PersistenceStorage getObjectForKey:@"localScheduledDate"] stringByAppendingString:@"\n"] stringByAppendingString:text];
             }
 
             
@@ -733,7 +831,7 @@ if (self.datePicker.hidden==0)
         }
 
         UILocalNotification* localNotification = [[UILocalNotification alloc] init];
-        localNotification.fireDate = self.startDate ;
+        localNotification.fireDate = [Utils dateWithString:self.scheduleInfo.startDate inFormat:DATE_FORMAT]  ;
         NSString *str = [NSString stringWithFormat:@"%@%@%@",@"\nThe 'Guided Meditation' skill is scheduled now in '",[PersistenceStorage getObjectForKey:@"planName"],@"' plan.\n\n You can access and run this skill from this plan."];
         localNotification.alertBody =  str;
         
@@ -753,7 +851,7 @@ if (self.datePicker.hidden==0)
     
     if ([[PersistenceStorage getObjectForKey:@"skillName"] isEqualToString:@"Tips for Better Sleep"]){
         
-        NSString * schDate = self.startDate;
+        NSString * schDate = self.scheduleInfo.startDate;
         
         
         
@@ -787,16 +885,16 @@ if (self.datePicker.hidden==0)
             
             
             
-            if  ([buttonTitle isEqualToString:@"Daily"]) {
+            if  (self.scheduleInfo.remType == eRT_DAILY) {
                 recurrance = [[EKRecurrenceRule alloc] initRecurrenceWithFrequency:EKRecurrenceFrequencyDaily interval:1 end:[EKRecurrenceEnd recurrenceEndWithEndDate:twoYearsFromNow]];
                 
             }
-            if ([buttonTitle isEqualToString:@"Weekly"]) {
+            else if (self.scheduleInfo.remType == eRT_WEEKLY) {
                 recurrance = [[EKRecurrenceRule alloc] initRecurrenceWithFrequency:EKRecurrenceFrequencyWeekly interval:1 end:[EKRecurrenceEnd recurrenceEndWithEndDate:twoYearsFromNow]];
                 
             }
             
-            if ([buttonTitle isEqualToString:@"None"]) {
+            else{
                 recurrance = [[EKRecurrenceRule alloc] initRecurrenceWithFrequency:EKRecurrenceFrequencyYearly interval:1 end:[EKRecurrenceEnd recurrenceEndWithEndDate:twoYearsFromNow]];
                 
                 
@@ -807,8 +905,8 @@ if (self.datePicker.hidden==0)
             NSString *TC = @"Tinnitus Coach: SKILL  ";
             event.title = @" Tinnitus Coach - Tips for Better Sleep Skill";///[TC stringByAppendingString:self.name];
             //NSLog(@"%@",  event.title );
-            event.startDate = self.startDate ;//[NSDate date]; //today
-            event.endDate =  self.endDate;  //event.startDate dateByAddingTimeInterval:60*60];  //set 1 hour meeting
+            event.startDate = [Utils dateWithString:self.scheduleInfo.startDate inFormat:DATE_FORMAT]  ;//[NSDate date]; //today
+            event.endDate =  [Utils dateWithString:self.scheduleInfo.endDate inFormat:DATE_FORMAT] ;  //event.startDate dateByAddingTimeInterval:60*60];  //set 1 hour meeting
             
             event.recurrenceRules=@[recurrance];
             
@@ -847,7 +945,7 @@ if (self.datePicker.hidden==0)
         }
 
         UILocalNotification* localNotification = [[UILocalNotification alloc] init];
-        localNotification.fireDate = self.startDate ;
+        localNotification.fireDate = [Utils dateWithString:self.scheduleInfo.startDate inFormat:DATE_FORMAT] ; ;
         NSString *str = [NSString stringWithFormat:@"%@%@%@",@"\nThe 'Tips for Better Sleep' skill is scheduled now in '",[PersistenceStorage getObjectForKey:@"planName"],@"' plan.\n\n You can access and run this skill from this plan."];
         localNotification.alertBody =  str;
         
@@ -868,7 +966,7 @@ if (self.datePicker.hidden==0)
     
     if ([[PersistenceStorage getObjectForKey:@"skillName"] isEqualToString:@"Deep Breathing"]){
         
-        NSString * schDate = self.startDate;
+        NSString * schDate = self.scheduleInfo.startDate;
         
         
         
@@ -911,16 +1009,16 @@ if (self.datePicker.hidden==0)
             
             
             
-            if  ([buttonTitle isEqualToString:@"Daily"]) {
+            if  (self.scheduleInfo.remType == eRT_DAILY) {
                 recurrance = [[EKRecurrenceRule alloc] initRecurrenceWithFrequency:EKRecurrenceFrequencyDaily interval:1 end:[EKRecurrenceEnd recurrenceEndWithEndDate:twoYearsFromNow]];
                 
             }
-            if ([buttonTitle isEqualToString:@"Weekly"]) {
+            else if (self.scheduleInfo.remType == eRT_WEEKLY) {
                 recurrance = [[EKRecurrenceRule alloc] initRecurrenceWithFrequency:EKRecurrenceFrequencyWeekly interval:1 end:[EKRecurrenceEnd recurrenceEndWithEndDate:twoYearsFromNow]];
                 
             }
             
-            if ([buttonTitle isEqualToString:@"None"]) {
+            else {
                 recurrance = [[EKRecurrenceRule alloc] initRecurrenceWithFrequency:EKRecurrenceFrequencyYearly interval:1 end:[EKRecurrenceEnd recurrenceEndWithEndDate:twoYearsFromNow]];
                 
                 
@@ -931,8 +1029,8 @@ if (self.datePicker.hidden==0)
             NSString *TC = @"Tinnitus Coach: SKILL  ";
             event.title = @"  Tinnitus Coach - Deep Breathing Skill";///[TC stringByAppendingString:self.name];
             //NSLog(@"%@",  event.title );
-            event.startDate = self.startDate ;//[NSDate date]; //today
-            event.endDate =  self.endDate;  //event.startDate dateByAddingTimeInterval:60*60];  //set 1 hour meeting
+            event.startDate = [Utils dateWithString:self.scheduleInfo.startDate inFormat:DATE_FORMAT] ;//[NSDate date]; //today
+            event.endDate =  [Utils dateWithString:self.scheduleInfo.endDate inFormat:DATE_FORMAT];  //event.startDate dateByAddingTimeInterval:60*60];  //set 1 hour meeting
             
             event.recurrenceRules=@[recurrance];
             
@@ -957,10 +1055,21 @@ if (self.datePicker.hidden==0)
             
             NSString *dateWithRepeat = [PersistenceStorage getObjectForKey:@"localScheduledDate"];
             
-            if([repeatLabel.titleLabel.text isEqualToString:@"Daily"] ||
-               [repeatLabel.titleLabel.text isEqualToString:@"Weekly"])
+            NSString *text = nil;
+            
+            if(self.scheduleInfo.remType == eRT_DAILY)
             {
-                dateWithRepeat = [[[PersistenceStorage getObjectForKey:@"localScheduledDate"] stringByAppendingString:@"\n"] stringByAppendingString:repeatLabel.titleLabel.text];
+                text = @"Daily";
+            }
+            else if(self.scheduleInfo.remType == eRT_WEEKLY){
+                
+                
+                text = @"Weekly";
+            }
+            
+            if(text){
+                
+                dateWithRepeat = [[[PersistenceStorage getObjectForKey:@"localScheduledDate"] stringByAppendingString:@"\n"] stringByAppendingString:text];
             }
             
             
@@ -982,7 +1091,7 @@ if (self.datePicker.hidden==0)
         }
         // Schedule the notification
         UILocalNotification* localNotification = [[UILocalNotification alloc] init];
-        localNotification.fireDate = self.startDate ;
+        localNotification.fireDate = [Utils dateWithString:self.scheduleInfo.startDate inFormat:DATE_FORMAT] ;
         NSString *str = [NSString stringWithFormat:@"%@%@%@",@"\nThe 'Deep Breathing' skill is scheduled now in '",[PersistenceStorage getObjectForKey:@"planName"],@"' plan.\n\n You can access and run this skill from this plan."];
         localNotification.alertBody =  str;
         
@@ -1035,17 +1144,22 @@ if (self.datePicker.hidden==0)
                         action:@selector(setDatePickerTime:)
               forControlEvents:UIControlEventValueChanged];
     NSDateFormatter *outputFormatter = [[NSDateFormatter alloc] init];
-    [outputFormatter setDateFormat:@"MMM dd,yyy hh:mm a"];
+    [outputFormatter setDateFormat:DATE_FORMAT];
     
     NSString *title = [outputFormatter stringFromDate:self.datePicker.date];
-    self.startDate = self.datePicker.date;
+    //self.startDate = self.datePicker.date;
+
+ NSString * schDate = self.scheduleInfo.startDate;
+    
+    
+    [PersistenceStorage setObject:schDate andKey:@"scheduledDate"];
  
     
     
     [self.startButton setTitle:title forState:UIControlStateNormal];
-    self.endDate = [[NSDate alloc]initWithTimeInterval:3600 sinceDate:self.datePicker.date];
-    NSString *endTitle = [outputFormatter stringFromDate:self.endDate ];
-    [self.endButton setTitle:endTitle forState:UIControlStateNormal];
+    //self.endDate = [[NSDate alloc]initWithTimeInterval:3600 sinceDate:self.datePicker.date];
+    //NSString *endTitle = [outputFormatter stringFromDate:self.endDate ];
+    //[self.endButton setTitle:endTitle forState:UIControlStateNormal];
 }
 
 
@@ -1077,37 +1191,24 @@ if (self.datePicker.hidden==0)
     UIButton *repeatLabel = (UIButton *)[self.view viewWithTag:355];
     if  ([buttonTitle isEqualToString:@"Daily"]) {
         
-    
-        
-        //
-        /*  UILabel *firstLabel = (UILabel *)[self.view viewWithTag:555];
-         firstLabel.text = @"Daily";
-         
-         [self.activityNameButton setTitle:[dict valueForKey:@"activityName"] forState:UIControlStateNormal];
-         */
-        [repeatLabel setTitle:@"Daily" forState:UIControlStateNormal];
+        self.scheduleInfo.remType = eRT_DAILY;
         //    [self.repeatLabel setTitle:@"Daily"];
     }
     if ([buttonTitle isEqualToString:@"Weekly"]) {
-        /*       UILabel *firstLabel = (UILabel *)[self.view viewWithTag:555];
-         firstLabel.text = @"Weekly";*/
         
-        //      [self.repeatLabel setTitle:@"Weekly"];
-        [repeatLabel setTitle:@"Weekly" forState:UIControlStateNormal];
-        
-        
+        self.scheduleInfo.remType = eRT_WEEKLY;
     }
     
     if ([buttonTitle isEqualToString:@"None"]) {
-        /*UILabel *firstLabel = (UILabel *)[self.view viewWithTag:555];
-         firstLabel.text = @"None";*/
-        [repeatLabel setTitle:@"None" forState:UIControlStateNormal];
-        
-        //[self.repeatLabel setTitle:@"None"];
+        self.scheduleInfo.remType = eRT_NEVER;
+      
         
         
+
     }
     
+    [self.scheduleTableView reloadData];
+
 }
 
 
@@ -1117,16 +1218,16 @@ if (self.datePicker.hidden==0)
 -(void)setDatePickerTime:(id)sender
 {
     NSDateFormatter *outputFormatter = [[NSDateFormatter alloc] init];
-    [outputFormatter setDateFormat:@"MMM dd,yyy hh:mm a"];
+    [outputFormatter setDateFormat:DATE_FORMAT];
     
     NSString *title = [outputFormatter stringFromDate:self.datePicker.date];
-    self.startDate = self.datePicker.date;
+    //self.startDate = self.datePicker.date;
     
     [self.startButton setTitle:title forState:UIControlStateNormal];
     //end date
-    self.endDate = [[NSDate alloc]initWithTimeInterval:3600 sinceDate:self.datePicker.date];
-    NSString *endTitle = [outputFormatter stringFromDate:self.endDate ];
-    [self.endButton setTitle:endTitle forState:UIControlStateNormal];
+    //self.endDate = [[NSDate alloc]initWithTimeInterval:3600 sinceDate:self.datePicker.date];
+    //NSString *endTitle = [outputFormatter stringFromDate:self.endDate ];
+    //[self.endButton setTitle:endTitle forState:UIControlStateNormal];
 }
 
 
@@ -1159,7 +1260,22 @@ if (self.datePicker.hidden==0)
     application.applicationIconBadgeNumber = 0;
 }
 
+#pragma mark UITable View Datasource
 
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    if (![[PersistenceStorage getObjectForKey:@"showCancelActivityButton"] isEqualToString:@"No"])
+    {
+        return 2;
+        
+        
+    }
+    else
+    {
+        return 1;
+    }
+
+}
 
 -(void)writeSkillReminderToggle:theMode
 
@@ -1345,6 +1461,227 @@ NSFileManager *fileManager = [NSFileManager defaultManager];
     }
     
 }
+
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    if(section == 1)
+    {
+        return 1;
+    }
+    else
+    {
+        return 4;
+    }
+}
+
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if(indexPath.section == 0)
+    {
+        if(indexPath.row == 1
+           || indexPath.row == 2)
+        {
+            DateCell *dateCell = [self.scheduleTableView dequeueReusableCellWithIdentifier:@"DateCell"];
+            
+            if(indexPath.row == 1)
+            {
+                dateCell.dateTypeLabel.text = @"Starts";
+                if(self.scheduleInfo.startDate)
+                {
+                    dateCell.dateLabel.text = self.scheduleInfo.startDate;
+                }
+                else
+                {
+                    dateCell.dateLabel.text = @"Select a Date";
+                }
+                
+            }
+            else
+            {
+                dateCell.dateTypeLabel.text = @"Ends";
+                if(self.scheduleInfo.endDate)
+                {
+                    dateCell.dateLabel.text = self.scheduleInfo.endDate;
+                }
+                else
+                {
+                    dateCell.dateLabel.text = @"Select a Date";
+                }
+            }
+            
+            return dateCell;
+        }
+        else if(indexPath.row == 3)
+        {
+            RepeatCell *repeatCell = [self.scheduleTableView dequeueReusableCellWithIdentifier:@"RepeatCell"];
+            
+            NSString *remTypeStr = @"Daily";
+            
+            if(self.scheduleInfo.remType == eRT_NEVER)
+            {
+                remTypeStr = @"Never";
+                
+            }
+            else if(self.scheduleInfo.remType == eRT_WEEKLY)
+            {
+                remTypeStr = @"Weekly";
+                
+            }
+            
+            repeatCell.repeatLabel.text = remTypeStr;
+            
+            return repeatCell;
+        }
+        else
+        {
+            
+            UITableViewCell *cell = [self.scheduleTableView dequeueReusableCellWithIdentifier:@"titleCell"];
+            
+            if(!cell)
+            {
+                
+                Pair *pallete = [Utils getColorFontPair:eCFS_PALLETE_3];
+                
+                cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"titleCell"];
+                
+                CGFloat constant = 27;
+                
+                CGFloat titleLabelHeight = [Utils heightForLabelForString:self.activityText width:276 font:pallete.secondObj];
+                
+                
+                UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(22, 15, 276, titleLabelHeight)];
+                
+                titleLabel.numberOfLines = 1000;
+                
+                titleLabel.tag = 190;
+                
+                titleLabel.text = self.activityText;
+                
+                
+                titleLabel.textColor = pallete.firstObj;
+                titleLabel.font = pallete.secondObj;
+                
+                [cell addSubview:titleLabel];
+                
+                UIView *separator = [[UIView alloc]initWithFrame:CGRectMake(22, constant + titleLabelHeight - 1, 280, 1)];
+                
+                separator.backgroundColor = [Utils colorWithHexValue:@"EEEEEE"];
+                
+                [cell addSubview:separator];
+            }
+            
+            return cell;
+        }
+    }
+    else if(indexPath.section == 1)
+    {
+        UITableViewCell *cell = [self.scheduleTableView dequeueReusableCellWithIdentifier:@"deleteCell"];
+        
+        if(!cell)
+        {
+            cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"deleteCell"];
+            
+            UIImageView *trashImage = [[UIImageView alloc]initWithFrame:CGRectMake(15, 8, 27, 27)];
+            
+            trashImage.image = [UIImage imageNamed:@"Active_Trash_Button.png"];
+            
+            [cell addSubview:trashImage];
+            
+            
+            UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake( 50, 12, 230, 20)];
+            
+            titleLabel.tag = 190;
+            titleLabel.textAlignment = NSTextAlignmentCenter;
+            
+            
+            titleLabel.text = [NSString stringWithFormat:@"Remove already existing event"];
+            
+            Pair *pallete = [Utils getColorFontPair:eCFS_PALLETE_4];
+            
+            titleLabel.textColor = pallete.firstObj;
+            titleLabel.font = pallete.secondObj;
+            
+            
+            [cell addSubview:titleLabel];
+            
+            UIView *separator = [[UIView alloc]initWithFrame:CGRectMake(0, 43, 320, 1)];
+            
+            separator.backgroundColor = [UIColor lightGrayColor];
+            
+            [cell addSubview:separator];
+        }
+        
+        return cell;
+    }
+    
+    return nil;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    if(indexPath.section == 0 && indexPath.row == 0){
+        CGFloat constant = 27;
+        
+        Pair *pallete = [Utils getColorFontPair:eCFS_PALLETE_3];
+        
+        CGFloat titleLabelHeight = [Utils heightForLabelForString:self.activityText width:276 font:pallete.secondObj];
+        
+        
+        constant += (titleLabelHeight);
+        
+        return constant;
+
+        
+    }
+    return 44;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+{
+    if(section == 0)
+    {
+        return 10;
+    }
+    return 0;
+}
+
+-(UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
+{
+    UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 10)];
+    
+    view.backgroundColor = [Utils colorWithHexValue:@"EEEEEE"];
+    
+    UIView *separator = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 1)];
+    separator.backgroundColor = [UIColor lightGrayColor];
+    
+    [view addSubview:separator];
+    
+    UIView *separator1 = [[UIView alloc]initWithFrame:CGRectMake(0, 9, 320, 1)];
+    separator1.backgroundColor = [UIColor lightGrayColor];
+    
+    [view addSubview:separator1];
+    
+    return view;
+}
+
+
+#pragma mark UITable View Delegate
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if(indexPath.section == 1)
+    {
+        [self DeleteReminder:self];
+    }
+    else if(indexPath.section == 0)
+    {
+        if(indexPath.row == 3)
+        {
+            [self repeatButtonTapped:self];
+        }
+    }
+}
+
+
 
 
 @end
