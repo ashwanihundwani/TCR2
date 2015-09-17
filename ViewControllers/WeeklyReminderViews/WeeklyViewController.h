@@ -18,6 +18,7 @@
 @property (weak, nonatomic) IBOutlet UIButton* nextBtn;
 @property (weak, nonatomic) IBOutlet UIButton* submittBtn;
 
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint* topleftconstraint;
 
 -(IBAction)barButtonPressed:(id)sender;
 

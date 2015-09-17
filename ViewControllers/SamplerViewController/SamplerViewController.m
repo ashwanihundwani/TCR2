@@ -1086,10 +1086,12 @@
     if([PersistenceStorage getIntegerForKey:@"HomeButtonTapped"] == self.tabBarController.selectedIndex ){
         navMethod = @"Navigated from Home Screen";
         [PersistenceStorage setInteger:-1 andKey:@"HomeButtonTapped"];
-    }else if(self.tabBarController.selectedIndex == 1){
+    }else if([PersistenceStorage getIntegerForKey:@"TabBarButtonTapped"] == self.tabBarController.selectedIndex){
         navMethod = @"Navigated from Nav Bar";
+        [PersistenceStorage setInteger:-1 andKey:@"TabBarButtonTapped"];
     }else{
         navMethod = nil;
+        return;
     }
     NSLog(@"navigation method is:%@ and parent controller is: %@ and isMovingToParentViewController is:%@", navMethod, [[self parentViewController] class], [[self presentingViewController] class]);
     NSString   *finalStr = [NSString stringWithFormat:@"\r%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@",dateString,timeString,type,navMethod,str,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil];

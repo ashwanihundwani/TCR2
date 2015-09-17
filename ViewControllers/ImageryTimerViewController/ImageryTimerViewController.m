@@ -54,23 +54,26 @@
     
     [timer invalidate];
     
-
+    
 }
 
 
 -(void)viewDidAppear:(BOOL)animated
 {
-  //  if (timer) {
- //   [timer invalidate];
-//timer = nil;
+    //  if (timer) {
+    //   [timer invalidate];
+    //timer = nil;
+    
+    
+    [PersistenceStorage setObject:@"Babbling Brook" andKey:@"skillDetail2"];
     
     
     [[self.view viewWithTag:220] setHidden:NO];
     [[self.view viewWithTag:77] setHidden:NO];
-
+    
     
     [PersistenceStorage setObject:@300 andKey:@"timerDuration"];
-
+    
     
     UILabel *firstLabel = (UILabel *)[self.view viewWithTag:77];
     firstLabel.text = @"Babbling Brook";
@@ -83,15 +86,15 @@
     
     
     
-    }
-    
-  //  timer = [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(updateCounter:) userInfo:nil repeats:YES];
+}
+
+//  timer = [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(updateCounter:) userInfo:nil repeats:YES];
 
 
-    
-    
- //
-    
+
+
+//
+
 
 
 
@@ -108,15 +111,15 @@ int secondsLeft;
     [[self.view viewWithTag:3] setHidden:NO];
     [[self.view viewWithTag:220] setHidden:YES];
     
- [[self.view viewWithTag:77] setHidden:NO];
+    [[self.view viewWithTag:77] setHidden:NO];
     
     
     
     [super viewDidLoad];
-      timer = [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(updateCounter:) userInfo:nil repeats:YES];
+    timer = [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(updateCounter:) userInfo:nil repeats:YES];
     
     NSError *sessionError = nil;
-     [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:&sessionError];
+    [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:&sessionError];
     
     
     self.audioPlayer.numberOfLoops = 100;
@@ -126,7 +129,7 @@ int secondsLeft;
     self.audioPlayer = [[AVAudioPlayer alloc]initWithContentsOfURL:url error:nil];
     [self.audioPlayer prepareToPlay];
     
-    }
+}
 
 
 
@@ -153,32 +156,32 @@ int secondsLeft;
         //NSInteger ti = (NSInteger)interval;
         NSInteger seconds = ti % 60;
         NSInteger minutes = (ti / 60) % 60;
-     //   NSInteger hours = (ti / 3600);
+        //   NSInteger hours = (ti / 3600);
         NSString *displayTime = [NSString stringWithFormat:@"%02ld:%02ld %@",  (long)minutes, (long)seconds,@"min" ] ;
         
-     //    NSString *B = @" min";
-       // self.startPointLabel.text = [NSString stringWithFormat:@"%@%@",A,B];
-
+        //    NSString *B = @" min";
+        // self.startPointLabel.text = [NSString stringWithFormat:@"%@%@",A,B];
         
         
         
-myCounterLabel.text = displayTime;
+        
+        myCounterLabel.text = displayTime;
         
     }
     else
     {
-myCounterLabel.text= @"00:00 min";
-             [self.audioPlayer stop];
+        myCounterLabel.text= @"00:00 min";
+        [self.audioPlayer stop];
         
         NSLog(@"%@",@"Stopped");
         
-            [[self.view viewWithTag:77] setHidden:NO];
+        [[self.view viewWithTag:77] setHidden:NO];
         
-        }
     }
-    
-    
-    
+}
+
+
+
 
 
 
@@ -186,16 +189,16 @@ myCounterLabel.text= @"00:00 min";
 
 
 - (IBAction)countdownTimer:(id)sender {
-
+    
     [[self.view viewWithTag:220] setHidden:YES];
     [[self.view viewWithTag:77] setHidden:NO];
     [[self.view viewWithTag:1] setHidden:YES];
     
     [[self.view viewWithTag:2] setHidden:YES];
     
-
     
-  //  secondsLeft = hours = minutes = seconds = 0;
+    
+    //  secondsLeft = hours = minutes = seconds = 0;
     
     NSString *tDuration = [PersistenceStorage getObjectForKey:@"timerDuration"];
     
@@ -210,14 +213,14 @@ myCounterLabel.text= @"00:00 min";
     
     NSDate *currentDate1 = [NSDate date];
     self.startDate = [currentDate1 dateByAddingTimeInterval:tDurationDouble];
-
-   
+    
+    
     self.audioPlayer.numberOfLoops = -1;
-
+    
     [self.audioPlayer play];
-
+    
     [self updateCounter];
-
+    
 }
 
 
@@ -236,11 +239,11 @@ myCounterLabel.text= @"00:00 min";
     
     NSString *cancelTitle = @"Cancel";
     UIActionSheet *actionSheetAudio = [[UIActionSheet alloc]
-                                  initWithTitle:actionSheetTitle
-                                  delegate:self
-                                  cancelButtonTitle:cancelTitle
-                                   destructiveButtonTitle:nil
-                                  otherButtonTitles:other0, other1,other2,other3,other4, nil];
+                                       initWithTitle:actionSheetTitle
+                                       delegate:self
+                                       cancelButtonTitle:cancelTitle
+                                       destructiveButtonTitle:nil
+                                       otherButtonTitles:other0, other1,other2,other3,other4, nil];
     
     
     
@@ -250,7 +253,7 @@ myCounterLabel.text= @"00:00 min";
 }
 
 
- //strAct = [dict valueForKey:@"activityName"];
+//strAct = [dict valueForKey:@"activityName"];
 //[PersistenceStorage setObject:strAct andKey:@"activityName"];
 
 
@@ -263,32 +266,32 @@ myCounterLabel.text= @"00:00 min";
 
 - (IBAction)selectTime:(id)sender {
     
-
+    
     
     NSString *actionSheetTitle = @"Select Time"; //Action Sheet Title
     NSString *other0 = @"5 min"; //Action Sheet Button Titles
     NSString *other1 = @"10 min";
     NSString *other2 = @"20 min";
-
+    
     NSString *other3 = @"30 min";
-
+    
     NSString *other4 = @"60 min";
-
+    
     NSString *other5 = @"20 min";
-
+    
     NSString *cancelTitle = @"Cancel";
     
     
     
     
     UIActionSheet *actionSheetTime = [[UIActionSheet alloc]
-                                       initWithTitle:actionSheetTitle
-                                       delegate:self
-                                       cancelButtonTitle:cancelTitle
+                                      initWithTitle:actionSheetTitle
+                                      delegate:self
+                                      cancelButtonTitle:cancelTitle
                                       destructiveButtonTitle:nil
-                                       otherButtonTitles:other0, other1,other2,other3,other4, nil];
+                                      otherButtonTitles:other0, other1,other2,other3,other4, nil];
     [actionSheetTime setTag:@2];
-
+    
     [actionSheetTime showInView:self.view];
 }
 
@@ -297,8 +300,8 @@ myCounterLabel.text= @"00:00 min";
 - (void)actionSheet:(UIActionSheet *)actionSheetTimer clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     timer = nil;
-
-     //Get the name of the current pressed button
+    
+    //Get the name of the current pressed button
     NSString *buttonTitle = [actionSheetTimer buttonTitleAtIndex:buttonIndex];
     
     //   NSString * theValue = [(UILabel*)[self viewWithTag:t200] text];
@@ -319,15 +322,14 @@ myCounterLabel.text= @"00:00 min";
             //
             UILabel *firstLabel = (UILabel *)[self.view viewWithTag:77];
             firstLabel.text = @"Babbling Brook";
-             [_img setImage:[UIImage imageNamed: @"BabblingBrook.png"]];
-
+            [_img setImage:[UIImage imageNamed: @"BabblingBrook.png"]];
+            
             NSString *beasMonoPath  =[[NSBundle mainBundle]pathForResource:@"BabblingBrook.mp3"  ofType:nil];
             NSURL *url = [NSURL URLWithString:beasMonoPath];
             self.audioPlayer = [[AVAudioPlayer alloc]initWithContentsOfURL:url error:nil];
             
             [PersistenceStorage setObject:@"Babbling Brook" andKey:@"skillDetail2"];
             self.audioPlayer.numberOfLoops = 100;
-
             
         }
         
@@ -339,13 +341,12 @@ myCounterLabel.text= @"00:00 min";
             //
             UILabel *firstLabel = (UILabel *)[self.view viewWithTag:77];
             firstLabel.text = @"Crackling Fire";
-             [_img setImage:[UIImage imageNamed: @"Fire.png"]];
+            [_img setImage:[UIImage imageNamed: @"Fire.png"]];
             NSString *beasMonoPath  =[[NSBundle mainBundle]pathForResource:@"CracklingFire.mp3"  ofType:nil];
             NSURL *url = [NSURL URLWithString:beasMonoPath];
             self.audioPlayer = [[AVAudioPlayer alloc]initWithContentsOfURL:url error:nil];
             [PersistenceStorage setObject:@"Crackling Fire" andKey:@"skillDetail2"];
             self.audioPlayer.numberOfLoops = 100;
-
         }
         
         
@@ -359,13 +360,12 @@ myCounterLabel.text= @"00:00 min";
             UILabel *firstLabel = (UILabel *)[self.view viewWithTag:77];
             firstLabel.text = @"Frogs";
             [_img setImage:[UIImage imageNamed: @"Frogs.png"]];
-
+            
             NSString *beasMonoPath  =[[NSBundle mainBundle]pathForResource:@"frog.mp3"  ofType:nil];
             NSURL *url = [NSURL URLWithString:beasMonoPath];
             self.audioPlayer = [[AVAudioPlayer alloc]initWithContentsOfURL:url error:nil];
             [PersistenceStorage setObject:@"Frogs" andKey:@"skillDetail2"];
             self.audioPlayer.numberOfLoops = 100;
-
         }
         
         
@@ -376,14 +376,14 @@ myCounterLabel.text= @"00:00 min";
             //
             UILabel *firstLabel = (UILabel *)[self.view viewWithTag:77];
             firstLabel.text = @"Ocean Waves";
-             [_img setImage:[UIImage imageNamed: @"Ocean.png"]];
-
+            [_img setImage:[UIImage imageNamed: @"Ocean.png"]];
+            
             NSString *beasMonoPath  =[[NSBundle mainBundle]pathForResource:@"OceanWaves.mp3"  ofType:nil];
             NSURL *url = [NSURL URLWithString:beasMonoPath];
             self.audioPlayer = [[AVAudioPlayer alloc]initWithContentsOfURL:url error:nil];
             [PersistenceStorage setObject:@"Ocean Waves" andKey:@"skillDetail2"];
             self.audioPlayer.numberOfLoops = 100;
-
+            
         }
         
         
@@ -394,14 +394,14 @@ myCounterLabel.text= @"00:00 min";
             //
             UILabel *firstLabel = (UILabel *)[self.view viewWithTag:77];
             firstLabel.text = @"Pink Noise";
-             [_img setImage:[UIImage imageNamed: @"PinkNoise.png"]];
-
+            [_img setImage:[UIImage imageNamed: @"PinkNoise.png"]];
+            
             NSString *beasMonoPath  =[[NSBundle mainBundle]pathForResource:@"PinkNoise.mp3"  ofType:nil];
             NSURL *url = [NSURL URLWithString:beasMonoPath];
             self.audioPlayer = [[AVAudioPlayer alloc]initWithContentsOfURL:url error:nil];
             [PersistenceStorage setObject:@"Pink Noise" andKey:@"skillDetail2"];
             self.audioPlayer.numberOfLoops = 100;
-
+            
         }
         
         
@@ -417,128 +417,128 @@ myCounterLabel.text= @"00:00 min";
     
     
     if ([actionSheetTimer.title isEqualToString:@"Select Time"]) {
-    
-    
-     
-
-
-    
-    if  ([buttonTitle isEqualToString:@"5 min"]) {
         
-        [PersistenceStorage setObject:@300 andKey:@"timerDuration"];
-        myCounterLabel.text= @"05:00 min";
-
         
-        // secondsLeft1 = [PersistenceStorage getObjectForKey:@"timerDuration"];
-    }
-
-    
-    
-    if  ([buttonTitle isEqualToString:@"10 min"]) {
         
-        [PersistenceStorage setObject:@600 andKey:@"timerDuration"];
-        myCounterLabel.text= @"10:00 min";
-
         
-        // secondsLeft1 = [PersistenceStorage getObjectForKey:@"timerDuration"];
-    }
-
-    
-    
-    if  ([buttonTitle isEqualToString:@"20 min"]) {
         
-        [PersistenceStorage setObject:@1200 andKey:@"timerDuration"];
-        myCounterLabel.text= @"20:00 min";
-
         
-        // secondsLeft1 = [PersistenceStorage getObjectForKey:@"timerDuration"];
-    }
-
-    
-    
-    if  ([buttonTitle isEqualToString:@"30 min"]) {
+        if  ([buttonTitle isEqualToString:@"5 min"]) {
+            
+            [PersistenceStorage setObject:@300 andKey:@"timerDuration"];
+            myCounterLabel.text= @"05:00 min";
+            
+            
+            // secondsLeft1 = [PersistenceStorage getObjectForKey:@"timerDuration"];
+        }
         
-        [PersistenceStorage setObject:@1800 andKey:@"timerDuration"];
-        myCounterLabel.text= @"30:00 min";
-
         
-        // secondsLeft1 = [PersistenceStorage getObjectForKey:@"timerDuration"];
-    }
-
+        
+        if  ([buttonTitle isEqualToString:@"10 min"]) {
+            
+            [PersistenceStorage setObject:@600 andKey:@"timerDuration"];
+            myCounterLabel.text= @"10:00 min";
+            
+            
+            // secondsLeft1 = [PersistenceStorage getObjectForKey:@"timerDuration"];
+        }
+        
+        
+        
+        if  ([buttonTitle isEqualToString:@"20 min"]) {
+            
+            [PersistenceStorage setObject:@1200 andKey:@"timerDuration"];
+            myCounterLabel.text= @"20:00 min";
+            
+            
+            // secondsLeft1 = [PersistenceStorage getObjectForKey:@"timerDuration"];
+        }
+        
+        
+        
+        if  ([buttonTitle isEqualToString:@"30 min"]) {
+            
+            [PersistenceStorage setObject:@1800 andKey:@"timerDuration"];
+            myCounterLabel.text= @"30:00 min";
+            
+            
+            // secondsLeft1 = [PersistenceStorage getObjectForKey:@"timerDuration"];
+        }
+        
         
         
         if  ([buttonTitle isEqualToString:@"60 min"]) {
             
             [PersistenceStorage setObject:@3600 andKey:@"timerDuration"];
             myCounterLabel.text= @"60:00 min";
-
+            
             
             // secondsLeft1 = [PersistenceStorage getObjectForKey:@"timerDuration"];
         }
-
+        
+        
+        
+        
+        // if (!buttonIndex== 6)
+        //{
+        
+        
+        
+        //     [[self.view viewWithTag:1] setHidden:YES];
+        //      [[self.view viewWithTag:2] setHidden:YES];
+        
+        //     [[self.view viewWithTag:3] setHidden:YES];
+        //     [[self.view viewWithTag:77] setHidden:NO];
+        [[self.view viewWithTag:220] setHidden:NO];
+        
+        
+        
+        
+        
+        // }
+        
+        
+    }
     
     
-    
-   // if (!buttonIndex== 6)
-     //{
-
-         
-            
-       //     [[self.view viewWithTag:1] setHidden:YES];
-      //      [[self.view viewWithTag:2] setHidden:YES];
-            
-       //     [[self.view viewWithTag:3] setHidden:YES];
-       //     [[self.view viewWithTag:77] setHidden:NO];
-            [[self.view viewWithTag:220] setHidden:NO];
-        
-        
-         
-        
-        
-       // }
-        
-     
-}
-
-
 }
 
 
 
 -(void)writeTimerSoundSelected
 {
-
-NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
-NSString *documentsDirectory = [paths objectAtIndex:0];
-NSString *documentTXTPath = [documentsDirectory stringByAppendingPathComponent:@"TinnitusCoachUsageData.csv"];
-
-NSDate *date = [NSDate date];
-NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
-dateFormatter.dateFormat = @"MM/dd/yy";
-NSString *dateString = [dateFormatter stringFromDate: date];
-NSDateFormatter *timeFormatter = [[NSDateFormatter alloc]init];
-timeFormatter.dateFormat = @"HH:mm:ss";
-NSString *timeString = [timeFormatter stringFromDate: date];
-NSString *type = @"Skill";
- NSString *str = @"Provided a Rating";
-
-NSString   *finalStr = [NSString stringWithFormat:@"\r%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@",dateString,timeString,type,str,nil,[PersistenceStorage getObjectForKey:@"planName"],[PersistenceStorage getObjectForKey:@"situationName"],[PersistenceStorage getObjectForKey:@"skillName"],@"Timer for Practice",[PersistenceStorage getObjectForKey:@"skillDetail2"],nil,nil,nil,nil,nil,nil];
-
+    
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    NSString *documentTXTPath = [documentsDirectory stringByAppendingPathComponent:@"TinnitusCoachUsageData.csv"];
+    
+    NSDate *date = [NSDate date];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
+    dateFormatter.dateFormat = @"MM/dd/yy";
+    NSString *dateString = [dateFormatter stringFromDate: date];
+    NSDateFormatter *timeFormatter = [[NSDateFormatter alloc]init];
+    timeFormatter.dateFormat = @"HH:mm:ss";
+    NSString *timeString = [timeFormatter stringFromDate: date];
+    NSString *type = @"Skill";
+    NSString *str = @"Provided a Rating";
+    
+    NSString   *finalStr = [NSString stringWithFormat:@"\r%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@",dateString,timeString,type,str,nil,[PersistenceStorage getObjectForKey:@"planName"],[PersistenceStorage getObjectForKey:@"situationName"],[PersistenceStorage getObjectForKey:@"skillName"],@"Timer for Practice",[PersistenceStorage getObjectForKey:@"skillDetail2"],nil,nil,nil,nil,nil,nil];
+    
     NSLog(@"%@",finalStr);
     
-NSFileManager *fileManager = [NSFileManager defaultManager];
-if(![fileManager fileExistsAtPath:documentTXTPath])
-{
-    [finalStr writeToFile:documentTXTPath atomically:YES];
-}
-else
-{
-    NSFileHandle *myHandle = [NSFileHandle fileHandleForWritingAtPath:documentTXTPath];
-    [myHandle seekToEndOfFile];
-    [myHandle writeData:[finalStr dataUsingEncoding:NSUTF8StringEncoding]];
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    if(![fileManager fileExistsAtPath:documentTXTPath])
+    {
+        [finalStr writeToFile:documentTXTPath atomically:YES];
+    }
+    else
+    {
+        NSFileHandle *myHandle = [NSFileHandle fileHandleForWritingAtPath:documentTXTPath];
+        [myHandle seekToEndOfFile];
+        [myHandle writeData:[finalStr dataUsingEncoding:NSUTF8StringEncoding]];
+        
+    }
     
-}
-
 }
 
 
@@ -565,10 +565,10 @@ else
     
     [[self.view viewWithTag:3] setHidden:NO];
     [[self.view viewWithTag:220] setHidden:YES];
-
+    
     
     [super viewWillAppear:animated];
-
+    
     [self.tabBarController.tabBar setHidden:YES] ;
     UIBarButtonItem *doneButton = [[UIBarButtonItem alloc]initWithTitle:@"Done" style:UIBarButtonItemStyleDone target:self action:@selector(doneTapped)];
     //  self.navigationItem.rightBarButtonItems = @[doneButton];
@@ -589,8 +589,13 @@ else
 //done button
 -(void)doneTapped{
     [[self.view viewWithTag:77] setHidden:YES];
-
-  //  secondsLeft = @0;
+    
+    //  secondsLeft = @0;
+    
+    [self writeTimerSoundSelected];
+    
+    
+    
     SkillRatingsViewController *ratingsView = [[UIStoryboard storyboardWithName:@"Main"bundle:nil]instantiateViewControllerWithIdentifier:@"SkillRatingsViewController"];
     ratingsView.skillSection = @"Sounds";
     ratingsView.skillDetail = self.name;
@@ -717,8 +722,8 @@ else
         else
         {
             self.audioPlayer.numberOfLoops = -1;
-
-             [self.audioPlayer play];
+            
+            [self.audioPlayer play];
             [self.playPauseButton setTitle:@"Pause" forState:UIControlStateNormal];
             self.updateTimer = [NSTimer scheduledTimerWithTimeInterval:.01 target:self selector:@selector(updateCurrentTime) userInfo:self.audioPlayer repeats:YES];
             
@@ -758,7 +763,7 @@ else
 
 - (IBAction)sliderChanged:(id)sender {
     // Fast skip the music when user scroll the UISlider
-   // [self.audioPlayer stop];
+    // [self.audioPlayer stop];
     [self.audioPlayer setCurrentTime:self.audioSeekSlider.value];
     [self.audioPlayer prepareToPlay];
     [self.audioPlayer play];
@@ -776,8 +781,8 @@ else
 {
     [super viewWillDisappear:animated];
     timer = nil;
-
-[timer invalidate];
+    
+    [timer invalidate];
     
     
     [self.audioPlayer stop]; // Or pause
