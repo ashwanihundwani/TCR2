@@ -13,6 +13,9 @@
 #import "Utils.h"
 #import "TipsReminder.h"
 
+#define PREVIOUS_SKILL_KEY @"previousSkillName"
+#define PREVIOUS_PLAN_KEY @"previousPlanName"
+#define PREVIOUS_SITUATION_KEY @"previousSituationName"
 @interface AppDelegate ()
 
 @property(atomic, assign) BOOL isLaunchWithNotification;
@@ -180,6 +183,17 @@
         
         tipsRemShowing = TRUE;
         [self showTipsReminderView:^(){
+            
+//            [PersistenceStorage setObject:[PersistenceStorage getObjectForKey:PREVIOUS_PLAN_KEY] andKey:@"planName"];
+//            
+//            [PersistenceStorage setObject:[PersistenceStorage getObjectForKey:PREVIOUS_SITUATION_KEY] andKey:@"situationName"];
+//            
+//            
+//            [PersistenceStorage setObject:[PersistenceStorage getObjectForKey:PREVIOUS_SKILL_KEY] andKey:@"skillName"];
+            
+            
+            
+            //[self showWeeklyReminderView];
             
             NSArray *notificationArray = [application scheduledLocalNotifications];
             
@@ -448,6 +462,7 @@
     mySleepsViewCotroller.dismissBlock = block;
     
     UIWindow *currentWindow = [[UIApplication sharedApplication].windows firstObject];
+   
     [currentWindow.rootViewController presentViewController:mySleepsViewCotroller animated:YES completion:nil];
     
 }

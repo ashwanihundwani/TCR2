@@ -207,7 +207,10 @@
     {    [PersistenceStorage setObject:@"" andKey:@"Referer"];
         [PersistenceStorage setObject:@"No" andKey:@"ItsMondayShowWR"];
         
-        [self dismissViewControllerAnimated:YES completion:^{}];
+        [self dismissViewControllerAnimated:YES completion:^{
+        
+            self.dismissBlock();
+        }];
         
     }
 

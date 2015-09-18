@@ -14,6 +14,11 @@
 #import "MyTipsHeaderView.h"
 #import "NewPlanAddedViewController.h"
 #import "EditTipsCell.h"
+#import "SkillRatingsViewController.h"
+
+#define PREVIOUS_SKILL_KEY @"previousSkillName"
+#define PREVIOUS_PLAN_KEY @"previousPlanName"
+#define PREVIOUS_SITUATION_KEY @"previousSituationName"
 
 @interface TipsReminder ()<UITableViewDataSource, UITableViewDelegate>
 {
@@ -26,6 +31,7 @@
 @property (weak, nonatomic) IBOutlet UITableView *tableViewOutlet;
 
 @property (nonatomic, strong) NSMutableArray *numOfTips;
+
 @end
 
 @implementation TipsReminder
@@ -40,6 +46,8 @@
     _allMyTipsDetailDict = [NSMutableDictionary dictionaryWithDictionary:[self gettingMyTips]];
     _numOfTips = [NSMutableArray arrayWithArray:[_allMyTipsDetailDict allKeys]];
     _selectedMyTipsArray = [NSMutableArray new];
+    
+    
     [_tableViewOutlet reloadData];
 }
 
@@ -319,8 +327,6 @@
         //        UIWindow *currentWindow = [[UIApplication sharedApplication].windows firstObject];
         //        [currentWindow.rootViewController presentViewController:mySleepsViewCotroller animated:YES completion:nil];
         
-        self.dismissBlock();
-        
         
         NSDateFormatter* day = [[NSDateFormatter alloc] init];
         [day setDateFormat: @"EEEE"];
@@ -341,10 +347,27 @@ else
     
 }
     
+        
+        
+//        [PersistenceStorage setObject:[PersistenceStorage getObjectForKey:@"skillName"] andKey:PREVIOUS_SKILL_KEY];
+//        
+//        [PersistenceStorage setObject:[PersistenceStorage getObjectForKey:@"planName"] andKey:PREVIOUS_PLAN_KEY];
+//        
+//        
+//        [PersistenceStorage setObject:[PersistenceStorage getObjectForKey:@"situationName"] andKey:PREVIOUS_SITUATION_KEY];
+//        
+//        [PersistenceStorage setObject:@"Tips for Better Sleep" andKey:@"skillName"];
+//        //TODO - plan & situation name.
+        
+        
         UIStoryboard *storyBoard = [ UIStoryboard storyboardWithName:@"Main" bundle:nil];
-        UIViewController *mySleepsViewCotroller = [storyBoard instantiateViewControllerWithIdentifier:@"SkillRatingsViewController"];
+        SkillRatingsViewController *mySleepsViewCotroller = [storyBoard instantiateViewControllerWithIdentifier:@"SkillRatingsViewController"];
+        
+        mySleepsViewCotroller.dismissBlock = self.dismissBlock;
         UIWindow *currentWindow = [[UIApplication sharedApplication].windows firstObject];
-        [currentWindow.rootViewController presentViewController:mySleepsViewCotroller animated:YES completion:nil];
+        [currentWindow.rootViewController presentViewController:mySleepsViewCotroller animated:YES completion:^{
+            
+        }];
         
         
         
@@ -531,6 +554,38 @@ else
     
     NSArray *allMyTips=[NSArray arrayWithArray:[self.dbManager loadDataFromDB:query]];
     
+//    NSMutableString *planIDs = [NSMutableString string];
+//    
+//    NSMutableSet *distinctPlanIDs = [NSMutableSet set];
+//    
+//
+//    for(NSDictionary *dict in allMyTips){
+//        
+//        [distinctPlanIDs addObject:[dict objectForKey:@"planID"]];
+//    }
+//    
+//    NSInteger count = distinctPlanIDs.count;
+//    
+//    for(NSString *planID in distinctPlanIDs){
+//        
+//        [planIDs appendString:@"'"];
+//        [planIDs appendString:planID];
+//        [planIDs appendString:@"'"];
+//        
+//        count--;
+//        
+//        if (count > 0) {
+//            [planIDs appendString:@","];
+//        }
+//    }
+//    
+//    
+//    NSString *query1 = [NSString stringWithFormat:@"select * from MyPlans where ID IN %@",planIDs];
+//    
+//    NSArray *plans = [self.dbManager loadDataFromDB:query1];
+    
+    
+    
     return [self setAllTipsDetails:allMyTips];
 }
 -(NSMutableDictionary *)setAllTipsDetails:(NSArray *)allMyTips
@@ -645,6 +700,8 @@ else
 {
     _allMyTipsDetailDict = [NSMutableDictionary dictionaryWithDictionary:[self gettingMyTips]];
     _numOfTips = [NSMutableArray arrayWithArray:[_allMyTipsDetailDict allKeys]];
+    
+    
     [_tableViewOutlet reloadData];
 }
 

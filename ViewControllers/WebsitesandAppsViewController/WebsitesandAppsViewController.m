@@ -183,7 +183,7 @@
     doneLabel.textColor = pallete.firstObj;
     
     [Utils addTapGestureToView:doneLabel target:self
-                      selector:@selector(addWebsitesandApps)];
+                      selector:@selector(addTapped:)];
     
     [self.view addSubview:doneLabel];
     

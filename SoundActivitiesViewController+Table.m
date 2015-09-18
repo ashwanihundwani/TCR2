@@ -431,7 +431,8 @@
     
 }
 
--(void)writeModifiedResource{
+-(void)writeModifiedResource:(NSString *)itemTitle
+{
     //  NSURL *path = [self getUrlOfFiles:@"TinnitusCoachUsageData.csv"];
     
     
@@ -450,7 +451,7 @@
     NSString *optionName = [PersistenceStorage getObjectForKey:@"optionName"];
     NSString *str = [PersistenceStorage getObjectForKey:@"actionTypeForResource"];
     
-    NSString   *finalStr = [NSString stringWithFormat:@"\r%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@",dateString,timeString,type,str,nil,[PersistenceStorage getObjectForKey:@"planName"],[PersistenceStorage getObjectForKey:@"situationName"],[PersistenceStorage getObjectForKey:@"skillName"],[PersistenceStorage getObjectForKey:@"skillDetail1"],[PersistenceStorage getObjectForKey:@"skillDetail2"],[PersistenceStorage getObjectForKey:@"skillDetail3"],nil,nil,nil,nil,nil];
+    NSString   *finalStr = [NSString stringWithFormat:@"\r%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@",dateString,timeString,type,str,nil,[PersistenceStorage getObjectForKey:@"planName"],[PersistenceStorage getObjectForKey:@"situationName"],[PersistenceStorage getObjectForKey:@"skillName"],[PersistenceStorage getObjectForKey:@"skillDetail1"],[PersistenceStorage getObjectForKey:@"skillDetail2"],itemTitle,nil,nil,nil,nil,nil];
     
     NSFileManager *fileManager = [NSFileManager defaultManager];
     if(![fileManager fileExistsAtPath:documentTXTPath])
@@ -552,7 +553,8 @@
         [PersistenceStorage setObject:_soundTypeName andKey:@"skillDetail1"];
         [PersistenceStorage setObject:@"Other Devices" andKey:@"skillDetail2"];
         
-        [self writeModifiedResource];
+        [self writeModifiedResource:info.title];
+        
         NSString *query = [NSString stringWithFormat:@"delete from MyDevices where deviceID=%@     and planID = %@", [item dbIdentifier], [PersistenceStorage getObjectForKey:@"currentPlanID"]];
         
         BOOL isDone = [self.dbManagerMySounds executeQuery:query];
@@ -588,7 +590,7 @@
         [PersistenceStorage setObject:_soundTypeName andKey:@"skillDetail1"];
         [PersistenceStorage setObject:@"Websites & Apps" andKey:@"skillDetail2"];
 
-        [self writeModifiedResource];
+        [self writeModifiedResource:info.title];
         
         NSString *query = [NSString stringWithFormat:@"delete from MyWebsites where websiteID=%@     and planID = %@", [item dbIdentifier], [PersistenceStorage getObjectForKey:@"currentPlanID"]];
         
