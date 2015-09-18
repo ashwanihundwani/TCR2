@@ -16,6 +16,8 @@
 #define PREVIOUS_SKILL_KEY @"previousSkillName"
 #define PREVIOUS_PLAN_KEY @"previousPlanName"
 #define PREVIOUS_SITUATION_KEY @"previousSituationName"
+#define PREVIOUS_SKILL_DETAIL_1 @"prevSkillDetail1"
+
 @interface AppDelegate ()
 
 @property(atomic, assign) BOOL isLaunchWithNotification;
@@ -184,12 +186,14 @@
         tipsRemShowing = TRUE;
         [self showTipsReminderView:^(){
             
-//            [PersistenceStorage setObject:[PersistenceStorage getObjectForKey:PREVIOUS_PLAN_KEY] andKey:@"planName"];
-//            
-//            [PersistenceStorage setObject:[PersistenceStorage getObjectForKey:PREVIOUS_SITUATION_KEY] andKey:@"situationName"];
-//            
-//            
-//            [PersistenceStorage setObject:[PersistenceStorage getObjectForKey:PREVIOUS_SKILL_KEY] andKey:@"skillName"];
+            [PersistenceStorage setObject:[PersistenceStorage getObjectForKey:PREVIOUS_PLAN_KEY] andKey:@"planName"];
+            
+            [PersistenceStorage setObject:[PersistenceStorage getObjectForKey:PREVIOUS_SITUATION_KEY] andKey:@"situationName"];
+            
+            
+            [PersistenceStorage setObject:[PersistenceStorage getObjectForKey:PREVIOUS_SKILL_KEY] andKey:@"skillName"];
+            
+            [PersistenceStorage setObject:[PersistenceStorage getObjectForKey:PREVIOUS_SKILL_DETAIL_1] andKey:@"skillDetail1"];
             
             
             

@@ -19,6 +19,7 @@
 #define PREVIOUS_SKILL_KEY @"previousSkillName"
 #define PREVIOUS_PLAN_KEY @"previousPlanName"
 #define PREVIOUS_SITUATION_KEY @"previousSituationName"
+#define PREVIOUS_SKILL_DETAIL_1 @"prevSkillDetail1"
 
 @interface TipsReminder ()<UITableViewDataSource, UITableViewDelegate>
 {
@@ -349,15 +350,90 @@ else
     
         
         
-//        [PersistenceStorage setObject:[PersistenceStorage getObjectForKey:@"skillName"] andKey:PREVIOUS_SKILL_KEY];
-//        
-//        [PersistenceStorage setObject:[PersistenceStorage getObjectForKey:@"planName"] andKey:PREVIOUS_PLAN_KEY];
-//        
-//        
-//        [PersistenceStorage setObject:[PersistenceStorage getObjectForKey:@"situationName"] andKey:PREVIOUS_SITUATION_KEY];
-//        
-//        [PersistenceStorage setObject:@"Tips for Better Sleep" andKey:@"skillName"];
-//        //TODO - plan & situation name.
+        [PersistenceStorage setObject:[PersistenceStorage getObjectForKey:@"skillName"] andKey:PREVIOUS_SKILL_KEY];
+        
+        [PersistenceStorage setObject:[PersistenceStorage getObjectForKey:@"planName"] andKey:PREVIOUS_PLAN_KEY];
+        
+        
+        [PersistenceStorage setObject:[PersistenceStorage getObjectForKey:@"situationName"] andKey:PREVIOUS_SITUATION_KEY];
+        
+        [PersistenceStorage setObject:[PersistenceStorage getObjectForKey:@"skillDetail1"] andKey:PREVIOUS_SKILL_DETAIL_1];
+        
+        NSString *query = @"select * from My_Tips";
+        
+        NSArray *allMyTips=[NSArray arrayWithArray:[self.dbManager loadDataFromDB:query]];
+        
+        NSMutableString *planIDs = [NSMutableString string];
+        
+        NSMutableSet *distinctPlanIDs = [NSMutableSet set];
+        
+        
+        for(NSDictionary *dict in allMyTips){
+            
+            [distinctPlanIDs addObject:[dict objectForKey:@"planID"]];
+        }
+        
+        NSInteger count = distinctPlanIDs.count;
+        
+        for(NSString *planID in distinctPlanIDs){
+            
+            [planIDs appendString:@"'"];
+            [planIDs appendString:planID];
+            [planIDs appendString:@"'"];
+            
+            count--;
+            
+            if (count > 0) {
+                [planIDs appendString:@","];
+            }
+        }
+        
+        
+        NSString *query1 = [NSString stringWithFormat:@"select * from MyPlans where ID IN (%@)",planIDs];
+        
+        NSArray *plans = [self.dbManager loadDataFromDB:query1];
+        
+        NSMutableString *planNames = [NSMutableString string];
+        
+        count = plans.count;
+        for(NSDictionary *plan in plans){
+            [planNames appendString:[plan objectForKey:@"planName"]];
+            count--;
+            if(count > 0){
+                [planNames appendString:@"|"];
+            }
+        }
+        
+        NSMutableString *string = [NSMutableString string];
+        
+        NSInteger outerCount = _allMyTipsDetailDict.count;
+        
+        for(NSString *detail in [_allMyTipsDetailDict allKeys]){
+            
+            outerCount--;
+            NSArray *items = [_allMyTipsDetailDict objectForKey:detail];
+            
+            count = items.count;
+            
+            for(NSDictionary *dict in items){
+                
+                [string appendString:[dict objectForKey:@"category"]];
+                count--;
+                if(count > 0 || outerCount > 0){
+                    [string appendString:@"|"];
+                }
+
+            }
+        }
+        
+        [PersistenceStorage setObject:@"Tips for Better Sleep" andKey:@"skillName"];
+        
+        [PersistenceStorage setObject:planNames andKey:@"planName"];
+        
+        [PersistenceStorage setObject:planNames andKey:@"situationName"];
+        
+        [PersistenceStorage setObject:string andKey:@"skillDetail1"];
+        //TODO - plan & situation name.
         
         
         UIStoryboard *storyBoard = [ UIStoryboard storyboardWithName:@"Main" bundle:nil];
@@ -553,37 +629,6 @@ else
     NSString *query = @"select * from My_Tips";
     
     NSArray *allMyTips=[NSArray arrayWithArray:[self.dbManager loadDataFromDB:query]];
-    
-//    NSMutableString *planIDs = [NSMutableString string];
-//    
-//    NSMutableSet *distinctPlanIDs = [NSMutableSet set];
-//    
-//
-//    for(NSDictionary *dict in allMyTips){
-//        
-//        [distinctPlanIDs addObject:[dict objectForKey:@"planID"]];
-//    }
-//    
-//    NSInteger count = distinctPlanIDs.count;
-//    
-//    for(NSString *planID in distinctPlanIDs){
-//        
-//        [planIDs appendString:@"'"];
-//        [planIDs appendString:planID];
-//        [planIDs appendString:@"'"];
-//        
-//        count--;
-//        
-//        if (count > 0) {
-//            [planIDs appendString:@","];
-//        }
-//    }
-//    
-//    
-//    NSString *query1 = [NSString stringWithFormat:@"select * from MyPlans where ID IN %@",planIDs];
-//    
-//    NSArray *plans = [self.dbManager loadDataFromDB:query1];
-    
     
     
     return [self setAllTipsDetails:allMyTips];
