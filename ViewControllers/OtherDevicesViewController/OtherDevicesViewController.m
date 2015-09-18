@@ -518,7 +518,38 @@
     NSString *optionName = [PersistenceStorage getObjectForKey:@"optionName"];
     NSString *str = [PersistenceStorage getObjectForKey:@"actionTypeForResource"];
     
-    NSString   *finalStr = [NSString stringWithFormat:@"\r%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@",dateString,timeString,type,str,nil,[PersistenceStorage getObjectForKey:@"planName"],[PersistenceStorage getObjectForKey:@"situationName"],[PersistenceStorage getObjectForKey:@"skillName"],self.soundType,[PersistenceStorage getObjectForKey:@"skillDetail2"],[PersistenceStorage getObjectForKey:@"skillDetail3"],nil,nil,nil,nil,nil];
+    NSMutableString *strItems = [NSMutableString string];
+    
+    
+    NSInteger index = 0;
+    
+    NSMutableArray *filteredItems = [NSMutableArray array];
+    
+    for(NSNumber *item in self.checkFlagArray){
+        
+        if([item boolValue]){
+            
+            [filteredItems addObject:[NSNumber numberWithInteger:index]];
+        }
+        
+        index++;
+    }
+    
+    NSInteger count = filteredItems.count;
+    
+    for(NSNumber *item in filteredItems){
+        
+        NSString *obj = [[otherDevicesSoundsArray objectAtIndex:[item integerValue]] valueForKey:@"deviceName"];
+        
+        [strItems appendString:obj];
+        
+        count--;
+        
+        if(count > 0)
+            [strItems appendString:@"|"];
+    }
+    
+    NSString   *finalStr = [NSString stringWithFormat:@"\r%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@",dateString,timeString,type,str,nil,[PersistenceStorage getObjectForKey:@"planName"],[PersistenceStorage getObjectForKey:@"situationName"],[PersistenceStorage getObjectForKey:@"skillName"],self.soundType,[PersistenceStorage getObjectForKey:@"skillDetail2"],strItems,nil,nil,nil,nil,nil];
     
     NSFileManager *fileManager = [NSFileManager defaultManager];
     if(![fileManager fileExistsAtPath:documentTXTPath])
