@@ -4291,18 +4291,18 @@ With this app, you can make plans for using sound when your tinnitus is botherin
                                 <nil key="highlightedColor"/>
                                 <variation key="default">
                                     <mask key="constraints">
-                                        <exclude reference="uAk-dE-6Ow"/>
                                         <exclude reference="TVR-zb-AsC"/>
-                                        <exclude reference="ny0-eI-vtM"/>
                                         <exclude reference="hAi-Bv-TE6"/>
+                                        <exclude reference="ny0-eI-vtM"/>
+                                        <exclude reference="uAk-dE-6Ow"/>
                                     </mask>
                                 </variation>
                                 <variation key="heightClass=regular-widthClass=compact">
                                     <mask key="constraints">
-                                        <include reference="uAk-dE-6Ow"/>
                                         <include reference="TVR-zb-AsC"/>
-                                        <include reference="ny0-eI-vtM"/>
                                         <include reference="hAi-Bv-TE6"/>
+                                        <include reference="ny0-eI-vtM"/>
+                                        <include reference="uAk-dE-6Ow"/>
                                     </mask>
                                 </variation>
                             </label>
@@ -6381,7 +6381,8 @@ With this app, you can make plans for using sound when your tinnitus is botherin
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="C4N-T2-TyD">
-                                                    <rect key="frame" x="20" y="5" width="32" height="32"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="50" height="42"/>
+                                                    <inset key="imageEdgeInsets" minX="14" minY="8" maxX="10" maxY="8"/>
                                                     <state key="normal" image="trashcan.png">
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
@@ -6973,8 +6974,9 @@ With this app, you can make plans for using sound when your tinnitus is botherin
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="iNd-dq-i62" id="g8L-F0-rhD">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c25-qj-kY6">
-                                                    <rect key="frame" x="20" y="5" width="32" height="32"/>
+                                                <button opaque="NO" contentMode="center" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c25-qj-kY6">
+                                                    <rect key="frame" x="0.0" y="5" width="50" height="42"/>
+                                                    <inset key="imageEdgeInsets" minX="18" minY="8" maxX="8" maxY="8"/>
                                                     <state key="normal" backgroundImage="trashcan.png">
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>

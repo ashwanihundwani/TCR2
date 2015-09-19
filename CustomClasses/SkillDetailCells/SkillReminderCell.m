@@ -68,7 +68,7 @@
 }
 
 
--(void)onTrash:(id)sender
+-(IBAction)onTrash:(id)sender
 {
     if(self.delegate
        && [self.delegate respondsToSelector:@selector(didTapTrash:)])

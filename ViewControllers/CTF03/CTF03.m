@@ -200,8 +200,12 @@ NSLog(@"''%@",emotionsArray);
 
     UIButton* deleteBtn = (UIButton*)[cell viewWithTag:1089];
     if(deleteBtn == nil){
-        deleteBtn = [[UIButton alloc] initWithFrame:CGRectMake(4, cell.frame.origin.y+8, 25, 25)];
-        [deleteBtn setBackgroundImage:[UIImage imageNamed:@"Active_Trash_Button.png"] forState:UIControlStateNormal];
+        deleteBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, cell.frame.origin.y, 44, 44)];
+        [deleteBtn setImage:[UIImage imageNamed:@"Active_Trash_Button.png"] forState:UIControlStateNormal];
+        
+       // deleteBtn.titleEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 0);
+        deleteBtn.imageEdgeInsets = UIEdgeInsetsMake(6, 8, 8, 10);
+        
         deleteBtn.tag = 1089;
         [deleteBtn addTarget:self action:@selector(deleteBtnPressed:) forControlEvents:UIControlEventTouchUpInside];
         [cell addSubview:deleteBtn];
@@ -209,7 +213,7 @@ NSLog(@"''%@",emotionsArray);
     }
     UILabel* emotioTextLabel = (UILabel*)[cell viewWithTag:1090];
     if(emotioTextLabel == nil){
-        emotioTextLabel = [[UILabel alloc] initWithFrame:CGRectMake(35, cell.frame.origin.y+5, 200, 35)];
+        emotioTextLabel = [[UILabel alloc] initWithFrame:CGRectMake(40, cell.frame.origin.y+5, 195, 35)];
         emotioTextLabel.tag = 1090;
         [cell addSubview:emotioTextLabel];
     }

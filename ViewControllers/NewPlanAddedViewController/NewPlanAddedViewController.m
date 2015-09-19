@@ -637,15 +637,24 @@
         
         [cell addSubview:accessory];
         
+        UIView *deleteContainer = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 45, 45)];
+        
+        
+        
         UIImageView *deleteButton = [[UIImageView alloc]initWithFrame:CGRectMake(13, 8, 27, 27)];
+        
+        [deleteContainer addSubview:deleteButton];
+        
+        deleteContainer.tag = indexPath.row;
+        
+        [Utils addTapGestureToView:deleteContainer target:self selector:@selector(onDelete:)];
         
         [deleteButton setImage:[UIImage imageNamed:@"Active_Trash_Button.png"]];
         
-        deleteButton.tag = indexPath.row;
+        //deleteButton.tag = indexPath.row;
         
-        [Utils addTapGestureToView:deleteButton target:self selector:@selector(onDelete:)];
-        
-        [cell addSubview:deleteButton];
+        [cell addSubview:deleteContainer];
+
         
         UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(55 , 11, 210, 20)];
         

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7702" systemVersion="14A389" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7702" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
     </dependencies>
@@ -26,11 +26,12 @@
                         </variation>
                     </view>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TSO-xY-Y6s">
-                        <rect key="frame" x="15" y="13" width="27" height="27"/>
+                        <rect key="frame" x="0.0" y="0.0" width="50" height="44"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="27" id="Xd8-aQ-bee"/>
-                            <constraint firstAttribute="width" constant="27" id="qM6-PR-ji1"/>
+                            <constraint firstAttribute="height" constant="44" id="Xd8-aQ-bee"/>
+                            <constraint firstAttribute="width" constant="50" id="qM6-PR-ji1"/>
                         </constraints>
+                        <inset key="imageEdgeInsets" minX="15" minY="12" maxX="7" maxY="4"/>
                         <state key="normal" title="Button" image="Active_Trash_Button.png">
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
@@ -39,14 +40,14 @@
                         </connections>
                     </button>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="u353.png" translatesAutoresizingMaskIntoConstraints="NO" id="XMC-8B-QvR">
-                        <rect key="frame" x="60" y="13" width="27" height="27"/>
+                        <rect key="frame" x="63" y="13" width="27" height="27"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="27" id="Ard-Nx-4bW"/>
                             <constraint firstAttribute="height" constant="27" id="HbT-lC-ZYE"/>
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="100" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7zp-hc-6R4">
-                        <rect key="frame" x="110" y="16" width="172" height="21"/>
+                        <rect key="frame" x="113" y="16" width="169" height="21"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="21" id="Trx-7Q-MWS"/>
                         </constraints>
@@ -75,10 +76,10 @@
                     <constraint firstAttribute="centerY" secondItem="XMC-8B-QvR" secondAttribute="centerY" constant="-5" id="7gl-0C-ZvP"/>
                     <constraint firstItem="7zp-hc-6R4" firstAttribute="leading" secondItem="XMC-8B-QvR" secondAttribute="trailing" constant="23" id="9Ct-hn-vfq"/>
                     <constraint firstAttribute="trailing" secondItem="bHL-Hb-ue5" secondAttribute="trailing" constant="17" id="9jH-0r-Ig5"/>
-                    <constraint firstItem="XMC-8B-QvR" firstAttribute="leading" secondItem="TSO-xY-Y6s" secondAttribute="trailing" constant="18" id="BNY-zW-Dv0"/>
+                    <constraint firstItem="XMC-8B-QvR" firstAttribute="leading" secondItem="TSO-xY-Y6s" secondAttribute="trailing" constant="13" id="BNY-zW-Dv0"/>
                     <constraint firstAttribute="trailing" secondItem="bHL-Hb-ue5" secondAttribute="trailing" constant="11" id="FSU-uM-BcL"/>
                     <constraint firstAttribute="centerY" secondItem="bHL-Hb-ue5" secondAttribute="centerY" id="GC4-65-rwu"/>
-                    <constraint firstItem="TSO-xY-Y6s" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="JgS-PK-zqp"/>
+                    <constraint firstItem="TSO-xY-Y6s" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="JgS-PK-zqp"/>
                     <constraint firstItem="i2H-5t-myg" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="JjC-NT-yUW"/>
                     <constraint firstAttribute="centerY" secondItem="7zp-hc-6R4" secondAttribute="centerY" constant="-5" id="Vp4-e5-iIM"/>
                     <constraint firstAttribute="centerX" secondItem="7zp-hc-6R4" secondAttribute="centerX" id="Wf0-0f-EmF"/>
@@ -90,6 +91,7 @@
                     <constraint firstAttribute="centerX" secondItem="bHL-Hb-ue5" secondAttribute="centerX" id="gOK-cR-5Ad"/>
                     <constraint firstItem="bHL-Hb-ue5" firstAttribute="leading" secondItem="7zp-hc-6R4" secondAttribute="trailing" constant="8" id="gyh-5a-t0M"/>
                     <constraint firstAttribute="centerY" secondItem="TSO-xY-Y6s" secondAttribute="centerY" id="iBF-ka-7H3"/>
+                    <constraint firstItem="TSO-xY-Y6s" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="tKF-nB-jfG"/>
                     <constraint firstAttribute="centerY" secondItem="bHL-Hb-ue5" secondAttribute="centerY" constant="-5" id="wC7-M7-rGv"/>
                     <constraint firstItem="7zp-hc-6R4" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="16" id="y02-0l-xzR"/>
                     <constraint firstItem="7zp-hc-6R4" firstAttribute="bottom" secondItem="i2H-5t-myg" secondAttribute="bottom" constant="-7" id="zLJ-iH-E7Q"/>
@@ -97,6 +99,7 @@
                 </constraints>
                 <variation key="default">
                     <mask key="constraints">
+                        <exclude reference="43H-kA-MSq"/>
                         <exclude reference="iBF-ka-7H3"/>
                         <exclude reference="1gu-xP-UO0"/>
                         <exclude reference="Vp4-e5-iIM"/>
