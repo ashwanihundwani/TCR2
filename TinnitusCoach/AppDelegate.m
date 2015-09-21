@@ -12,6 +12,7 @@
 #import "HomeNewViewController.h"
 #import "Utils.h"
 #import "TipsReminder.h"
+#import "TCNSURLProtocol.h"
 
 
 @interface AppDelegate ()
@@ -24,6 +25,9 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    
+    
+    [NSURLProtocol registerClass:[TCNSURLProtocol class]];
     // check if it is first time launch after app install
     if(![PersistenceStorage getBoolForKey:@"isTinnitusCoachAppFirstLaunchDone"]){
         [PersistenceStorage setBool:YES andKey:@"isTinnitusCoachAppFirstLaunchDone"];

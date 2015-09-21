@@ -36,7 +36,16 @@
             $(document).ready(function(){
                               $.ui.launch();
                               });
-            </script>
+                </script>
+            <script>
+                    
+                    function accessedArticle(article)
+                    {
+                        window.location.href = "tcappweb1://" + "Accessed%20Article/"+ "Imagery/" + article;
+                        
+                        //alert(window.location.href);
+                    }
+                </script>
     </head>
     <body vlink="black" link="black">
         <font size="3">
@@ -46,21 +55,21 @@
               <div class="panel" title="Imagery" id="listview" data-footer="none" selected="true">
                   <ul class="list">
                       <b>
-                    <a href="#item1">
+                    <a href="#item1" onclick="accessedArticle('Introduction%20to%20%27Imagery%27')">
                       <div class="list-div"><li>
                       Introduction to 'Imagery'
                       </li>
                       <img class="next-chevron" align="right" src="Next-Arrow.png"></img>
                     </div>
                     </a>
-                    <a href="#item2">
+                    <a href="#item2" onclick="accessedArticle('%27Imagery%27%20instructions%20-%20steps%201-4')">
                       <div class="list-div"><li>
                       'Imagery' instructions - steps 1-4
                       </li>
                       <img class="next-chevron" align="right" src="Next-Arrow.png"></img>
                     </div>
                     </a>
-                    <a href="#item3">
+                    <a href="#item3" onclick="accessedArticle('%27Imagery%27%20instructions%20-%20steps%205-7')">
                       <div class="list-div"><li>
                       'Imagery' instructions - steps 5-7
                     </li>

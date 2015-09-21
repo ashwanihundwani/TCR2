@@ -37,6 +37,16 @@
             $.ui.launch();
         });
     </script>
+    
+    <script>
+        
+        function accessedArticle(article)
+        {
+            window.location.href = "tcappweb1://" + "Accessed%20Article/"+ "Pleasant%20Activities/" + article;
+            
+            //alert(window.location.href);
+        }
+    </script>
 </head>
 <body vlink="black" link="black">
 <font size="3">
@@ -46,7 +56,7 @@
         <div class="panel" title="Pleasant Activities" id="listview" data-footer="none" selected="true">
             <ul class="list">
                 <b>
-                <a href="#item1">
+                <a href="#item1" onclick="accessedArticle('Introduction%20to%20Pleasant%20Activities')">
                 <div class="list-div">
                   <li>
                     Introduction to Pleasant Activities
@@ -55,7 +65,7 @@
                 </div>
                 </a>
 
-                <a href="#item2">
+                <a href="#item2"  onclick="accessedArticle('Planning')">
                   <div class="list-div">
                     <li>
                     Planning
@@ -64,7 +74,7 @@
                   </div>
                   </a>
 
-                <a href="#item3">
+                <a href="#item3" onclick="accessedArticle('Values')">
                 <div class="list-div">
                   <li>
                     Values
@@ -73,7 +83,7 @@
                 </div>
                 </a>
 
-                 <a href="#item4">
+                 <a href="#item4" onclick="accessedArticle('Step%201:%20Make%20a%20list%20of%20pleasant%20activities')">
                  <div class="list-div">
                    <li>
                      Step 1: Make a list of pleasant activities
@@ -82,7 +92,7 @@
                  </div>
                  </a>
 
-                <a href="#item5">
+<a href="#item5" onclick="accessedArticle('Step%202:%20Plan%20pleasant%20activities')">
                 <div class="list-div">
                   <li>
                     Step 2: Plan pleasant activities
@@ -91,7 +101,7 @@
                 </div>
                 </a>
 
-                <a href="#item6">
+                <a href="#item6" onclick="accessedArticle('Step%203:%20Evaluate')">
                 <div class="list-div">
                   <li>
                     Step 3: Evaluate

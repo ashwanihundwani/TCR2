@@ -38,6 +38,15 @@
                               $.ui.launch();
                               });
             </script>
+        <script>
+            
+            function accessedArticle(article)
+            {
+                window.location.href = "tcappweb1://" + "Accessed%20Article/"+ "Resources/" + article;
+                
+                //alert(window.location.href);
+            }
+        </script>
     </head>
     <body vlink="black" link="black" bgcolor="white">
         <font size="3">
@@ -50,16 +59,16 @@
                         
                         <ul class="list">
                             <b>
-                            <a href="#item1"><div class="list-div"><li>Resources</li>
+                            <a href="#item1" onclick="accessedArticle('Resources')"><div class="list-div"><li>Resources</li>
                                 <img class="next-chevron" align="right" src="Next-Arrow.png"></img>
                             </div></a>
-                            <a href="#item2"><div class="list-div"><li>Information about tinnitus</li>
+                            <a href="#item2" onclick="accessedArticle('Information%20about%20tinnitus')"><div class="list-div"><li>Information about tinnitus</li>
                                 <img class="next-chevron" align="right" src="Next-Arrow.png"></img>
                             </div></a>
-                            <a href="#item3"><div class="list-div"><li>Websites and apps with sound</li>
+                            <a href="#item3" onclick="accessedArticle('Websites%20and%20apps%20with%20sound')"><div class="list-div"><li>Websites and apps with sound</li>
                                 <img class="next-chevron" align="right" src="Next-Arrow.png"></img>
                             </div></a>
-                            <a href="#item4"><div class="list-div"><li>Sleep and mental health information</li>
+                            <a href="#item4" onclick="accessedArticle('Sleep%20and%20mental%20health%20information')"><div class="list-div"><li>Sleep and mental health information</li>
                                 <img class="next-chevron" align="right" src="Next-Arrow.png"></img>
                             </div></a>
                         </b></ul>

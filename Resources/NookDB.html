@@ -36,6 +36,16 @@
                               $.ui.launch();
                               });
             </script>
+        
+        <script>
+            
+            function accessedArticle(article)
+            {
+                window.location.href = "tcappweb1://" + "Accessed%20Article/"+ "Deep%20Breathing/" + article;
+                
+                //alert(window.location.href);
+            }
+        </script>
     </head>
 
         <body vlink="black" link="black" bgcolor="white">
@@ -46,7 +56,7 @@
                  <!--List View Page-->
                 <div class="panel" title="Deep Breathing" id="listview" data-footer="none" selected="true">
                     <ul class="list">
-                      <a href="#item1">
+                      <a href="#item1" onclick="accessedArticle('Introduction%20to%20%27Deep%20Breathing%27')">
                       <div class="list-div">
                           <b>
                         <li>
@@ -55,7 +65,7 @@
                         <img class="next-chevron" align="right" src="Next-Arrow.png"></img>
                       </div>
                       </a>
-                      <a href="#item2">
+                      <a href="#item2" onclick="accessedArticle('%27Deep%20Breathing%27%20instructions%20-%20steps%201-4')">
                         <div class="list-div">
                           <li>
                           'Deep Breathing' instructions - steps 1-4
@@ -63,7 +73,7 @@
                           <img class="next-chevron" align="right" src="Next-Arrow.png"></img>
                         </div>
                         </a>
-                        <a href="#item3">
+                        <a href="#item3" onclick="accessedArticle('%27Deep%20Breathing%27%20instructions%20-%20steps%205-9')">
                         <div class="list-div">
                           <li>
                             'Deep Breathing' instructions - steps 5-9

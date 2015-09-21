@@ -48,37 +48,37 @@
         <div class="panel" title="Tips for Better Sleep" id="listview" data-footer="none" selected="true">
             <ul class="list">
                 <b>
-               <a href="#item1">
+               <a href="#item1" onclick="accessedArticle('Introduction%20to%20%27Tips%20for%20Better%20Sleep%27')">
                  <div class="list-div" id="tin-basics">
                  <li>Introduction to 'Tips for Better Sleep'</li>
                  <img class="next-chevron" align="right" src="Next-Arrow.png"></img>
                </div>
                </a>
-                <a href="#item2">
+                <a href="#item2" onclick="accessedArticle('Sleep%20timing')">
                   <div class="list-div" id="tin-basics">
                   <li>Sleep timing</li>
                   <img class="next-chevron" align="right" src="Next-Arrow.png"></img>
                 </div>
                 </a>
-                <a href="#item3">
+                <a href="#item3" onclick="accessedArticle('Sleep%20behavior')">
                   <div class="list-div" id="tin-basics">
                   <li>Sleep behavior</li>
                   <img class="next-chevron" align="right" src="Next-Arrow.png"></img>
                 </div>
                 </a>
-                <a href="#item4">
+                <a href="#item4" onclick="accessedArticle('Sleep%20environment')">
                   <div class="list-div" id="tin-basics">
                   <li>Sleeping environment</li>
                   <img class="next-chevron" align="right" src="Next-Arrow.png"></img>
                 </div>
                 </a>
-                <a href="#item5">
+                <a href="#item5" onclick="accessedArticle('Relaxing%20before%20bedtime')">
                   <div class="list-div" id="tin-basics">
                   <li>Relaxing before bedtime</li>
                   <img class="next-chevron" align="right" src="Next-Arrow.png"></img>
                 </div>
                 </a>
-                <a href="#item6">
+                <a href="#item6"onclick="accessedArticle('Food,%20nicotine,%20alcohol%20and%20caffeine')">
                   <div class="list-div" id="tin-basics">
                   <li>Food, nicotine, alcohol and caffeine</li>
                   <img class="next-chevron" align="right" src="Next-Arrow.png"></img>
@@ -274,5 +274,14 @@
 
 
 </div>
+ <script>
+     
+     function accessedArticle(article)
+     {
+         window.location.href = "tcappweb1://" + "Accessed%20Article/"+ "Tips%20for%20Better%20Sleep/" + article;
+         
+         //alert(window.location.href);
+     }
+ </script>
 </body>
 </html>

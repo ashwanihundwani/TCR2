@@ -15,6 +15,9 @@
     if ([theRequest.URL.scheme caseInsensitiveCompare:@"tcappweb"] == NSOrderedSame) {
         return YES;
     }
+    else if([theRequest.URL.scheme caseInsensitiveCompare:@"tcappweb1"] == NSOrderedSame){
+        return YES;
+    }
     return NO;
 }
 
@@ -29,23 +32,54 @@
     NSString* urlString = [self.request.URL absoluteString];
     NSArray* temp = [urlString componentsSeparatedByString:@"://"];
     if (temp.count > 1) {
-        NSString* paramString = [temp objectAtIndex:1];
-        NSArray* params = [paramString componentsSeparatedByString:@"/"];
-        NSString* activity, *itemName;
-        for (int i=0; i < params.count; ++i) {
-            switch (i) {
-                case 0:
-                    activity = [[params objectAtIndex:i] stringByReplacingOccurrencesOfString:@"-" withString:@" "];
-                    break;
-                case 1:
-                    itemName = [[params objectAtIndex:i] stringByReplacingOccurrencesOfString:@"-" withString:@" "];
-                    break;
-                default:
-                    break;
+        
+        NSString *protocol = [temp objectAtIndex:0];
+        NSString* activity, *itemName, *skillName;
+        
+        if([protocol isEqualToString:@"tcappweb1"]){
+            NSString* paramString = [temp objectAtIndex:1];
+            NSArray* params = [paramString componentsSeparatedByString:@"/"];
+            for (int i=0; i < params.count; ++i) {
+                switch (i) {
+                    case 0:
+                        activity = [[[params objectAtIndex:i] stringByReplacingOccurrencesOfString:@"%20" withString:@" "] stringByReplacingOccurrencesOfString:@"%27" withString:@"'"];
+                        break;
+                    case 1:
+                        skillName = [[[params objectAtIndex:i] stringByReplacingOccurrencesOfString:@"%20" withString:@" "] stringByReplacingOccurrencesOfString:@"%27" withString:@"'"];
+                        break;
+                    case 2:
+                        itemName = [[[params objectAtIndex:i] stringByReplacingOccurrencesOfString:@"%20" withString:@" "] stringByReplacingOccurrencesOfString:@"%27" withString:@"'"];
+                        break;
+                        
+                    default:
+                        break;
+                }
             }
+
+        }
+        else{
+            NSString* paramString = [temp objectAtIndex:1];
+            NSArray* params = [paramString componentsSeparatedByString:@"/"];
+            for (int i=0; i < params.count; ++i) {
+                switch (i) {
+                    case 0:
+                        activity = [[params objectAtIndex:i] stringByReplacingOccurrencesOfString:@"-" withString:@" "];
+                        break;
+                    case 1:
+                        itemName = [[params objectAtIndex:i] stringByReplacingOccurrencesOfString:@"-" withString:@" "];
+                        break;
+                    case 2:
+                        skillName = [[params objectAtIndex:i] stringByReplacingOccurrencesOfString:@"-" withString:@" "];
+                        break;
+                        
+                    default:
+                        break;
+                }
+            }
+
         }
         
-        [self logDatawithActivity:activity andItem:itemName];
+        [self logDatawithActivity:activity andItem:itemName skill:skillName];
     }
     
 }
@@ -55,7 +89,7 @@
     NSLog(@"loading stopped");
 }
 
--(void)logDatawithActivity:(NSString*)activity andItem:(NSString*)item{
+-(void)logDatawithActivity:(NSString*)activity andItem:(NSString*)item skill:(NSString *)skill{
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0];
     NSString *documentTXTPath = [documentsDirectory stringByAppendingPathComponent:@"TinnitusCoachUsageData.csv"];
@@ -70,7 +104,14 @@
     NSString *type = @"Learning Nook";
     
     NSString *str = activity;
+    
     NSString   *finalStr = [NSString stringWithFormat:@"\r%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@",dateString,timeString,type,str,item,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil];
+    
+    if(skill){
+        
+        finalStr = [NSString stringWithFormat:@"\r%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@",dateString,timeString,type,str,skill,item,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil];
+    }
+    
     
     NSFileManager *fileManager = [NSFileManager defaultManager];
     if(![fileManager fileExistsAtPath:documentTXTPath])

@@ -46,6 +46,16 @@
         <script>
         
             </script>
+        
+        <script>
+            
+            function accessedArticle(article)
+            {
+                window.location.href = "tcappweb1://" + "Accessed%20Article/"+ "Guided%20Meditation/" + article;
+                
+                //alert(window.location.href);
+            }
+        </script>
     </head>
 
     <body vlink="black" link="black" bgcolor="white">
@@ -57,19 +67,19 @@
                     <div class="panel" title="Guided Meditation" id="listview" data-footer="none" selected="true">
                         <ul class="list">
                             <b>
-                            <a href="#item1"><div class="list-div"><li>What is mindfulness?</li>
+                            <a href="#item1" onclick="accessedArticle('What%20is%20mindfulness?')"><div class="list-div"><li>What is mindfulness?</li>
                             <img class="next-chevron" align="right" src="Next-Arrow.png"></img>
                             </div></a>
-                            <a href="#item2"><div class="list-div"><li>How can mindfulness help someone with tinnitus?</li>
+                            <a href="#item2" onclick="accessedArticle('How%20can%20mindfulness%20help%20someone%20with%20tinnitus?')"><div class="list-div"><li>How can mindfulness help someone with tinnitus?</li>
                             <img class="next-chevron" align="right" src="Next-Arrow.png"></img>
                             </div></a>
-                            <a href="#item3"><div class="list-div"><li>How to: everyday mindfulness</li>
+                            <a href="#item3" onclick="accessedArticle('How%20to: everyday%20mindfulness')"><div class="list-div"><li>How to: everyday mindfulness</li>
                             <img class="next-chevron" align="right" src="Next-Arrow.png"></img>
                             </div></a>
-                             <a href="#item4"><div class="list-div"><li>How to: mindful breathing</li>
+                             <a href="#item4" onclick="accessedArticle('How%20to: mindful%20breathing')"><div class="list-div"><li>How to: mindful breathing</li>
                              <img class="next-chevron" align="right" src="Next-Arrow.png"></img>
                              </div></a>
-                            <a href="#item5"><div class="list-div"><li>What is guided meditation?</li>
+                            <a href="#item5" onclick="accessedArticle('What%20is%20guided%20meditation?')"><div class="list-div"><li>What is guided meditation?</li>
                             <img class="next-chevron" align="right" src="Next-Arrow.png"></img>
                             </div></a>
                             </b>

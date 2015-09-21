@@ -49,25 +49,25 @@
 
          <ul class="list">
              <b>
-            <a href="#item1">
+            <a href="#item1" onclick="accessedArticle('Introduction%20to%20%27Using%20Sound%27')">
               <div class="list-div">
                 <li>Introduction to 'Using Sound'</li>
                 <img class="next-chevron" align="right" src="Next-Arrow.png"></img>
               </div>
             </a>
-            <a href="#item3">
+            <a href="#item3" onclick="accessedArticle('Soothing%20sound')">
               <div class="list-div">
                 <li>Soothing sound</li>
                 <img class="next-chevron" align="right" src="Next-Arrow.png"></img>
               </div>
             </a>
-            <a href="#item4">
+            <a href="#item4" onclick="accessedArticle('Interesting%20sound')">
               <div class="list-div">
                 <li>Interesting sound</li>
                 <img class="next-chevron" align="right" src="Next-Arrow.png"></img>
               </div>
             </a>
-            <a href="#item5">
+            <a href="#item5" onclick="accessedArticle('Background%20sound')">
               <div class="list-div">
                 <li>Background sound</li>
                 <img class="next-chevron" align="right" src="Next-Arrow.png"></img>
@@ -286,6 +286,8 @@
     {
         window.location.href = "tcappweb://" + "Played-Sound/"+ audioName;
 
+//alert(window.location.href);
+
         if(playingAudioId == audioID) return;
         
         if(playingAudioId == "")
@@ -299,6 +301,16 @@
         }
         
         playingAudioId = audioID;
+    }
+</script>
+
+<script>
+    
+    function accessedArticle(article)
+    {
+        window.location.href = "tcappweb1://" + "Accessed%20Article/"+ "Using%20Sounds/" + article;
+        
+        //alert(window.location.href);
     }
 </script>
 </body>
