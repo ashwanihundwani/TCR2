@@ -209,7 +209,11 @@
         
         [self dismissViewControllerAnimated:YES completion:^{
         
-            self.dismissBlock();
+            if(self.dismissBlock){
+                
+                self.dismissBlock();
+            }
+            
         }];
         
     }
@@ -382,8 +386,33 @@
     s = [[s componentsSeparatedByCharactersInSet: doNotWant] componentsJoinedByString: @"|"];
     NSString *str = @"Provided Rating";
 
-    
-    if ([[PersistenceStorage getObjectForKey:@"skillName"] isEqualToString:@"Changing Thoughts & Feelings"])
+    if([[PersistenceStorage getObjectForKey:@"TipsReminder"] isEqualToString:@"TipsReminderRating"]){
+        
+        NSString *s = self.textView.text;
+        
+        
+        NSString * newString = [s stringByReplacingOccurrencesOfString:@"," withString:@"|"];
+        
+        NSString *finalStr = [NSString stringWithFormat:@"\r%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@",dateString,timeString,type,str,nil,[PersistenceStorage getObjectForKey:@"planNameTips"],[PersistenceStorage getObjectForKey:@"situationNameTips"],[PersistenceStorage getObjectForKey:@"skillNameTips"],[PersistenceStorage getObjectForKey:@"skillDetailTips"],nil,nil,nil,nil,nil,ratingName,newString];
+        
+        NSFileManager *fileManager = [NSFileManager defaultManager];
+        if(![fileManager fileExistsAtPath:documentTXTPath])
+        {
+            [finalStr writeToFile:documentTXTPath atomically:YES];
+        }
+        else
+        {
+            NSFileHandle *myHandle = [NSFileHandle fileHandleForWritingAtPath:documentTXTPath];
+            [myHandle seekToEndOfFile];
+            [myHandle writeData:[finalStr dataUsingEncoding:NSUTF8StringEncoding]];
+            
+        }
+        
+        [PersistenceStorage setObject:@"" andKey:@"TipsReminder"];
+        
+    }
+
+    else if ([[PersistenceStorage getObjectForKey:@"skillName"] isEqualToString:@"Changing Thoughts & Feelings"])
     
     {
        // NSLog(@"%@",[PersistenceStorage getObjectForKey:@"ctf06textRating"]);
@@ -455,8 +484,6 @@
             }
             
         }
-
-        
     
         else
         

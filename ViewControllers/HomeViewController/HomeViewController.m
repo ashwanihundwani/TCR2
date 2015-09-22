@@ -14,7 +14,7 @@
 #import <EventKit/EventKit.h>
 #import <EventKitUI/EventKitUI.h>
 #import "Utils.h"
-
+#import "TipsReminder.h"
 
 @interface HomeViewController()
 
@@ -215,6 +215,17 @@
 
 }
 
+-(void)showTipsReminderView:(void (^)())block{
+    
+    UIStoryboard *storyBoard = [ UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    TipsReminder *mySleepsViewCotroller = [storyBoard instantiateViewControllerWithIdentifier:@"TipsReminder"];
+    
+    mySleepsViewCotroller.dismissBlock = block;
+    UIWindow *currentWindow = [[UIApplication sharedApplication].windows firstObject];
+    [currentWindow.rootViewController presentViewController:mySleepsViewCotroller animated:YES completion:nil];
+    
+}
+
 
 -(void)viewDidAppear:(BOOL)animated
 {
@@ -232,14 +243,13 @@
         
     {
         
-        UIStoryboard *storyBoard = [ UIStoryboard storyboardWithName:@"Main" bundle:nil];
-        UIViewController *mySleepsViewCotroller = [storyBoard instantiateViewControllerWithIdentifier:@"TipsReminder"];
-        UIWindow *currentWindow = [[UIApplication sharedApplication].windows firstObject];
-        [currentWindow.rootViewController presentViewController:mySleepsViewCotroller animated:YES completion:nil];
+        [self showTipsReminderView:^{
+            
+            
+            
+        }];
         
         [PersistenceStorage setObject:@"No" andKey:@"launchSleepTips"];
-        
-        
     }
     
     
@@ -291,10 +301,11 @@
 
 - (IBAction)NookButtonTapped:(id)sender {
     if ([PersistenceStorage getBoolForKey:@"debugWR"]) {
-        UIStoryboard *storyBoard = [ UIStoryboard storyboardWithName:@"Main" bundle:nil];
-        UIViewController *mySleepsViewCotroller = [storyBoard instantiateViewControllerWithIdentifier:@"TipsReminder"];
-        UIWindow *currentWindow = [[UIApplication sharedApplication].windows firstObject];
-        [currentWindow.rootViewController presentViewController:mySleepsViewCotroller animated:YES completion:nil];
+        [self showTipsReminderView:^{
+        
+            
+        }];
+        
     }else{
         [PersistenceStorage setInteger:3 andKey:@"HomeButtonTapped"];
         [[self tabBarController] setSelectedIndex:3];

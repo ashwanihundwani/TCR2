@@ -16,11 +16,6 @@
 #import "EditTipsCell.h"
 #import "SkillRatingsViewController.h"
 
-#define PREVIOUS_SKILL_KEY @"previousSkillName"
-#define PREVIOUS_PLAN_KEY @"previousPlanName"
-#define PREVIOUS_SITUATION_KEY @"previousSituationName"
-#define PREVIOUS_SKILL_DETAIL_1 @"prevSkillDetail1"
-
 @interface TipsReminder ()<UITableViewDataSource, UITableViewDelegate>
 {
     UIView *nomatchesView;
@@ -349,16 +344,6 @@ else
 }
     
         
-        
-        [PersistenceStorage setObject:[PersistenceStorage getObjectForKey:@"skillName"] andKey:PREVIOUS_SKILL_KEY];
-        
-        [PersistenceStorage setObject:[PersistenceStorage getObjectForKey:@"planName"] andKey:PREVIOUS_PLAN_KEY];
-        
-        
-        [PersistenceStorage setObject:[PersistenceStorage getObjectForKey:@"situationName"] andKey:PREVIOUS_SITUATION_KEY];
-        
-        [PersistenceStorage setObject:[PersistenceStorage getObjectForKey:@"skillDetail1"] andKey:PREVIOUS_SKILL_DETAIL_1];
-        
         NSString *query = @"select * from My_Tips";
         
         NSArray *allMyTips=[NSArray arrayWithArray:[self.dbManager loadDataFromDB:query]];
@@ -426,13 +411,15 @@ else
             }
         }
         
-        [PersistenceStorage setObject:@"Tips for Better Sleep" andKey:@"skillName"];
+        [PersistenceStorage setObject:@"TipsReminderRating" andKey:@"TipsReminder"];
         
-        [PersistenceStorage setObject:planNames andKey:@"planName"];
+        [PersistenceStorage setObject:@"Tips for Better Sleep" andKey:@"skillNameTips"];
         
-        [PersistenceStorage setObject:planNames andKey:@"situationName"];
+        [PersistenceStorage setObject:planNames andKey:@"planNameTips"];
         
-        [PersistenceStorage setObject:string andKey:@"skillDetail1"];
+        [PersistenceStorage setObject:planNames andKey:@"situationNameTips"];
+        
+        [PersistenceStorage setObject:string andKey:@"skillDetailTips"];
         //TODO - plan & situation name.
         
         
