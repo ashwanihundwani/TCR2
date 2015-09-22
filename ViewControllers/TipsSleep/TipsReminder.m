@@ -419,6 +419,8 @@ else
         
         [PersistenceStorage setObject:planNames andKey:@"situationNameTips"];
         
+        string = [[string stringByReplacingOccurrencesOfString:@"," withString:@">"] mutableCopy];
+        
         [PersistenceStorage setObject:string andKey:@"skillDetailTips"];
         //TODO - plan & situation name.
         
