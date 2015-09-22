@@ -149,6 +149,30 @@
 
 }
 
+-(BOOL)shouldShowWR{
+    
+    
+    NSDate *currentDate = [NSDate date];
+    
+    NSDate *savedDate = [PersistenceStorage getObjectForKey:@"WRSavedDate"];
+    
+    if(!savedDate){
+        return TRUE;
+    }
+    
+    NSDateComponents *currentComponents = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear | NSCalendarUnitHour | NSCalendarUnitWeekday fromDate:currentDate];
+    
+    
+    NSDateComponents *savedComponents = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear | NSCalendarUnitHour fromDate:savedDate];
+    
+    if((currentComponents.weekday == 2) && (savedComponents.day < currentComponents.day))
+    {
+        return YES;
+    }
+    
+    return NO;
+}
+
 -(BOOL)dateChangedForTipsReminder{
     
     NSDate *currentDate = [NSDate date];
@@ -464,14 +488,18 @@
 
 -(void)showWeeklyReminderView
 {
-    
-    [[UIApplication sharedApplication] setApplicationIconBadgeNumber:1];
-    [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
-    
-    UIStoryboard *storyBoard = [ UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    UIViewController *WeeklyReminder = [storyBoard instantiateViewControllerWithIdentifier:@"WeeklyViewController"];
-    UIWindow *currentWindow = [[UIApplication sharedApplication].windows firstObject];
-    [currentWindow.rootViewController presentViewController:WeeklyReminder animated:YES completion:nil];
+    if([self shouldShowWR]){
+        
+        [PersistenceStorage setObject:[NSDate date] andKey:@"WRSavedDate"];
+        
+        [[UIApplication sharedApplication] setApplicationIconBadgeNumber:1];
+        [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
+        
+        UIStoryboard *storyBoard = [ UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        UIViewController *WeeklyReminder = [storyBoard instantiateViewControllerWithIdentifier:@"WeeklyViewController"];
+        UIWindow *currentWindow = [[UIApplication sharedApplication].windows firstObject];
+        [currentWindow.rootViewController presentViewController:WeeklyReminder animated:YES completion:nil];
+    }
     
 }
 
