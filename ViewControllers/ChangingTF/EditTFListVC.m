@@ -210,7 +210,9 @@
     y_Pos = lblDesc.frame.origin.y + lblDesc.frame.size.height + V_PADDING;
     
     UIButton *btnToggleHeader = [UIButton buttonWithType:UIButtonTypeCustom];
-    btnToggleHeader.frame = CGRectMake(frame.size.width-75, 3, 68, 32);
+    btnToggleHeader.frame = CGRectMake(frame.size.width-40, 0, 44, 44);
+    btnToggleHeader.imageEdgeInsets = UIEdgeInsetsMake(6, 12, 18, 12);
+    
     [btnToggleHeader addTarget:self action:@selector(onClickToggleHeader:) forControlEvents:UIControlEventTouchUpInside];
     [btnToggleHeader setBackgroundColor:[UIColor clearColor]];
     btnToggleHeader.tag = index;

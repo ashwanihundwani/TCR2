@@ -28,8 +28,31 @@
 
 @implementation EditTipListVC
 
+-(void)cancel{
+    
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    UIImageView *backLabel = [[UIImageView alloc]initWithFrame:CGRectMake(10, 10, 15, 20)];
+    
+    backLabel.image = [UIImage imageNamed:@"Active_Back-Arrow.png"];
+    
+    [Utils addTapGestureToView:backLabel target:self
+                      selector:@selector(cancel)];
+    
+    UIBarButtonItem *item = [[UIBarButtonItem alloc]initWithCustomView:backLabel];
+    
+    UIBarButtonItem *negativeSpacer = [[UIBarButtonItem alloc]
+                                       initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace
+                                       target:nil action:nil];
+    negativeSpacer.width = -8;
+    
+    self.navigationItem.leftBarButtonItems = [NSArray arrayWithObjects:negativeSpacer, item, nil];
+
     
     [self.navigationItem setTitle:@"Edit Tip List"];
     
@@ -127,12 +150,12 @@
     }
     
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.tableViewOutlet.frame.size.width, 5)];
-    [view setBackgroundColor:[UIColor lightGrayColor]] ;//] colorWithRed:245.0/255.0 green:245.0/255.0 blue:245.0/255.0 alpha:1]];
+    [view setBackgroundColor:[Utils colorWithHexValue:@"EEEEEE"]] ;//] colorWithRed:245.0/255.0 green:245.0/255.0 blue:245.0/255.0 alpha:1]];
     
     UILabel *lblTitle = [[UILabel alloc] initWithFrame:CGRectMake(X_POs, 5, frame.size.width-20, DEFAULT_HEIGHT_LABEL)];
    // [lblTitle setBackgroundColor:[[UIColor lightGrayColor ]] ;//] colorWithRed:245.0/255.0 green:245.0/255.0 blue:245.0/255.0 alpha:1]];
    
-    [lblTitle setBackgroundColor:[UIColor lightGrayColor]];//
+    [lblTitle setBackgroundColor:[Utils colorWithHexValue:@"EEEEEE"]];//
      [lblTitle setText:aTitle];
     [lblTitle setFont:[UIFont boldSystemFontOfSize:15]];
     [view addSubview:lblTitle];
@@ -149,7 +172,9 @@
     y_Pos = lblDesc.frame.origin.y + lblDesc.frame.size.height + V_PADDING;
     
     UIButton *btnToggleHeader = [UIButton buttonWithType:UIButtonTypeCustom];
-    btnToggleHeader.frame = CGRectMake(frame.size.width-75, 3, 68, 32);
+    btnToggleHeader.frame = CGRectMake(frame.size.width-40, 0, 44, 44);
+    btnToggleHeader.imageEdgeInsets = UIEdgeInsetsMake(6, 12, 18, 12);
+    
     [btnToggleHeader addTarget:self action:@selector(onClickToggleHeader:) forControlEvents:UIControlEventTouchUpInside];
     [btnToggleHeader setBackgroundColor:[UIColor clearColor]];
     btnToggleHeader.tag = index;

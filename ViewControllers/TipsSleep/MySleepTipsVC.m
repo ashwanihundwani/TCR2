@@ -26,8 +26,30 @@
 
 @implementation MySleepTipsVC
 
+-(void)cancel{
+    
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    UIImageView *backLabel = [[UIImageView alloc]initWithFrame:CGRectMake(10, 10, 15, 20)];
+    
+    backLabel.image = [UIImage imageNamed:@"Active_Back-Arrow.png"];
+    
+    [Utils addTapGestureToView:backLabel target:self
+                      selector:@selector(cancel)];
+    
+    UIBarButtonItem *item = [[UIBarButtonItem alloc]initWithCustomView:backLabel];
+    
+    UIBarButtonItem *negativeSpacer = [[UIBarButtonItem alloc]
+                                       initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace
+                                       target:nil action:nil];
+    negativeSpacer.width = -8;
+    
+    self.navigationItem.leftBarButtonItems = [NSArray arrayWithObjects:negativeSpacer, item, nil];
+    
     [self.navigationItem setTitle:@"My Sleep Tips"];
     [self emptyView];
     // Do any additional setup after loading the view.
@@ -119,7 +141,7 @@
     {
         CGRect frame = self.tableViewOutlet.frame;
         UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.tableViewOutlet.frame.size.width, 20)];
-        [view setBackgroundColor:[UIColor lightGrayColor]];
+        [view setBackgroundColor:[Utils colorWithHexValue:@"EFEFF4"]];
         
         UILabel *lblTitle = [[UILabel alloc] initWithFrame:CGRectMake(20, 10, frame.size.width-20, 21)];
         [lblTitle setBackgroundColor:[UIColor clearColor]];
@@ -144,7 +166,7 @@
         [btn setTitle:@"Return to Plan" forState:UIControlStateNormal];
         [btn setBackgroundColor:[UIColor colorWithRed:0.0/255.0 green:122.0/255.0 blue:255.0/255.0 alpha:1]];
         [btn.titleLabel setFont:[UIFont boldSystemFontOfSize:14.0f]];
-        btn.layer.cornerRadius = 3.0f;
+        btn.layer.cornerRadius = 5.0f;
         [btn addTarget:self action:@selector(onClickReturnTipsButton:) forControlEvents:UIControlEventTouchUpInside];
         [btn.titleLabel setTextColor:[UIColor whiteColor]];
         [view addSubview:btn];
