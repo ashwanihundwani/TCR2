@@ -326,7 +326,7 @@ NSArray *remindersArray;
         //        {
         //
         
-        NSString *query = [NSString stringWithFormat: @"select * from MySkillReminders where SkillName = 'Imagery' and PlanName = \'%@\'",[PersistenceStorage getObjectForKey:@"planName"]];
+        NSString *query = [NSString stringWithFormat: @"select * from MySkillReminders where SkillName = 'Imagery' and PlanName = '%@'",[Utils getValidSqlString:[PersistenceStorage getObjectForKey:@"planName"]]];
         
         self.manager = [[DBManager alloc]initWithDatabaseFileName:@"GNResoundDB.sqlite"];
         
@@ -520,7 +520,7 @@ audioPanning.videoURL = @"ImageryLesson.mp4";
    // NSString *query = [NSString stringWithFormat:@"select * from MySkillReminders where SkillName = 'Imagery'"];
     
 
-    NSString *query = [NSString stringWithFormat:@"select * from MySkillReminders where SkillName = 'Imagery' and PlanName = '%@'",[PersistenceStorage getObjectForKey:@"planName"]];
+    NSString *query = [NSString stringWithFormat:@"select * from MySkillReminders where SkillName = 'Imagery' and PlanName = '%@'",[Utils getValidSqlString:[PersistenceStorage getObjectForKey:@"planName"]]];
 
     
     self.manager = [[DBManager alloc]initWithDatabaseFileName:@"GNResoundDB.sqlite"];
@@ -596,7 +596,7 @@ audioPanning.videoURL = @"ImageryLesson.mp4";
 
 
 - (IBAction)DeleteReminder:(id)sender {
-    NSString *queryClear = [NSString stringWithFormat:@"delete from MySkillReminders where SkillName = 'Imagery' and PlanName = '%@'",[PersistenceStorage getObjectForKey:@"planName"]];
+    NSString *queryClear = [NSString stringWithFormat:@"delete from MySkillReminders where SkillName = 'Imagery' and PlanName = '%@'",[Utils getValidSqlString:[PersistenceStorage getObjectForKey:@"planName"]]];
     CalenderEventID = [self eventExists];
     if(CalenderEventID != nil){
         [self removeEventFromCalender];
@@ -726,7 +726,7 @@ audioPanning.videoURL = @"ImageryLesson.mp4";
     //check for the Event
     //get the skill first
     NSString* calEvent = nil;
-    NSString* reminderQuery = [NSString stringWithFormat:@"select CalendarEventID from MySkillReminders where SkillName = \"%@\" and  PlanName = \"%@\"",[PersistenceStorage getObjectForKey:@"skillName"],[PersistenceStorage getObjectForKey:@"planName"]];
+    NSString* reminderQuery = [NSString stringWithFormat:@"select CalendarEventID from MySkillReminders where SkillName = \"%@\" and  PlanName = '%@'",[PersistenceStorage getObjectForKey:@"skillName"],[Utils getValidSqlString:[PersistenceStorage getObjectForKey:@"planName"]]];
     NSArray* calenderEventsArray = [NSArray arrayWithArray:[self.manager loadDataFromDB:reminderQuery]];
     if(calenderEventsArray != nil && calenderEventsArray.count > 0){
         //get the calender event and return it back for rescheduling

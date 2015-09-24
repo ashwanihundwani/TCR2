@@ -359,9 +359,9 @@
     NSString *query3 = [NSString stringWithFormat:@"delete from MyActivities where SkillID=%@ and planID = %ld",skillID,planID];
     
     
-    NSString *query4 = [NSString stringWithFormat:@"delete from MyReminders where PlanName=\"%@\" and SkillName = '%@'",planName,skillName];
+    NSString *query4 = [NSString stringWithFormat:@"delete from MyReminders where PlanName='%@' and SkillName = '%@'",[Utils getValidSqlString:planName],skillName];
     
-    NSString *query5 = [NSString stringWithFormat:@"delete from MySkillReminders where SkillName=\"%@\" and PlanName = \"%@\"",skillName, planName];
+    NSString *query5 = [NSString stringWithFormat:@"delete from MySkillReminders where SkillName=\"%@\" and PlanName = '%@'",skillName, [Utils getValidSqlString:planName]];
     
     NSString *query5_1 = @"delete from MySkillReminders where SkillName = 'Tips for Better Sleep'";
     NSString *query6 = [NSString stringWithFormat:@"delete from My_Tips where SkillID=%@ and planID = %ld",skillID,planID];
@@ -466,7 +466,7 @@
         
         //before deleting lets fetch the calender even, if any
         CalEventsArray = [[NSMutableArray alloc] init];
-        NSString* reminderQuery = [NSString stringWithFormat:@"select CalendarEventID from MySkillReminders where SkillName = \"%@\" and  PlanName = \"%@\"",sKillNameToDelete,self.planName ];
+        NSString* reminderQuery = [NSString stringWithFormat:@"select CalendarEventID from MySkillReminders where SkillName = \"%@\" and  PlanName = '%@'",sKillNameToDelete,[Utils getValidSqlString:self.planName] ];
         NSArray* calenderEventsArray = [self.dbManagerMySkills loadDataFromDB:reminderQuery];
         if(calenderEventsArray.count > 0){
             [CalEventsArray addObjectsFromArray:calenderEventsArray];
@@ -476,7 +476,7 @@
         }else{
             isTBSDeleted = NO;
             if([sKillNameToDelete isEqualToString:@"Pleasant Activities"]){
-                reminderQuery = [NSString stringWithFormat:@"select CalendarEventID from MyReminders where PlanName = \"%@\"",self.planName ];
+                reminderQuery = [NSString stringWithFormat:@"select CalendarEventID from MyReminders where PlanName = '%@'",[Utils getValidSqlString:self.planName] ];
                 NSArray* arr2 = [self.dbManagerMySkills loadDataFromDB:reminderQuery];
                 if(arr2.count > 0){
                     [CalEventsArray addObjectsFromArray:arr2];

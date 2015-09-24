@@ -100,4 +100,6 @@ typedef enum
 
 +(NSInteger)getNumDaysToNextMonday;
 
++(NSString *)getValidSqlString:(NSString *)inputString;
+
 @end

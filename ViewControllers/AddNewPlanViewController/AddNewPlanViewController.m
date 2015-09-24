@@ -116,21 +116,21 @@
 -(void)writeToMyPlans:(NSString *)planName
 {
     
+    NSString *sqlPlan = [Utils getValidSqlString:planName];
     
-    
-    NSString *duplicateCheck = [NSString stringWithFormat:@"SELECT * from MyPlans  where planName = '%@'", planName];
+    NSString *duplicateCheck = [NSString stringWithFormat:@"SELECT * from MyPlans  where planName = '%@'", sqlPlan];
     
     NSArray* duplicatePlanaArray = [self.dbManagerPlansList loadDataFromDB:duplicateCheck];
     if (duplicatePlanaArray.count > 0) {
         NSLog(@"duplicate plan");
     }else{
-        NSString *query = [NSString stringWithFormat:@"insert into MyPlans ('planName', 'isActive', 'situationName','timeStamp') values ('%@', 1, '%@','%@')",planName,[PersistenceStorage getObjectForKey:@"sitName"],[NSDate date]];
+        NSString *query = [NSString stringWithFormat:@"insert into MyPlans ('planName', 'isActive', 'situationName','timeStamp') values ('%@', 1, '%@','%@')",sqlPlan,[PersistenceStorage getObjectForKey:@"sitName"],[NSDate date]];
         
         [PersistenceStorage setObject:planName andKey:@"newPlanName"];
         [PersistenceStorage setObject:planName andKey:@"planName"];
         
         
-        NSString *queryaa = [NSString stringWithFormat: @"select ID from MyPlans where planName == '%@'", planName];
+        NSString *queryaa = [NSString stringWithFormat: @"select ID from MyPlans where planName == '%@'", sqlPlan];
         
         
         [self writeAddedPlan];

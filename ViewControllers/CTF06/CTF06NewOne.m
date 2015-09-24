@@ -373,13 +373,20 @@
         
         
     }
+    
+    NSString *txt1 = [Utils getValidSqlString:[PersistenceStorage getObjectForKey:@"ctf01text"]];
+    
+    NSString *txt2 = [Utils getValidSqlString:[PersistenceStorage getObjectForKey:@"ctf02text"]];
+    
+    NSString *txt5 = [Utils getValidSqlString:[PersistenceStorage getObjectForKey:@"ctf05text"]];
+    
     NSString *query = [NSString stringWithFormat:@"insert into My_TF_Set ('planID','situationDescription', 'thoughtDescription', 'emotionsList','thoughtError', 'newThought', 'newEmotionsList', 'dateTime','dateTimeSeconds') values ('%@','%@', '%@', '%@','%@', '%@', '%@','%@','%@')",
                        [PersistenceStorage getObjectForKey:@"currentPlanID"],
-                       [PersistenceStorage getObjectForKey:@"ctf01text"],
-                       [PersistenceStorage getObjectForKey:@"ctf02text"],
+                       txt1,
+                       txt2,
                        [PersistenceStorage getObjectForKey:@"ctf03text"],
                        [PersistenceStorage getObjectForKey:@"ctf04text"],
-                       [PersistenceStorage getObjectForKey:@"ctf05text"],
+                       txt5,
                        [PersistenceStorage getObjectForKey:@"ctf06text"],
                        currentTime,intervalString
                        

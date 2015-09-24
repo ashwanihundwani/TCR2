@@ -232,8 +232,8 @@ mySwitch.on = YES;
                 
                 [PersistenceStorage setObject:savedEventId andKey:@"lastEventIdentifer"];  ///STORE to test it for deletion
                 NSLog(@"%@", [PersistenceStorage getObjectForKey:@"lastEventIdentifer"]);
-                NSString *queryClear = [NSString stringWithFormat:@"delete from MySkillReminders where SkillName = 'Tips for Better Sleep' and PlanName = '%@'",[PersistenceStorage getObjectForKey:@"planName"]];
-                NSString *query = [NSString stringWithFormat:@"insert into MySkillReminders ('ID','SkillName','ScheduledDate','CalendarEventID','PlanName') values(1,'%@','%@','%@','%@')",@"Tips for Better Sleep",[PersistenceStorage getObjectForKey:@"localScheduledDate"],[PersistenceStorage getObjectForKey:@"lastEventIdentifer"],[PersistenceStorage getObjectForKey:@"planName"]];
+                NSString *queryClear = [NSString stringWithFormat:@"delete from MySkillReminders where SkillName = 'Tips for Better Sleep' and PlanName = '%@'",[Utils getValidSqlString:[PersistenceStorage getObjectForKey:@"planName"]]];
+                NSString *query = [NSString stringWithFormat:@"insert into MySkillReminders ('ID','SkillName','ScheduledDate','CalendarEventID','PlanName') values(1,'%@','%@','%@','%@')",@"Tips for Better Sleep",[PersistenceStorage getObjectForKey:@"localScheduledDate"],[PersistenceStorage getObjectForKey:@"lastEventIdentifer"],[Utils getValidSqlString:[PersistenceStorage getObjectForKey:@"planName"]]];
                 
                 [self.manager executeQuery:queryClear];
                 [self.manager executeQuery:query];
@@ -276,8 +276,8 @@ mySwitch.on = YES;
             localNotification.userInfo = infoDict;
             
             [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
-            NSString *queryClear = [NSString stringWithFormat:@"delete from MySkillReminders where SkillName = 'Tips for Better Sleep' and PlanName = '%@'",[PersistenceStorage getObjectForKey:@"planName"]];
-            NSString *query = [NSString stringWithFormat:@"insert into MySkillReminders ('ID','SkillName','ScheduledDate','CalendarEventID','PlanName') values(1,'%@','%@','%@','%@')",@"Tips for Better Sleep",[PersistenceStorage getObjectForKey:@"localScheduledDate"],@"",[PersistenceStorage getObjectForKey:@"planName"]];
+            NSString *queryClear = [NSString stringWithFormat:@"delete from MySkillReminders where SkillName = 'Tips for Better Sleep' and PlanName = '%@'",[Utils getValidSqlString:[PersistenceStorage getObjectForKey:@"planName"]]];
+            NSString *query = [NSString stringWithFormat:@"insert into MySkillReminders ('ID','SkillName','ScheduledDate','CalendarEventID','PlanName') values(1,'%@','%@','%@','%@')",@"Tips for Better Sleep",[PersistenceStorage getObjectForKey:@"localScheduledDate"],@"",[Utils getValidSqlString:[PersistenceStorage getObjectForKey:@"planName"]]];
             
             [self.manager executeQuery:queryClear];
             [self.manager executeQuery:query];
@@ -354,7 +354,7 @@ mySwitch.on = YES;
 {
    // NSString *query = [NSString stringWithFormat:@"select * from MySkillReminders where SkillName = 'Tips for Better Sleep'"];
     
-    NSString *query = [NSString stringWithFormat:@"select * from MySkillReminders where SkillName = 'Tips for Better Sleep' and PlanName = '%@'",[PersistenceStorage getObjectForKey:@"planName"]];
+    NSString *query = [NSString stringWithFormat:@"select * from MySkillReminders where SkillName = 'Tips for Better Sleep' and PlanName = '%@'",[Utils getValidSqlString:[PersistenceStorage getObjectForKey:@"planName"]]];
     
     self.manager = [[DBManager alloc]initWithDatabaseFileName:@"GNResoundDB.sqlite"];
     remindersArray = [[NSArray alloc] initWithArray:[self.manager loadDataFromDB:query]];
@@ -416,7 +416,7 @@ mySwitch.on = YES;
     
 //    NSString *query = [NSString stringWithFormat: @"select * from MySkillReminders where SkillName = 'Tips for Better Sleep'"];
     
-    NSString *query = [NSString stringWithFormat:@"select * from MySkillReminders where SkillName = 'Tips for Better Sleep' and PlanName = '%@'",[PersistenceStorage getObjectForKey:@"planName"]];
+    NSString *query = [NSString stringWithFormat:@"select * from MySkillReminders where SkillName = 'Tips for Better Sleep' and PlanName = '%@'",[Utils getValidSqlString:[PersistenceStorage getObjectForKey:@"planName"]]];
 
     
     self.manager = [[DBManager alloc]initWithDatabaseFileName:@"GNResoundDB.sqlite"];

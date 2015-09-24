@@ -364,9 +364,9 @@
     NSString *query5 = [NSString stringWithFormat:@"delete from MyWebsites where planID = '%@'",planID];
     
     
-    NSString *query3 = [NSString stringWithFormat:@"delete from MyReminders where PlanName = '%@'",planName];
+    NSString *query3 = [NSString stringWithFormat:@"delete from MyReminders where PlanName = '%@'",[Utils getValidSqlString:planName]];
     
-    NSString *query4 = [NSString stringWithFormat:@"delete from MySkillReminders where PlanName = '%@' and SkillName != 'Tips for Better Sleep' ",planName];
+    NSString *query4 = [NSString stringWithFormat:@"delete from MySkillReminders where PlanName = '%@' and SkillName != 'Tips for Better Sleep' ",[Utils getValidSqlString:planName]];
     
     NSString *query4_1 = [NSString stringWithFormat:@"delete from MySkillReminders where SkillName = 'Tips for Better Sleep' "];
     
@@ -437,7 +437,7 @@
 
 -(NSString *)getPlanIDForName:(NSString *)planName
 {
-    NSString *query = [NSString stringWithFormat: @"select ID from MyPlans where planName == '%@'", planName];
+    NSString *query = [NSString stringWithFormat: @"select ID from MyPlans where planName == '%@'", [Utils getValidSqlString:planName]];
     
     NSString *planID = [[[self.dbManagerMyPlans loadDataFromDB:query]objectAtIndex:0] valueForKey:@"ID"];
    
@@ -496,7 +496,7 @@
         [PersistenceStorage setObject:[[userPlansArray objectAtIndex:tag] valueForKey:@"planName"] andKey:@"deletingPlanName"];
         [PersistenceStorage setObject:[[userPlansArray objectAtIndex:tag] valueForKey:@"situationName"] andKey:@"deletingSituationName"];
 
-         NSString* reminderQuery = [NSString stringWithFormat:@"select CalendarEventID from MySkillReminders where PlanName = \"%@\"",[[userPlansArray objectAtIndex:tag] valueForKey:@"planName"]  ];
+         NSString* reminderQuery = [NSString stringWithFormat:@"select CalendarEventID from MySkillReminders where PlanName = '%@'",[Utils getValidSqlString:[[userPlansArray objectAtIndex:tag] valueForKey:@"planName"]]];
         NSString* sleepReminderQuery = @"select CalendarEventID from MySkillReminders where SkillName = 'Tips for Better Sleep'";
         NSArray* caleventsArray = [self.dbManagerMyPlans loadDataFromDB:reminderQuery];
         if(caleventsArray.count > 0){
@@ -515,7 +515,7 @@
         if(calenderEventsArray != nil && sleepEventsArray != nil)
             [calenderEventsArray removeObjectsInArray:sleepEventsArray];
         //get the activities reminders
-        reminderQuery = [NSString stringWithFormat:@"select CalendarEventID from MyReminders where PlanName = \"%@\"",[[userPlansArray objectAtIndex:tag] valueForKey:@"planName"]];
+        reminderQuery = [NSString stringWithFormat:@"select CalendarEventID from MyReminders where PlanName = '%@'",[Utils getValidSqlString:[[userPlansArray objectAtIndex:tag] valueForKey:@"planName"]]];
         NSArray* arr2 = [self.dbManagerMyPlans loadDataFromDB:reminderQuery];
         if(arr2.count > 0){
             if(calenderEventsArray){

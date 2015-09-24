@@ -203,7 +203,7 @@
 -(void)loadData{
     self.manager = [[DBManager alloc]initWithDatabaseFileName:@"GNResoundDB.sqlite"];
     
-    NSString *query = [NSString stringWithFormat:@"SELECT * FROM Plan_Activities LEFT OUTER  JOIN myReminders ON Plan_Activities.ActivityName = MyReminders.ActName and MyReminders.PlanName = '%@' where valueName IS '%@' order by  CreatedDate DESC",[PersistenceStorage getObjectForKey:@"planName"],[PersistenceStorage getObjectForKey:@"valueName"]];
+    NSString *query = [NSString stringWithFormat:@"SELECT * FROM Plan_Activities LEFT OUTER  JOIN myReminders ON Plan_Activities.ActivityName = MyReminders.ActName and MyReminders.PlanName = '%@' where valueName IS '%@' order by  CreatedDate DESC",[Utils getValidSqlString:[PersistenceStorage getObjectForKey:@"planName"]],[PersistenceStorage getObjectForKey:@"valueName"]];
     
     
     
@@ -547,7 +547,7 @@
             NSString *query = [NSString stringWithFormat:@"delete from  Plan_Activities where ActivityName = '%@' and cantDelete is not 1",[dict valueForKey:@"activityName"]];
             NSString *queryFav = [NSString stringWithFormat:@"delete from  MyActivities where ActivityName = '%@' and skillID = %@ and planID = %@",[dict valueForKey:@"activityName"],[PersistenceStorage getObjectForKey:@"currentSkillID"], [PersistenceStorage getObjectForKey:@"currentPlanID"]];
             
-            NSString *queryClear = [NSString stringWithFormat:@"delete from MyReminders where ActName = '%@' and PlanName = '%@' and SkillName = 'Pleasant Activities'",[dict valueForKey:@"activityName"],[PersistenceStorage getObjectForKey:@"planName"]];
+            NSString *queryClear = [NSString stringWithFormat:@"delete from MyReminders where ActName = '%@' and PlanName = '%@' and SkillName = 'Pleasant Activities'",[dict valueForKey:@"activityName"],[Utils getValidSqlString:[PersistenceStorage getObjectForKey:@"planName"]]];
             // Execute the query.
             [self.manager executeQuery:query];
             if(self.manager.affectedRows > 0){
@@ -620,7 +620,7 @@
         NSString *query = [NSString stringWithFormat:@"delete from  Plan_Activities where ActivityName = '%@' and cantDelete is not 1",[dict valueForKey:@"activityName"]];
         NSString *queryFav = [NSString stringWithFormat:@"delete from  MyActivities where ActivityName = '%@' and skillID = %@ and planID = %@",[dict valueForKey:@"activityName"],[PersistenceStorage getObjectForKey:@"currentSkillID"], [PersistenceStorage getObjectForKey:@"currentPlanID"]];
         
-        NSString *queryClear = [NSString stringWithFormat:@"delete from MyReminders where ActName = '%@' and PlanName = '%@' and SkillName = 'Pleasant Activities'",[dict valueForKey:@"activityName"],[PersistenceStorage getObjectForKey:@"planName"]];
+        NSString *queryClear = [NSString stringWithFormat:@"delete from MyReminders where ActName = '%@' and PlanName = '%@' and SkillName = 'Pleasant Activities'",[dict valueForKey:@"activityName"],[Utils getValidSqlString:[PersistenceStorage getObjectForKey:@"planName"]]];
         
         // Execute the query.
         [self.manager executeQuery:query];
@@ -868,7 +868,7 @@
     //check for the Event
     //get the skill first
     NSString* calEvent = nil;
-    NSString* reminderQuery = [NSString stringWithFormat:@"select CalendarEventID from MyReminders where SkillName = \"%@\" and PlanName = \"%@\" and ActName = '%@'",[PersistenceStorage getObjectForKey:@"skillName"],[PersistenceStorage getObjectForKey:@"planName"],activityName];
+    NSString* reminderQuery = [NSString stringWithFormat:@"select CalendarEventID from MyReminders where SkillName = \"%@\" and PlanName = '%@' and ActName = '%@'",[PersistenceStorage getObjectForKey:@"skillName"],[Utils getValidSqlString:[PersistenceStorage getObjectForKey:@"planName"]],activityName];
     NSArray* calenderEventsArray = [NSArray arrayWithArray:[self.manager loadDataFromDB:reminderQuery]];
     if(calenderEventsArray != nil && calenderEventsArray.count > 0){
         //get the calender event and return it back for rescheduling

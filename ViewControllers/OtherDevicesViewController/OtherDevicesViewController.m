@@ -262,7 +262,11 @@
         for (int i = 0; i<[self.checkFlagArray count]; i++) {
             if ([[self.checkFlagArray objectAtIndex:i] boolValue] == 1) {
                 
-                [query appendFormat:@"(%ld, %ld, %ld, %ld, %ld, '%@'),",[PersistenceStorage getIntegerForKey:@"currentPlanID"], (long)[PersistenceStorage getIntegerForKey:@"currentGroupID"], [PersistenceStorage getIntegerForKey:@"currentSkillID"], soundTypeID, (long)[[[otherDevicesSoundsArray objectAtIndex:i] valueForKey:@"ID"] integerValue], [self getCommentsAtIndex:i]];
+                NSString *comment = [self getCommentsAtIndex:i];
+                
+                NSString *commentForSql = [Utils getValidSqlString:comment];
+                
+                [query appendFormat:@"(%ld, %ld, %ld, %ld, %ld, '%@'),",[PersistenceStorage getIntegerForKey:@"currentPlanID"], (long)[PersistenceStorage getIntegerForKey:@"currentGroupID"], [PersistenceStorage getIntegerForKey:@"currentSkillID"], soundTypeID, (long)[[[otherDevicesSoundsArray objectAtIndex:i] valueForKey:@"ID"] integerValue], commentForSql];
             
                  }
 

@@ -229,7 +229,7 @@ UIView *titleView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 130, 44)];
             NSLog(@"Error in deletining event from calender:%@", [eventToRemove description]);
         }
     }
-    NSString *queryClear = [NSString stringWithFormat:@"delete from MyReminders where ActName = '%@' and SkillName ='%@' and PlanName = '%@'",[PersistenceStorage getObjectForKey:@"activityName"],@"Pleasant Activities",[PersistenceStorage getObjectForKey:@"planName"]];
+    NSString *queryClear = [NSString stringWithFormat:@"delete from MyReminders where ActName = '%@' and SkillName ='%@' and PlanName = '%@'",[PersistenceStorage getObjectForKey:@"activityName"],@"Pleasant Activities",[Utils getValidSqlString:[PersistenceStorage getObjectForKey:@"planName"]]];
     
     
     if ([remindersArray count]== 1) {
@@ -506,10 +506,10 @@ if (self.datePicker.hidden==0)
             NSLog(@"%@", [PersistenceStorage getObjectForKey:@"lastEventIdentifer"]);
             
             
-            NSString *queryClear = [NSString stringWithFormat:@"delete from MyReminders where ActName = '%@' and PlanName = '%@' and SkillName = 'Pleasant Activities'",[PersistenceStorage getObjectForKey:@"activityName"],[PersistenceStorage getObjectForKey:@"planName"]];
+            NSString *queryClear = [NSString stringWithFormat:@"delete from MyReminders where ActName = '%@' and PlanName = '%@' and SkillName = 'Pleasant Activities'",[PersistenceStorage getObjectForKey:@"activityName"],[Utils getValidSqlString:[PersistenceStorage getObjectForKey:@"planName"]]];
             
             
-            NSString *query = [NSString stringWithFormat:@"insert into MyReminders ('ID','ActName','ScheduledDate','CalendarEventID','PlanName','SkillName') values(1,'%@','%@','%@','%@','Pleasant Activities')",[PersistenceStorage getObjectForKey:@"activityName"],[PersistenceStorage getObjectForKey:@"localScheduledDate"],[PersistenceStorage getObjectForKey:@"lastEventIdentifer"],[PersistenceStorage getObjectForKey:@"planName"]];
+            NSString *query = [NSString stringWithFormat:@"insert into MyReminders ('ID','ActName','ScheduledDate','CalendarEventID','PlanName','SkillName') values(1,'%@','%@','%@','%@','Pleasant Activities')",[PersistenceStorage getObjectForKey:@"activityName"],[PersistenceStorage getObjectForKey:@"localScheduledDate"],[PersistenceStorage getObjectForKey:@"lastEventIdentifer"],[Utils getValidSqlString:[PersistenceStorage getObjectForKey:@"planName"]]];
             
             
             
@@ -653,7 +653,7 @@ if (self.datePicker.hidden==0)
             NSLog(@"%@", [PersistenceStorage getObjectForKey:@"lastEventIdentifer"]);
             
             
-            NSString *queryClear = [NSString stringWithFormat:@"delete from MySkillReminders where SkillName = 'Imagery' and PlanName = '%@'",[PersistenceStorage getObjectForKey:@"planName"]];
+            NSString *queryClear = [NSString stringWithFormat:@"delete from MySkillReminders where SkillName = 'Imagery' and PlanName = '%@'",[Utils getValidSqlString:[PersistenceStorage getObjectForKey:@"planName"]]];
             
             NSString *dateWithRepeat = [PersistenceStorage getObjectForKey:@"localScheduledDate"];
             
@@ -675,7 +675,7 @@ if (self.datePicker.hidden==0)
             }
             
             
-            NSString *query = [NSString stringWithFormat:@"insert into MySkillReminders ('ID','SkillName','ScheduledDate','CalendarEventID','PlanName') values(1,'%@','%@','%@','%@' )",@"Imagery",dateWithRepeat,[PersistenceStorage getObjectForKey:@"lastEventIdentifer"],[PersistenceStorage getObjectForKey:@"planName"]];
+            NSString *query = [NSString stringWithFormat:@"insert into MySkillReminders ('ID','SkillName','ScheduledDate','CalendarEventID','PlanName') values(1,'%@','%@','%@','%@' )",@"Imagery",dateWithRepeat,[PersistenceStorage getObjectForKey:@"lastEventIdentifer"],[Utils getValidSqlString:[PersistenceStorage getObjectForKey:@"planName"]]];
             
             [self.manager executeQuery:queryClear];
             [self.manager executeQuery:query];
@@ -812,10 +812,10 @@ if (self.datePicker.hidden==0)
             }
 
             
-            NSString *queryClear = [NSString stringWithFormat:@"delete from MySkillReminders where SkillName = 'Guided Meditation' and PlanName = '%@'",[PersistenceStorage getObjectForKey:@"planName"]];;
+            NSString *queryClear = [NSString stringWithFormat:@"delete from MySkillReminders where SkillName = 'Guided Meditation' and PlanName = '%@'",[Utils getValidSqlString:[PersistenceStorage getObjectForKey:@"planName"]]];;
             
             
-            NSString *query = [NSString stringWithFormat:@"insert into MySkillReminders ('ID','SkillName','ScheduledDate','CalendarEventID','PlanName') values(1,'%@','%@','%@','%@')",@"Guided Meditation",dateWithRepeat,[PersistenceStorage getObjectForKey:@"lastEventIdentifer"],[PersistenceStorage getObjectForKey:@"planName"]];
+            NSString *query = [NSString stringWithFormat:@"insert into MySkillReminders ('ID','SkillName','ScheduledDate','CalendarEventID','PlanName') values(1,'%@','%@','%@','%@')",@"Guided Meditation",dateWithRepeat,[PersistenceStorage getObjectForKey:@"lastEventIdentifer"],[Utils getValidSqlString:[PersistenceStorage getObjectForKey:@"planName"]]];
             
             [self.manager executeQuery:queryClear];
             [self.manager executeQuery:query];
@@ -925,10 +925,10 @@ if (self.datePicker.hidden==0)
             NSLog(@"%@", [PersistenceStorage getObjectForKey:@"lastEventIdentifer"]);
             
             
-            NSString *queryClear = [NSString stringWithFormat:@"delete from MySkillReminders where SkillName = 'Tips for Better Sleep' and PlanName = '%@'",[PersistenceStorage getObjectForKey:@"planName"]];
+            NSString *queryClear = [NSString stringWithFormat:@"delete from MySkillReminders where SkillName = 'Tips for Better Sleep' and PlanName = '%@'",[Utils getValidSqlString:[PersistenceStorage getObjectForKey:@"planName"]]];
             
             
-            NSString *query = [NSString stringWithFormat:@"insert into MySkillReminders ('ID','SkillName','ScheduledDate','CalendarEventID','PlanName') values(1,'%@','%@','%@','%@')",@"Tips for Better Sleep",[PersistenceStorage getObjectForKey:@"localScheduledDate"],[PersistenceStorage getObjectForKey:@"lastEventIdentifer"],[PersistenceStorage getObjectForKey:@"planName"]];
+            NSString *query = [NSString stringWithFormat:@"insert into MySkillReminders ('ID','SkillName','ScheduledDate','CalendarEventID','PlanName') values(1,'%@','%@','%@','%@')",@"Tips for Better Sleep",[PersistenceStorage getObjectForKey:@"localScheduledDate"],[PersistenceStorage getObjectForKey:@"lastEventIdentifer"],[Utils getValidSqlString:[PersistenceStorage getObjectForKey:@"planName"]]];
             
             [self.manager executeQuery:queryClear];
             [self.manager executeQuery:query];
@@ -1071,10 +1071,10 @@ if (self.datePicker.hidden==0)
             }
             
             
-            NSString *queryClear = [NSString stringWithFormat:@"delete from MySkillReminders where SkillName = 'Deep Breathing' and PlanName = '%@'",[PersistenceStorage getObjectForKey:@"planName"]];
+            NSString *queryClear = [NSString stringWithFormat:@"delete from MySkillReminders where SkillName = 'Deep Breathing' and PlanName = '%@'",[Utils getValidSqlString:[PersistenceStorage getObjectForKey:@"planName"]]];
             
             
-            NSString *query = [NSString stringWithFormat:@"insert into MySkillReminders ('ID','SkillName','ScheduledDate','CalendarEventID','PlanName') values(1,'%@','%@','%@','%@')",@"Deep Breathing",dateWithRepeat,[PersistenceStorage getObjectForKey:@"lastEventIdentifer"],[PersistenceStorage getObjectForKey:@"planName"]];
+            NSString *query = [NSString stringWithFormat:@"insert into MySkillReminders ('ID','SkillName','ScheduledDate','CalendarEventID','PlanName') values(1,'%@','%@','%@','%@')",@"Deep Breathing",dateWithRepeat,[PersistenceStorage getObjectForKey:@"lastEventIdentifer"],[Utils getValidSqlString:[PersistenceStorage getObjectForKey:@"planName"]]];
             
             [self.manager executeQuery:queryClear];
             [self.manager executeQuery:query];
@@ -1405,7 +1405,7 @@ NSFileManager *fileManager = [NSFileManager defaultManager];
     //check for the Event
     //get the skill first
     NSString* calEvent = nil;
-    NSString* reminderQuery = [NSString stringWithFormat:@"select CalendarEventID from MySkillReminders where SkillName = \"%@\" and  PlanName = \"%@\"",[PersistenceStorage getObjectForKey:@"skillName"],[PersistenceStorage getObjectForKey:@"planName"]];
+    NSString* reminderQuery = [NSString stringWithFormat:@"select CalendarEventID from MySkillReminders where SkillName = \"%@\" and  PlanName = '%@'",[PersistenceStorage getObjectForKey:@"skillName"],[Utils getValidSqlString:[PersistenceStorage getObjectForKey:@"planName"]]];
     NSArray* calenderEventsArray = [NSArray arrayWithArray:[self.manager loadDataFromDB:reminderQuery]];
     if(calenderEventsArray != nil && calenderEventsArray.count > 0){
         //get the calender event and return it back for rescheduling
@@ -1433,7 +1433,7 @@ NSFileManager *fileManager = [NSFileManager defaultManager];
     //check for the Event
     //get the skill first
     NSString* calEvent = nil;
-    NSString* reminderQuery = [NSString stringWithFormat:@"select CalendarEventID from MyReminders where SkillName = \"%@\" and PlanName = \"%@\" and ActName = '%@'",[PersistenceStorage getObjectForKey:@"skillName"],[PersistenceStorage getObjectForKey:@"planName"],[PersistenceStorage getObjectForKey:@"activityName"]];
+    NSString* reminderQuery = [NSString stringWithFormat:@"select CalendarEventID from MyReminders where SkillName = \"%@\" and PlanName = '%@' and ActName = '%@'",[PersistenceStorage getObjectForKey:@"skillName"],[Utils getValidSqlString:[PersistenceStorage getObjectForKey:@"planName"]],[PersistenceStorage getObjectForKey:@"activityName"]];
     NSArray* tempArray = [self.manager loadDataFromDB:reminderQuery];
     NSArray* calenderEventsArray = [NSArray arrayWithArray:tempArray];
     if(calenderEventsArray != nil && calenderEventsArray.count > 0){

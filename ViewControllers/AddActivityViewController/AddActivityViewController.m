@@ -141,6 +141,8 @@
     {
         if(![self activityExists]){
             
+             NSString *sqlStr = [Utils getValidSqlString:self.nameTextField.text];
+            
             NSDate *date = [NSDate date];
             NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
             formatter.dateFormat = @"yyyy-MM-dd";
@@ -148,7 +150,7 @@
             
             NSTimeInterval  today = [[NSDate date] timeIntervalSince1970];
             //NSString *CurrentTime = [NSString stringWithFormat:@"%lf", today];
-            NSString *query = [NSString stringWithFormat:@"insert into Plan_Activities (valueName,activityName,isActive,createdDate) values('%@','%@',%i,'%lf')",[PersistenceStorage getObjectForKey:@"valueName"],self.nameTextField.text,YES,today];
+            NSString *query = [NSString stringWithFormat:@"insert into Plan_Activities (valueName,activityName,isActive,createdDate) values('%@','%@',%i,'%lf')",[PersistenceStorage getObjectForKey:@"valueName"],sqlStr,YES,today];
             
             [self.manager executeQuery:query];
             
@@ -157,7 +159,8 @@
                 
                 // check for fav and add it
                 if(self.favoriteButton.selected){
-                    NSString *query = [NSString stringWithFormat:@"insert into MyActivities (valueID,activityID,isFavourite,isSchedule,timeStamp,valueName,activityName,skillID, planID) values(%i,%lld,'%d',%i,'%@','%@','%@',%ld,%ld)",[PersistenceStorage getObjectForKey:@"valueID"],self.manager.lastInsertedRowID,1,YES,dateString,[PersistenceStorage getObjectForKey:@"valueName"],self.nameTextField.text,[PersistenceStorage getIntegerForKey:@"currentSkillID"],[PersistenceStorage getIntegerForKey:@"currentPlanID"]];
+                    
+                    NSString *query = [NSString stringWithFormat:@"insert into MyActivities (valueID,activityID,isFavourite,isSchedule,timeStamp,valueName,activityName,skillID, planID) values(%i,%lld,'%d',%i,'%@','%@','%@',%ld,%ld)",[PersistenceStorage getObjectForKey:@"valueID"],self.manager.lastInsertedRowID,1,YES,dateString,[PersistenceStorage getObjectForKey:@"valueName"],sqlStr,[PersistenceStorage getIntegerForKey:@"currentSkillID"],[PersistenceStorage getIntegerForKey:@"currentPlanID"]];
                     
                     // Execute the query.
                     [self.manager executeQuery:query];
@@ -187,7 +190,10 @@
 }
 
 -(BOOL)activityExists{
-   NSString* queryString = [NSString stringWithFormat:@"select count(*) from Plan_Activities where activityName =\"%@\"",self.nameTextField.text];
+    
+    NSString *sqlStr = [Utils getValidSqlString:self.nameTextField.text];
+    
+   NSString* queryString = [NSString stringWithFormat:@"select count(*) from Plan_Activities where activityName ='%@'",sqlStr];
     NSDictionary* dict = [[self.manager loadDataFromDB:queryString] objectAtIndex:0];
     int val = [(NSString*)[dict valueForKey:@"count(*)"] intValue];
     return  val > 0 ? YES:NO;

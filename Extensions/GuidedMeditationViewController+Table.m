@@ -76,7 +76,7 @@
         
         id reminder = nil;
         
-        NSString *query = [NSString stringWithFormat:@"select * from MySkillReminders where SkillName = 'Guided Meditation' and PlanName = \'%@\'",[PersistenceStorage getObjectForKey:@"planName"]];
+        NSString *query = [NSString stringWithFormat:@"select * from MySkillReminders where SkillName = 'Guided Meditation' and PlanName = '%@'",[Utils getValidSqlString:[PersistenceStorage getObjectForKey:@"planName"]]];
         
         self.manager = [[DBManager alloc]initWithDatabaseFileName:@"GNResoundDB.sqlite"];
         
@@ -244,7 +244,7 @@
     }
     else if(indexPath.section == 1)
     {
-        NSString *query = [NSString stringWithFormat:@"select * from MySkillReminders where SkillName = 'Guided Meditation' and PlanName = \'%@\'",[PersistenceStorage getObjectForKey:@"planName"]];
+        NSString *query = [NSString stringWithFormat:@"select * from MySkillReminders where SkillName = 'Guided Meditation' and PlanName = '%@'",[Utils getValidSqlString:[PersistenceStorage getObjectForKey:@"planName"]]];
         
         self.manager = [[DBManager alloc]initWithDatabaseFileName:@"GNResoundDB.sqlite"];
         

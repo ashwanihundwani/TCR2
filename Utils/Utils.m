@@ -500,4 +500,16 @@
 
 
 
++(NSString *)getValidSqlString:(NSString *)inputString
+{
+    // copy string as string should not affect the other cases.
+    NSString *copiedStr = [inputString copy];
+    
+    copiedStr = [copiedStr stringByReplacingOccurrencesOfString:@"'" withString:@"''"];
+    
+    return copiedStr;
+    
+}
+
+
 @end
