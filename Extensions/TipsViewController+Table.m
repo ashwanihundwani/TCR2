@@ -64,7 +64,7 @@
         
         id reminder = nil;
         
-        NSString *query = [NSString stringWithFormat:@"select * from MySkillReminders where SkillName = 'Tips for Better Sleep'"];
+        NSString *query = [NSString stringWithFormat:@"select * from MySkillReminders where SkillName = 'Tips for Better Sleep' and PlanName = '%@'",[Utils getValidSqlString:[PersistenceStorage getObjectForKey:@"planName"]]];
         
         self.manager = [[DBManager alloc]initWithDatabaseFileName:@"GNResoundDB.sqlite"];
         

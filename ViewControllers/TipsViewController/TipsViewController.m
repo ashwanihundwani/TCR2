@@ -292,7 +292,8 @@ mySwitch.on = YES;
     {
         NSLog(@"DeActivating TBS reminder");
         //get the TBS events
-        NSString* query = @"select * from MySkillReminders where SkillName = 'Tips for Better Sleep'";
+        NSString* query =[NSString stringWithFormat:@"select * from MySkillReminders where SkillName = 'Tips for Better Sleep' and PlanName = '%@'", [Utils getValidSqlString:[PersistenceStorage getObjectForKey:@"planName"]]];
+        
         NSArray* sleepReminderArray = [self.manager loadDataFromDB:query];
         for (NSDictionary* sleepRemiderDict in sleepReminderArray) {
             // check for calenderevent and cancel it
@@ -310,7 +311,7 @@ mySwitch.on = YES;
                 [[UIApplication sharedApplication] cancelLocalNotification:notification] ;
             }
         }
-        NSString *queryClear = [NSString stringWithFormat:@"delete from MySkillReminders where SkillName = 'Tips for Better Sleep'"];
+        NSString *queryClear = [NSString stringWithFormat:@"delete from MySkillReminders where SkillName = 'Tips for Better Sleep' and PlanName = '%@'", [Utils getValidSqlString:[PersistenceStorage getObjectForKey:@"planName"]]];
         [self.manager executeQuery:queryClear];
         [PersistenceStorage setObject:@"No" andKey:@"TipsActivated"];
         [self writeDeletedReminder];
@@ -431,7 +432,7 @@ mySwitch.on = YES;
         [PersistenceStorage setObject:strAct andKey:@"EventID"];
     }
     
-    NSString *query1 = [NSString stringWithFormat:@"delete from MySkillReminders where SkillName = 'Tips for Better Sleep'"];
+    NSString *query1 = [NSString stringWithFormat:@"delete from MySkillReminders where SkillName = 'Tips for Better Sleep' and PlanName='%@'", [Utils getValidSqlString:[PersistenceStorage getObjectForKey:@"planName"]]];
     
     
     
