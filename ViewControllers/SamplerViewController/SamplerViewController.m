@@ -912,7 +912,7 @@
         
         case 300:{
             
-            [self writeSamplerViewedInfoExercise];
+            //[self writeSamplerViewedInfoExercise];
             
             switch (indexPath.row) {
                 case 0:
