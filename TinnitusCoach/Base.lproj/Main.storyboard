@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7702" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="49e-Tb-3d3">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="49e-Tb-3d3">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -5957,6 +5957,9 @@ With this app, you can make plans for using sound when your tinnitus is botherin
                                     <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="emT-fh-2VR">
                                         <rect key="frame" x="22" y="43" width="578" height="1"/>
                                         <color key="backgroundColor" red="0.93333333330000001" green="0.93333333330000001" blue="0.93333333330000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
+                                            <rect key="frame" x="0.0" y="-64" width="0.0" height="0.0"/>
+                                        </variation>
                                     </view>
                                 </subviews>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -6246,7 +6249,7 @@ With this app, you can make plans for using sound when your tinnitus is botherin
                                                         <rect key="frame" x="-9" y="41" width="27" height="65"/>
                                                     </variation>
                                                     <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
-                                                        <rect key="frame" x="57" y="92" width="85" height="64"/>
+                                                        <rect key="frame" x="47" y="-61" width="37" height="49"/>
                                                     </variation>
                                                 </view>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gGr-kP-ykb">
@@ -7922,29 +7925,6 @@ With this app, you can make plans for using sound when your tinnitus is botherin
                                     <rect key="frame" x="0.0" y="0.0" width="0.0" height="0.0"/>
                                 </variation>
                             </textView>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Type your response here." minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Kql-y1-Scs">
-                                <rect key="frame" x="0.0" y="-30" width="97" height="30"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="LN4-cn-MXE"/>
-                                    <constraint firstAttribute="width" constant="97" id="kf1-Hx-x6p">
-                                        <variation key="widthClass=compact" constant="288"/>
-                                    </constraint>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="LN4-cn-MXE"/>
-                                        <exclude reference="kf1-Hx-x6p"/>
-                                    </mask>
-                                </variation>
-                                <variation key="widthClass=compact">
-                                    <mask key="constraints">
-                                        <include reference="LN4-cn-MXE"/>
-                                        <include reference="kf1-Hx-x6p"/>
-                                    </mask>
-                                </variation>
-                            </textField>
                             <button opaque="NO" tag="335" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7wb-wU-9JS">
                                 <rect key="frame" x="200" y="526" width="200" height="36"/>
                                 <color key="backgroundColor" red="0.1215686275" green="0.37647058820000001" blue="0.97254901959999995" alpha="1" colorSpace="calibratedRGB"/>
@@ -8033,11 +8013,34 @@ With this app, you can make plans for using sound when your tinnitus is botherin
                             <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="ctf01.png" translatesAutoresizingMaskIntoConstraints="NO" id="UcD-lX-CMt">
                                 <rect key="frame" x="0.0" y="-2" width="277" height="37"/>
                             </imageView>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="c6y-Vc-c68" customClass="MBAutoGrowingTextView">
+                                <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="288" id="aAd-e9-ip2"/>
+                                    <constraint firstAttribute="height" constant="30" id="dzz-DV-jyp"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="done"/>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="aAd-e9-ip2"/>
+                                        <exclude reference="dzz-DV-jyp"/>
+                                    </mask>
+                                </variation>
+                                <variation key="heightClass=regular-widthClass=compact">
+                                    <mask key="constraints">
+                                        <include reference="aAd-e9-ip2"/>
+                                        <include reference="dzz-DV-jyp"/>
+                                    </mask>
+                                </variation>
+                            </textView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="j9l-fm-I5C" firstAttribute="top" secondItem="sij-5e-Z2M" secondAttribute="bottom" constant="53" id="4Rt-RV-Uqd">
                                 <variation key="widthClass=compact" constant="55"/>
+                                <variation key="heightClass=regular-widthClass=compact" constant="62"/>
                             </constraint>
                             <constraint firstAttribute="centerX" secondItem="UcD-lX-CMt" secondAttribute="centerX" constant="9.5" id="4oK-EN-pBa">
                                 <variation key="widthClass=compact" constant="0.0"/>
@@ -8050,24 +8053,19 @@ With this app, you can make plans for using sound when your tinnitus is botherin
                                 <variation key="widthClass=compact" constant="0.0"/>
                             </constraint>
                             <constraint firstItem="OyS-7T-w80" firstAttribute="top" secondItem="yQa-bu-qzw" secondAttribute="bottom" constant="-1" id="BVE-yS-M7N"/>
-                            <constraint firstItem="7wb-wU-9JS" firstAttribute="top" secondItem="Kql-y1-Scs" secondAttribute="bottom" constant="64" id="FaG-Ov-wAH">
-                                <variation key="widthClass=compact" constant="6"/>
-                            </constraint>
-                            <constraint firstItem="Kql-y1-Scs" firstAttribute="leading" secondItem="VuW-iI-mJM" secondAttribute="leadingMargin" constant="37" id="K4p-kb-fcR">
-                                <variation key="widthClass=compact" constant="0.0"/>
-                            </constraint>
                             <constraint firstItem="UcD-lX-CMt" firstAttribute="top" secondItem="sij-5e-Z2M" secondAttribute="bottom" id="Ny4-6B-3lf">
                                 <variation key="widthClass=compact" constant="3"/>
+                                <variation key="heightClass=regular-widthClass=compact" constant="8"/>
                             </constraint>
-                            <constraint firstItem="Kql-y1-Scs" firstAttribute="top" secondItem="OyS-7T-w80" secondAttribute="bottom" constant="8" id="Wqy-3h-j9p">
-                                <variation key="widthClass=compact" constant="0.0"/>
-                            </constraint>
+                            <constraint firstItem="7wb-wU-9JS" firstAttribute="top" secondItem="c6y-Vc-c68" secondAttribute="bottom" constant="6" id="Wu6-dy-e1U"/>
+                            <constraint firstItem="c6y-Vc-c68" firstAttribute="leading" secondItem="VuW-iI-mJM" secondAttribute="leadingMargin" id="Yy0-PP-dkp"/>
                             <constraint firstAttribute="centerY" secondItem="UcD-lX-CMt" secondAttribute="centerY" constant="261.5" id="eUG-e0-SUs"/>
                             <constraint firstItem="7wb-wU-9JS" firstAttribute="leading" secondItem="VuW-iI-mJM" secondAttribute="leadingMargin" constant="178" id="ilA-a9-CId"/>
                             <constraint firstItem="OyS-7T-w80" firstAttribute="top" secondItem="yQa-bu-qzw" secondAttribute="bottom" constant="-11" id="l0z-zk-Pr8"/>
                             <constraint firstItem="OyS-7T-w80" firstAttribute="leading" secondItem="VuW-iI-mJM" secondAttribute="leadingMargin" constant="9" id="oqS-2l-4XN">
                                 <variation key="widthClass=compact" constant="0.0"/>
                             </constraint>
+                            <constraint firstItem="c6y-Vc-c68" firstAttribute="top" secondItem="OyS-7T-w80" secondAttribute="bottom" id="rGN-yq-8gq"/>
                             <constraint firstItem="yQa-bu-qzw" firstAttribute="top" secondItem="j9l-fm-I5C" secondAttribute="bottom" constant="8" id="tbt-lc-ijm">
                                 <variation key="widthClass=compact" constant="0.0"/>
                             </constraint>
@@ -8076,15 +8074,13 @@ With this app, you can make plans for using sound when your tinnitus is botherin
                             <mask key="subviews">
                                 <exclude reference="j9l-fm-I5C"/>
                                 <exclude reference="zBd-HT-4r6"/>
-                                <exclude reference="Kql-y1-Scs"/>
                                 <exclude reference="7wb-wU-9JS"/>
                                 <exclude reference="OyS-7T-w80"/>
                                 <exclude reference="yQa-bu-qzw"/>
                                 <exclude reference="UcD-lX-CMt"/>
+                                <exclude reference="c6y-Vc-c68"/>
                             </mask>
                             <mask key="constraints">
-                                <exclude reference="K4p-kb-fcR"/>
-                                <exclude reference="Wqy-3h-j9p"/>
                                 <exclude reference="BVE-yS-M7N"/>
                                 <exclude reference="l0z-zk-Pr8"/>
                                 <exclude reference="oqS-2l-4XN"/>
@@ -8096,7 +8092,9 @@ With this app, you can make plans for using sound when your tinnitus is botherin
                                 <exclude reference="5gq-0D-gYt"/>
                                 <exclude reference="Ny4-6B-3lf"/>
                                 <exclude reference="eUG-e0-SUs"/>
-                                <exclude reference="FaG-Ov-wAH"/>
+                                <exclude reference="Yy0-PP-dkp"/>
+                                <exclude reference="rGN-yq-8gq"/>
+                                <exclude reference="Wu6-dy-e1U"/>
                                 <exclude reference="ilA-a9-CId"/>
                             </mask>
                         </variation>
@@ -8104,15 +8102,12 @@ With this app, you can make plans for using sound when your tinnitus is botherin
                             <mask key="subviews">
                                 <include reference="j9l-fm-I5C"/>
                                 <include reference="zBd-HT-4r6"/>
-                                <include reference="Kql-y1-Scs"/>
                                 <include reference="7wb-wU-9JS"/>
                                 <include reference="OyS-7T-w80"/>
                                 <include reference="yQa-bu-qzw"/>
                                 <include reference="UcD-lX-CMt"/>
                             </mask>
                             <mask key="constraints">
-                                <include reference="K4p-kb-fcR"/>
-                                <include reference="Wqy-3h-j9p"/>
                                 <include reference="BVE-yS-M7N"/>
                                 <exclude reference="l0z-zk-Pr8"/>
                                 <include reference="oqS-2l-4XN"/>
@@ -8124,13 +8119,23 @@ With this app, you can make plans for using sound when your tinnitus is botherin
                                 <exclude reference="5gq-0D-gYt"/>
                                 <include reference="Ny4-6B-3lf"/>
                                 <exclude reference="eUG-e0-SUs"/>
-                                <include reference="FaG-Ov-wAH"/>
                                 <include reference="ilA-a9-CId"/>
+                            </mask>
+                        </variation>
+                        <variation key="heightClass=regular-widthClass=compact">
+                            <mask key="subviews">
+                                <include reference="c6y-Vc-c68"/>
+                            </mask>
+                            <mask key="constraints">
+                                <include reference="Yy0-PP-dkp"/>
+                                <include reference="rGN-yq-8gq"/>
+                                <include reference="Wu6-dy-e1U"/>
                             </mask>
                         </variation>
                     </view>
                     <connections>
-                        <outlet property="nameTextField" destination="Kql-y1-Scs" id="zx8-Qm-3ar"/>
+                        <outlet property="TextViewHeightConstraint" destination="dzz-DV-jyp" id="8KF-WL-6DY"/>
+                        <outlet property="nameTextView" destination="c6y-Vc-c68" id="O6f-ek-jTH"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fBq-Iw-ln5" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -8781,6 +8786,7 @@ With this app, you can make plans for using sound when your tinnitus is botherin
                             <constraint firstItem="N3m-2v-V72" firstAttribute="top" secondItem="Sgf-YN-OEa" secondAttribute="bottom" constant="21" id="aN1-jR-8L9"/>
                             <constraint firstItem="oVO-ed-x4P" firstAttribute="top" secondItem="Sgf-YN-OEa" secondAttribute="bottom" constant="-12" id="c83-fi-ajs">
                                 <variation key="widthClass=compact" constant="3"/>
+                                <variation key="heightClass=regular-widthClass=compact" constant="8"/>
                             </constraint>
                             <constraint firstAttribute="trailingMargin" secondItem="N3m-2v-V72" secondAttribute="trailing" constant="20" id="dWn-cJ-vax"/>
                             <constraint firstItem="RJN-qh-hhc" firstAttribute="top" secondItem="cHO-Gh-IWz" secondAttribute="bottom" constant="57" id="eWf-CA-8PA">
@@ -9080,6 +9086,7 @@ With this app, you can make plans for using sound when your tinnitus is botherin
                             </constraint>
                             <constraint firstItem="BPL-oe-bZk" firstAttribute="top" secondItem="Yvk-g8-dVG" secondAttribute="bottom" id="Ln2-uQ-jKJ">
                                 <variation key="widthClass=compact" constant="55"/>
+                                <variation key="heightClass=regular-widthClass=compact" constant="62"/>
                             </constraint>
                             <constraint firstItem="dXd-jA-HoX" firstAttribute="bottom" secondItem="T6L-Ml-0Zu" secondAttribute="top" id="NO5-wf-3QC"/>
                             <constraint firstItem="kdG-3e-os7" firstAttribute="top" secondItem="BPL-oe-bZk" secondAttribute="bottom" constant="8" id="Pn4-r6-Qdr"/>
@@ -9109,10 +9116,12 @@ With this app, you can make plans for using sound when your tinnitus is botherin
                             </constraint>
                             <constraint firstItem="2sW-eB-AIY" firstAttribute="top" secondItem="Yvk-g8-dVG" secondAttribute="bottom" constant="-5" id="v9r-WS-YBx">
                                 <variation key="widthClass=compact" constant="3"/>
+                                <variation key="heightClass=regular-widthClass=compact" constant="8"/>
                             </constraint>
                             <constraint firstItem="BPL-oe-bZk" firstAttribute="leading" secondItem="UQJ-y6-dhX" secondAttribute="leadingMargin" constant="-10" id="wag-bE-cya"/>
                             <constraint firstItem="T6L-Ml-0Zu" firstAttribute="top" secondItem="bPV-3q-1TW" secondAttribute="bottom" constant="60" id="xkg-3N-lWq">
                                 <variation key="widthClass=compact" constant="52"/>
+                                <variation key="heightClass=regular-widthClass=compact" constant="48"/>
                             </constraint>
                             <constraint firstAttribute="centerX" secondItem="dXd-jA-HoX" secondAttribute="centerX" id="z29-7T-gds"/>
                         </constraints>
@@ -9632,29 +9641,6 @@ With this app, you can make plans for using sound when your tinnitus is botherin
                                     <rect key="frame" x="0.0" y="0.0" width="0.0" height="0.0"/>
                                 </variation>
                             </textView>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Type your response here." minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="1LP-hd-1ug">
-                                <rect key="frame" x="0.0" y="-30" width="97" height="30"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="0LT-Li-gQj"/>
-                                    <constraint firstAttribute="width" constant="97" id="gjJ-vP-ikb">
-                                        <variation key="widthClass=compact" constant="288"/>
-                                    </constraint>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="0LT-Li-gQj"/>
-                                        <exclude reference="gjJ-vP-ikb"/>
-                                    </mask>
-                                </variation>
-                                <variation key="widthClass=compact">
-                                    <mask key="constraints">
-                                        <include reference="0LT-Li-gQj"/>
-                                        <include reference="gjJ-vP-ikb"/>
-                                    </mask>
-                                </variation>
-                            </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yGf-An-jBA">
                                 <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
                                 <constraints>
@@ -9752,21 +9738,42 @@ With this app, you can make plans for using sound when your tinnitus is botherin
                                     <action selector="addButtonTapped:" destination="Zx5-ab-tp1" eventType="touchUpInside" id="j69-6x-eIn"/>
                                 </connections>
                             </button>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fcH-Ju-O4a" customClass="MBAutoGrowingTextView">
+                                <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="Ae7-WM-mni"/>
+                                    <constraint firstAttribute="width" constant="288" id="Ky5-p1-zQW"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="done"/>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="Ae7-WM-mni"/>
+                                        <exclude reference="Ky5-p1-zQW"/>
+                                    </mask>
+                                </variation>
+                                <variation key="heightClass=regular-widthClass=compact">
+                                    <mask key="constraints">
+                                        <include reference="Ae7-WM-mni"/>
+                                        <include reference="Ky5-p1-zQW"/>
+                                    </mask>
+                                </variation>
+                            </textView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="iKg-EI-qdI" firstAttribute="leading" secondItem="HnN-PF-e9E" secondAttribute="leadingMargin" constant="9" id="2DQ-g4-Pat">
                                 <variation key="widthClass=compact" constant="0.0"/>
                             </constraint>
-                            <constraint firstItem="9uo-ZQ-c7z" firstAttribute="top" secondItem="1LP-hd-1ug" secondAttribute="bottom" constant="14" id="2Di-ey-GXc"/>
+                            <constraint firstItem="9uo-ZQ-c7z" firstAttribute="top" secondItem="fcH-Ju-O4a" secondAttribute="bottom" constant="14" id="2X7-g5-kEw"/>
                             <constraint firstItem="iKg-EI-qdI" firstAttribute="top" secondItem="NVW-Un-LKC" secondAttribute="bottom" constant="8" id="3an-nI-Dyf">
                                 <variation key="widthClass=compact" constant="0.0"/>
                             </constraint>
                             <constraint firstItem="SjG-XB-eBX" firstAttribute="top" secondItem="Edt-LW-bRL" secondAttribute="bottom" constant="-8" id="3qi-5P-ARm">
                                 <variation key="widthClass=compact" constant="3"/>
+                                <variation key="heightClass=regular-widthClass=compact" constant="8"/>
                             </constraint>
-                            <constraint firstItem="MWW-dS-0p4" firstAttribute="top" secondItem="1LP-hd-1ug" secondAttribute="bottom" constant="14" id="6Bz-XR-LDy"/>
-                            <constraint firstItem="1LP-hd-1ug" firstAttribute="top" secondItem="yGf-An-jBA" secondAttribute="bottom" constant="-12" id="7IS-Ok-B6X"/>
                             <constraint firstItem="NVW-Un-LKC" firstAttribute="top" secondItem="SjG-XB-eBX" secondAttribute="bottom" constant="-8" id="7zD-nZ-eYC"/>
                             <constraint firstItem="MWW-dS-0p4" firstAttribute="top" secondItem="9uo-ZQ-c7z" secondAttribute="top" id="Mdk-K9-Dl0"/>
                             <constraint firstItem="yGf-An-jBA" firstAttribute="leading" secondItem="HnN-PF-e9E" secondAttribute="leadingMargin" constant="9" id="Mit-tB-BJt">
@@ -9776,39 +9783,35 @@ With this app, you can make plans for using sound when your tinnitus is botherin
                                 <variation key="widthClass=compact" constant="21"/>
                             </constraint>
                             <constraint firstItem="MWW-dS-0p4" firstAttribute="leading" secondItem="HnN-PF-e9E" secondAttribute="leadingMargin" constant="9" id="W9d-nn-Obm"/>
+                            <constraint firstItem="MWW-dS-0p4" firstAttribute="top" secondItem="fcH-Ju-O4a" secondAttribute="bottom" constant="14" id="WhO-tI-aye"/>
+                            <constraint firstItem="9uo-ZQ-c7z" firstAttribute="top" secondItem="fcH-Ju-O4a" secondAttribute="bottom" constant="14" id="WwE-1e-qWF"/>
                             <constraint firstAttribute="centerX" secondItem="SjG-XB-eBX" secondAttribute="centerX" constant="8.5" id="ZvX-Le-BR1">
                                 <variation key="widthClass=compact" constant="3"/>
                             </constraint>
                             <constraint firstItem="yGf-An-jBA" firstAttribute="top" secondItem="iKg-EI-qdI" secondAttribute="bottom" constant="-11" id="aff-GM-BYs"/>
-                            <constraint firstItem="1LP-hd-1ug" firstAttribute="top" secondItem="yGf-An-jBA" secondAttribute="bottom" constant="8" id="fwv-sJ-LxH">
-                                <variation key="widthClass=compact" constant="3"/>
-                            </constraint>
+                            <constraint firstItem="fcH-Ju-O4a" firstAttribute="leading" secondItem="HnN-PF-e9E" secondAttribute="leadingMargin" id="c6z-mw-jOu"/>
                             <constraint firstItem="9uo-ZQ-c7z" firstAttribute="leading" secondItem="HnN-PF-e9E" secondAttribute="leadingMargin" constant="178" id="i0M-ua-QaO"/>
-                            <constraint firstItem="1LP-hd-1ug" firstAttribute="leading" secondItem="HnN-PF-e9E" secondAttribute="leadingMargin" constant="37" id="icx-xo-3GV">
-                                <variation key="widthClass=compact" constant="0.0"/>
-                            </constraint>
                             <constraint firstItem="NVW-Un-LKC" firstAttribute="leading" secondItem="HnN-PF-e9E" secondAttribute="leadingMargin" constant="9" id="n6a-g1-m7J">
                                 <variation key="widthClass=compact" constant="0.0"/>
                             </constraint>
                             <constraint firstItem="NVW-Un-LKC" firstAttribute="top" secondItem="Edt-LW-bRL" secondAttribute="bottom" constant="21" id="pOh-as-yej">
                                 <variation key="widthClass=compact" constant="55"/>
+                                <variation key="heightClass=regular-widthClass=compact" constant="62"/>
                             </constraint>
+                            <constraint firstItem="fcH-Ju-O4a" firstAttribute="top" secondItem="iKg-EI-qdI" secondAttribute="bottom" constant="32" id="yFV-zT-wWH"/>
                         </constraints>
                         <variation key="default">
                             <mask key="subviews">
                                 <exclude reference="NVW-Un-LKC"/>
                                 <exclude reference="iKg-EI-qdI"/>
                                 <exclude reference="Yqo-vS-bxo"/>
-                                <exclude reference="1LP-hd-1ug"/>
                                 <exclude reference="yGf-An-jBA"/>
                                 <exclude reference="MWW-dS-0p4"/>
                                 <exclude reference="SjG-XB-eBX"/>
                                 <exclude reference="9uo-ZQ-c7z"/>
+                                <exclude reference="fcH-Ju-O4a"/>
                             </mask>
                             <mask key="constraints">
-                                <exclude reference="7IS-Ok-B6X"/>
-                                <exclude reference="fwv-sJ-LxH"/>
-                                <exclude reference="icx-xo-3GV"/>
                                 <exclude reference="7zD-nZ-eYC"/>
                                 <exclude reference="T4d-dr-X9f"/>
                                 <exclude reference="n6a-g1-m7J"/>
@@ -9819,11 +9822,14 @@ With this app, you can make plans for using sound when your tinnitus is botherin
                                 <exclude reference="3an-nI-Dyf"/>
                                 <exclude reference="Mit-tB-BJt"/>
                                 <exclude reference="aff-GM-BYs"/>
-                                <exclude reference="2Di-ey-GXc"/>
+                                <exclude reference="c6z-mw-jOu"/>
+                                <exclude reference="yFV-zT-wWH"/>
+                                <exclude reference="2X7-g5-kEw"/>
+                                <exclude reference="WwE-1e-qWF"/>
                                 <exclude reference="i0M-ua-QaO"/>
-                                <exclude reference="6Bz-XR-LDy"/>
                                 <exclude reference="Mdk-K9-Dl0"/>
                                 <exclude reference="W9d-nn-Obm"/>
+                                <exclude reference="WhO-tI-aye"/>
                             </mask>
                         </variation>
                         <variation key="widthClass=compact">
@@ -9831,16 +9837,12 @@ With this app, you can make plans for using sound when your tinnitus is botherin
                                 <include reference="NVW-Un-LKC"/>
                                 <include reference="iKg-EI-qdI"/>
                                 <include reference="Yqo-vS-bxo"/>
-                                <include reference="1LP-hd-1ug"/>
                                 <include reference="yGf-An-jBA"/>
                                 <include reference="MWW-dS-0p4"/>
                                 <include reference="SjG-XB-eBX"/>
                                 <include reference="9uo-ZQ-c7z"/>
                             </mask>
                             <mask key="constraints">
-                                <include reference="7IS-Ok-B6X"/>
-                                <exclude reference="fwv-sJ-LxH"/>
-                                <include reference="icx-xo-3GV"/>
                                 <exclude reference="7zD-nZ-eYC"/>
                                 <exclude reference="T4d-dr-X9f"/>
                                 <include reference="n6a-g1-m7J"/>
@@ -9851,16 +9853,27 @@ With this app, you can make plans for using sound when your tinnitus is botherin
                                 <include reference="3an-nI-Dyf"/>
                                 <include reference="Mit-tB-BJt"/>
                                 <include reference="aff-GM-BYs"/>
-                                <include reference="2Di-ey-GXc"/>
                                 <include reference="i0M-ua-QaO"/>
-                                <include reference="6Bz-XR-LDy"/>
                                 <include reference="Mdk-K9-Dl0"/>
                                 <include reference="W9d-nn-Obm"/>
                             </mask>
                         </variation>
+                        <variation key="heightClass=regular-widthClass=compact">
+                            <mask key="subviews">
+                                <include reference="fcH-Ju-O4a"/>
+                            </mask>
+                            <mask key="constraints">
+                                <include reference="c6z-mw-jOu"/>
+                                <include reference="yFV-zT-wWH"/>
+                                <include reference="2X7-g5-kEw"/>
+                                <exclude reference="WwE-1e-qWF"/>
+                                <include reference="WhO-tI-aye"/>
+                            </mask>
+                        </variation>
                     </view>
                     <connections>
-                        <outlet property="nameTextField" destination="1LP-hd-1ug" id="yCn-dh-N6J"/>
+                        <outlet property="TextViewHeightConstraint" destination="Ae7-WM-mni" id="t4z-pQ-1Ct"/>
+                        <outlet property="nameTextView" destination="fcH-Ju-O4a" id="Fsu-sM-MyI"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x7N-uF-72y" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -9920,29 +9933,6 @@ With this app, you can make plans for using sound when your tinnitus is botherin
                                     <rect key="frame" x="0.0" y="0.0" width="0.0" height="0.0"/>
                                 </variation>
                             </textView>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Type your response here." minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="RVb-7Y-bsG">
-                                <rect key="frame" x="0.0" y="-30" width="97" height="30"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="97" id="HLj-bX-4Mn">
-                                        <variation key="widthClass=compact" constant="300"/>
-                                    </constraint>
-                                    <constraint firstAttribute="height" constant="30" id="VBH-RK-Xsh"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="HLj-bX-4Mn"/>
-                                        <exclude reference="VBH-RK-Xsh"/>
-                                    </mask>
-                                </variation>
-                                <variation key="widthClass=compact">
-                                    <mask key="constraints">
-                                        <include reference="HLj-bX-4Mn"/>
-                                        <include reference="VBH-RK-Xsh"/>
-                                    </mask>
-                                </variation>
-                            </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Write down a new thought about the situation that is more helpful." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WUZ-Nh-xzC">
                                 <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
                                 <constraints>
@@ -10095,12 +10085,31 @@ With this app, you can make plans for using sound when your tinnitus is botherin
                                     <action selector="backButtonTapped:" destination="72V-c3-VTf" eventType="touchUpInside" id="Stt-pW-Ia3"/>
                                 </connections>
                             </button>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="idh-ix-9Wf" customClass="MBAutoGrowingTextView">
+                                <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="300" id="64q-Al-lMY"/>
+                                    <constraint firstAttribute="height" constant="30" id="gN6-y9-phZ"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="done"/>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="64q-Al-lMY"/>
+                                        <exclude reference="gN6-y9-phZ"/>
+                                    </mask>
+                                </variation>
+                                <variation key="heightClass=regular-widthClass=compact">
+                                    <mask key="constraints">
+                                        <include reference="64q-Al-lMY"/>
+                                        <include reference="gN6-y9-phZ"/>
+                                    </mask>
+                                </variation>
+                            </textView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="RVb-7Y-bsG" firstAttribute="leading" secondItem="zis-hj-eoj" secondAttribute="leadingMargin" constant="37" id="AAV-mm-DCM">
-                                <variation key="widthClass=compact" constant="0.0"/>
-                            </constraint>
                             <constraint firstItem="l70-LF-dKO" firstAttribute="leading" secondItem="zis-hj-eoj" secondAttribute="leadingMargin" constant="178" id="AxM-Iy-Ah4"/>
                             <constraint firstItem="KY0-O1-let" firstAttribute="top" secondItem="Ez6-4f-vjL" secondAttribute="bottom" constant="8" id="Ayy-9I-PFN">
                                 <variation key="heightClass=regular-widthClass=compact" constant="4"/>
@@ -10116,41 +10125,35 @@ With this app, you can make plans for using sound when your tinnitus is botherin
                                 <variation key="widthClass=compact" constant="0.0"/>
                                 <variation key="heightClass=regular-widthClass=compact" constant="70"/>
                             </constraint>
-                            <constraint firstItem="l70-LF-dKO" firstAttribute="top" secondItem="RVb-7Y-bsG" secondAttribute="bottom" constant="64" id="O4n-xd-45z">
-                                <variation key="widthClass=compact" constant="24"/>
-                            </constraint>
-                            <constraint firstItem="RVb-7Y-bsG" firstAttribute="top" secondItem="WUZ-Nh-xzC" secondAttribute="bottom" constant="8" id="Oia-Wa-2UU">
-                                <variation key="widthClass=compact" constant="0.0"/>
-                            </constraint>
                             <constraint firstItem="WUZ-Nh-xzC" firstAttribute="top" secondItem="Usy-Vg-0Jc" secondAttribute="bottom" constant="-2" id="Qp9-6f-Tns"/>
                             <constraint firstItem="KY0-O1-let" firstAttribute="leading" secondItem="zis-hj-eoj" secondAttribute="leadingMargin" constant="9" id="URs-mx-OeC">
                                 <variation key="widthClass=compact" constant="0.0"/>
                             </constraint>
                             <constraint firstItem="s2X-lw-MOX" firstAttribute="top" secondItem="l70-LF-dKO" secondAttribute="top" id="VJ0-Xj-5mP"/>
                             <constraint firstItem="C1m-z8-hxQ" firstAttribute="top" secondItem="KY0-O1-let" secondAttribute="bottom" constant="8" id="Vv8-TH-Gvx"/>
+                            <constraint firstItem="idh-ix-9Wf" firstAttribute="top" secondItem="WUZ-Nh-xzC" secondAttribute="bottom" id="XVk-3a-cd4"/>
                             <constraint firstItem="Usy-Vg-0Jc" firstAttribute="leading" secondItem="zis-hj-eoj" secondAttribute="leadingMargin" id="XwW-KW-bbJ"/>
                             <constraint firstItem="WUZ-Nh-xzC" firstAttribute="top" secondItem="KY0-O1-let" secondAttribute="bottom" constant="-11" id="cPr-JM-HJC"/>
                             <constraint firstItem="Q66-4u-Ulm" firstAttribute="top" secondItem="Ezy-1s-LoN" secondAttribute="bottom" constant="-15" id="gWZ-fn-acS">
                                 <variation key="widthClass=compact" constant="3"/>
-                            </constraint>
-                            <constraint firstItem="RVb-7Y-bsG" firstAttribute="top" secondItem="WUZ-Nh-xzC" secondAttribute="bottom" constant="8" id="kDs-Bu-TOO">
-                                <variation key="widthClass=compact" constant="0.0"/>
+                                <variation key="heightClass=regular-widthClass=compact" constant="8"/>
                             </constraint>
                             <constraint firstItem="Usy-Vg-0Jc" firstAttribute="top" secondItem="C1m-z8-hxQ" secondAttribute="bottom" constant="-5" id="l5D-Mj-JIO"/>
-                            <constraint firstItem="RVb-7Y-bsG" firstAttribute="top" secondItem="WUZ-Nh-xzC" secondAttribute="bottom" id="mU6-vx-dc6"/>
+                            <constraint firstItem="s2X-lw-MOX" firstAttribute="top" secondItem="idh-ix-9Wf" secondAttribute="bottom" constant="24" id="lIy-Vq-oni"/>
                             <constraint firstItem="C1m-z8-hxQ" firstAttribute="leading" secondItem="zis-hj-eoj" secondAttribute="leadingMargin" id="oxX-pG-qMS"/>
                             <constraint firstAttribute="centerX" secondItem="Q66-4u-Ulm" secondAttribute="centerX" constant="4.5" id="u7P-k8-laC">
                                 <variation key="widthClass=compact" constant="0.0"/>
                             </constraint>
+                            <constraint firstItem="l70-LF-dKO" firstAttribute="top" secondItem="idh-ix-9Wf" secondAttribute="bottom" constant="24" id="uTG-uT-cWF"/>
                             <constraint firstItem="Ez6-4f-vjL" firstAttribute="top" secondItem="Ezy-1s-LoN" secondAttribute="bottom" constant="57" id="ygG-YL-fQe">
-                                <variation key="heightClass=regular-widthClass=compact" constant="37"/>
+                                <variation key="heightClass=regular-widthClass=compact" constant="42"/>
                             </constraint>
+                            <constraint firstItem="idh-ix-9Wf" firstAttribute="leading" secondItem="zis-hj-eoj" secondAttribute="leadingMargin" id="zt5-Ee-kUm"/>
                         </constraints>
                         <variation key="default">
                             <mask key="subviews">
                                 <exclude reference="KY0-O1-let"/>
                                 <exclude reference="m88-kA-x0R"/>
-                                <exclude reference="RVb-7Y-bsG"/>
                                 <exclude reference="WUZ-Nh-xzC"/>
                                 <exclude reference="Q66-4u-Ulm"/>
                                 <exclude reference="C1m-z8-hxQ"/>
@@ -10158,6 +10161,7 @@ With this app, you can make plans for using sound when your tinnitus is botherin
                                 <exclude reference="Ez6-4f-vjL"/>
                                 <exclude reference="l70-LF-dKO"/>
                                 <exclude reference="s2X-lw-MOX"/>
+                                <exclude reference="idh-ix-9Wf"/>
                             </mask>
                             <mask key="constraints">
                                 <exclude reference="Vv8-TH-Gvx"/>
@@ -10168,27 +10172,25 @@ With this app, you can make plans for using sound when your tinnitus is botherin
                                 <exclude reference="URs-mx-OeC"/>
                                 <exclude reference="gWZ-fn-acS"/>
                                 <exclude reference="u7P-k8-laC"/>
-                                <exclude reference="AAV-mm-DCM"/>
-                                <exclude reference="Oia-Wa-2UU"/>
-                                <exclude reference="kDs-Bu-TOO"/>
-                                <exclude reference="mU6-vx-dc6"/>
                                 <exclude reference="XwW-KW-bbJ"/>
                                 <exclude reference="l5D-Mj-JIO"/>
                                 <exclude reference="BXh-T7-ElE"/>
                                 <exclude reference="M3e-bQ-9Pr"/>
                                 <exclude reference="Qp9-6f-Tns"/>
                                 <exclude reference="cPr-JM-HJC"/>
+                                <exclude reference="XVk-3a-cd4"/>
+                                <exclude reference="zt5-Ee-kUm"/>
                                 <exclude reference="AxM-Iy-Ah4"/>
-                                <exclude reference="O4n-xd-45z"/>
+                                <exclude reference="uTG-uT-cWF"/>
                                 <exclude reference="HGL-un-ca0"/>
                                 <exclude reference="VJ0-Xj-5mP"/>
+                                <exclude reference="lIy-Vq-oni"/>
                             </mask>
                         </variation>
                         <variation key="widthClass=compact">
                             <mask key="subviews">
                                 <include reference="KY0-O1-let"/>
                                 <include reference="m88-kA-x0R"/>
-                                <include reference="RVb-7Y-bsG"/>
                                 <include reference="WUZ-Nh-xzC"/>
                                 <include reference="Q66-4u-Ulm"/>
                                 <include reference="l70-LF-dKO"/>
@@ -10198,14 +10200,10 @@ With this app, you can make plans for using sound when your tinnitus is botherin
                                 <include reference="URs-mx-OeC"/>
                                 <include reference="gWZ-fn-acS"/>
                                 <include reference="u7P-k8-laC"/>
-                                <include reference="AAV-mm-DCM"/>
-                                <include reference="Oia-Wa-2UU"/>
-                                <include reference="kDs-Bu-TOO"/>
                                 <include reference="BXh-T7-ElE"/>
                                 <include reference="M3e-bQ-9Pr"/>
                                 <exclude reference="cPr-JM-HJC"/>
                                 <include reference="AxM-Iy-Ah4"/>
-                                <include reference="O4n-xd-45z"/>
                                 <include reference="HGL-un-ca0"/>
                                 <include reference="VJ0-Xj-5mP"/>
                             </mask>
@@ -10215,6 +10213,7 @@ With this app, you can make plans for using sound when your tinnitus is botherin
                                 <include reference="C1m-z8-hxQ"/>
                                 <include reference="Usy-Vg-0Jc"/>
                                 <include reference="Ez6-4f-vjL"/>
+                                <include reference="idh-ix-9Wf"/>
                             </mask>
                             <mask key="constraints">
                                 <include reference="Vv8-TH-Gvx"/>
@@ -10222,18 +10221,20 @@ With this app, you can make plans for using sound when your tinnitus is botherin
                                 <include reference="JSs-nz-5gC"/>
                                 <include reference="ygG-YL-fQe"/>
                                 <include reference="Ayy-9I-PFN"/>
-                                <exclude reference="Oia-Wa-2UU"/>
-                                <exclude reference="kDs-Bu-TOO"/>
-                                <include reference="mU6-vx-dc6"/>
                                 <include reference="XwW-KW-bbJ"/>
                                 <include reference="l5D-Mj-JIO"/>
                                 <exclude reference="M3e-bQ-9Pr"/>
                                 <include reference="Qp9-6f-Tns"/>
+                                <include reference="XVk-3a-cd4"/>
+                                <include reference="zt5-Ee-kUm"/>
+                                <include reference="uTG-uT-cWF"/>
+                                <include reference="lIy-Vq-oni"/>
                             </mask>
                         </variation>
                     </view>
                     <connections>
-                        <outlet property="nameTextField" destination="RVb-7Y-bsG" id="rm7-gb-x1s"/>
+                        <outlet property="TextViewHeightConstraint" destination="gN6-y9-phZ" id="Mi2-fI-sdI"/>
+                        <outlet property="nameTextView" destination="idh-ix-9Wf" id="2d1-7n-ldU"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rwM-WC-tOy" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -11328,9 +11329,11 @@ With this app, you can make plans for using sound when your tinnitus is botherin
                             </constraint>
                             <constraint firstItem="f3I-cR-ov4" firstAttribute="top" secondItem="fti-IX-RMq" secondAttribute="bottom" constant="53" id="E3i-vN-lV7">
                                 <variation key="widthClass=compact" constant="45"/>
+                                <variation key="heightClass=regular-widthClass=compact" constant="50"/>
                             </constraint>
                             <constraint firstItem="qlS-MF-s7a" firstAttribute="top" secondItem="fti-IX-RMq" secondAttribute="bottom" constant="-8" id="KKb-ci-bUm">
                                 <variation key="widthClass=compact" constant="3"/>
+                                <variation key="heightClass=regular-widthClass=compact" constant="8"/>
                             </constraint>
                             <constraint firstItem="0Cv-pS-jx8" firstAttribute="leading" secondItem="9Vm-1h-Xhb" secondAttribute="leadingMargin" id="NET-fK-wmx"/>
                             <constraint firstItem="s2V-7F-k09" firstAttribute="top" secondItem="z05-gD-PgW" secondAttribute="bottom" constant="7" id="Qgj-4V-JfD">
@@ -11350,7 +11353,6 @@ With this app, you can make plans for using sound when your tinnitus is botherin
                             </constraint>
                             <constraint firstItem="MXS-kT-oN1" firstAttribute="leading" secondItem="9Vm-1h-Xhb" secondAttribute="leadingMargin" constant="28" id="aBO-xy-uL1"/>
                             <constraint firstItem="Kvv-ex-otS" firstAttribute="leading" secondItem="9Vm-1h-Xhb" secondAttribute="leadingMargin" constant="178" id="bS3-3N-B62"/>
-                            <constraint firstItem="qlS-MF-s7a" firstAttribute="top" secondItem="fti-IX-RMq" secondAttribute="bottom" constant="3" id="dUw-qR-rNY"/>
                             <constraint firstItem="aFE-pl-9kA" firstAttribute="top" secondItem="s2V-7F-k09" secondAttribute="bottom" constant="1" id="ezf-bO-itM">
                                 <variation key="widthClass=compact" constant="-10"/>
                             </constraint>
@@ -11396,7 +11398,6 @@ With this app, you can make plans for using sound when your tinnitus is botherin
                                 <exclude reference="E3i-vN-lV7"/>
                                 <exclude reference="9B5-ZL-CEL"/>
                                 <exclude reference="KKb-ci-bUm"/>
-                                <exclude reference="dUw-qR-rNY"/>
                                 <exclude reference="Uai-Kh-Edy"/>
                                 <exclude reference="ezf-bO-itM"/>
                                 <exclude reference="gbN-dv-zE0"/>
@@ -11437,7 +11438,6 @@ With this app, you can make plans for using sound when your tinnitus is botherin
                                 <include reference="E3i-vN-lV7"/>
                                 <include reference="9B5-ZL-CEL"/>
                                 <include reference="KKb-ci-bUm"/>
-                                <include reference="dUw-qR-rNY"/>
                                 <include reference="Uai-Kh-Edy"/>
                                 <exclude reference="ezf-bO-itM"/>
                                 <include reference="gbN-dv-zE0"/>

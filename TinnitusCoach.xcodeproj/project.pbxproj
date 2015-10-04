@@ -426,6 +426,7 @@
 		4AF9E8C71AB415E100C73A45 /* SamplerCustomCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AF9E8C51AB415E100C73A45 /* SamplerCustomCell.m */; };
 		4AF9E8CA1AB4346000C73A45 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4AF9E8C91AB4346000C73A45 /* libsqlite3.dylib */; };
 		4AF9E8CE1AB434DB00C73A45 /* DBManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AF9E8CD1AB434DB00C73A45 /* DBManager.m */; };
+		B2E5F9F61BC122C200E1E45D /* MBAutoGrowingTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = B2E5F9F51BC122C200E1E45D /* MBAutoGrowingTextView.m */; };
 		CD0752181BAAAAFE00D7B72F /* RepeatCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CD0752151BAAAAFE00D7B72F /* RepeatCell.m */; };
 		CD0752191BAAAAFE00D7B72F /* DateCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CD0752171BAAAAFE00D7B72F /* DateCell.m */; };
 		CD27E6F81BA7218D00355709 /* SkillReminderCell_Tips.xib in Resources */ = {isa = PBXBuildFile; fileRef = CD27E6F71BA7218D00355709 /* SkillReminderCell_Tips.xib */; };
@@ -1053,6 +1054,8 @@
 		4AF9E8C91AB4346000C73A45 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		4AF9E8CC1AB434DB00C73A45 /* DBManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBManager.h; sourceTree = "<group>"; };
 		4AF9E8CD1AB434DB00C73A45 /* DBManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBManager.m; sourceTree = "<group>"; };
+		B2E5F9F41BC122C200E1E45D /* MBAutoGrowingTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBAutoGrowingTextView.h; sourceTree = "<group>"; };
+		B2E5F9F51BC122C200E1E45D /* MBAutoGrowingTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBAutoGrowingTextView.m; sourceTree = "<group>"; };
 		CD0752141BAAAAFE00D7B72F /* RepeatCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RepeatCell.h; sourceTree = "<group>"; };
 		CD0752151BAAAAFE00D7B72F /* RepeatCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RepeatCell.m; sourceTree = "<group>"; };
 		CD0752161BAAAAFE00D7B72F /* DateCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DateCell.h; sourceTree = "<group>"; };
@@ -2767,6 +2770,7 @@
 		4AF9E8DE1AB4C0D500C73A45 /* ThirdPartyClasses */ = {
 			isa = PBXGroup;
 			children = (
+				B2E5F9F31BC122C200E1E45D /* MBAutoGrowingTextView */,
 				04B0F1C01AEF74A0005BCEA5 /* MBProgressHUD */,
 				1550E59B1AC894D200E36C90 /* CERoundProgress */,
 				15156B341ABEFD1D009F4489 /* MYIntroduction */,
@@ -2774,6 +2778,15 @@
 				4A9017511AB8AD7800AE4B9D /* MixerHostAudio */,
 			);
 			path = ThirdPartyClasses;
+			sourceTree = "<group>";
+		};
+		B2E5F9F31BC122C200E1E45D /* MBAutoGrowingTextView */ = {
+			isa = PBXGroup;
+			children = (
+				B2E5F9F41BC122C200E1E45D /* MBAutoGrowingTextView.h */,
+				B2E5F9F51BC122C200E1E45D /* MBAutoGrowingTextView.m */,
+			);
+			path = MBAutoGrowingTextView;
 			sourceTree = "<group>";
 		};
 		CD0752121BAAAAD400D7B72F /* New Group */ = {
@@ -3377,6 +3390,7 @@
 				042DDC881AEC13A50023910B /* VideoPlayerViewController.m in Sources */,
 				4A4A3B261AC6BA7D00F2AEF6 /* ActivitiesViewController.m in Sources */,
 				0487A58F1AED4C5900A3CCE1 /* SkillRatingsViewController.m in Sources */,
+				B2E5F9F61BC122C200E1E45D /* MBAutoGrowingTextView.m in Sources */,
 				CDF14CF41B8F718A005A0E01 /* TipsViewController+Table.m in Sources */,
 				1550E5A41AC894D200E36C90 /* CERoundProgressView.m in Sources */,
 				15156B2B1ABEFC52009F4489 /* NewPlanAddedViewController.m in Sources */,

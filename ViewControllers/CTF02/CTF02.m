@@ -14,7 +14,7 @@
 
 
 @interface CTF02 ()
-
+@property (nonatomic, strong) UILabel* placeHolderLabel;
 @end
 
 @implementation CTF02
@@ -31,10 +31,32 @@
     
     [self.view addGestureRecognizer:tap];
     
+    self.nameTextView.layer.cornerRadius = 5;
+    [self.nameTextView.layer setBorderColor:[[[UIColor grayColor] colorWithAlphaComponent:0.5] CGColor]];
+    self.nameTextView.layer.borderWidth = 0.5;
+    self.nameTextView.clipsToBounds = true;
+    [self.nameTextView associateConstraints:self.TextViewHeightConstraint];
+    self.nameTextView.textContainer.maximumNumberOfLines = 2;
+    self.nameTextView.textContainer.lineBreakMode = NSLineBreakByTruncatingTail;
+    // add placeholder text
+    self.placeHolderLabel = [[UILabel alloc] initWithFrame:CGRectMake(10.0, 2.0,self.nameTextView.frame.size.width - 10.0, 25.0)];
     
     
+    [self.placeHolderLabel setText:@"Type your response here."];
+    [self.placeHolderLabel setFont:[UIFont systemFontOfSize:14]];
+    [self.placeHolderLabel setBackgroundColor:[UIColor clearColor]];
+    [self.placeHolderLabel setTextColor:[UIColor lightGrayColor]];
+    
+    [self.nameTextView addSubview:self.placeHolderLabel];
     [self setUpView];
-    self.nameTextField.delegate = self;
+    self.nameTextView.delegate = self;
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWasShown:)
+                                                 name:UIKeyboardDidShowNotification object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillBeHidden:)
+                                                 name:UIKeyboardWillHideNotification object:nil];
 }
 
 -(void)setUpView{
@@ -53,6 +75,7 @@
 - (void)viewWillDisappear:(BOOL)animated
 {
     [self.tabBarController.tabBar setHidden:NO];
+     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 
@@ -60,8 +83,10 @@
 
 {
     
-    self.nameTextField.text = [PersistenceStorage getObjectForKey:@"ctf02text"];
-    
+    self.nameTextView.text = [PersistenceStorage getObjectForKey:@"ctf02text"];
+    if([self.nameTextView hasText]){
+        [self.placeHolderLabel setHidden:YES];
+    }
     
     
 }
@@ -144,9 +169,9 @@
     
     
     
-    [PersistenceStorage setObject:self.nameTextField.text andKey:@"ctf02text"];
+    [PersistenceStorage setObject:self.nameTextView.text andKey:@"ctf02text"];
 
-    NSLog(@"%@",self.nameTextField.text);
+    NSLog(@"%@",self.nameTextView.text);
     
     
     
@@ -178,6 +203,29 @@
     }
 }
 
+// Called when the UIKeyboardDidShowNotification is sent.
+- (void)keyboardWasShown:(NSNotification*)aNotification
+{
+    const float movementDuration = 0.3f;
+    [UIView beginAnimations: @"anim" context: nil];
+    [UIView setAnimationBeginsFromCurrentState: YES];
+    [UIView setAnimationDuration: movementDuration];
+    self.view.frame = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y-5, self.view.frame.size.width, self.view.frame.size.height);
+    [UIView commitAnimations];
+}
+
+// Called when the UIKeyboardWillHideNotification is sent
+- (void)keyboardWillBeHidden:(NSNotification*)aNotification
+{
+    const float movementDuration = 0.3f;
+    [UIView beginAnimations: @"anim" context: nil];
+    [UIView setAnimationBeginsFromCurrentState: YES];
+    [UIView setAnimationDuration: movementDuration];
+    self.view.frame = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y+5, self.view.frame.size.width, self.view.frame.size.height);
+    [UIView commitAnimations];
+    
+}
+
 
 #pragma mark - UITextFieldDelegate
 
@@ -195,4 +243,32 @@
  -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
  [self.nameTextField resignFirstResponder];
  }*/
+
+#pragma mark - UITextViewDelegate
+
+- (void)textViewDidEndEditing:(UITextView *)theTextView
+{
+    if (![self.nameTextView hasText]) {
+        self.placeHolderLabel.hidden = NO;
+    }
+}
+
+- (void) textViewDidChange:(UITextView *)textView
+{
+    if(![self.nameTextView hasText]) {
+        self.placeHolderLabel.hidden = NO;
+    }
+    else{
+        self.placeHolderLabel.hidden = YES;
+    }
+}
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
+    
+    if([text isEqualToString:@"\n"]) {
+        [textView resignFirstResponder];
+        return NO;
+    }
+    
+    return YES;
+}
 @end
