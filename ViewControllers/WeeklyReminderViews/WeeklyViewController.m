@@ -465,13 +465,20 @@
     NSDictionary* skill = [[categorizedSkills objectAtIndex:currentPlanIndex] objectAtIndex:indexPath.row];
     if([[skill valueForKey:@"skillName"] isEqualToString:@"Using Sound"]){
         if([selectedSkills containsObject:skill]){
-            NSInteger baseHeight = 560 + 55;
+            NSInteger baseHeight = 200 + 55;
             NSArray* deviceArray= (NSArray*)[skill objectForKey:@"devices"];
             NSArray* websiteArray = (NSArray*)[skill objectForKey:@"websitesAndApps"];
-            baseHeight = baseHeight + 40*deviceArray.count;
-            baseHeight = baseHeight + 40*websiteArray.count;
-            baseHeight = deviceArray.count > 0 ? baseHeight + 50:baseHeight;
-            baseHeight = websiteArray.count > 0 ? baseHeight + 50:baseHeight;
+            if ([[skill valueForKey:@"group1"] isEqualToString:@"YES"]){
+                baseHeight = baseHeight +180;
+                baseHeight = baseHeight + 40*deviceArray.count;
+            }
+            baseHeight = baseHeight + 50;
+            if ([[skill valueForKey:@"group2"] isEqualToString:@"YES"]){
+                baseHeight = baseHeight +180;
+                baseHeight = baseHeight + 40*websiteArray.count;
+                //baseHeight = websiteArray.count > 0 ? baseHeight + 50:baseHeight;
+            }
+            baseHeight = baseHeight + 50;
             NSLog(@"returning height as %ld for index:%ld", baseHeight, indexPath.row);
             return baseHeight;
         }else{
@@ -1444,32 +1451,70 @@
     cell.itemSelectorBtn.hidden = NO;
     cell.itemSelctorBtnImage.hidden = NO;
     //show the expanded view
-    cell.secondaryView.hidden = NO;
-    cell.secondaryView.userInteractionEnabled = YES;
+/*    if(indexPath.row == 0){
+        cell.secondaryView.hidden = NO;
+        cell.secondaryView.userInteractionEnabled = YES;
+    }else{
+        cell.secondaryView.hidden = YES;
+        cell.secondaryView.userInteractionEnabled = NO;
+    }
+ */
     NSInteger rowNumm = tableView.tag - 100;
     NSIndexPath* cellIndexPath = [self.tableview indexPathForCell:usCell];
     NSDictionary* skill = nil;
-    if(indexPath.row != 0 && rowNumm >= 0){
+/*    if(indexPath.row != 0 && rowNumm >= 0){
         //now check for devices also
         skill =[[categorizedSkills objectAtIndex:currentPlanIndex] objectAtIndex:cellIndexPath.row];
         NSArray *devicesArray = [skill valueForKey:@"devices"];
         NSArray *websitesArray = [skill valueForKey:@"websitesAndApps"];
-        if(devicesArray.count > 0 || websitesArray.count > 0){
-            cell.feedbackTableView.hidden = NO;
-            cell.feedbackTableView.tag = 1000 + indexPath.row;
-            cell.feedbackTableView.scrollEnabled = NO;
-            [cell.feedbackTableView reloadData];
-        }else{
-            cell.feedbackTableView.hidden = YES;
-        }
+        
     }else if(indexPath.row == 0){
         skill = [[categorizedSkills objectAtIndex:currentPlanIndex] objectAtIndex:cellIndexPath.row];
     }
+ */
+    skill = [[categorizedSkills objectAtIndex:currentPlanIndex] objectAtIndex:cellIndexPath.row];
     NSString* key = [NSString stringWithFormat:@"group%ld",indexPath.row];
+    NSArray *devicesArray = [skill valueForKey:@"devices"];
+    NSArray *websitesArray = [skill valueForKey:@"websitesAndApps"];
     if ([[skill valueForKey:key] isEqualToString:@"YES"]) {
         [cell.itemSelctorBtnImage  setImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@", SELECTED_IMAGE]]];
+        if(indexPath.row == 0){
+            cell.secondaryView.hidden = NO;
+            cell.secondaryView.userInteractionEnabled = YES;
+        }else if(indexPath.row == 1){
+            cell.secondaryView.hidden = NO;
+            cell.secondaryView.userInteractionEnabled = YES;
+            if(devicesArray.count > 0){
+                cell.feedbackTableView.hidden = NO;
+                cell.feedbackTableView.tag = 1000 + indexPath.row;
+                cell.feedbackTableView.scrollEnabled = NO;
+                [cell.feedbackTableView reloadData];
+            }else{
+                cell.feedbackTableView.hidden = YES;
+            }
+        }else if(indexPath.row == 2){
+            cell.secondaryView.hidden = NO;
+            cell.secondaryView.userInteractionEnabled = YES;
+            if(websitesArray.count > 0){
+                cell.feedbackTableView.hidden = NO;
+                cell.feedbackTableView.tag = 1000 + indexPath.row;
+                cell.feedbackTableView.scrollEnabled = NO;
+                [cell.feedbackTableView reloadData];
+            }else{
+                cell.feedbackTableView.hidden = YES;
+            }
+        }
+        
     }else{
         [cell.itemSelctorBtnImage  setImage:[UIImage imageNamed:UN_SELECTED_IMAGE]];
+        if(indexPath.row != 0){
+            cell.secondaryView.hidden = YES;
+           // cell.secondaryView.userInteractionEnabled = NO;
+        }else{
+            cell.secondaryView.hidden = NO;
+            cell.secondaryView.userInteractionEnabled = YES;
+        }
+        cell.feedbackTableView.hidden = YES;
     }
     key = [NSString stringWithFormat:@"group%ldrating",indexPath.row];
     switch ([[skill valueForKey:key] intValue]) {
@@ -1544,14 +1589,18 @@
             break;
         case 1:
         {
-            height = 180 + (devicesArray.count*40);
-            height = devicesArray.count > 0 ? height + 50:height;
+            if ([[skill valueForKey:@"group1"] isEqualToString:@"YES"]) {
+                height = 180 + (devicesArray.count*40);
+            }
+            height = height+60;
         }
             break;
         case 2:
         {
-            height = 180 + (websitesArray.count*40);
-            height = websitesArray.count > 0 ? height + 50:height;
+            if ([[skill valueForKey:@"group2"] isEqualToString:@"YES"]) {
+                height = 180 + (websitesArray.count*40);
+            }
+            height = height + 60;
         }
         default:
             break;
