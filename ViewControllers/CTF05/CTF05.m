@@ -43,7 +43,7 @@
     self.nameTextView.layer.borderWidth = 0.5;
     self.nameTextView.clipsToBounds = true;
     self.nameTextView.textContainer.maximumNumberOfLines = 2;
-    self.nameTextView.textContainer.lineBreakMode = NSLineBreakByTruncatingTail;
+    //self.nameTextView.textContainer.lineBreakMode = NSLineBreakByTruncatingTail;
     [self.nameTextView associateConstraints:self.TextViewHeightConstraint];
     // add placeholder text
     self.placeHolderLabel = [[UILabel alloc] initWithFrame:CGRectMake(10.0, 2.0,self.nameTextView.frame.size.width - 10.0, 25.0)];
