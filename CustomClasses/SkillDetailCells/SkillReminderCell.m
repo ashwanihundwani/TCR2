@@ -59,7 +59,7 @@
 }
 
 -(BOOL)getSkillReminderSwitchState{
-    return self.activateSwitch.on;
+    return [self.activateSwitch isOn];
 }
 
 -(void)setSkillReminderSwitchState:(BOOL)state{

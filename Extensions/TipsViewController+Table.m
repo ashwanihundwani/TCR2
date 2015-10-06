@@ -262,11 +262,11 @@
     // check for toggle
     SkillReminderCell* cell = (SkillReminderCell*)sender;
     if([cell getSkillReminderSwitchState]){
-        [cell setSkillReminderSwitchState:NO];
+        [cell setSkillReminderSwitchState:TRUE];
         [self toggle1:YES];
         
     }else{
-        [cell setSkillReminderSwitchState:YES];
+        [cell setSkillReminderSwitchState:FALSE];
         [self toggle1:NO];
 
     }

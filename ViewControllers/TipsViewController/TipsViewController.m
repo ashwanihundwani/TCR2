@@ -50,7 +50,7 @@
     self.exercises = @[@"View My Sleep Tips"];
     
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    
+    self.manager = [[DBManager alloc]initWithDatabaseFileName:@"GNResoundDB.sqlite"];
     
     // Do any additional setup after loading the view.
     
@@ -202,32 +202,33 @@ mySwitch.on = YES;
             NSLog(@"application not allowed for notification");
             // notification not enabled , set a calender entry
             EKEventStore *store = [EKEventStore new];
-            [store requestAccessToEntityType:EKEntityTypeEvent completion:^(BOOL granted, NSError *error) {
-                if (!granted) { return; }
-                EKEvent *event = [EKEvent eventWithEventStore:store];
-                //event.title = self.name : @"concatenation with operators" ;
-                NSDate *twoYearsFromNow = [NSDate dateWithTimeIntervalSinceNow:63113851];
-                
-                EKRecurrenceRule *recurrance;
-                NSDateComponents *comp = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear fromDate:[NSDate date]];
-                [comp setHour: 5];
-                [comp setMinute: 00];
-                [comp setSecond: 0];
-                
-                recurrance = [[EKRecurrenceRule alloc] initRecurrenceWithFrequency:EKRecurrenceFrequencyDaily interval:1 end:[EKRecurrenceEnd recurrenceEndWithEndDate:twoYearsFromNow]];
-                
-                NSString *TC = @"Tinnitus Coach: SKILL  ";
-                event.title = @" Tinnitus Coach - Tips for Better Sleep Skill";
-                event.startDate = [[NSCalendar currentCalendar] dateFromComponents:comp]; //today
-                event.endDate =   [event.startDate dateByAddingTimeInterval:60*60];  //set 1 hour meeting
-                
-                event.recurrenceRules=@[recurrance];
-                
-                event.calendar = [store defaultCalendarForNewEvents];
-                
-                NSError *err = nil;
-                
-                [store saveEvent:event span:EKSpanThisEvent commit:YES error:&err];
+            //[store requestAccessToEntityType:EKEntityTypeEvent completion:^(BOOL granted, NSError *error) //{
+            // if (!granted) { return; }
+            EKEvent *event = [EKEvent eventWithEventStore:store];
+            //event.title = self.name : @"concatenation with operators" ;
+            NSDate *twoYearsFromNow = [NSDate dateWithTimeIntervalSinceNow:63113851];
+            
+            EKRecurrenceRule *recurrance;
+            NSDateComponents *comp = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear fromDate:[NSDate date]];
+            [comp setHour: 5];
+            [comp setMinute: 00];
+            [comp setSecond: 0];
+            
+            recurrance = [[EKRecurrenceRule alloc] initRecurrenceWithFrequency:EKRecurrenceFrequencyDaily interval:1 end:[EKRecurrenceEnd recurrenceEndWithEndDate:twoYearsFromNow]];
+            
+            NSString *TC = @"Tinnitus Coach: SKILL  ";
+            event.title = @" Tinnitus Coach - Tips for Better Sleep Skill";
+            event.startDate = [[NSCalendar currentCalendar] dateFromComponents:comp]; //today
+            event.endDate =   [event.startDate dateByAddingTimeInterval:60*60];  //set 1 hour meeting
+            
+            event.recurrenceRules=@[recurrance];
+            
+            event.calendar = [store defaultCalendarForNewEvents];
+            
+            NSError *err = nil;
+            
+            [store saveEvent:event span:EKSpanThisEvent commit:YES error:&err];
+            if(err == nil){
                 NSString *savedEventId = event.eventIdentifier;  //save the event id if you want to access this later
                 
                 [PersistenceStorage setObject:savedEventId andKey:@"lastEventIdentifer"];  ///STORE to test it for deletion
@@ -239,11 +240,10 @@ mySwitch.on = YES;
                 [self.manager executeQuery:query];
                 [PersistenceStorage setObject:@"Yes" andKey:@"TipsActivated"];
                 [self writeEnabledReminder];
-                [self.tableView reloadData];
-
-                
-                
-            }];
+            }
+            //[self.tableView reloadData];
+            
+            //}];
             
         }else {
             NSLog(@"application allowed for notification");
@@ -286,7 +286,6 @@ mySwitch.on = YES;
             [self writeEnabledReminder];
             
         }
-        
     }
     else
     {
