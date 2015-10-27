@@ -18,6 +18,7 @@
 #import "NookMGM.h"
 #import "NookImg.h"
 #import "NookUS.h"
+#import "AudioPlayerTwoViewController.h"
 
 
 
@@ -102,7 +103,15 @@
         [self.navigationController presentModalViewController:ratingsView animated:YES];
     }
     
-    
+    if ([[PersistenceStorage getObjectForKey:@"Referer"] isEqual:  @"AudioPlayerTwoViewController"]) {
+        RatingsViewController *ratingsView = [[UIStoryboard storyboardWithName:@"Main"bundle:nil]instantiateViewControllerWithIdentifier:@"RatingsViewController"];
+        
+        //ratingsView.skillSection = @"Sounds";
+        //  ratingsView.skillDetail = self.name;
+        
+        //[self.navigationController pushViewController:ratingsView animated:YES];
+        [self.navigationController presentModalViewController:ratingsView animated:YES];
+    }
     
     
     
@@ -209,8 +218,20 @@
          }
         else
         {
-            SamplerVideoViewController *audioPanning = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"SamplerVideoViewController"];
-            audioPanning.panning = video;
+            UIViewController* vc = nil;
+            if([[PersistenceStorage getObjectForKey:@"exerciseName"] isEqualToString:@"Circling to Sleep"]){
+                AudioPlayerTwoViewController *audioPanning = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"AudioPlayerTwoViewController"];
+                audioPanning.url = [PersistenceStorage getObjectForKey:@"SamplerexerciseURL"];
+                audioPanning.name = [PersistenceStorage getObjectForKey:@"exerciseName"];
+                audioPanning.panning = audio;
+                vc = audioPanning;
+            }else{
+                SamplerVideoViewController *audioPanning = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"SamplerVideoViewController"];
+                audioPanning.panning = video;
+                vc = audioPanning;
+            }
+          //  SamplerVideoViewController *audioPanning = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"SamplerVideoViewController"];
+            //audioPanning.panning = video;
            // audioPanning.videoURL = [PersistenceStorage getObjectForKey:@"SamplerexerciseUrl"];
             
 
@@ -232,7 +253,7 @@
             
                  //   [self.navigationController pushViewController:audioPanning animated:YES];
             
-            [self.navigationController presentModalViewController:audioPanning animated:NO];
+            [self.navigationController presentModalViewController:vc animated:NO];
             
             
         }
@@ -875,11 +896,20 @@
                      moviePlayer.moviePlayer.shouldAutoplay = YES;
                      [moviePlayer.moviePlayer setFullscreen:YES animated:YES];
                      //                  [moviePlayer.moviePlayer play];*/
-                    SamplerVideoViewController *audioPanning = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"SamplerVideoViewController"];
-                    audioPanning.panning = video;
-                    audioPanning.videoURL = [dict valueForKey:@"exerciseURL"];
-                    
-                    
+                    // check for circling to sleep
+                    UIViewController* vc = nil;
+                    if([[dict valueForKey:@"exerciseName"] isEqualToString:@"Circling to Sleep"]){
+                        AudioPlayerTwoViewController *audioPanning = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"AudioPlayerTwoViewController"];
+                        audioPanning.url = [dict valueForKey:@"exerciseURL"];
+                        audioPanning.name = [dict valueForKey:@"exerciseName"];
+                        audioPanning.panning = audio;
+                        vc = audioPanning;
+                    }else{
+                        SamplerVideoViewController *audioPanning = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"SamplerVideoViewController"];
+                        audioPanning.panning = video;
+                        audioPanning.videoURL = [dict valueForKey:@"exerciseURL"];
+                        vc = audioPanning;
+                    }
                     
                     [PersistenceStorage setObject:[dict valueForKey:@"exerciseURL"] andKey:@"SamplerexerciseURL"];
                     
@@ -898,7 +928,7 @@
                     
                     //        [self.navigationController pushViewController:audioPanning animated:YES];
                     
-                    [self.navigationController presentModalViewController:audioPanning animated:NO];
+                    [self.navigationController presentModalViewController:vc animated:NO];
                     
                     
                     
