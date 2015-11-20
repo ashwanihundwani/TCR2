@@ -470,15 +470,20 @@
             NSArray* websiteArray = (NSArray*)[skill objectForKey:@"websitesAndApps"];
             if ([[skill valueForKey:@"group1"] isEqualToString:@"YES"]){
                 baseHeight = baseHeight +180;
-                baseHeight = baseHeight + 40*deviceArray.count;
+                if(deviceArray.count > 0)
+                    baseHeight = baseHeight + 40*deviceArray.count;
+                else
+                   baseHeight = baseHeight + 40*websiteArray.count;
             }
-            baseHeight = baseHeight + 50;
+            if(deviceArray.count > 0)
+                baseHeight = baseHeight + 50;
             if ([[skill valueForKey:@"group2"] isEqualToString:@"YES"]){
                 baseHeight = baseHeight +180;
                 baseHeight = baseHeight + 40*websiteArray.count;
                 //baseHeight = websiteArray.count > 0 ? baseHeight + 50:baseHeight;
             }
-            baseHeight = baseHeight + 50;
+            if(websiteArray.count > 0)
+                baseHeight = baseHeight + 50;
             NSLog(@"returning height as %ld for index:%ld", baseHeight, indexPath.row);
             return baseHeight;
         }else{
@@ -952,18 +957,25 @@
             BOOL isWebLoggable = NO;
             //get the sound rating
             NSString* soundRating = nil;
+            NSArray* deviceArray = [myskills objectForKey:@"devices"];
+            NSArray* websiteArray = [myskills objectForKey:@"websitesAndApps"];
             if([[myskills valueForKey:@"group0"] isEqualToString:@"YES"]){
                 soundRating = [myskills valueForKey:@"group0rating"];
                 isSoundLoggable = YES;
             }
             // get devices rating
             NSString* deviceRating = nil;
+            NSString* webRating = nil;
             if([[myskills valueForKey:@"group1"] isEqualToString:@"YES"]){
-                deviceRating = [myskills valueForKey:@"group1rating"];
-                isDeviceLoggable = YES;
+                if(deviceArray.count > 0){
+                    deviceRating = [myskills valueForKey:@"group1rating"];
+                    isDeviceLoggable = YES;
+                }else{
+                    webRating = [myskills valueForKey:@"group1rating"];
+                    isWebLoggable = YES;
+                }
             }
             // get websites and apps rating
-            NSString* webRating = nil;
             if([[myskills valueForKey:@"group2"] isEqualToString:@"YES"]){
                 webRating = [myskills valueForKey:@"group2rating"];
                 isWebLoggable = YES;
@@ -972,7 +984,6 @@
             NSMutableString* selectedDeviceNames = [[NSMutableString alloc] init];
             NSMutableString* selectedWebNames = [[NSMutableString alloc] init];
 
-            NSArray* deviceArray = [myskills objectForKey:@"devices"];
             for (NSDictionary* deviceDict in deviceArray) {
                 if([[deviceDict valueForKey:@"selected"] isEqualToString:@"YES"]){
                     [selectedDeviceNames appendString:@"("];
@@ -981,7 +992,6 @@
                 }
             }
             
-            NSArray* websiteArray = [myskills objectForKey:@"websitesAndApps"];
             for (NSDictionary* webDict in websiteArray) {
                 if([[webDict valueForKey:@"selected"] isEqualToString:@"YES"]){
                     [selectedWebNames appendString:@"("];
@@ -1167,9 +1177,15 @@
     label.font = [UIFont systemFontOfSize:15];
     label.numberOfLines = 2;
     label.textColor = [Utils colorWithHexValue:BUTTON_BLUE_COLOR_HEX_VALUE];
-    
+    NSIndexPath* cellIndexPath = [self.tableview indexPathForCell:cell];
+    //get the current skill
+    NSDictionary* skillDict = [[categorizedSkills objectAtIndex:currentPlanIndex] objectAtIndex:cellIndexPath.row];
+    NSArray* deviceArray = [skillDict objectForKey:@"devices"];
         if(tableView.tag == 1001){
-            label.text = @"Which devices did you use?";
+            if(deviceArray.count > 0)
+                label.text = @"Which devices did you use?";
+            else
+                label.text = @"Which websites & apps did you use?";
             
         }else if(tableView.tag == 1002){
             label.text = @"Which websites & apps did you use?";
@@ -1182,9 +1198,16 @@
 }
 
 -(NSString *)feedbackTableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section inUsingSound:(id)cell{
+    NSIndexPath* cellIndexPath = [self.tableview indexPathForCell:cell];
+    //get the current skill
+    NSDictionary* skillDict = [[categorizedSkills objectAtIndex:currentPlanIndex] objectAtIndex:cellIndexPath.row];
+    NSArray* deviceArray = [skillDict objectForKey:@"devices"];
     if(tableView.tag == 1001){
-        return @"Which devices did you use?";
-    }else if(tableView.tag ==2){
+        if(deviceArray.count > 0)
+            return @"Which devices did you use?";
+        else
+           return @"Which websites & apps did you use?";
+    }else if(tableView.tag ==1002){
         return @"Which websites & apps did you use?";
     }else{
         return @"Hello there";
@@ -1206,7 +1229,10 @@
     NSArray* deviceArray = [skillDict objectForKey:@"devices"];
     NSArray* websiteArray = [skillDict objectForKey:@"websitesAndApps"];
         if(tableView.tag == 1001){
-            return deviceArray.count;
+            if(deviceArray.count > 0)
+                return deviceArray.count;
+            else
+                return websiteArray.count;
         }else if(tableView.tag == 1002){
             return websiteArray.count;
         }else{
@@ -1245,8 +1271,13 @@
     NSArray* websiteArray = [skillDict objectForKey:@"websitesAndApps"];
     NSDictionary* deviceDict = nil;
         if(tableView.tag == 1001){
-            deviceDict = [deviceArray objectAtIndex:indexPath.row];
-            cell.skillNameLabel.text = [deviceDict valueForKey:@"deviceName"];
+            if(deviceArray.count > 0){
+                deviceDict = [deviceArray objectAtIndex:indexPath.row];
+                cell.skillNameLabel.text = [deviceDict valueForKey:@"deviceName"];
+            }else{
+                deviceDict = [websiteArray objectAtIndex:indexPath.row];
+                cell.skillNameLabel.text = [deviceDict valueForKey:@"waName"];
+            }
         }else{
             deviceDict = [websiteArray objectAtIndex:indexPath.row];
             cell.skillNameLabel.text = [deviceDict valueForKey:@"waName"];
@@ -1324,8 +1355,11 @@
     [skillDict setValue:@"YES" forKey:key];
     NSArray* deviceArray = nil;
     switch (groupIndexPath.row) {
-        case 1:
+        case 1:{
             deviceArray = [skillDict objectForKey:@"devices"];
+            if(deviceArray.count == 0)
+                deviceArray = [skillDict objectForKey:@"websitesAndApps"];
+        }
             break;
         case 2:
             deviceArray = [skillDict objectForKey:@"websitesAndApps"];
@@ -1433,13 +1467,23 @@
     cell.skillNameLabel.font = [UIFont systemFontOfSize:15];
     cell.skillNameLabel.numberOfLines = 2;
     cell.skillNameLabel.textColor = [Utils colorWithHexValue:BUTTON_BLUE_COLOR_HEX_VALUE];
-    
+    NSIndexPath* cellIndexPath = [self.tableview indexPathForCell:usCell];
+    NSDictionary* skill = nil;
+    skill = [[categorizedSkills objectAtIndex:currentPlanIndex] objectAtIndex:cellIndexPath.row];
+    NSString* key = [NSString stringWithFormat:@"group%ld",indexPath.row];
+    NSArray *devicesArray = [skill valueForKey:@"devices"];
+    NSArray *websitesArray = [skill valueForKey:@"websitesAndApps"];
     switch (indexPath.row) {
         case 0:
             cell.skillNameLabel.text = @"Tinnitus Coach Sounds & My Own Sounds";
             break;
-        case 1:
-            cell.skillNameLabel.text = @"Devices";
+        case 1:{
+            if(devicesArray.count > 0){
+               cell.skillNameLabel.text = @"Devices";
+            }else{
+              cell.skillNameLabel.text = @"Websites & Apps";
+            }
+        }
             break;
         case 2:
             cell.skillNameLabel.text = @"Websites & Apps";
@@ -1460,8 +1504,7 @@
     }
  */
     NSInteger rowNumm = tableView.tag - 100;
-    NSIndexPath* cellIndexPath = [self.tableview indexPathForCell:usCell];
-    NSDictionary* skill = nil;
+    
 /*    if(indexPath.row != 0 && rowNumm >= 0){
         //now check for devices also
         skill =[[categorizedSkills objectAtIndex:currentPlanIndex] objectAtIndex:cellIndexPath.row];
@@ -1472,10 +1515,7 @@
         skill = [[categorizedSkills objectAtIndex:currentPlanIndex] objectAtIndex:cellIndexPath.row];
     }
  */
-    skill = [[categorizedSkills objectAtIndex:currentPlanIndex] objectAtIndex:cellIndexPath.row];
-    NSString* key = [NSString stringWithFormat:@"group%ld",indexPath.row];
-    NSArray *devicesArray = [skill valueForKey:@"devices"];
-    NSArray *websitesArray = [skill valueForKey:@"websitesAndApps"];
+    
     if ([[skill valueForKey:key] isEqualToString:@"YES"]) {
         [cell.itemSelctorBtnImage  setImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@", SELECTED_IMAGE]]];
         if(indexPath.row == 0){
@@ -1490,7 +1530,14 @@
                 cell.feedbackTableView.scrollEnabled = NO;
                 [cell.feedbackTableView reloadData];
             }else{
-                cell.feedbackTableView.hidden = YES;
+                if(websitesArray.count > 0){
+                    cell.feedbackTableView.hidden = NO;
+                    cell.feedbackTableView.tag = 1000 + indexPath.row;
+                    cell.feedbackTableView.scrollEnabled = NO;
+                    [cell.feedbackTableView reloadData];
+                }else{
+                    cell.feedbackTableView.hidden = YES;
+                }
             }
         }else if(indexPath.row == 2){
             cell.secondaryView.hidden = NO;
@@ -1590,7 +1637,10 @@
         case 1:
         {
             if ([[skill valueForKey:@"group1"] isEqualToString:@"YES"]) {
-                height = 180 + (devicesArray.count*40);
+                if(devicesArray.count > 0)
+                    height = 180 + (devicesArray.count*40);
+                else
+                    height = 180 + (websitesArray.count*40);
             }
             height = height+60;
         }
@@ -1607,6 +1657,20 @@
     }
     
     return height;
+}
+
+- (NSInteger)usingSoundTableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section inUsingSound:(id)usCell{
+    NSInteger rowCount = 1;
+    // get the skill
+    NSIndexPath* cellIndexPath = [self.tableview indexPathForCell:usCell];
+    NSDictionary* skill =[[categorizedSkills objectAtIndex:currentPlanIndex] objectAtIndex:cellIndexPath.row];
+    NSArray *devicesArray = [skill valueForKey:@"devices"];
+    NSArray *websitesArray = [skill valueForKey:@"websitesAndApps"];
+    if(devicesArray.count > 0)
+        rowCount++;
+    if(websitesArray.count > 0)
+        rowCount++;
+    return rowCount;
 }
 
 #pragma mark - SkillFeedbackCellDelegate
