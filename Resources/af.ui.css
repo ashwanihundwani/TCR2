@@ -162,16 +162,17 @@ body {
     width: 480px;
     z-index: 1;
     height: 44px;
-    font-size: 17px;
+    font-size: 14px;
     font-weight: bold;
     left: 10%;
     color: inherit;
     padding: 15px 0;
     text-shadow: rgba(0,0,0,0.8) 0 -1px 0;
     text-align: center;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden;
+
+  /*  white-space: nowrap;
+   text-overflow: ellipsis;
+    overflow: hidden;*/
     
     
 } /* This is text that appears in the header at the top of the screen */
@@ -695,7 +696,7 @@ body {
     text-shadow:none;
     text-align: center;
     
-    width:83%;
+    width:90%px;
 }
 
 #afui .backButton {
@@ -1485,7 +1486,7 @@ body {
     padding:7px;
     height:32px;
     margin:5px;
-    text-overflow: ellipsis;
+    /*text-overflow: ellipsis;*/
     white-space: nowrap;
 }
 
