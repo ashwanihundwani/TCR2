@@ -58,8 +58,7 @@
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return [self.delegate usingSoundTableView:tableView numberOfRowsInSection:section inUsingSound:self];
-    //return 3;
+    return 3;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{

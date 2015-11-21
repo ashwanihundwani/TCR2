@@ -655,7 +655,7 @@
         
         [cell addSubview:accessory];
         
-        UIView *deleteContainer = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 55, 50)];
+        UIView *deleteContainer = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 45, 45)];
         
         
         
