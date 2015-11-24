@@ -13,6 +13,7 @@
 
 - (UITableViewCell *)usingSoundTableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath inUsingSound:(id)usCell;
 - (CGFloat)usingSoundTableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath inUsingSound:(id)cell;
+- (NSInteger)usingSoundTableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section inUsingSound:(id)usCell;
 - (CGFloat)feeedbackTableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath inUsingSound:(id)cell;
 
 - (UIView *)feeedbackTableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section inUsingSound:(id)cell;
