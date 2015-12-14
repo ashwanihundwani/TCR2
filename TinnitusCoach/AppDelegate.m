@@ -75,8 +75,9 @@
     else if ([localNotification.alertBody isEqualToString:@"Weekly Reminder"])
         
     {
+        NSLog(@" app launch with weekly reminder");
         self.isLaunchWithNotification = YES;
-        [self showWeeklyReminderView];
+        [self showMissedWeeklyReminderView];
         [PersistenceStorage setObject:@"Yes" andKey:@"launchWeeklyReminder"];
 
     }
@@ -258,7 +259,7 @@
                 // lets force show weekly reminder
                 NSLog(@"Detected missed WR notification, Launching WR ");
                 if(!self.isLaunchWithNotification && !tipsRemShowing)
-                    [self showWeeklyReminderView];
+                    [self showMissedWeeklyReminderView];
             }
             break;
         }
@@ -404,7 +405,7 @@
     {
         
         
-        [self showWeeklyReminderView];
+        [self showMissedWeeklyReminderView];
         
         
         
@@ -488,8 +489,9 @@
 
 -(void)showWeeklyReminderView
 {
+    NSLog(@" In showWeeklyReminderView");
     if([self shouldShowWR]){
-        
+        NSLog(@"WeeklyReminderView should be shown");
         [PersistenceStorage setObject:[NSDate date] andKey:@"WRSavedDate"];
         
         [[UIApplication sharedApplication] setApplicationIconBadgeNumber:1];
@@ -503,7 +505,21 @@
     
 }
 
-
+-(void)showMissedWeeklyReminderView
+{
+    NSLog(@" In showMissedWeeklyReminderView");
+    [PersistenceStorage setObject:[NSDate date] andKey:@"WRSavedDate"];
+    
+    [[UIApplication sharedApplication] setApplicationIconBadgeNumber:1];
+    [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
+    
+    UIStoryboard *storyBoard = [ UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    UIViewController *WeeklyReminder = [storyBoard instantiateViewControllerWithIdentifier:@"WeeklyViewController"];
+    UIWindow *currentWindow = [[UIApplication sharedApplication].windows firstObject];
+    [currentWindow.rootViewController presentViewController:WeeklyReminder animated:YES completion:nil];
+    
+    
+}
 
 
 
