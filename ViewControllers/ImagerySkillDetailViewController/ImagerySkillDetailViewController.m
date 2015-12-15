@@ -2,7 +2,7 @@
 //  SkillDetailViewController.m
 //  TinnitusCoach
 //
-//  Created by Vikram Singh on 3/22/15.
+//  Created by Creospan on 3/22/15.
 //  Copyright (c) 2015 Creospan. All rights reserved.
 //
 
@@ -27,10 +27,8 @@
     self.title = [self.skillDict valueForKey:@"skillName"];
     // Do any additional setup after loading the view.
     
-      if (![[PersistenceStorage getObjectForKey:@"shownImageryIntro"] isEqual: @"OK"])
+    if (![[PersistenceStorage getObjectForKey:@"shownImageryIntro"] isEqual: @"OK"])
     {
-        
-        
         NSMutableArray *pageInfos = [NSMutableArray array];
         
         IntroPageInfo *info = [[IntroPageInfo alloc] initWithimage:[UIImage imageNamed:@"Intro3image1.png"] title: @"Why is \"Imagery\" helpful?" description:@"Imagery is imagining a calm and peaceful place. Imagining the sights, sounds, and smells of the place can help you relax. You can combine Imagery with Deep Breathing  to feel even more relaxed."];
@@ -56,9 +54,6 @@
     
     [PersistenceStorage setObject:@"OK" andKey:@"shownImageryIntro"];
     
-
-    
-    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -72,12 +67,6 @@
 }
 
 -(IBAction)viewIntroductionAgainClicked:(id)sender{
-    
-    /*
-    ImageryIntroDetailViewController *siv = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"ImageryIntroDetailViewController"];
-    [self.navigationController pushViewController:siv animated:YES];
-     */
-    
     NSMutableArray *pageInfos = [NSMutableArray array];
     
     IntroPageInfo *info = [[IntroPageInfo alloc] initWithimage:[UIImage imageNamed:@"Intro3image1.png"] title: @"Why is \"Imagery\" helpful?" description:@"Imagery is imagining a calm and peaceful place. Imagining the sights, sounds, and smells of the place can help you relax. You can combine Imagery with Deep Breathing  to feel even more relaxed."];
@@ -101,6 +90,7 @@
 
 }
 
+
 -(void)writeToMySkills
 {
     self.dbManagerMySkills = [[DBManager alloc]initWithDatabaseFileName:@"GNResoundDB.sqlite"];
@@ -118,15 +108,9 @@
         hud.labelText = @"Added Skill";
         
         [hud show:YES];
-        [hud hide:YES afterDelay:1];    }
-
-   
+        [hud hide:YES afterDelay:1];
+    }
     [self writeAddedSkill];
-    
-    
-    
-    
-    
     
 }
 
@@ -134,8 +118,6 @@
 
 
 -(void)writeAddedSkill{
-    //  NSURL *path = [self getUrlOfFiles:@"TinnitusCoachUsageData.csv"];
-    
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0];
     NSString *documentTXTPath = [documentsDirectory stringByAppendingPathComponent:@"TinnitusCoachUsageData.csv"];
@@ -178,14 +160,6 @@
 -(void)navigateBacktoPlan{
     [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:[self.navigationController.viewControllers count]-3] animated:YES];
 }
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

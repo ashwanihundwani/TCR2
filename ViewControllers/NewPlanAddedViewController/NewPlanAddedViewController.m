@@ -41,8 +41,6 @@
 -(UIView *)tableHeaderView
 {
     UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 30)];
-    
-    
     UILabel *planNameLabel = [[UILabel alloc]initWithFrame:CGRectMake(22, 13, 276, 21)];
     
     planNameLabel.text = @"Plan Name:";
@@ -77,7 +75,7 @@
     [view addSubview:self.planNameTextField];
     
     NSString *query = [NSString stringWithFormat:@"select * from Plan_Skills where ID NOT IN (select skillID from MySkills where planID==%@) and ID NOT IN (select skillID from Skills_Situation where situationName=='%@') ",[PersistenceStorage getObjectForKey:@"currentPlanID"],[PersistenceStorage getObjectForKey:@"situationName"]];
-
+    
     
     NSArray *array = [self.dbManagerMySkills loadDataFromDB:query];
     
@@ -244,84 +242,46 @@
 {
     self.planNameTextField.text = [PersistenceStorage getObjectForKey:@"planName"];//self.planName;
     self.planName = [PersistenceStorage getObjectForKey:@"planName"];
-    
-     
-    
-  //  [PersistenceStorage setObject:pName andKey:@"planName"];
-
-    NSLog(@"PLSN NAME %@",    [PersistenceStorage getObjectForKey:@"planName"]);
-    
     [self loadMySkillsData];
-
-}
-
-
-/*
- 
- TRIED SCROLLING
- -(void)viewDidAppear:(BOOL)animated
-{
     
-    
-    [self.scrollView setFrame:CGRectMake(0.0, 0.0, self.view.frame.size.width, self.view.frame.size.height)];
-    [self.scrollView setContentSize:CGSizeMake(320,800)];
 }
-*/
-
 
 
 -(void)loadMySkillsData{
-     NSString *query = [NSString stringWithFormat: @"select ID, groupID, skillName from Plan_Skills where ID IN (select skillID from MySkills where planID = %ld) ORDER BY groupID", (long)[PersistenceStorage getIntegerForKey:@"currentPlanID"]];
-    
-    
-   //   NSString *query = [NSString stringWithFormat: @"select skillID from MySkills where planID = %ld", (long)[PersistenceStorage getIntegerForKey:@"currentPlanID"]];
-    
+    NSString *query = [NSString stringWithFormat: @"select ID, groupID, skillName from Plan_Skills where ID IN (select skillID from MySkills where planID = %ld) ORDER BY groupID", (long)[PersistenceStorage getIntegerForKey:@"currentPlanID"]];
     
     skillListArray = [[NSMutableArray alloc] initWithArray:[self.dbManagerMySkills loadDataFromDB:query]];
-
-
     self.skillsListTableView.tableHeaderView = [self tableHeaderView];
-    
-    
-      // Get the results.
+    // Get the results.
     if ([skillListArray count]==0)
     {
-        
-   
         [[self.view viewWithTag:10] setHidden:NO];
         self.addSkillBtnTopConst.constant = 197;
-       // skillListArray = nil;
+        // skillListArray = nil;
     }
     else
     {
-        
         [[self.view viewWithTag:10] setHidden:YES];
         self.addSkillBtnTopConst.constant = 152;
     }
-    
-    
     [self loadGroupData];
     // Reload the table view.
     [self.skillsListTableView reloadData];
     
-
-
-    
 }
+
+
 
 -(void)loadGroupData
 {
-    
     NSString *query = [NSString stringWithFormat:@"select ID, groupName from Skills_Group where ID IN (select groupID from MySkills where planID = %ld) GROUP BY ID, groupName", (long)[PersistenceStorage getIntegerForKey:@"currentPlanID"]];
-    
     // Get the results.
     if (groupListArray!= nil) {
         groupListArray = nil;
     }
     groupListArray = [[NSMutableArray alloc] initWithArray:[self.dbManagerMySkills loadDataFromDB:query]];
-    
-    
 }
+
 
 -(void)deleteSkillFromDB:(NSDictionary *)skillDict andCompletion:(void (^)(BOOL success))block
 {
@@ -333,7 +293,6 @@
     if (![skillName isEqualToString:@"Tips for Better Sleep"]) {
         //remove the notfications, if any related to this skill
         NSArray *notificationArray = [[UIApplication sharedApplication] scheduledLocalNotifications];
-        
         for(UILocalNotification *notification in notificationArray){
             if ([[notification.userInfo valueForKey:@"PlanName"] isEqualToString:planName] && [[notification.userInfo valueForKey:@"Type"] isEqualToString:skillName]) {
                 NSLog(@"Cancelling local notification for skill:%@ in Plan:%@", skillName, planName);
@@ -346,10 +305,6 @@
     NSString *query = [NSString stringWithFormat:@"delete from MySkills where SkillID=%@ and planID = %ld",skillID,planID];
     
     NSString *query01 = [NSString stringWithFormat:@"delete from MyDevices where SkillID=%@ and planID = %ld",skillID,planID];
-    
-
-    
-    
     NSString *query1 = [NSString stringWithFormat:@"delete from MySounds where SkillID=%@ and planID = %ld",skillID,planID];
     
     NSString *query1_1 = [NSString stringWithFormat:@"delete from MyOwnSounds where SkillID=%@ and planID = %ld",skillID,planID];
@@ -398,13 +353,6 @@
         
         [hud show:YES];
         [hud hide:YES afterDelay:1];
-
-        
-        
-        
-        
-        
-        
         block(YES);
     }
     else{
@@ -418,11 +366,8 @@
 -(void)popToSkillsView
 {
     NewPlanAddedViewController *ratingsView = [[UIStoryboard storyboardWithName:@"Main"bundle:nil]instantiateViewControllerWithIdentifier:@"NewPlanAddedViewController"];
-    
- 
-    [self.navigationController presentModalViewController:ratingsView animated:NO];}
-
-
+    [self.navigationController presentModalViewController:ratingsView animated:NO];
+}
 
 
 -(void)popToPlansView
@@ -431,21 +376,13 @@
 }
 
 
-
-
-
-
-
 -(void)onDelete:(id)sender
 {
     
     DeleteCormationManager *manager = [DeleteCormationManager getInstance];
     
     [manager showAlertwithPositiveBlock:^(BOOL positive) {
-        
-        
         UITableViewCell *cell = (UITableViewCell *)[[sender view] superview];
-        
         NSIndexPath *indexPath = [self.skillsListTableView indexPathForCell:cell];
         NSInteger rowNum = indexPath.row;
         NSInteger secNum = indexPath.section;
@@ -503,6 +440,8 @@
     }];
     
 }
+
+
 
 -(void)removeEventFromCalender{
     NSLog(@"Removing calender events:%ld from calender",CalEventsArray.count);
@@ -562,16 +501,11 @@
 - (IBAction)weeklyTapped:(id)sender
 {
     WeeklyViewController *week = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier: @"WeeklyViewController"];
-
-    
-//[self.navigationController presentModalViewController:week animated:YES];
 }
 
 
 
 -(void)writeDeletedSkill{
-    //  NSURL *path = [self getUrlOfFiles:@"TinnitusCoachUsageData.csv"];
-    
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0];
     NSString *documentTXTPath = [documentsDirectory stringByAppendingPathComponent:@"TinnitusCoachUsageData.csv"];
@@ -604,9 +538,6 @@
 }
 
 
-
-
-
 -(IBAction)addSkillToPlansClicked:(id)sender
 {
     AddSkillsToPlanViewController *astpv = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier: @"AddSkillsToPlanViewController"];
@@ -626,6 +557,8 @@
     return [filteredArray count];
 }
 
+
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     UITableViewCell *cell;
     
@@ -638,9 +571,6 @@
         [cell addSubview:accessory];
         
         UIView *deleteContainer = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 55, 50)];
-        
-        
-        
         UIImageView *deleteButton = [[UIImageView alloc]initWithFrame:CGRectMake(13, 8, 27, 27)];
         
         [deleteContainer addSubview:deleteButton];
@@ -650,12 +580,7 @@
         [Utils addTapGestureToView:deleteContainer target:self selector:@selector(onDelete:)];
         
         [deleteButton setImage:[UIImage imageNamed:@"Active_Trash_Button.png"]];
-        
-        //deleteButton.tag = indexPath.row;
-        
         [cell addSubview:deleteContainer];
-
-        
         UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(55 , 11, 210, 20)];
         
         titleLabel.tag = 1007;
@@ -664,13 +589,7 @@
         
         titleLabel.font = pallete.secondObj;
         titleLabel.textColor = pallete.firstObj;
-        
-        
         titleLabel.adjustsFontSizeToFitWidth = YES;
-        
-        
-        
-        
         [cell addSubview:titleLabel];
         
         UIView *separator = [[UIView alloc]initWithFrame:CGRectMake(55, 44, 298, 1)];
@@ -692,11 +611,13 @@
 }
 
 
+
 #pragma mark - UITableViewDelegate
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     
     return [self heightForIndexPath:indexPath];
 }
+
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
     return 56.0f;
@@ -761,29 +682,6 @@
 
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    /* //ADDED BY ME
-     if(indexPath.section ==1){
-     
-     PleasantActivityViewController *pav = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"PleasantActivityViewController"];
-     //     pav.skillName = [[skillListArray objectAtIndex:indexPath.row] valueForKey:@"name"];
-     
-     [self.navigationController pushViewController:pav animated:YES];
-     }
-     
-     else
-     
-     {
-     
-     SoundActivitiesViewController *sav = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"SoundActivitiesViewController"];
-     //sav.skillName = [[skillListArray objectAtIndex:indexPath.row] valueForKey:@"name"];
-     [self.navigationController pushViewController:sav animated:YES];
-     
-     
-     
-     }
-     
-     
-     */
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF.groupID == %@",[[groupListArray objectAtIndex:indexPath.section]valueForKey:@"ID"]];
     NSArray *filteredArray = [skillListArray filteredArrayUsingPredicate:predicate];
     
@@ -802,10 +700,6 @@
         //sav.skillName = [[skillListArray objectAtIndex:indexPath.row] valueForKey:@"name"];
         [PersistenceStorage setObject:[[filteredArray objectAtIndex:indexPath.row] valueForKey:@"ID"] andKey:@"currentSkillID"];
         [PersistenceStorage setObject:[[filteredArray objectAtIndex:indexPath.row] valueForKey:@"groupID"] andKey:@"currentGroupID"];
-        
-
-        
-        
         [self.navigationController pushViewController:sav animated:YES];
     }
     
@@ -831,12 +725,6 @@
         [self.navigationController pushViewController:gav animated:YES];
     }
     
-    
-    
-    
-    
-    
-    
     if ([[[filteredArray objectAtIndex:indexPath.row] valueForKey:@"skillName"] isEqualToString:@"Deep Breathing"])
     {
         DeepBreathingViewController *dav = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"DeepBreathingViewController"];
@@ -845,9 +733,6 @@
         [PersistenceStorage setObject:[[filteredArray objectAtIndex:indexPath.row] valueForKey:@"groupID"] andKey:@"currentGroupID"];
         [self.navigationController pushViewController:dav animated:YES];
     }
-    
-    
-    
     
     if ([[[filteredArray objectAtIndex:indexPath.row] valueForKey:@"ID"] isEqualToString:@"5"])
     {
@@ -858,25 +743,15 @@
         [self.navigationController pushViewController:pav animated:YES];
     }
     
-    
-    
-    
-    
-    
     if ([[[filteredArray objectAtIndex:indexPath.row] valueForKey:@"skillName"] isEqualToString:@"Changing Thoughts & Feelings"])
     {
         ChangingThoughtsViewController *dav = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"ChangingThoughtsViewController"];
         //sav.skillName = [[skillListArray objectAtIndex:indexPath.row] valueForKey:@"name"];
         [PersistenceStorage setObject:[[filteredArray objectAtIndex:indexPath.row] valueForKey:@"ID"] andKey:@"currentSkillID"];
-        
-        
-        
         [PersistenceStorage setObject:[[filteredArray objectAtIndex:indexPath.row] valueForKey:@"groupID"] andKey:@"currentGroupID"];
         [self.navigationController pushViewController:dav animated:YES];
     }
-    
-    
-    
+
     if ([[[filteredArray objectAtIndex:indexPath.row] valueForKey:@"skillName"] isEqualToString:@"Tips for Better Sleep"])
     {
         TipsViewController *dav = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"TipsViewController"];
@@ -886,104 +761,39 @@
         [self.navigationController pushViewController:dav animated:YES];
     }
     
-
-    
-    
-    
-    
-    
     
 }
-
-
-
-
-
-
 
 
 -(NSArray *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewRowAction *button = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault title:@"X" handler:^(UITableViewRowAction *action, NSIndexPath *indexPath)
-                                   /* {
-                                        [self deletePlanFromDB:[skillListArray objectAtIndex:indexPath.row] andCompletion:^(BOOL success)
-                                         {
-                                             if (success) {
-                                                 [skillListArray removeObjectAtIndex:indexPath.row];
-                                                 NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF.groupID == %@",[[groupListArray objectAtIndex:indexPath.section]valueForKey:@"ID"]];
-                                                 NSArray *filteredArray = [skillListArray filteredArrayUsingPredicate:predicate];
-                                                 if ([filteredArray count]<=0) {
-                                                     [groupListArray removeObjectAtIndex:indexPath.section];
-                                                     [self.skillsListTableView deleteSections:[NSIndexSet indexSetWithIndex:indexPath.section] withRowAnimation:UITableViewRowAnimationRight];
-                                                 }
-                                                 else
-                                                 {
-                                                     [self.skillsListTableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationRight];
-                                                 }
-                                                 [self.skillsListTableView reloadData];
-                                                 
-                                             }
-                                             
-                                         }];  */
-                                    
-                                    
                                     {
-                                       
+                                        
                                         
                                         [self deleteSkillFromDB:[skillListArray objectAtIndex:indexPath.row] andCompletion:^(BOOL success)
                                          {
                                              if (success) {
-                                        
-                                                /* [skillListArray removeObjectAtIndex:indexPath.row];
-                                                 NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF.groupID == %@",[[groupListArray objectAtIndex:indexPath.section]valueForKey:@"ID"]];
-                                                 NSArray *filteredArray = [skillListArray filteredArrayUsingPredicate:predicate];
-                                                 if ([filteredArray count]<=0) {
-                                                     [groupListArray removeObjectAtIndex:indexPath.section];
-                                                     [self.skillsListTableView deleteSections:[NSIndexSet indexSetWithIndex:indexPath.section] withRowAnimation:UITableViewRowAnimationRight];
-                                                 }
-                                                 else
-                                                 {
-                                                     [self.skillsListTableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationRight];
-                                                 }
-                                                 [self.skillsListTableView reloadData];*/
                                                  [self loadMySkillsData];
-
                                              }
                                              
                                          }];
-
-                                    
-                                    
-                                    
-                                    
-                                    
+                                        
                                     }];
     button.backgroundColor = [UIColor redColor]; //arbitrary color
-    
     
     return @[button];
 }
 
+
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    
-    
-    
-    // you need to implement this method too or nothing will work:
-    
 }
+
+
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return NO;
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

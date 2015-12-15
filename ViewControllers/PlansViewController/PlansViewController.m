@@ -48,26 +48,19 @@
     self.tabBarController.selectedIndex = 0;
 }
 
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     self.plansTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    
     UIView *titleView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 100, 44)];
-    
     titleView.backgroundColor = [UIColor clearColor];
-    
     UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 100, 44)];
-    
-    
     Pair *pallete = [Utils getColorFontPair:eCFS_PALLETE_1];
     
     titleLabel.font = pallete.secondObj;
     titleLabel.textColor = pallete.firstObj;
     
     titleLabel.textAlignment = NSTextAlignmentCenter;
-    
-    //titleLabel.textColor = [UIColor colorWithHexValue:@"797979"];
     titleLabel.backgroundColor = [UIColor clearColor];
     titleLabel.text = @"Plans";
     
@@ -117,57 +110,30 @@
     self.dbManagerMyPlans = [[DBManager alloc]initWithDatabaseFileName:@"GNResoundDB.sqlite"];
     
     self.dbManagerMySkills = [[DBManager alloc]initWithDatabaseFileName:@"GNResoundDB.sqlite"];
-
-    
     if (![[PersistenceStorage getObjectForKey:@"shownPlansIntro"] isEqual: @"OK"])
-        
     {
-        
-        
-              [self showIntroView];
+        [self showIntroView];
         
     }
     
     [PersistenceStorage setObject:@"OK" andKey:@"shownPlansIntro"];
     
-
-    
-    
-    
-    
-    // Do any additional setup after loading the view.
 }
+
 
 -(void)viewDidAppear:(BOOL)animated
 {
     
-        [self writeVisitedPlans];
-   
+    [self writeVisitedPlans];
+    
     [self.tabBarController.tabBar setHidden:NO];
-
     
-   //  if ([[PersistenceStorage getObjectForKey:@"shownPlanIntro"] isEqual: @"YES"])
-  //   {
-//}
-   //  else{
- //       [self showIntroView];
-     //   [PersistenceStorage setObject:@"YES" andKey:@"shownPlanIntro"];
-        
-    
-     }
-
-        
-    
-
-
+}
 
 
 -(void)viewWillAppear:(BOOL)animated
-{    [self loadMyPlans];
-    
-    
- 
-    
+{
+    [self loadMyPlans];
     
 }
 
@@ -252,36 +218,15 @@
     }
 }
 
+
 -(void)loadMyPlans{
     NSString *query = @"select * from MyPlans";
-    
-    
     UILabel *firstLabel = (UILabel *)[self.view viewWithTag:100];
-    
-
-    
     // Get the results.
     if (userPlansArray!= nil) {
         userPlansArray = nil;
     }
     userPlansArray = [[NSMutableArray alloc] initWithArray:[self.dbManagerMyPlans loadDataFromDB:query]];
-//    if ([userPlansArray count]==3) {
-//        [self.addNewPlanBtn setUserInteractionEnabled:NO];
-//        self.addNewPlanBtn.titleLabel.textColor = [UIColor grayColor];
-// 
-//            firstLabel.text = @"To add a new plan, first delete one of the existing three plans.";
-//        [[self.view viewWithTag:3] setHidden:YES];
-//    
-//    }
-//    else
-//    {
-//        firstLabel.text = @"You can add up to 3 plans.";
-//        [[self.view viewWithTag:3] setHidden:NO];
-//    }
-    
-        
- //
-    
     self.plansTableView.tableHeaderView = [self tableHeaderView];
     
     // Reload the table view.
@@ -294,76 +239,44 @@
     [[Utils rootTabBarController] setSelectedIndex:0];
 }
 
+
 -(void)deletePlanFromDB:(NSDictionary *)planDict andCompletion:(void (^)(BOOL success))block
 {
     NSString* planID = [planDict objectForKey:@"ID"];
     NSString* planName = [planDict objectForKey:@"planName"];
     NSLog(@"Deleting object with plan ID:%@ and planName:%@",planID, planName);
     NSArray *notificationArray = [[UIApplication sharedApplication] scheduledLocalNotifications];
-    
-    
-//    VIKRAM 2 Sept 2015
-    
-// Make the list of skills separated by | and insert into SkillDetail3
-    // This is inserted in the row. Refer writeDeletedPlan
-    
-    
     NSString *querySkills = [NSString stringWithFormat: @"select skillName from Plan_Skills Inner JOIN MySkills on MySkills.SkillID = Plan_Skills.ID where MySkills.PlanID = %@",planID];
- 
-    
     NSArray* skillArr = [self.dbManagerMySkills loadDataFromDB:querySkills];
-    
-    
     NSMutableString *skillString =[NSMutableString stringWithString:@""];
-    
-    
     for(int i= 0 ;i<[skillArr count];i++)
     {
-        
-        
         [skillString appendString:[[skillArr objectAtIndex:i] valueForKey:@"skillName"]];
         [skillString appendString:@"|"];
         
-        
     }
-    
     if ([skillString length] > 0) {
         NSString *outPut = skillString;
         outPut = [outPut substringToIndex:[outPut length] - 1];
         NSLog(@"%@",outPut);
         [PersistenceStorage setObject:outPut andKey:@"skillDetail3"];
-        
-        
     }
-    
-    
     for(UILocalNotification *notification in notificationArray){
-       // if ([notification.alertBody containsString:@"'Imagery'"])
-            
         if ([[notification.userInfo valueForKey:@"PlanName"] isEqualToString:planName] && ![[notification.userInfo valueForKey:@"Type"] isEqualToString:@"Tips for Better Sleep"])
         {
             NSLog(@"cancelling notification for plan:%@ and skill:%@",planName,[notification.userInfo valueForKey:@"Type"] );
             [[UIApplication sharedApplication] cancelLocalNotification:notification] ;
         }
-        
-        
     }
     
     NSString *query01 = [NSString stringWithFormat:@"delete from MyPlans where ID=%@",planID];
     
-           NSString *query2 = [NSString stringWithFormat:@"delete from MySounds where planID = '%@'",planID];
+    NSString *query2 = [NSString stringWithFormat:@"delete from MySounds where planID = '%@'",planID];
     
-            NSString *query2_1 = [NSString stringWithFormat:@"delete from MyOwnSounds where planID = '%@'",planID];
-   
-    
+    NSString *query2_1 = [NSString stringWithFormat:@"delete from MyOwnSounds where planID = '%@'",planID];
     NSString *query02 = [NSString stringWithFormat:@"delete from MySkills where planID = '%@'",planID];
     
-     
-    //   NSString *query2 = [NSString stringWithFormat:@"delete from MySounds where planID = '%@'",];
-    
     NSString *query5 = [NSString stringWithFormat:@"delete from MyWebsites where planID = '%@'",planID];
-    
-    
     NSString *query3 = [NSString stringWithFormat:@"delete from MyReminders where PlanName = '%@'",[Utils getValidSqlString:planName]];
     
     NSString *query4 = [NSString stringWithFormat:@"delete from MySkillReminders where PlanName = '%@' and SkillName != 'Tips for Better Sleep' ",[Utils getValidSqlString:planName]];
@@ -378,19 +291,18 @@
     NSString *query8 = [NSString stringWithFormat:@"delete from My_Contacts "];
     NSString *query9 = [NSString stringWithFormat:@"delete from MyDevices where planID = '%@'",planID];
     NSString *query10 = [NSString stringWithFormat:@"delete from My_TF_Set where planID = '%@'",planID];
-
-                        [self.dbManagerMyPlans executeQuery:query02];
-                        [self.dbManagerMyPlans executeQuery:query2];
-                        [self.dbManagerMyPlans executeQuery:query2_1];
-                        [self.dbManagerMyPlans executeQuery:query3];
-                        [self.dbManagerMyPlans executeQuery:query4];
-                        [self.dbManagerMyPlans executeQuery:query5];
-                        [self.dbManagerMyPlans executeQuery:query6];
-                        [self.dbManagerMyPlans executeQuery:query7];
-                     //   [self.dbManagerMyPlans executeQuery:query8];
-                        [self.dbManagerMyPlans executeQuery:query9];
-                        [self.dbManagerMyPlans executeQuery:query10];
-
+    
+    [self.dbManagerMyPlans executeQuery:query02];
+    [self.dbManagerMyPlans executeQuery:query2];
+    [self.dbManagerMyPlans executeQuery:query2_1];
+    [self.dbManagerMyPlans executeQuery:query3];
+    [self.dbManagerMyPlans executeQuery:query4];
+    [self.dbManagerMyPlans executeQuery:query5];
+    [self.dbManagerMyPlans executeQuery:query6];
+    [self.dbManagerMyPlans executeQuery:query7];
+    [self.dbManagerMyPlans executeQuery:query9];
+    [self.dbManagerMyPlans executeQuery:query10];
+    
     
     NSString* queryforTBS = @"select * from MySkills where skillID = 7";
     NSArray* TBSArray = [self.dbManagerMyPlans loadDataFromDB:queryforTBS];
@@ -402,7 +314,7 @@
     if (isDone == YES)
     {
         [self writeDeletedPlan];
-
+        
         NSLog(@"Success");
         block(YES);
     }
@@ -412,7 +324,7 @@
         
     }
     
-       [self loadMyPlans];
+    [self loadMyPlans];
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark.png"] ];
     
@@ -422,28 +334,14 @@
     
     [hud show:YES];
     [hud hide:YES afterDelay:1];
-
     
-    
-    
-    
-    
-    
-    
-    
-
-       }
+}
 
 
 -(NSString *)getPlanIDForName:(NSString *)planName
 {
     NSString *query = [NSString stringWithFormat: @"select ID from MyPlans where planName == '%@'", [Utils getValidSqlString:planName]];
-    
     NSString *planID = [[[self.dbManagerMyPlans loadDataFromDB:query]objectAtIndex:0] valueForKey:@"ID"];
-   
-
-    
-    
     return planID;
     
 }
@@ -456,25 +354,6 @@
     [self.navigationController pushViewController:npsv animated:NO];
 }
 
-//-(void)onDelete:(id)sender
-//{
-//    NSInteger tag = [[sender view] tag];
-//    
-//    [self deletePlanFromDB:[userPlansArray objectAtIndex:tag] andCompletion:^(BOOL success)
-//     {
-//         if (success) {
-//             
-//             NSIndexPath *indexPath = [NSIndexPath indexPathForRow:tag inSection:0];
-//             [userPlansArray removeObjectAtIndex:tag];
-//             
-//             [self.plansTableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationNone];
-//             [self.plansTableView reloadData];
-//             
-//             
-//         }
-//         
-//     }];
-//}
 
 -(void)onDelete:(id)sender
 
@@ -484,19 +363,10 @@
     [manager showAlertwithPositiveBlock:^(BOOL positive) {
         
         NSInteger tag = [[sender view] tag];
-        
-        
-        
-        
-        
-        
-        
-        
-        
         [PersistenceStorage setObject:[[userPlansArray objectAtIndex:tag] valueForKey:@"planName"] andKey:@"deletingPlanName"];
         [PersistenceStorage setObject:[[userPlansArray objectAtIndex:tag] valueForKey:@"situationName"] andKey:@"deletingSituationName"];
-
-         NSString* reminderQuery = [NSString stringWithFormat:@"select CalendarEventID from MySkillReminders where PlanName = '%@'",[Utils getValidSqlString:[[userPlansArray objectAtIndex:tag] valueForKey:@"planName"]]];
+        
+        NSString* reminderQuery = [NSString stringWithFormat:@"select CalendarEventID from MySkillReminders where PlanName = '%@'",[Utils getValidSqlString:[[userPlansArray objectAtIndex:tag] valueForKey:@"planName"]]];
         NSString* sleepReminderQuery = @"select CalendarEventID from MySkillReminders where SkillName = 'Tips for Better Sleep'";
         NSArray* caleventsArray = [self.dbManagerMyPlans loadDataFromDB:reminderQuery];
         if(caleventsArray.count > 0){
@@ -573,6 +443,7 @@
      ];
 }
 
+
 -(void)checkAndDeleteTBSReminders{
     //check if no TBS is left in DB
     NSString* queryforTBS = @"select * from MySkills where skillID = 7";
@@ -586,8 +457,6 @@
                 [[UIApplication sharedApplication] cancelLocalNotification:notification] ;
                 NSLog(@"!!!!!!!!!!!!TBS notifocation Cancelled!!!!!!!!!!!!!!!");
             }
-            
-            
         }
         
         // remove calender events if any
@@ -617,6 +486,7 @@
          ];
     }
 }
+
 
 -(BOOL)isSleepEvent:(NSString*)eventID{
     BOOL retVal = NO;
@@ -656,9 +526,6 @@
         [cell addSubview:accessory];
         
         UIView *deleteContainer = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 55, 50)];
-        
-        
-        
         UIImageView *deleteButton = [[UIImageView alloc]initWithFrame:CGRectMake(13, 8, 27, 27)];
         
         [deleteContainer addSubview:deleteButton];
@@ -668,9 +535,6 @@
         [Utils addTapGestureToView:deleteContainer target:self selector:@selector(onDelete:)];
         
         [deleteButton setImage:[UIImage imageNamed:@"Active_Trash_Button.png"]];
-        
-        //deleteButton.tag = indexPath.row;
-        
         [cell addSubview:deleteContainer];
         
         UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(55 , 11, 200, 20)];
@@ -701,11 +565,7 @@
     NSString *planName = [[userPlansArray objectAtIndex:indexPath.row] valueForKey:@"planName"];
     
     CGFloat labelHeight = [Utils heightForLabelForString:planName width:200 font:TITLE_LABEL_FONT];
-    
-    
     titleLabel.height = labelHeight;
-    
-    //cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     titleLabel.text =[[userPlansArray objectAtIndex:indexPath.row] valueForKey:@"planName"];
     
     UIView *separator = [cell viewWithTag:345];
@@ -726,23 +586,24 @@
     
 }
 
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{ 
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     NewPlanAddedViewController *npav = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"NewPlanAddedViewController"];
     
     npav.planName = [[userPlansArray objectAtIndex:indexPath.row] valueForKey:@"planName"];
     NSString *sitName = [[userPlansArray objectAtIndex:indexPath.row] valueForKey:@"situationName"];
-
+    
     [PersistenceStorage setObject:[self getPlanIDForName:npav.planName] andKey:@"currentPlanID"];
- 
+    
     [PersistenceStorage setObject:sitName andKey:@"situationName"];
     [PersistenceStorage setObject:sitName andKey:@"sitName"];
-
-      [PersistenceStorage setObject:[[userPlansArray objectAtIndex:indexPath.row] valueForKey:@"planName"] andKey:@"planName"];
     
+    [PersistenceStorage setObject:[[userPlansArray objectAtIndex:indexPath.row] valueForKey:@"planName"] andKey:@"planName"];
     
-    
-     [self.navigationController pushViewController:npav animated:YES];
+    [self.navigationController pushViewController:npav animated:YES];
 }
+
+
 
 -(NSArray *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewRowAction *button = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault title:@"X" handler:^(UITableViewRowAction *action, NSIndexPath *indexPath)
@@ -754,14 +615,12 @@
     return @[button];
 }
 
+
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    
-    
-    
-    // you need to implement this method too or nothing will work:
-    
+
 }
+
+
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return NO;
@@ -796,12 +655,6 @@
 
 
 -(void)writeDeletedPlan{
-    //  NSURL *path = [self getUrlOfFiles:@"TinnitusCoachUsageData.csv"];
-    
-    
-    
-    
-    
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0];
     NSString *documentTXTPath = [documentsDirectory stringByAppendingPathComponent:@"TinnitusCoachUsageData.csv"];
@@ -834,11 +687,6 @@
 }
 
 
-
-
-
-
-
 #pragma mark - Button Click Events
 
 - (IBAction)addPlanButtonClicked:(id)sender {
@@ -853,9 +701,8 @@
     }
 }
 
+
 -(void)writeVisitedPlans{
-    //  NSURL *path = [self getUrlOfFiles:@"TinnitusCoachUsageData.csv"];
-    
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0];
     NSString *documentTXTPath = [documentsDirectory stringByAppendingPathComponent:@"TinnitusCoachUsageData.csv"];
@@ -899,10 +746,7 @@
 }
 
 
-
 -(void)writeViewedIntroduction{
-    //  NSURL *path = [self getUrlOfFiles:@"TinnitusCoachUsageData.csv"];
-    
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0];
     NSString *documentTXTPath = [documentsDirectory stringByAppendingPathComponent:@"TinnitusCoachUsageData.csv"];
@@ -918,11 +762,6 @@
     
     NSString *str = @"Watched the Plan Introduction";
     NSString   *finalStr = [NSString stringWithFormat:@"\r%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@",dateString,timeString,type,str,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil];
-    
-    
-    
-    
-    
     
     NSFileManager *fileManager = [NSFileManager defaultManager];
     if(![fileManager fileExistsAtPath:documentTXTPath])

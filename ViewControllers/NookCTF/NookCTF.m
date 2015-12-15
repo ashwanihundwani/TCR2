@@ -11,39 +11,12 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-     //NSURL *url = [NSURL URLWithString:fullURL];
- //   NSURL *url = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"NookCTF" ofType:@"html" inDirectory:@"www"]];
- //   NSURL *url = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"NookCTF" ofType:@"html" inDirectory:@"Resources"]];
     NSString *beasMonoPath  =[[NSBundle mainBundle]pathForResource:@"NookCTFNew.html"  ofType:nil];
     NSURL *url = [NSURL URLWithString:beasMonoPath];
     self.title=@"Learning Nook";
-
-   //  NSString *fullURL = @"http://google.com";
- //   NSURL *url = [NSURL URLWithString:fullURL];
     NSURLRequest *requestObj = [NSURLRequest requestWithURL:url];
     [_viewWeb loadRequest:requestObj];
-    
- //   NSString *path = [[NSBundle mainBundle] bundlePath];
-  //  NSURL *baseURL = [NSURL fileURLWithPath:path];
-    //[webView loadHTMLString:htmlString baseURL:baseURL];
-    
-    
-    
-    
-// NSURL *url = [NSURL URLWithString:@"http://google.com"];
 
-    
-  //      NSURLRequest *requestObj = [NSURLRequest requestWithURL:url];
-  //   [_viewWeb loadRequest:requestObj];
-    
-    
- //
-    
-    //[self.webview loadRequest:[NSURLRequest requestWithURL:url]];
-    
-  //  self.navigationController.navigationBarHidden = YES;
-
-    
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -76,24 +49,21 @@
 
 -(BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
     NSURL *url = request.URL;
- 
-    
     if ([request.URL.scheme isEqualToString:@"apple"])
     {
-    
-    
-    NSURL *URL = [[NSBundle mainBundle] URLForResource:@"CognitiveBehaviorTherapyForTinnitus" withExtension:@"pdf"];
-    
-    self.controller = [UIDocumentInteractionController interactionControllerWithURL:URL];
-    
-    [self.controller setDelegate:self];
-    [self.controller presentPreviewAnimated:YES];
-    
-    return NO;
-}
+        NSURL *URL = [[NSBundle mainBundle] URLForResource:@"CognitiveBehaviorTherapyForTinnitus" withExtension:@"pdf"];
+        
+        self.controller = [UIDocumentInteractionController interactionControllerWithURL:URL];
+        
+        [self.controller setDelegate:self];
+        [self.controller presentPreviewAnimated:YES];
+        
+        return NO;
+    }
     else
     {
-        return YES;}
+        return YES;
+    }
     
 }
 
@@ -107,8 +77,6 @@
 
 
 -(void)writeVisitedPage{
-    //  NSURL *path = [self getUrlOfFiles:@"TinnitusCoachUsageData.csv"];
-    
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0];
     NSString *documentTXTPath = [documentsDirectory stringByAppendingPathComponent:@"TinnitusCoachUsageData.csv"];

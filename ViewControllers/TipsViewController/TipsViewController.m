@@ -51,116 +51,6 @@
     
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.manager = [[DBManager alloc]initWithDatabaseFileName:@"GNResoundDB.sqlite"];
-    
-    // Do any additional setup after loading the view.
-    
-//    UIView *titleView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 170, 44)];
-//    
-//    titleView.backgroundColor = [Utils colorWithHexValue:NAV_BAR_BLACK_COLOR];
-//    
-//    UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 170, 25)];
-//    
-//    Pair *pallete = [Utils getColorFontPair:eCFS_PALLETE_1];
-//    
-//    titleLabel.font = pallete.secondObj;
-//    titleLabel.textColor = pallete.firstObj;
-//    
-//    titleLabel.textAlignment = NSTextAlignmentCenter;
-//    
-//    //titleLabel.textColor = [UIColor colorWithHexValue:@"797979"];
-//    titleLabel.backgroundColor = [UIColor clearColor];
-//    // titleLabel.text = @"Add New Plan";
-//    
-//    titleLabel.text= [NSString stringWithFormat:@"Plan for %@ ",[PersistenceStorage getObjectForKey:@"planName"]];
-//    titleLabel.adjustsFontSizeToFitWidth=YES;
-//    titleLabel.minimumScaleFactor=0.5;
-//    
-//    UILabel *situationLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 23, 170, 19)];
-//    
-//    pallete = [Utils getColorFontPair:eCFS_PALLETE_2];
-//    
-//    situationLabel.font = pallete.secondObj;
-//    situationLabel.textColor = pallete.firstObj;
-//    
-//    situationLabel.textAlignment = NSTextAlignmentCenter;
-//    
-//    //titleLabel.textColor = [UIColor colorWithHexValue:@"797979"];
-//    situationLabel.backgroundColor = [UIColor clearColor];
-//    situationLabel.text = [PersistenceStorage getObjectForKey:@"skillName"];//@"Your Situation";
-//    
-//    [titleView addSubview:titleLabel];
-//    [titleView addSubview:situationLabel];
-//    
-//    self.navigationItem.titleView = titleView;
-    
-    
-//    
-//    
-//    UIImageView *backLabel = [[UIImageView alloc]initWithFrame:CGRectMake(20, 10, 15, 20)];
-//    
-//    backLabel.image = [UIImage imageNamed:@"Active_Back-Arrow.png"];
-//    
-//    [Utils addTapGestureToView:backLabel target:self
-//                      selector:@selector(popToSkillsView)];
-//    
-//    UIBarButtonItem *item = [[UIBarButtonItem alloc]initWithCustomView:backLabel];
-//    
-//    UIBarButtonItem *negativeSpacer = [[UIBarButtonItem alloc]
-//                                       initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace
-//                                       target:nil action:nil];
-//    negativeSpacer.width = -8;
-//    
-//    self.navigationItem.leftBarButtonItems = [NSArray arrayWithObjects:negativeSpacer, item, nil];
-//    
-//    
-//    
-//    
-
-    
-    
-//    if (![[PersistenceStorage getObjectForKey:@"TipsInitialized"] isEqual: @"Yes"])
-//        
-//    {
-//        
-//        NSCalendar *calendar = [NSCalendar currentCalendar];
-//    NSDateComponents *components = [[NSDateComponents alloc] init];
-//    [components setDay: 3];
-//    [components setMonth: 7];
-//    [components setYear: 2012];
-//    [components setHour: 4];
-//    [components setMinute: 45];
-//    [components setSecond: 0];
-//    [calendar setTimeZone: [NSTimeZone defaultTimeZone]];
-//    NSDate *dateToFire = [calendar dateFromComponents:components];
-//    
-//    
-//    UILocalNotification *localNotification = [[UILocalNotification alloc] init];
-//    
-//     NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
-//    [dateFormat setDateFormat:@"dd/MM/yyyy"];
-//    
-//    
-//    NSString *str = [NSString stringWithFormat:@"%@",@"Tips for Sleep Feedback"];
-//    localNotification.alertBody = str;
-//    
-//    [localNotification setFireDate: dateToFire];
-//    [localNotification setTimeZone: [NSTimeZone defaultTimeZone]];
-//    [localNotification setRepeatInterval: kCFCalendarUnitDay];
-//    
-//    [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
-//        [PersistenceStorage setObject:@"Yes" andKey:@"TipsInitialized"];
-//
-//    
-// }
-//    
-    
-
-    
-    
-    
-    
-       
-    // Do any additional setup after loading the view.
 }
 
 - (void)didReceiveMemoryWarning {
@@ -171,22 +61,21 @@
 -(void)viewDidAppear:(BOOL)animated
 {
     
-     [self.scrollView setFrame:CGRectMake(0.0, 0.0, self.view.frame.size.width, self.view.frame.size.height)];
+    [self.scrollView setFrame:CGRectMake(0.0, 0.0, self.view.frame.size.width, self.view.frame.size.height)];
     [self.scrollView setContentSize:CGSizeMake(320,600)];
-
+    
     UISwitch *mySwitch = (UISwitch *)[self.view viewWithTag:669];
     UILabel *label = (UILabel *)[self.view viewWithTag:700];
-  if ([[PersistenceStorage getObjectForKey:@"TipsActivated"]  isEqualToString:@"Yes"])
-  {
-mySwitch.on = YES;
-      label.text = @"Skill Reminder Activated";
-      
-  }else
-  {
-      mySwitch.on = NO;
-      label.text = @"Activate Skill Reminder";
-  }
-    
+    if ([[PersistenceStorage getObjectForKey:@"TipsActivated"]  isEqualToString:@"Yes"])
+    {
+        mySwitch.on = YES;
+        label.text = @"Skill Reminder Activated";
+        
+    }else
+    {
+        mySwitch.on = NO;
+        label.text = @"Activate Skill Reminder";
+    }
     [self.tableView reloadData];
 }
     
@@ -241,9 +130,6 @@ mySwitch.on = YES;
                 [PersistenceStorage setObject:@"Yes" andKey:@"TipsActivated"];
                 [self writeEnabledReminder];
             }
-            //[self.tableView reloadData];
-            
-            //}];
             
         }else {
             NSLog(@"application allowed for notification");
@@ -338,60 +224,25 @@ mySwitch.on = YES;
 }
 
 
-
-
-
-//- (IBAction) toggleOnForSwitch3: (id) sender {
-//    
-//    if (switch3.on) resSwitch.on = YES;
-//    else resSwitch.on = NO;
-//    
-//}
-
-
-
 -(void)RefreshScheduleData
 {
-   // NSString *query = [NSString stringWithFormat:@"select * from MySkillReminders where SkillName = 'Tips for Better Sleep'"];
-    
     NSString *query = [NSString stringWithFormat:@"select * from MySkillReminders where SkillName = 'Tips for Better Sleep' and PlanName = '%@'",[Utils getValidSqlString:[PersistenceStorage getObjectForKey:@"planName"]]];
-    
     self.manager = [[DBManager alloc]initWithDatabaseFileName:@"GNResoundDB.sqlite"];
     remindersArray = [[NSArray alloc] initWithArray:[self.manager loadDataFromDB:query]];
     UILabel *label = (UILabel *)[self.view viewWithTag:333];
     UIButton *btnLabel1 = (UIButton *)[self.view viewWithTag:334];
     UIButton *btnLabel2 = (UIButton *)[self.view viewWithTag:335];
-    
     [[self.view viewWithTag:3] setHidden:YES];
-    
     if ([remindersArray count]== 1) {
-        
-        //label.text = @"Reminder set";
-        
         NSDictionary *dict = [remindersArray objectAtIndex:0];
         NSString *strAct = [dict valueForKey:@"ScheduledDate"];
-        
-        
-        
         label.text = strAct;
-        
-        
         [[self.view viewWithTag:334] setHidden:NO];
         [[self.view viewWithTag:335] setHidden:YES];
-        //        btnLabel1.setHidden = YES;
-        //      btnLabel2.setHidden = NO;
-        
-        
-        
-        
     }
     else
     {
-        
         label.text = @"No reminders";
-        //  btnLabel1.setHidden = NO;
-        // btnLabel2.setHidden = YES;
-        
         [[self.view viewWithTag:334] setHidden:YES];
         [[self.view viewWithTag:335] setHidden:NO];
         
@@ -413,60 +264,28 @@ mySwitch.on = YES;
 
 
 - (IBAction)DeleteReminder:(id)sender {
-    
-//    NSString *query = [NSString stringWithFormat: @"select * from MySkillReminders where SkillName = 'Tips for Better Sleep'"];
-    
     NSString *query = [NSString stringWithFormat:@"select * from MySkillReminders where SkillName = 'Tips for Better Sleep' and PlanName = '%@'",[Utils getValidSqlString:[PersistenceStorage getObjectForKey:@"planName"]]];
-
-    
     self.manager = [[DBManager alloc]initWithDatabaseFileName:@"GNResoundDB.sqlite"];
     remindersArray = [[NSArray alloc] initWithArray:[self.manager loadDataFromDB:query]];
-    
-    
     if ([remindersArray count]== 1) {
-        
-        
         NSDictionary *dict = [remindersArray objectAtIndex:0];
         NSString *strAct = [dict valueForKey:@"CalendarEventID"];
         [PersistenceStorage setObject:strAct andKey:@"EventID"];
     }
-    
     NSString *query1 = [NSString stringWithFormat:@"delete from MySkillReminders where SkillName = 'Tips for Better Sleep' and PlanName='%@'", [Utils getValidSqlString:[PersistenceStorage getObjectForKey:@"planName"]]];
-    
-    
-    
-    
-    
     [self.manager executeQuery:query1];
-    
     [self RefreshScheduleData];
-    
-    
-    
     EKEventStore *store = [[EKEventStore alloc] init];
     [store requestAccessToEntityType:EKEntityTypeEvent completion:^(BOOL granted, NSError *error) {
         if (!granted) return;
         EKEvent* eventToRemove = [store eventWithIdentifier:[PersistenceStorage getObjectForKey:@"EventID"]];
         if (eventToRemove) {
             NSError* err = nil;
-            //    [store removeEvent:eventToRemove span:EKSpanThisEvent commit:YES error:&err];
             [store removeEvent:eventToRemove span:EKSpanFutureEvents commit:YES error:&err];
-            
-            
-            
-            //            EKSpanFutureEvents
-            
-             
-            
         }
         
         
-        
-    }
-     
-     
-     
-     ];
+    }];
     
 }
 
@@ -478,12 +297,6 @@ mySwitch.on = YES;
 
 -(IBAction)viewIntroductionAgainClicked:(id)sender{
     [self writeViewedIntroduction];
-    
-    /*
-    TipsIntroDetailViewController *siv = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"TipsIntroDetailViewController"];
-    [self.navigationController pushViewController:siv animated:YES];
-     */
-    
     NSMutableArray *pageInfos = [NSMutableArray array];
     
     IntroPageInfo *info = [[IntroPageInfo alloc] initWithimage:[UIImage imageNamed:@"Intro7image1.png"] title: @"How can \"Tips for Better Sleep\" help me cope with my Tinnitus?" description:@"Your tinnitus may seem worse when you are tired. When you get enough sleep, you are ready to handle problems, and you won’t get frustrated as easily. A good night’s sleep will give you energy to practice skills from this app."];
@@ -505,27 +318,19 @@ mySwitch.on = YES;
 }
 
 -(IBAction)learnMoreClicked:(id)sender{
-NookTBS *siv = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"NookTBS"];
+    NookTBS *siv = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"NookTBS"];
     [self.navigationController pushViewController:siv animated:YES];
     
 }
 
 
  -(IBAction)openMySleepTipsVC:(id)sender{
-
-    
-    
     MySleepTipsVC *siv = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"MySleepTipsVC"];
     [self.navigationController pushViewController:siv animated:YES];
-
- 
  }
 
 
 -(void)writeViewedIntroduction{
-    //  NSURL *path = [self getUrlOfFiles:@"TinnitusCoachUsageData.csv"];
-    
-    
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0];
     NSString *documentTXTPath = [documentsDirectory stringByAppendingPathComponent:@"TinnitusCoachUsageData.csv"];
@@ -561,9 +366,6 @@ NookTBS *siv = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateV
 
 -(void)writeEnabledReminder
 {
-    //  NSURL *path = [self getUrlOfFiles:@"TinnitusCoachUsageData.csv"];
-    
-    
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0];
     NSString *documentTXTPath = [documentsDirectory stringByAppendingPathComponent:@"TinnitusCoachUsageData.csv"];
@@ -600,9 +402,6 @@ NookTBS *siv = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateV
 
 -(void)writeDeletedReminder
 {
-    //  NSURL *path = [self getUrlOfFiles:@"TinnitusCoachUsageData.csv"];
-    
-    
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0];
     NSString *documentTXTPath = [documentsDirectory stringByAppendingPathComponent:@"TinnitusCoachUsageData.csv"];

@@ -9,7 +9,7 @@
 #import "ValueAndActivitiesViewController.h"
 
 @interface ValueAndActivitiesViewController ()<UITableViewDelegate,UITableViewDataSource>{
-   NSArray *valueandActivityArray;
+    NSArray *valueandActivityArray;
 }
 @property (nonatomic, strong) DBManager *dbManagerValues;
 
@@ -35,9 +35,7 @@
     
     UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(22, 15, 276, 20)
                            ];
-    
     titleLabel.numberOfLines = 1000;
-    
     titleLabel.backgroundColor = [UIColor clearColor];
     view.backgroundColor = [Utils colorWithHexValue:@"EFEFF4"];
     
@@ -59,10 +57,12 @@
     return view;
 }
 
+
 -(void)cancel
 {
     [self.navigationController popViewControllerAnimated:YES];
 }
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -78,11 +78,7 @@
     
     titleLabel.font = pallete.secondObj;
     titleLabel.textColor = pallete.firstObj;
-    
-    
     titleLabel.textAlignment = NSTextAlignmentCenter;
-    
-    //titleLabel.textColor = [UIColor colorWithHexValue:@"797979"];
     titleLabel.backgroundColor = [UIColor clearColor];
     titleLabel.text = @"Values and Activities";
     
@@ -105,14 +101,11 @@
     negativeSpacer.width = -8;
     
     self.navigationItem.leftBarButtonItems = [NSArray arrayWithObjects:negativeSpacer, item, nil];
-    
-    
-    
     self.valueActivityTableView.tableHeaderView = [self tableHeaderView];
-    
     self.dbManagerValues = [[DBManager alloc]initWithDatabaseFileName:@"GNResoundDB.sqlite"];
-     [self setupTable];
+    [self setupTable];
 }
+
 
 -(void)setupTable{
     [self.valueActivityTableView setDataSource:self];
@@ -187,48 +180,25 @@
     
     accessory.y = height/2 - accessory.height/2;
     
-
+    
     return cell;
 }
+
 
 #pragma mark UITableViewDelegate
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     NSString *valName = [valueandActivityArray objectAtIndex:indexPath.row];
-   
-
     NSString *query = [NSString stringWithFormat: @"select ValueDescription from Plan_Values where valueName = '%@'", valName];
- 
-    
-    
     NSArray *mySoundsArray = [[NSArray alloc] initWithArray:[self.dbManagerValues loadDataFromDB:query]];
-    
-    
     [PersistenceStorage setObject:valName andKey:@"valueName"];
-    
-    
     NSArray *temp=  [mySoundsArray valueForKey:@"valueDescription"];
-    
-    
-    
-//    [PersistenceStorage setObject:[mySoundsArray valueForKey:@"valueDescription"] andKey:@"valueDescriptiontemp"];
-
-NSLog(@"%@",[temp objectAtIndex:0]);
-    
-    
     [PersistenceStorage setObject:[temp objectAtIndex:0] andKey:@"valueDescription"];
-
-  //  [[[PersistenceStorage getObjectForKey:@"valueDescriptiontemo"] allObjects]objectAtIndex:0];
-    
-    
-    
     if (indexPath.row < 400) {
-        
-
-        
         ActivitiesViewController *avc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"ActivitiesViewController"];
         [self.navigationController pushViewController:avc animated:YES];
     }
 }
+
 
 -(BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath{
     return NO;
@@ -239,14 +209,5 @@ NSLog(@"%@",[temp objectAtIndex:0]);
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

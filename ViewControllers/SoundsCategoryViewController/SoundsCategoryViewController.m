@@ -97,10 +97,7 @@
     
     titleLabel.font = pallete.secondObj;
     titleLabel.textColor = pallete.firstObj;
-    
     titleLabel.textAlignment = NSTextAlignmentCenter;
-    
-    //titleLabel.textColor = [UIColor colorWithHexValue:@"797979"];
     titleLabel.backgroundColor = [UIColor clearColor];
     titleLabel.text = [NSString stringWithFormat:@"Add %@", self.soundType];
     
@@ -138,23 +135,9 @@
     arrayOfSoundCategories = [NSArray arrayWithObjects:@{@"sectionText":[NSString stringWithFormat: @"Pick %@ stored on your phone:",self.soundType], @"soundCategories":@[@{@"text":[NSString stringWithFormat:@"Tinnitus Coach %@ ",self.soundType], @"image":@"TCSounds.png"}, @{@"text":@"My Own Sounds", @"image":@"MyOwn.png"} ]}, @{@"sectionText":[NSString stringWithFormat:@"Pick %@ from the Internet:", self.soundType], @"soundCategories":@[@{@"text":@"Website & Apps", @"image":@"Website.png"}]}, @{@"sectionText":[NSString stringWithFormat:@"Make a list of %@ played from other devices you own:",self.soundType], @"soundCategories":@[@{@"text":@"Other Devices", @"image":@"Devices.png"}]}, nil];
     
     self.dbManager = [[DBManager alloc]initWithDatabaseFileName:@"GNResoundDB.sqlite"];
-    
-    
-/*arrayOfSoundCategories = [NSArray arrayWithObjects:@{@"sectionText":[NSString stringWithFormat: @"Pick %@ stored on your phone:",self.soundType], @"soundCategories":@[@{@"text":[NSString stringWithFormat:@"Tinnitus Coach %@ ",self.soundType], @"image":@"u353.png"}, @{@"text":@"My Own Sounds", @"image":@"iphone.png"}]}, @{@"sectionText":[NSString stringWithFormat:@"Pick %@ from the Internet:", self.soundType], @"soundCategories":@[@{@"text":@"Website & Apps", @"image":@"globe.png"}]}, @{@"sectionText":[NSString stringWithFormat:@"Make a list of %@ played from other devices you own:",self.soundType], @"soundCategories":@[@{@"text":@"Other Devices", @"image":@"u317.png"}]}, nil];
-    [super viewDidLoad];
-  */
-    
-    
-    
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]
                                                                    initWithTarget:self
                                                                   action:@selector(dismissKeyboard)];
-                                   
-                               //         [self.view addGestureRecognizer:tap];
-    
-    
-    //[self.soundCategoryTableView reloadData];
-    // Do any additional setup after loading the view.
     self.isNewOwnSoundAdded = NO;
 }
 
@@ -192,11 +175,11 @@
     }
 }
 
+
 - (void)viewWillDisappear:(BOOL)animated
 {
     [self.tabBarController.tabBar setHidden:NO];
 }
-
 
 
 -(IBAction)viewIntroductionAgainClicked:(id)sender{
@@ -207,15 +190,11 @@
 
 
 
-
-
 -(IBAction)learnMoreClicked:(id)sender{
     NookUS *siv = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"NookUS"];
     [self.navigationController pushViewController:siv animated:YES];
     
 }
-
-
 
 
 
@@ -285,8 +264,6 @@
     UIImageView *imageView = (UIImageView *)[cell viewWithTag:1006];
     
     imageView.image = [UIImage imageNamed:[[[[arrayOfSoundCategories objectAtIndex:indexPath.section] valueForKey:@"soundCategories"] objectAtIndex:indexPath.row] valueForKey:@"image"]];
-    
-    //cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     return cell;
     
 }
@@ -370,22 +347,7 @@
 }
 
 - (void) OldshowMyOwnSounds{
-    /*
-    // if the user has already chosen some music, display that list
-    if (userMediaItemCollection) {
-        
-        MusicTableViewController *controller = [[MusicTableViewController alloc] initWithNibName: @"MusicTableView" bundle: nil];
-        controller.delegate = self;
-        
-        controller.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
-        
-        [self presentModalViewController: controller animated: YES];
-        [controller release];
-        
-        // else, if no music is chosen yet, display the media item picker
-    } else {
-        
-    */    MPMediaPickerController *picker =
+   MPMediaPickerController *picker =
         [[MPMediaPickerController alloc] initWithMediaTypes: MPMediaTypeAny];
         
         picker.delegate						= self;
@@ -420,17 +382,16 @@
         [self presentModalViewController: picker animated: YES];
 }
 
+
 - (void) mediaPicker: (MPMediaPickerController *) mediaPicker didPickMediaItems: (MPMediaItemCollection *) collection {
-    
-    
     MPMediaItem *item = [[collection items] objectAtIndex:0];
     NSURL *turl = [item valueForProperty:MPMediaItemPropertyAssetURL];
     NSString *titl = [item valueForProperty:MPMediaItemPropertyTitle];
-
+    
     NSString *url  = [turl absoluteString];
     
     [PersistenceStorage setObject:url andKey:@"mediaURL"];
- 
+    
     NSInteger soundTypeID = 0;
     if ([self.soundType isEqualToString:@"Soothing Sound"]) {
         soundTypeID = 1;
@@ -441,69 +402,21 @@
     else if ([self.soundType isEqualToString:@"Background Sound"]) {
         soundTypeID = 3;
     }
-
-    
-    NSLog(@"ULLL %@",url);
-    
-    
     NSString *duplicateCheck = [NSString stringWithFormat:@"SELECT count(*) from MyOwnSounds  where soundTypeID = %d and PlanID = %d and URL = '%@'", soundTypeID, [PersistenceStorage getIntegerForKey:@"currentPlanID"], url];
-    NSLog(@"%@",duplicateCheck);
     
     NSString *rowCount = [self.dbManager loadDataFromDB:duplicateCheck];
     
-		  NSLog(@"%@", [rowCount valueForKey:@"count(*)"]);
-		  
-		//  if ([rowCount valueForKey:@"count(*)"]==0)
-        //  {
-              
-              
-           
-    
-            NSString *query = [NSString stringWithFormat:@"insert into MyOwnSounds ('planID', 'groupID', 'skillID', 'soundTypeID', 'URL','comments') values (%ld, %ld, %ld, %d,'%@','%@')",(long)[PersistenceStorage getIntegerForKey:@"currentPlanID"], (long)[PersistenceStorage getIntegerForKey:@"currentGroupID"], (long)[PersistenceStorage getIntegerForKey:@"currentSkillID"], soundTypeID,url,titl];
-    
-     
-              
-    
+    NSString *query = [NSString stringWithFormat:@"insert into MyOwnSounds ('planID', 'groupID', 'skillID', 'soundTypeID', 'URL','comments') values (%ld, %ld, %ld, %d,'%@','%@')",(long)[PersistenceStorage getIntegerForKey:@"currentPlanID"], (long)[PersistenceStorage getIntegerForKey:@"currentGroupID"], (long)[PersistenceStorage getIntegerForKey:@"currentSkillID"], soundTypeID,url,titl];
     BOOL isDone = [self.dbManager executeQuery:query];
     if (isDone == YES)
     {
         NSLog(@"Success");
-
+        
     }
-    
-      //    }
-          
-/*
-    [self performSelector:@selector(navigateBack) withObject:nil afterDelay:1.1];
-    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark.png"] ];
-    
-    hud.mode = MBProgressHUDModeCustomView;
-    
-    hud.labelText = @"Added";
-    
-    [hud show:YES];
-    [hud hide:YES afterDelay:1];
- */
     [self dismissModalViewControllerAnimated: YES];
     self.isNewOwnSoundAdded = YES;
- //   NSLog(@"Collection %@",url);
-    
-    
-   // NSError *error;
-//self.player = [[AVAudioPlayer alloc] url error:&error];
-    
-  //  if (!error) {
-    //    [self.player prepareToPlay];
-      //  [self.player play];
-//    }
-
-    
 }
 
-    //selectedSongCollection=mediaItemCollection;
-//}
-//After you are done with selecting the song, implement the delegate to dismiss the picker:
 
 - (void) mediaPickerDidCancel: (MPMediaPickerController *) mediaPicker
 {
@@ -516,28 +429,10 @@
 {
     WebsitesandAppsViewController *wav = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"WebsitesandAppsViewController"];
     wav.soundType = self.soundType;
-    
-    
-  //  MyCustomViewController *myModalViewController = [[WebsitesandAppsViewController alloc] init];
-  //  [myModalViewController setTitle:@"Foo"];
-    
- //   UIViewController *vc = [UIViewController new];
- //   UINavigationController *nav = [[UINavigationController alloc] initWithRoot:vc];
-   // [self presentViewController:nav animated:YES completion:nil];
-    
-    
-   // UINavigationController *modalNavController = [[UINavigationController alloc] initWithRootView:wav];
-   // [myModalViewController release];
-    
     // This is intended to be presented in another view controller class
     [self presentModalViewController:wav animated:YES];
-    
-    
-    
-    
-    
-    //[self.navigationController presentModalViewController:wav animated:YES];
 }
+
 
 - (void)showOtherDevices
 {
@@ -546,14 +441,5 @@
     [self.navigationController presentModalViewController:odv animated:YES];
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

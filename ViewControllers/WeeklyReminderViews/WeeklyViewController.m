@@ -108,18 +108,11 @@
     allSkillsArray = [NSMutableArray new];
     allMyPlanArray = [NSMutableArray new];
     categorizedSkills = [NSMutableArray new];
-    
     firtTimeLoad = YES;
-    //self.title = @"Weekly Reminder";
-    
     selectedSkills = [NSMutableArray new];
     selectedDeviceArray = [NSMutableArray new];
     self.tableview.separatorStyle = UITableViewCellSeparatorStyleNone;
-    
-    //[self.view setBackgroundColor:[UIColor colorWithRed:0.96078431 green:0.96078431 blue:0.96078431 alpha:1]];
-    
     [self getAllSkillWithDetails];
-    //[self.tableview setBackgroundColor:[UIColor redColor]];
     feedbackArray = [NSMutableArray new];
     currentPlanIndex = 0;
     self.previousBtn.hidden = YES;
@@ -135,25 +128,12 @@
         [self.topleftconstraint setConstant:130];
     }
     [self resetWeeklyReminderEventForFutureDate];
-    
-    
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-/*
- #pragma mark - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- */
-
 
 - (void)viewWillAppear:(BOOL)animated
 {
@@ -215,77 +195,18 @@
 #pragma mark Tableview datasource
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    /*
-     int numberOfSections = (maxNumberOfSkills * maxMyPlan) + maxMyPlan;
-     return numberOfSections;
-     */
-    // let's keep at 1 for now
     return 1;
     
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section;
 {
-    
-    /*
-     if (section % (maxNumberOfSkills + 1) == 0) {
-     return 0;
-     }
-     
-     int sectionForSkill = section - ((section) / (maxNumberOfSkills + 1) + 1);
-     
-     NSDictionary *skillDict = [allSkillsArray objectAtIndex:sectionForSkill];
-     if ([selectedSkills containsObject:skillDict]) {
-     if ([[allSkillsArray objectAtIndex:sectionForSkill] valueForKey:@"devices"] != nil) {
-     NSArray *devicesArray = [[allSkillsArray objectAtIndex:sectionForSkill] valueForKey:@"devices"];
-     
-     
-     return 2 + devicesArray.count;
-     
-     
-     }
-     return 1;
-     
-     }
-     
-     
-     
-     return 0;
-     */
     if(categorizedSkills != nil && categorizedSkills.count > 0)
         return [[categorizedSkills objectAtIndex:currentPlanIndex] count];
     else
         return 0;
 }
 
-
-
-
-//-(UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
-//{
-//
-//    if(section = _tableview.numberOfSections)
-//    {
-//        UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 10)];
-//
-//        view.backgroundColor = [Utils colorWithHexValue:NAV_BAR_BLACK_COLOR];
-//        UIView *line1 = [[UIView alloc]initWithFrame:CGRectMake(0, view.frame.size.height - 1, 320, 1)];
-//
-//        UIView *line2 = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 1)];
-//
-//        line1.backgroundColor = [UIColor colorWithRed:0.0/255.0 green:0.0/255.0 blue:0.098/255.0 alpha:0.22];;
-//
-//        line2.backgroundColor = [UIColor colorWithRed:0.0/255.0 green:0.0/255.0 blue:0.098/255.0 alpha:0.22];;
-//
-//        [view addSubview:line1];
-//        [view addSubview:line2];
-//
-//        return view;
-//    }
-//
-//    return nil;
-//}
-//
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath;
 {
@@ -301,9 +222,6 @@
             cell = [nibs firstObject];
             [cell.contentView setBackgroundColor:[UIColor greenColor]];
             cell.contentView.layer.cornerRadius = 5;
-            //cell.contentView.layer.masksToBounds = YES;
-            
-            
         }
         [self initUsingSoundCell:(UsingSoundFeedbackCell*)cell ForSkill:skill atRow:indexPath.row];
     }else{
@@ -315,7 +233,6 @@
             cell = [nibs firstObject];
             [cell.contentView setBackgroundColor:[UIColor greenColor]];
             cell.contentView.layer.cornerRadius = 5;
-            //cell.contentView.layer.masksToBounds = YES;
         }
         [self initSkillFeedbackCell:(SkillFeedbackCell*)cell ForSkill:skill atRow:indexPath.row];
     }
@@ -329,8 +246,6 @@
     // reinitialize this cell
     [cell reInitialize];
     cell.skillNameLabel.text = [skill valueForKey:@"skillName"];
-    //    UIFont* boldFont = [UIFont boldSystemFontOfSize:[UIFont systemFontSize]];
-    //    cell.skillNameLabel.font = boldFont;
     // check if skill is added in current plan
     if([self isSkilladdedToPlan:skill]){
         //skill is added to plan
@@ -480,7 +395,6 @@
             if ([[skill valueForKey:@"group2"] isEqualToString:@"YES"]){
                 baseHeight = baseHeight +180;
                 baseHeight = baseHeight + 40*websiteArray.count;
-                //baseHeight = websiteArray.count > 0 ? baseHeight + 50:baseHeight;
             }
             if(websiteArray.count > 0)
                 baseHeight = baseHeight + 50;
@@ -523,13 +437,10 @@
     NSDictionary *skillDict = [[categorizedSkills objectAtIndex:currentPlanIndex] objectAtIndex:index];
     
     if ([selectedSkills containsObject:skillDict]) {
-        
-        
         [selectedSkills removeObject:skillDict];
     }
     else
     {
-        
         [selectedSkills addObject:skillDict];
     }
     
@@ -545,15 +456,8 @@
     
     NSString *queryForAllSkill = @"select * from Plan_skills";
     DBManager *dbManager = [[DBManager alloc]initWithDatabaseFileName:@"GNResoundDB.sqlite"];
-    
-    
     NSArray *staticAllSkillsArray = [NSArray arrayWithArray:[dbManager loadDataFromDB:queryForAllSkill]];
-    
-    
     maxNumberOfSkills = (int)[staticAllSkillsArray count];
-    
-    
-    
     NSString *queryForUsedDivecsInPlan = @"select * from MyDevices";
     
     NSArray *allPlanedDevices = [NSArray arrayWithArray:[dbManager loadDataFromDB:queryForUsedDivecsInPlan]];
@@ -567,28 +471,12 @@
     NSString *queryForMyPlan = @"SELECT * FROM MyPlans";
     
     NSArray *allMyPlan = [NSArray arrayWithArray:[dbManager loadDataFromDB:queryForMyPlan]];
-    
-    
     NSString *queryForMySkills = @"SELECT * FROM MySkills";
     
     NSArray *allMySkills = [NSArray arrayWithArray:[dbManager loadDataFromDB:queryForMySkills]];
-    
-    
-    
-    
-    NSLog(@"ALLMYPLAN%@",allMyPlan);
-    NSLog(@"STATIC SKILLS%@",staticAllSkillsArray);
-    NSLog(@"LLMY SKILLS%@",allMySkills);
-    
-    
-    
-    
-    
     [allMyPlanArray removeAllObjects];
     if(allMyPlan.count > 0)
         [allMyPlanArray addObjectsFromArray:allMyPlan];
-    
-    
     maxMyPlan = (int)[allMyPlanArray count];
     
     for (NSDictionary *myPlanRecord in allMyPlan)
@@ -629,8 +517,6 @@
                     [usedDevicesArray addObject:deviceDict];
                 }
                 
-                
-                
             }
             
             if (usedDevicesArray.count > 0) {
@@ -655,32 +541,19 @@
                     [websiteDict setValue:[websiteInfoDict valueForKey:@"waName"] forKey:@"waName"];
                     [usedWebsitesArray addObject:websiteDict];
                 }
-                
-                
-                
             }
             if (usedWebsitesArray.count > 0) {
                 
                 [skillDetails setValue:usedWebsitesArray forKey:@"websitesAndApps"];
                 
             }
-            
-            //    if ([[skillDetails objectAtIn] valueForKey:@"title"])
-            
             [sortedData addObject:skillDetails];  // here is where you filter
             
         }
         
     }
-    
-    //    NSString *query = @"select  distinct DM.skillID,PS.skillName,DM.deviceID,PD.deviceName from MyDevices as DM,Plan_skills as PS,Plan_Devices as PD where DM.skillID=PS.ID and DM.deviceID=PD.ID";
-    //    NSArray *resultArray = [dbManager loadDataFromDB:query];
-    //
     [allSkillsArray removeAllObjects];
     [allSkillsArray addObjectsFromArray:sortedData];
-    
-    // NSLog(@"THI IS ThE DATA TO RECREATE %@",allSkillsArray);
-    
     activeSkillsArray = [[NSMutableArray alloc] init];
     [activeSkillsArray removeAllObjects];
     
@@ -690,20 +563,8 @@
         {
             if ([[mySkillDict valueForKey:@"skillID"] isEqual:[allSkillDict valueForKey:@"skillID"]] && [[mySkillDict valueForKey:@"planID"] isEqual:[allSkillDict valueForKey:@"planID"]])
             {
-                //  NSLog(@"MYSKILLDICT %@",[mySkillDict valueForKey:@"skillID"]);
-                NSLog(@"ALLSKILLDICT %@",allSkillDict);//[allSkillDict valueForKey:@"skillID"]);
-                //  }
-                
-                //    if ([mySkillDict valueForKey:@"planID"]  == [allSkillDict valueForKey:@"planID"]) //&& [mySkillDict valueForKey:@"skillID"]  == [allSkillDict valueForKey:@"skillID"])
-                //     {
-                
                 [activeSkillsArray addObject:allSkillDict];
-                
-                
-                //   }
-                
-                
-                
+
             }
             
         }
@@ -717,11 +578,6 @@
         [categorizedSkills addObject:array];
     }
     
-    //  [allSkillsArray removeAllObjects];
-    //  allSkillsArray = activeSkillsArray;
-    
-    NSLog(@"%@",allSkillsArray);
-    
     [_tableview reloadData];
 }
 
@@ -734,18 +590,8 @@
 
 -(void)noatallButtonAction:(NSInteger)index
 {
-    
-    //NSInteger index = pressedButton.tag;
-    
+
     NSMutableDictionary *skilDict = [[categorizedSkills objectAtIndex:currentPlanIndex] objectAtIndex:index];
-    /*
-     NSMutableDictionary *newfDict = [NSMutableDictionary new];
-     
-     [newfDict setValue:[skilDict valueForKey:@"skillName"] forKey:@"skillName"];
-     [newfDict setValue:@"1" forKey:@"rating"];
-     [newfDict setValue:[skilDict valueForKey:@"planName"] forKey:@"planName"];
-     [newfDict setValue:[skilDict valueForKey:@"situationName"] forKey:@"situationName"];
-     */
     if(![feedbackArray containsObject:skilDict]){
         [feedbackArray addObject:skilDict];
     }
@@ -756,41 +602,19 @@
             [dict setObject:@"1" forKey:@"rating"];
         }
     }
-    
-    //    NSLog(@"FBARRAY   %@",section);
-    
-    
+
     [self.tableview reloadData];
-    
-    
-    /* UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:@"Tinnitus Coach"  message:@"You rated 'not at all' for this skill" delegate:self cancelButtonTitle:nil otherButtonTitles:@"OK",nil];
-     // [alertView setAlertViewStyle:UIAlertViewStylePlainTextInput];
-     [alertView show];
-     
-     */
-    
-    
 }
+
+
 -(void)alittleButtonButtonAction:(NSInteger)index
 {
-    //NSInteger index = pressedButton.tag;
-    // int sectionForSkill = section - ((section) / (maxNumberOfSkills + 1) + 1);
-    
+
     NSMutableDictionary *skilDict = [[categorizedSkills objectAtIndex:currentPlanIndex] objectAtIndex:index];
-    /*
-     NSMutableDictionary *newfDict = [NSMutableDictionary new];
-     
-     [newfDict setValue:[skilDict valueForKey:@"skillName"] forKey:@"skillName"];
-     [newfDict setValue:@"2" forKey:@"rating"];
-     [newfDict setValue:[skilDict valueForKey:@"planName"] forKey:@"planName"];
-     [newfDict setValue:[skilDict valueForKey:@"situationName"] forKey:@"situationName"];
-     */
     if(![feedbackArray containsObject:skilDict]){
         [feedbackArray addObject:skilDict];
     }
     [skilDict setObject:@"2" forKey:@"rating"];
-    
-    
     for(NSMutableDictionary *dict in selectedSkills){
         if([[dict objectForKey:@"planName"] isEqual:[skilDict valueForKey:@"planName"]] && [[dict objectForKey:@"skillName"] isEqual:[skilDict valueForKey:@"skillName"]] && [[dict objectForKey:@"situationName"] isEqual:[skilDict valueForKey:@"situationName"]] ) {
             [dict setObject:@"2" forKey:@"rating"];
@@ -798,25 +622,12 @@
     }
     
     [self.tableview reloadData];
-    /*  UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:@"Tinnitus Coach"  message:@"You rated 'a little' for this skill" delegate:self cancelButtonTitle:nil otherButtonTitles:@"OK",nil];
-     // [alertView setAlertViewStyle:UIAlertViewStylePlainTextInput];
-     [alertView show];
-     */
 }
+
+
 -(void)moderatelyButtonAction:(NSInteger)index
 {
-    //NSInteger index = pressedButton.tag;
-    //int sectionForSkill = section - ((section) / (maxNumberOfSkills + 1) + 1);
-    
     NSMutableDictionary *skilDict = [[categorizedSkills objectAtIndex:currentPlanIndex] objectAtIndex:index];
-    /*
-     NSMutableDictionary *newfDict = [NSMutableDictionary new];
-     
-     [newfDict setValue:[skilDict valueForKey:@"skillName"] forKey:@"skillName"];
-     [newfDict setValue:@"3" forKey:@"rating"];
-     [newfDict setValue:[skilDict valueForKey:@"planName"] forKey:@"planName"];
-     [newfDict setValue:[skilDict valueForKey:@"situationName"] forKey:@"situationName"];
-     */
     if(![feedbackArray containsObject:skilDict]){
         [feedbackArray addObject:skilDict];
     }
@@ -830,26 +641,11 @@
     }
     
     [self.tableview reloadData];
-    
-    /*  UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:@"Tinnitus Coach"  message:@"You rated 'moderately' for this skill" delegate:self cancelButtonTitle:nil otherButtonTitles:@"OK",nil];
-     // [alertView setAlertViewStyle:UIAlertViewStylePlainTextInput];
-     [alertView show];
-     */
 }
+
 -(void)extremelyButtonAction:(NSInteger)index
 {
-    //NSInteger index = pressedButton.tag;
-    // int sectionForSkill = section - ((section) / (maxNumberOfSkills + 1) + 1);
-    
     NSMutableDictionary *skilDict = [[categorizedSkills objectAtIndex:currentPlanIndex] objectAtIndex:index];
-    
-    /*   NSMutableDictionary *newfDict = [NSMutableDictionary new];
-     
-     [newfDict setValue:[skilDict valueForKey:@"skillName"] forKey:@"skillName"];
-     [newfDict setValue:@"5" forKey:@"rating"];
-     [newfDict setValue:[skilDict valueForKey:@"planName"] forKey:@"planName"];
-     [newfDict setValue:[skilDict valueForKey:@"situationName"] forKey:@"situationName"];
-     */
     if(![feedbackArray containsObject:skilDict]){
         [feedbackArray addObject:skilDict];
     }
@@ -863,26 +659,13 @@
     }
     
     [self.tableview reloadData];
-    
-    /* UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:@"Tinnitus Coach"  message:@"You rated 'exteremely' for this skill" delegate:self cancelButtonTitle:nil otherButtonTitles:@"OK",nil];
-     // [alertView setAlertViewStyle:UIAlertViewStylePlainTextInput];
-     [alertView show];
-     */
 }
+
+
 -(void)veryMuchButtonAction:(NSInteger)index
 {
-    //NSInteger index = pressedButton.tag;
-    //int sectionForSkill = section - ((section) / (maxNumberOfSkills + 1) + 1);
-    
     NSMutableDictionary *skilDict = [[categorizedSkills objectAtIndex:currentPlanIndex] objectAtIndex:index];
-    
-    /*   NSMutableDictionary *newfDict = [NSMutableDictionary new];
-     
-     [newfDict setValue:[skilDict valueForKey:@"skillName"] forKey:@"skillName"];
-     [newfDict setValue:@"4" forKey:@"rating"];
-     [newfDict setValue:[skilDict valueForKey:@"planName"] forKey:@"planName"];
-     [newfDict setValue:[skilDict valueForKey:@"situationName"] forKey:@"situationName"];
-     */
+
     if(![feedbackArray containsObject:skilDict]){
         [feedbackArray addObject:skilDict];
     }
@@ -896,10 +679,6 @@
     }
     
     [self.tableview reloadData];
-    /*  UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:@"Tinnitus Coach"  message:@"You rated 'very much' for this skill" delegate:self cancelButtonTitle:nil otherButtonTitles:@"OK",nil];
-     // [alertView setAlertViewStyle:UIAlertViewStylePlainTextInput];
-     [alertView show];
-     */
 }
 
 - (IBAction)cancelTapped:(id)sender {
@@ -1025,72 +804,12 @@
                     [myHandle writeData:[str dataUsingEncoding:NSUTF8StringEncoding]];
                     
                 }
-                
             }
-
-            
         }
-        
-        
-        
-
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    //    NSLog(@"%@",sName);
-    //}
-    
-    
-    
-    //[self dismissViewControllerAnimated:YES completion:^{
-        //
-        //        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-        //        hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark.png"] ];
-        //
-        //        hud.mode = MBProgressHUDModeCustomView;
-        //
-        //        hud.labelText = @"Thanks for the feedback!";
-        //
-        //        [hud show:YES];
-        //        [hud hide:YES afterDelay:1];
-        //
-        //
-        
-        //        UIStoryboard *storyBoard = [ UIStoryboard storyboardWithName:@"Main" bundle:nil];
-        //        UIViewController *mySleepsViewCotroller = [storyBoard instantiateViewControllerWithIdentifier:@"SkillRatingsViewController"];
-        //        UIWindow *currentWindow = [[UIApplication sharedApplication].windows firstObject];
-        //        [currentWindow.rootViewController presentViewController:mySleepsViewCotroller animated:YES completion:nil];
-        
-        
-        //        UIStoryboard *storyBoard = [ UIStoryboard storyboardWithName:@"Main" bundle:nil];
-        //        UIViewController *mySleepsViewCotroller = [storyBoard instantiateViewControllerWithIdentifier:@"TipsReminder"];
-        //        UIWindow *currentWindow = [[UIApplication sharedApplication].windows firstObject];
-        //        [currentWindow.rootViewController presentViewController:mySleepsViewCotroller animated:YES completion:nil];
-        
-        
-        
-        
-   // }];
 }
+
+
 
 -(void)dismissSelf{
     [self dismissViewControllerAnimated:YES completion:^{}];
@@ -1240,8 +959,6 @@
         }else{
             return 0;
         }
-
-
 }
 
 
@@ -1293,16 +1010,12 @@
         //show the expanded view
         cell.secondaryView.hidden = YES;
         cell.secondaryView.userInteractionEnabled = NO;
-        // lets show the correct color of the selcted indiccator
-        //cell.feedbackTableView.hidden =YES;
     }else{
         // skill is not selected.
         [cell.itemSelctorBtnImage  setImage:[UIImage imageNamed:UN_SELECTED_IMAGE]];
         
     }
     cell.itemSelectorBtn.tag = indexPath.row;
-    // add selector for itemselector
-   // [cell.itemSelectorBtn addTarget:self action:@selector(onClickToggleDeviceCategory:) forControlEvents:UIControlEventTouchUpInside];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     [cell setBackgroundColor:[UIColor redColor]];
     return cell;
@@ -1461,9 +1174,6 @@
         cell = [nibs firstObject];
         [cell.contentView setBackgroundColor:[UIColor greenColor]];
         cell.contentView.layer.cornerRadius = 5;
-        //cell.contentView.layer.masksToBounds = YES;
-        
-        
     }
     [cell reInitialize];
     cell.skillNameLabel.font = [UIFont systemFontOfSize:15];
@@ -1497,27 +1207,6 @@
     cell.itemSelectorBtn.hidden = NO;
     cell.itemSelctorBtnImage.hidden = NO;
     //show the expanded view
-/*    if(indexPath.row == 0){
-        cell.secondaryView.hidden = NO;
-        cell.secondaryView.userInteractionEnabled = YES;
-    }else{
-        cell.secondaryView.hidden = YES;
-        cell.secondaryView.userInteractionEnabled = NO;
-    }
- */
-    NSInteger rowNumm = tableView.tag - 100;
-    
-/*    if(indexPath.row != 0 && rowNumm >= 0){
-        //now check for devices also
-        skill =[[categorizedSkills objectAtIndex:currentPlanIndex] objectAtIndex:cellIndexPath.row];
-        NSArray *devicesArray = [skill valueForKey:@"devices[categorizedSkills objectAtIndex:currentPlanIndex]];
-        NSArray *websitesArray = [skill valueForKey:@"websitesAndApps"];
-        
-    }else if(indexPath.row == 0){
-        skill = [[categorizedSkills objectAtIndex:currentPlanIndex] objectAtIndex:cellIndexPath.row];
-    }
- */
-    
     if ([[skill valueForKey:key] isEqualToString:@"YES"]) {
         [cell.itemSelctorBtnImage  setImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@", SELECTED_IMAGE]]];
         if(indexPath.row == 0){
@@ -1658,14 +1347,11 @@
         default:
             break;
     }
-     NSLog(@"Returning height of row:%ld using sound table view as %ld",indexPath.row, height);
     return height;
 }
 
 - (NSInteger)usingSoundTableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section inUsingSound:(id)usCell{
     NSInteger rowCount = 1;
-    // get the skill
-    //NSIndexPath* cellIndexPath = [self.tableview indexPathForCell:usCell];
     NSInteger rowIndex = tableView.tag - 10000;
     if(rowIndex >= 0 && rowIndex < [[categorizedSkills objectAtIndex:currentPlanIndex] count]){
      NSLog(@"row index is %ld",rowIndex);
@@ -1677,8 +1363,6 @@
     if(websitesArray.count > 0)
         rowCount++;
     }
-    NSLog(@"tag of using sound table is %ld",tableView.tag);
-    NSLog(@"Returning number of rows in using sound table view as %ld",rowCount);
     return rowCount;
 }
 

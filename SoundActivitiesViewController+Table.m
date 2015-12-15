@@ -2,7 +2,7 @@
 //  SoundActivitiesViewController+Table.m
 //  TinnitusCoach
 //
-//  Created by Ashwani Hundwani on 14/06/2015.
+//  Created by Creospan on 14/06/2015.
 //  Copyright (c) 2015 Creospan. All rights reserved.
 //
 
@@ -281,9 +281,7 @@
             CGFloat constant = 90;
             
             CGFloat titleHeight = [Utils heightForLabelForString:info.title width:172 font:TITLE_LABEL_FONT];
-            
-//            info.descriptionStr = [info.descriptionStr stringByAppendingString:@"dfdf df df jhdf jdfdhfjhfj jhdjf jhdjfj hdjhj hjdhvj hjhvj hjvj fjhvdjh jdhdjhdj hj jhdjvhdj jf"];
-//            
+         
             CGFloat subtitleHeight = [Utils heightForLabelForString:info.descriptionStr width:172 font:SUB_TITLE_LABEL_FONT];
             
             
@@ -345,9 +343,6 @@
     else if ([tableCell isKindOfClass:[MyOwnSoundCell class]])
     {
         MyOwnSoundInfo *info = (MyOwnSoundInfo *)item;
-        
-        //TODO
-        //[PersistenceStorage setObject:[soundDict valueForKey:@"URL"] andKey:@"mediaURL" ];
         [PersistenceStorage setObject:info.url andKey:@"mediaURL"];
         [PersistenceStorage setObject:info.title andKey:@"mediaName"];
         [PersistenceStorage setObject:@"My Own Sounds" andKey:@"skillDetail2"];
@@ -356,7 +351,7 @@
         [self playAud:nil];
     }
     
-    else //if ([soundDict valueForKey:@"soundID"] != nil)
+    else
     {
         TinnitusSoundInfo *info = (TinnitusSoundInfo *)item;
         
@@ -433,9 +428,6 @@
 
 -(void)writeModifiedResource:(NSString *)itemTitle
 {
-    //  NSURL *path = [self getUrlOfFiles:@"TinnitusCoachUsageData.csv"];
-    
-    
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0];
     NSString *documentTXTPath = [documentsDirectory stringByAppendingPathComponent:@"TinnitusCoachUsageData.csv"];

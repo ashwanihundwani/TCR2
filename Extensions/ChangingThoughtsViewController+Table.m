@@ -2,7 +2,7 @@
 //  ChangingThoughtsViewController+Table.m
 //  TinnitusCoach
 //
-//  Created by Ashwani Hundwani on 06/09/2015.
+//  Created by Creospan on 06/09/2015.
 //  Copyright (c) 2015 Creospan. All rights reserved.
 //
 

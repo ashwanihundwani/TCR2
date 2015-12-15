@@ -2,7 +2,7 @@
 //  TipsViewController+Table.m
 //  TinnitusCoach
 //
-//  Created by Ashwani Hundwani on 13/06/2015.
+//  Created by Creospan on 13/06/2015.
 //  Copyright (c) 2015 Creospan. All rights reserved.
 //
 
@@ -203,22 +203,6 @@
     }
     else if(indexPath.section == 1)
     {
-        /*
-        NSString *query = [NSString stringWithFormat:@"select * from MySkillReminders where SkillName = 'Tips for Better Sleep'"];
-        
-        self.manager = [[DBManager alloc]initWithDatabaseFileName:@"GNResoundDB.sqlite"];
-        
-        NSArray *reminders = [[NSArray alloc] initWithArray:[self.manager loadDataFromDB:query]];
-        
-        if([reminders count] == 1)
-        {
-            return 128;
-        }
-        else
-        {
-            return 100;
-        }
-         */
         return 140;
     }
     else
@@ -294,7 +278,6 @@
         
     } negativeBlock:^(BOOL negative) {
         
-        //TODO - do nothing.
         
     }];
 }

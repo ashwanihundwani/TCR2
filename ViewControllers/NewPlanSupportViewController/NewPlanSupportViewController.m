@@ -2,7 +2,7 @@
 //  NewPlanSupportViewController.m
 //  TinnitusCoach
 //
-//  Created by Vikram Singh on 3/21/15.
+//  Created by Creospan on 3/21/15.
 //  Copyright (c) 2015 Creospan. All rights reserved.
 //
 
@@ -32,15 +32,9 @@
 -(CGFloat)heightForViewForInfo:(IntroPageInfo *)info
 {
     CGFloat constant = 38;
-    
     CGFloat titleHeight = [Utils heightForLabelForString:info.title width:AVAILABLE_WIDTH_FOR_TEXT  font:[Utils helveticaNueueFontWithSize:16.5]];
-    
-    
     CGFloat subtitleHeight = [Utils heightForLabelForString:info.descriptionText width:AVAILABLE_WIDTH_FOR_TEXT font:[Utils helveticaNueueFontWithSize:15]];
-    
-    
     constant += (titleHeight +subtitleHeight);
-    
     return constant;
 }
 
@@ -57,10 +51,6 @@
     IntroPageInfo *info2 = [[IntroPageInfo alloc] initWithimage:nil title: @"How will making and using plans help me with my tinnitus?" description:@"Several coping skills can be used to help you feel better when your tinnitus is bothering you. When you make a plan, you will first see a list of coping skills. \n\n If you see a skill you would like to learn, you can add it to your plan. When you use your plan, the app will teach you how to use each skill on your plan. As you practice skills, you will learn which are helpful for you."];
     
     [self.pageInfos addObject:info2];
-    
-    //self.header = @"Welcome to Guided Meditation";
-    
-    
     self.tabBarController.tabBar.hidden = TRUE;
     
     [self.navigationController setNavigationBarHidden:YES];
@@ -86,8 +76,6 @@
     self.scrollView.showsVerticalScrollIndicator = FALSE;
     self.scrollView.bounces = YES;
     self.scrollView.backgroundColor = [UIColor clearColor];
-    
-    
     //Configuring scroll view
     CGRect frame = self.scrollView.frame;
     
@@ -117,19 +105,22 @@
     // Do any additional setup after loading the view.
 }
 
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
 
-
 - (void)viewWillAppear:(BOOL)animated
-{[self.tabBarController.tabBar setHidden:YES];
+{
+    [self.tabBarController.tabBar setHidden:YES];
 }
 
+
 - (void)viewWillDisappear:(BOOL)animated
-{[self.tabBarController.tabBar setHidden:NO];
+{
+    [self.tabBarController.tabBar setHidden:NO];
 }
 
 
@@ -145,24 +136,6 @@
     
     MYIntroductionPanel *panel2 = [[MYIntroductionPanel alloc] initWithTitle:@"How will making and using plans help me with my tinnitus?" description:@"Several coping skills can be used to help you feel better when your tinnitus is bothering you. When you make a plan, you will first see a list of coping skills. \n\n If you see a skill you would like to learn, you can add it to your plan. When you use your plan, the app will teach you how to use each skill on your plan. As you practice skills, you will learn which are helpful for you."];
     
-    
-    //STEP 2 Create IntroductionView
-    
-    
-    /*A more customized version*/
-    
-    //    NSMutableAttributedString * string1 = [[NSMutableAttributedString alloc] initWithString:@"Welcome to the Party !"];
-    //    [string1 addAttribute:NSForegroundColorAttributeName value:[UIColor whiteColor] range:NSMakeRange(0, [string1 length])];
-    //
-    //    NSMutableAttributedString * string2 = [[NSMutableAttributedString alloc] initWithString:@"X a Post"];
-    //    [string2 addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:NSMakeRange(0, [string2 length])];
-    //
-    //    NSMutableAttributedString * string3 = [[NSMutableAttributedString alloc] initWithString:@"Check Posts"];
-    //    [string3 addAttribute:NSForegroundColorAttributeName value:[UIColor greenColor] range:NSMakeRange(0, [string3 length])];
-    //
-    //    NSMutableAttributedString * string4 = [[NSMutableAttributedString alloc] initWithString:@"Flag a Post"];
-    //    [string4 addAttribute:NSForegroundColorAttributeName value:[UIColor whiteColor] range:NSMakeRange(0, [string4 length])];
-    
     MYIntroductionView *introductionView = [[MYIntroductionView alloc] initWithFrame:CGRectMake(20, 0, self.view.bounds.size.width-40, 500) headerTexts:@[@"What is a \"plan\"?", @"How will making and using plans help me with my tinnitus?"] panels:@[panel1, panel2] languageDirection:MYLanguageDirectionLeftToRight];
     [introductionView setBackgroundColor:[UIColor whiteColor]];
     
@@ -173,10 +146,7 @@
     [introductionView.HeaderView setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
     [introductionView.PageControl setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
     [introductionView.SkipButton setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
-    
-    
-    
-    
+
     //Set delegate to self for callbacks (optional)
     introductionView.delegate = self;
     
@@ -184,12 +154,15 @@
     [introductionView showInView:self.view animateDuration:0.0];
 }
 
+
+
 -(void)introductionDidFinishWithType:(MYFinishType)finishType
 {
     self.navigationController.navigationBar.hidden=NO;
 
     [self.navigationController popViewControllerAnimated:NO];
 }
+
 
 - (void)addCloseButton
 {
@@ -208,12 +181,14 @@
     [Utils addTapGestureToView:closeButton target:self selector:@selector(onTapCloseButton:)];
 }
 
+
 - (void)onTapCloseButton:(id)sender
 {
     
     [self.navigationController setNavigationBarHidden:NO];
     [self.navigationController popViewControllerAnimated:NO];
 }
+
 
 - (void)addViewsToScrollViewWithFrame:(CGRect)frame
 {
@@ -237,6 +212,7 @@
     }
 }
 
+
 #pragma mark
 #pragma mark ScrollView Delegate Methods
 
@@ -254,15 +230,5 @@
         [self.pageControl updateCurrentPageDisplay] ;
     
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

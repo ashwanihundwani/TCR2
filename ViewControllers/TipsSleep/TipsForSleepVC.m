@@ -2,7 +2,7 @@
 //  TipsForSleepVC.m
 //  TinnitusCoach
 //
-//  Created by Jiten on 26/04/15.
+//  Created by Creospan on 26/04/15.
 //  Copyright (c) 2015 Creospan. All rights reserved.
 //
 
@@ -109,7 +109,6 @@
     NSDictionary *dict = [[NSDictionary alloc] initWithObjectsAndKeys:TIPS_FOR_SLEEP,KEY_SKILLNAME, nil];
     
     SkillIntroductionViewController *siv = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"SkillIntroductionViewController"];
-   // siv.skillsDict = dict;
     [self.navigationController pushViewController:siv animated:YES];
 }
 

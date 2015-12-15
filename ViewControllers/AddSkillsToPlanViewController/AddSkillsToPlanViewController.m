@@ -2,7 +2,7 @@
 //  AddSkillsToPlanViewController.m
 //  TinnitusCoach
 //
-//  Created by Vikram Singh on 3/22/15.
+//  Created by Creospan on 3/22/15.
 //  Copyright (c) 2015 Creospan. All rights reserved.
 //
 
@@ -128,9 +128,6 @@
     negativeSpacer.width = -8;
     
     self.navigationItem.leftBarButtonItems = [NSArray arrayWithObjects:negativeSpacer, item, nil];
-    
-//    skillListArray = [NSArray arrayWithObjects:@{@"name":@"Using Sound", @"description":@"Listening to sound can reduce your stress and help you cope with your tinnitus."}, @{@"name":@"Deep Breathing", @"description":@"This breathing exercise can reduce your stress and help you cope with your tinnitus."}, @{@"name":@"Imagery", @"description":@"Imagining a peaceful place can reduce your stress and help you cope with your tinnitus."}, @{@"name":@"Guided Meditation", @"description":@"Try several other guided relaxation exercises."}, @{@"name":@"Pleasant Activities", @"description":@"Make a list of activities that will help you take your mind off of tinnitus."}, @{@"name":@"Changing Thoughts & Feelings", @"description":@"Changing the way you think about tinnitus can improve how you feel."}, @{@"name":@"Tips for Better Sleeping", @"description":@"Following these suggestions can help you sleep better."}, nil];
-
     self.dbManagerSkillList = [[DBManager alloc]initWithDatabaseFileName:@"GNResoundDB.sqlite"];
     
     [self loadPlanSkills];
@@ -139,22 +136,12 @@
 }
 
 -(void)loadPlanSkills{
-   // NSString *query = [NSString stringWithFormat:@"select * from Plan_Skills where ID NOT IN (select skillID from MySkills where planID==%@) and ID NOT IN (select skillID from Skills_Situation where situationID==%@) ",[PersistenceStorage getObjectForKey:@"currentPlanID"],@"2"]; //[PersistenceStorage getObjectForKey:@"currentSituationID"];
-    
-    
     NSString *query = [NSString stringWithFormat:@"select * from Plan_Skills where ID NOT IN (select skillID from MySkills where planID==%@) and ID NOT IN (select skillID from Skills_Situation where situationName=='%@') ",[PersistenceStorage getObjectForKey:@"currentPlanID"],[PersistenceStorage getObjectForKey:@"situationName"]];
-
-    
- 
-
-    
-    
     // Get the results.
     if (skillListArray!= nil) {
         skillListArray = nil;
     }
     skillListArray = [[NSArray alloc] initWithArray:[self.dbManagerSkillList loadDataFromDB:query]];
- 
     // Reload the table view.
     [self.skillsTableView reloadData];
 }
@@ -185,11 +172,8 @@
     CGFloat titleLabelHeight = [Utils heightForLabelForString:cell.titleLabel.text width:250 font:TITLE_LABEL_FONT];
     
     cell.titleHeightConst.constant = titleLabelHeight;
-    
     [cell setNeedsLayout];
     [cell layoutIfNeeded];
-    
-    
     return cell;
     
 }
@@ -240,62 +224,22 @@
          dav.skillDict = [skillListArray objectAtIndex:indexPath.row];
         [self.navigationController pushViewController:dav animated:YES];
     }
-    
-    
-    
-    
     if ([tSkillName isEqualToString:@"Changing Thoughts & Feelings"])
     {
         ThoughtsSkillDetailViewController *dav = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"ThoughtsSkillDetailViewController"];
         dav.skillDict = [skillListArray objectAtIndex:indexPath.row];
         [self.navigationController pushViewController:dav animated:YES];
     }
-    
-    
-    
     if ([tSkillName isEqualToString:@"Tips for Better Sleep"])
     {
         TipsSkillDetailViewController *dav = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"TipsSkillDetailViewController"];
         dav.skillDict = [skillListArray objectAtIndex:indexPath.row];
         [self.navigationController pushViewController:dav animated:YES];
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
   
 }
 
 
-/*
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    SkillDetailViewController *sdv = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"SkillDetailViewController"];
-    sdv.skillDict = [skillListArray objectAtIndex:indexPath.row];
-    [self.navigationController pushViewController:sdv animated:YES];
-    
-}
-*/
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

@@ -61,16 +61,11 @@
 
 - (IBAction)openPDF:(id)sender
 {
-//    NSURL *URL = [[NSBundle mainBundle] URLForResource:@"PlainLanguageSummaryTinnitus" withExtension:@"mp4"];
-  
     NSURL *URL = [[NSBundle mainBundle] URLForResource:@"deep_breathing" withExtension:@"mp4"];
-    
-    
     if (URL)
     {
         self.controller = [UIDocumentInteractionController interactionControllerWithURL:URL];
         self.controller.delegate = self;
-        
         // Present "Open In Menu"
         [self.controller presentOpenInMenuFromRect:[sender frame] inView:self.view animated:YES];
     } 
@@ -119,71 +114,28 @@
 
 - (IBAction)deleteAll:(id)sender {
     self.manager = [[DBManager alloc] initWithDatabaseFileName:@"GNResoundDB.sqlite"];
-
     NSString *query = [NSString stringWithFormat:@"delete from MySkills"];
-    
     NSString *query1 = [NSString stringWithFormat:@"delete from MyPlans"];
-    
- //   NSString *query2 = [NSString stringWithFormat:@"delete from MySounds where planID = '%@'",];
-    
     NSString *query5 = [NSString stringWithFormat:@"delete from MyWebsites"];
-
-
     NSString *query3 = [NSString stringWithFormat:@"delete from MyReminders"];
-
     NSString *query4 = [NSString stringWithFormat:@"delete from MySkillReminders"];
-    
     NSString *query6 = [NSString stringWithFormat:@"delete from MyActivities"];
-    
-    
     NSString *query7 = [NSString stringWithFormat:@"delete from My_Tips"];
-    
     NSString *query8 = [NSString stringWithFormat:@"delete from My_Contacts"];
     NSString *query9 = [NSString stringWithFormat:@"delete from MyDevices"];
-
-    
-
-    
-    
     [self.manager executeQuery:query];
- [self.manager executeQuery:query1];
-
-
- //    [self.manager executeQuery:query2];
-
-     [self.manager executeQuery:query3];
-
-  [self.manager executeQuery:query4];
-
- [self.manager executeQuery:query5];
-
+    [self.manager executeQuery:query1];
+    [self.manager executeQuery:query3];
+    [self.manager executeQuery:query4];
+    [self.manager executeQuery:query5];
     [self.manager executeQuery:query6];
-    
     [self.manager executeQuery:query7];
-    
     [self.manager executeQuery:query8];
-    
     [self.manager executeQuery:query9];
-
-    
-    
     
 }
 
 
 
-
-
-
-
-/*
- #pragma mark - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- */
 
 @end

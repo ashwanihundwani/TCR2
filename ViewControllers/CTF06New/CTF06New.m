@@ -25,7 +25,8 @@
 
 
 @interface CTF06New ()
-{    NSArray *emotionsArray;
+{
+    NSArray *emotionsArray;
     NSArray *emotionsArrayNew;
 
 }
@@ -39,19 +40,9 @@
 - (void)viewDidLoad {
 
     [super viewDidLoad];
-    
      self.dbManager = [[DBManager alloc] initWithDatabaseFileName:@"GNResoundDB.sqlite"];
     [self setUpView];
     self.title = @"Add New Entry";
-    
- //   self.EmotionsTableView.delegate = self;
-   // self.EmotionsTableView.dataSource = self;
-// self.NewEmotionsTableView.delegate = self;
-  //  self.NewEmotionsTableView.dataSource = self;
-
- //   [self addLabel];
-    
-    // Do any additional setup after loading the view.
 }
 
 
@@ -90,29 +81,13 @@ UIBarButtonItem *barButton = [[UIBarButtonItem alloc]initWithBarButtonSystemItem
 }
 
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
-
 -(void)setData
 {
     NSString *query = @"SELECT thoughtText,rating FROM My_TF where thoughtCategory = 'step3'";
    emotionsArray = [self.dbManager loadDataFromDB:query];
-    NSLog(@"%@",emotionsArray);
 
-    
-    
-    
     NSString *queryNew = @"SELECT thoughtText,rating FROM My_TF where thoughtCategory = 'step6'";
     emotionsArrayNew = [self.dbManager loadDataFromDB:queryNew];
-    NSLog(@"''%@",emotionsArrayNew);
-    
     
 }
 
@@ -127,14 +102,7 @@ UIBarButtonItem *barButton = [[UIBarButtonItem alloc]initWithBarButtonSystemItem
     emotionsArray = [self.dbManager loadDataFromDB:query];
     NSString *queryNew = @"SELECT thoughtText,rating FROM My_TF where thoughtCategory = 'step6'";
     emotionsArrayNew = [self.dbManager loadDataFromDB:queryNew];
-    
-    
-    
-    
-    
     if(tableView == self.EmotionsTableView)
-  
-        
         return [emotionsArray count];
     else
         return [emotionsArrayNew count];
@@ -145,9 +113,6 @@ UIBarButtonItem *barButton = [[UIBarButtonItem alloc]initWithBarButtonSystemItem
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath; {
     static NSString *CellIdentifier = @"Cell";
- 
-    
-    
     NSString *query = @"SELECT thoughtText,rating FROM My_TF where thoughtCategory = 'step3'";
     emotionsArray = [self.dbManager loadDataFromDB:query];
     NSString *queryNew = @"SELECT thoughtText,rating FROM My_TF where thoughtCategory = 'step6'";
@@ -160,15 +125,14 @@ UIBarButtonItem *barButton = [[UIBarButtonItem alloc]initWithBarButtonSystemItem
     if(tableView == self.EmotionsTableView){
         
         cell.textLabel.text =  [[emotionsArray objectAtIndex:indexPath.row] valueForKey:@"thoughtText"];
-        
-//        = [emotionsArray objectAtIndex:indexPath.row];
-        NSLog(@"wwwww%@",cell.textLabel.text);
     }
     else if(tableView == self.NewEmotionsTableView){
         cell.textLabel.text = [emotionsArrayNew objectAtIndex:indexPath.row];
     }
     return cell;
 }
+
+
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath; {
     UITableViewCell * cell = [tableView cellForRowAtIndexPath:indexPath];
@@ -190,14 +154,8 @@ UIBarButtonItem *barButton = [[UIBarButtonItem alloc]initWithBarButtonSystemItem
  
 - (IBAction)backButtonTapped:(id)sender {
     CTF05 *ratingsView = [[UIStoryboard storyboardWithName:@"Main"bundle:nil]instantiateViewControllerWithIdentifier:@"CTF05"];
-    
-    
     [self.navigationController pushViewController:ratingsView animated:YES];
-    
-    // Execute the query.
-    //[self.manager executeQuery:query];
-    
-    // If the query was successfully executed then pop the view controller.
+
  }
 
 
@@ -211,37 +169,12 @@ UIBarButtonItem *barButton = [[UIBarButtonItem alloc]initWithBarButtonSystemItem
 
 
 
-
-
-
-
-
-
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     //Get the name of the current pressed button
     NSString *buttonTitle = [actionSheet buttonTitleAtIndex:buttonIndex];
-    
-    //   NSString * theValue = [(UILabel*)[self viewWithTag:t200] text];
-    
-    
-    
-    
     if  ([buttonTitle isEqualToString:@"Repeat This Skill"]) {
-        
-   //     PleasantActivityViewController *pa = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"PleasantActivityViewController"];
-        //   audioPanning.url = [dict valueForKey:@"soundURL"];
-        // audioPanning.name = [dict valueForKey:@"soundName"];
-        // audioPanning.panning = audio;
-        
-        //     [self.navigationController pushViewController:pa animated:YES];
-        
-        //       [self.navigationController presentModalViewController:audioPanning animated:NO];
-        
-        
-        
-        
-        
+
     }
     if ([buttonTitle isEqualToString:@"Learn About This Skill"]) {
         NookUsingSoundViewControllerOne *samplerView = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"NookUsingSoundViewControllerOne"];
@@ -260,87 +193,23 @@ UIBarButtonItem *barButton = [[UIBarButtonItem alloc]initWithBarButtonSystemItem
         
     }
     
-    
-    
     if ([buttonTitle isEqualToString:@"Do Activity Now"]) {
-//DoingActivityViewController *svc1 = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"DoingActivityViewController"];
-        //[self.navigationController pushViewController:svc1 animated:YES];
-        
-    //    [self.navigationController presentModalViewController:svc1 animated:NO];
+
     }
     
     
     
     if ([buttonTitle isEqualToString:@"Schedule Later"]) {
         ScheduleViewController *svc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"ScheduleViewController"];
-   //     svc.name = strAct;
         [self.navigationController pushViewController:svc animated:YES];
     }
     
     
-    
-    
-    
-    
-    
-    
 }
 
-
-
-
-
-
-//NSString *query = [NSString stringWithFormat:@"select * from MyPlans"];
- //   activityArray = [[NSArray alloc] initWithArray:[self.manager loadDataFromDB:query]];
-
-    
-
-
-//   .. id obj = [remindersArray objectAtIndex:0];
-    
-
-    
-    
-    
-    
- 
-       // **_statusText**.text = [NSString stringWithFormat:@"%@ button pressed.", title];
-    
-    // [self performSelectorOnMainThread:@selector(reminderSchedule:) withObject:@"yourString" waitUntilDone:YES];
-
-   // [self.reminderSchedule setText:@"labelText"];
-    // [reminderSchedule.text setStringValue:[NSString stringWithFormat:@"%.2f",alt]];
-    
- //   reminderSchedule.text = @" is not limited.";
-   //[self.reminderSchedule performSelectorOnMainThread : @ selector(setText : ) withObject:str waitUntilDone:YES];
-
-
-/*(void)addLabel{
-  
-    UILabel *reminderSchedule = [[UILabel alloc]initWithFrame:
-                       CGRectMake(20, 200, 280, 80)];
-    reminderSchedule.numberOfLines = 0;
-    reminderSchedule.textColor = [UIColor blueColor];
-    reminderSchedule.backgroundColor = [UIColor clearColor];
- //   reminderSchedule.textAlignment = UITextAlignmentCenter;
-    reminderSchedule.text = @"This is a sample text\n of multiple lines.here number of lines is not limited.";
- [self.view addSubview:reminderSchedule];
-    reminderSchedule.clearsContextBeforeDrawing = YES;
-    reminderSchedule.text =@"ddd";
-    [self.scrollView setContentSize:CGSizeMake(320,1200)];
-
-}
-*/
 
 
 -(IBAction)viewIntroductionAgainClicked:(id)sender{
-//[self.reminderSchedule removeFromSuperview];
-  // self.reminderSchedule.text = @"asjasasdasd";
-    
-    
-    
-    
     BreathingIntroDetailViewController *siv = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"BreathingIntroDetailViewController"];
     [self.navigationController pushViewController:siv animated:YES];
     
@@ -386,8 +255,6 @@ UIBarButtonItem *barButton = [[UIBarButtonItem alloc]initWithBarButtonSystemItem
 
     [self.navigationController presentModalViewController:audioPanning animated:NO];
 
-    
-//    [self.navigationController pushViewController:audioPanning animated:YES];
 }
 
 
@@ -401,8 +268,6 @@ UIBarButtonItem *barButton = [[UIBarButtonItem alloc]initWithBarButtonSystemItem
 
     [self.navigationController presentModalViewController:audioPanning animated:NO];
 
-    
-//    [self.navigationController pushViewController:audioPanning animated:YES];
 }
 
 

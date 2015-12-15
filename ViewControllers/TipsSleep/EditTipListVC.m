@@ -20,9 +20,9 @@
     
     NSMutableSet *sectionViewArray;
     NSMutableArray *selectedCategories,*tempSelectedCategories;
-    //    NSMutableArray *selectedIndexes;
     
 }
+
 @property(nonatomic,strong)DBManager *dbManager;
 @end
 
@@ -115,8 +115,6 @@
         UILabel *lblTitle2 = [[UILabel alloc] initWithFrame:CGRectMake(20, 15, frame.size.width-25, 70)];
         [lblTitle2 setBackgroundColor:[UIColor clearColor]];
          [lblTitle2 setNumberOfLines:0];
-   //     [lblTitle2 sizeToFit];
-        
         [lblTitle2 setText:@"Note: It is normal to wake up a few times during the night. Very few people sleep through the night without interruptions."];
         [lblTitle2 setFont:[UIFont systemFontOfSize:13]];
         [view addSubview:lblTitle2];
@@ -153,8 +151,6 @@
     [view setBackgroundColor:[Utils colorWithHexValue:@"EEEEEE"]] ;//] colorWithRed:245.0/255.0 green:245.0/255.0 blue:245.0/255.0 alpha:1]];
     
     UILabel *lblTitle = [[UILabel alloc] initWithFrame:CGRectMake(X_POs, 5, frame.size.width-20, DEFAULT_HEIGHT_LABEL)];
-   // [lblTitle setBackgroundColor:[[UIColor lightGrayColor ]] ;//] colorWithRed:245.0/255.0 green:245.0/255.0 blue:245.0/255.0 alpha:1]];
-   
     [lblTitle setBackgroundColor:[Utils colorWithHexValue:@"EEEEEE"]];//
      [lblTitle setText:aTitle];
     [lblTitle setFont:[UIFont boldSystemFontOfSize:15]];
@@ -229,6 +225,8 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
+
+
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
     if(section == 0)
@@ -239,6 +237,7 @@
     
     return [self headerViewWith:[tipsDetailsDict valueForKey:@"tipsTypeName"] andDescription:[tipsDetailsDict valueForKey:@"tipsTypeDescription"] andIndexpath:section].frame.size.height;
 }
+
 
 -(IBAction)onClickToggleHeader:(id)sender
 {
@@ -272,10 +271,13 @@
     [self.tableViewOutlet reloadSections:sectionToReload withRowAnimation:UITableViewRowAnimationAutomatic];
 }
 
+
+
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     return [allTipsArray count]+2;
 }
+
 
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
@@ -315,8 +317,7 @@
     }
     
     return [sortArray count];
-    
-    // return 4;
+
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -324,9 +325,6 @@
     CGFloat constant = 27;
     
     NSDictionary *tipsDetailsDict = [allTipsArray objectAtIndex:indexPath.section-1];
-    // NSPredicate *predicate = [ NSPredicate predicateWithFormat:[NSString stringWithFormat:@"self.tipsTypeID == %d",[[tipsDetailsDict valueForKey:@"ID"] intValue]]];
-    
-    //    NSDictionary *categoryDetails =  [[allTipsCategoriesArray filteredArrayUsingPredicate:predicate] objectAtIndex:indexPath.row];
     
     NSMutableArray *sortArray = [NSMutableArray new];
     for(NSDictionary *categoriesDict in allTipsCategoriesArray) {
@@ -363,9 +361,6 @@
     [cell.btnToggleCategory setTag:indexPath.row];
     
     NSDictionary *tipsDetailsDict = [allTipsArray objectAtIndex:indexPath.section-1];
-    // NSPredicate *predicate = [ NSPredicate predicateWithFormat:[NSString stringWithFormat:@"self.tipsTypeID == %d",[[tipsDetailsDict valueForKey:@"ID"] intValue]]];
-    
-    //    NSDictionary *categoryDetails =  [[allTipsCategoriesArray filteredArrayUsingPredicate:predicate] objectAtIndex:indexPath.row];
     
     NSMutableArray *sortArray = [NSMutableArray new];
     for(NSDictionary *categoriesDict in allTipsCategoriesArray) {
@@ -379,11 +374,7 @@
     NSDictionary *categoryDetails =  [sortArray objectAtIndex:indexPath.row];
     
     if ([selectedCategories containsObject:categoryDetails]) {
-        
         cell.checkImage.hidden = false;
-        //        [self onClickToggleCategory:cell.btnToggleCategory];
-        //[self toggleCategoryImage:YES andCell:cell];
-        
     }
     else{
         cell.checkImage.hidden = true;
@@ -434,9 +425,6 @@
     NSIndexSet *sectionToReload5 = [NSIndexSet indexSetWithIndexesInRange:range5];
     [self.tableViewOutlet reloadSections:sectionToReload5 withRowAnimation:UITableViewRowAnimationAutomatic];
     
-    
-    
-    
 }
 
 
@@ -451,9 +439,7 @@
     EditTipsCell *cell = (EditTipsCell *)[self.tableViewOutlet cellForRowAtIndexPath:indexPath];
     
     UIButton *btn = (UIButton *)sender;
-    
-    
-    
+
     if(cell.checkImage.hidden){
     
         cell.checkImage.hidden = false;
@@ -466,17 +452,11 @@
     [cell.btnToggleCategory setImage:[UIImage imageNamed:@"Selected_Checkbox.png"] forState:UIControlStateSelected | UIControlStateHighlighted];
     if (indexPath != nil)
     {
-        //[self toggleCategoryImage:YES andCell:cell];
     }
     
     NSDictionary *tipsDetailsDict = [allTipsArray objectAtIndex:indexPath.section-1];
-    // NSPredicate *predicate = [ NSPredicate predicateWithFormat:[NSString stringWithFormat:@"self.tipsTypeID == %d",[[tipsDetailsDict valueForKey:@"ID"] intValue]]];
-    
-    //    NSDictionary *categoryDetails =  [[allTipsCategoriesArray filteredArrayUsingPredicate:predicate] objectAtIndex:indexPath.row];
-    
     NSMutableArray *sortArray = [NSMutableArray new];
     for(NSDictionary *categoriesDict in allTipsCategoriesArray) {
-        
         if ([[categoriesDict valueForKey:@"tipsTypeID"] isEqualToString:[tipsDetailsDict valueForKey:@"ID"]]) {
             [sortArray addObject:categoriesDict];
             
@@ -485,13 +465,10 @@
     
     NSDictionary *categoryDetails =  [sortArray objectAtIndex:indexPath.row];
     if ([selectedCategories containsObject:categoryDetails]) {
-        
-        //       [self deleteMyTips:categoryDetails];
         [selectedCategories removeObject:categoryDetails];
     }
     else
     {
-        //        [self insertMyTips:categoryDetails];
         [selectedCategories addObject:categoryDetails];
     }
     [_tableViewOutlet reloadData];
@@ -529,6 +506,7 @@
     }
 }
 
+
 -(NSArray *)getSelectedTips
 {
     
@@ -539,9 +517,6 @@
     NSMutableArray *selectedArray = [NSMutableArray new];
     for(NSDictionary *tipsDict in myTipsArray)
     {
-        //        tipsTypeID tipsTypeCategoryID
-        
-        
         for(NSDictionary *tipsCategory in allTipsCategoriesArray) {
             
             if ([[tipsCategory valueForKey:@"tipsTypeID"] isEqualToString:[tipsDict valueForKey:@"tipsTypeID"]] && [[ tipsCategory valueForKey:@"ID"] isEqualToString:[tipsDict valueForKey:@"tipsTypeCategoryID"]]) {
@@ -555,14 +530,13 @@
     return selectedArray;
 }
 
+
 #pragma mark add myTips
 -(void)insertMyTips:(NSDictionary*)selectedTipsCategories
 {
     int planID = (int)[PersistenceStorage getIntegerForKey:@"currentPlanID"];
     int skillID = (int)[PersistenceStorage getIntegerForKey:@"currentSkillID"];
     int grouID = (int)[PersistenceStorage getIntegerForKey:@"currentGroupID"];
-    
-    
     NSString *inserQquery = [NSString stringWithFormat:@"insert into My_Tips (planID,groupID,skillID,tipsTypeID,tipsTypeCategoryID) values(%d,%d,%d,%d,%d)",planID,grouID,skillID,[[selectedTipsCategories valueForKey:@"tipsTypeID"] intValue],[[selectedTipsCategories valueForKey:@"ID"] intValue]];
     
     // Execute the query.
@@ -576,11 +550,8 @@
     else{
         NSLog(@"Could not execute the query.");
     }
-    
-    //    [selectedCategories removeAllObjects];
-    //    [selectedCategories addObjectsFromArray:[self getSelectedTips]];
-    //    [_tableViewOutlet reloadData];
 }
+
 
 #pragma mark - deletingMyTips
 -(void)deleteMyTips:(NSDictionary*)selectedTipsCategories
@@ -589,24 +560,14 @@
     
     for(NSDictionary *tipsDict in allMyTips)
     {
-        //        tipsTypeID tipsTypeCategoryID
-        
-        
-        
-        
+
         if ([[selectedTipsCategories valueForKey:@"tipsTypeID"] isEqualToString:[tipsDict valueForKey:@"tipsTypeID"]] && [[selectedTipsCategories valueForKey:@"ID"] isEqualToString:[tipsDict valueForKey:@"tipsTypeCategoryID"]]) {
             
             ID = [tipsDict valueForKey:@"ID"];
         }
         
-        
     }
-    
-    
     NSString *deleteQquery = [NSString stringWithFormat:@"delete from My_Tips where ID=%@ , skillID = %@ and planID =%@",ID,[PersistenceStorage getObjectForKey:@"currentSkillID"],[PersistenceStorage getObjectForKey:@"currentPlanID"]];
-    
-    
-    
     
     // Execute the query.
     [self.dbManager executeQuery:deleteQquery];
@@ -619,19 +580,8 @@
     else{
         NSLog(@"Could not execute the query.");
     }
-    
-    //    [selectedCategories removeAllObjects];
-    //    [selectedCategories addObjectsFromArray:[self getSelectedTips]];
-    //    [_tableViewOutlet reloadData];
+
 }
-/*
- #pragma mark - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- */
+
 
 @end

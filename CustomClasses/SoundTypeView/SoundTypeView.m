@@ -57,14 +57,6 @@
         self.soundActivitiesArray = [[NSMutableArray alloc] initWithArray:dataArray];
         
         self.tempSoundsArray = [self setData:self.soundActivitiesArray];
-        
-        
-        
-        
-        
-        //NSLog(@"TEMPSA %@",self.tempSoundsArray);
-        
-        
         float heightForTable = [self getHeightForTableView:self.tempSoundsArray];
         [self.soundActivitiesTableView setFrame:CGRectMake(self.soundActivitiesTableView.frame.origin.x, self.soundActivitiesTableView.frame.origin.y, self.soundActivitiesTableView.frame.size.width, heightForTable)];
         
@@ -158,24 +150,14 @@
 
 -(NSMutableArray *)setData:(NSArray*)dataArray
 {
-    
-   // NSLog(@"Data Array   %@",dataArray);
-    
     if([dataArray count]>0)
     {
         NSString *query = [NSString stringWithFormat: @"select ID, soundName from Plan_Sound_List where soundTypeID = %@ AND ID IN(select soundID from MySounds where planID= %@)", [[dataArray objectAtIndex:0] valueForKey:@"soundTypeID"] ,[PersistenceStorage getObjectForKey:@"currentPlanID"]];
         
         NSMutableArray *mySoundsArray = [[NSMutableArray alloc] initWithArray:[self.dbManagerMySounds loadDataFromDB:query]];
-        
-        
- 
-        
         query = [NSString stringWithFormat: @"select deviceName,deviceID, comments from MyDevices Inner JOIN Plan_Devices on MyDevices.deviceID = Plan_Devices.ID where myDevices.soundTypeID = %ld and planID = %@", (long)[[[dataArray objectAtIndex:0] valueForKey:@"soundTypeID"]integerValue],[PersistenceStorage getObjectForKey:@"currentPlanID"]];
         [mySoundsArray addObjectsFromArray:[self.dbManagerMySounds loadDataFromDB:query]];
-        
-      //  NSLog(@"hhh%@",query);
-        
-        
+
         query = [NSString stringWithFormat: @"select waName , waDetail,websiteID, comments,MyWebsites.URL from MyWebsites Inner JOIN Plan_Website_Apps on MyWebsites.websiteId = Plan_Website_Apps.ID where MyWebsites.soundTypeID = %ld and planID = %@", (long)[[[dataArray objectAtIndex:0] valueForKey:@"soundTypeID"]integerValue],[PersistenceStorage getObjectForKey:@"currentPlanID"]];
         
         [mySoundsArray addObjectsFromArray:[self.dbManagerMySounds loadDataFromDB:query]];
@@ -184,19 +166,9 @@
         query = [NSString stringWithFormat: @"select * from MyOwnSounds where soundTypeID = %ld and planID = %@", (long)[[[dataArray objectAtIndex:0] valueForKey:@"soundTypeID"]integerValue],[PersistenceStorage getObjectForKey:@"currentPlanID"]];
         
         [mySoundsArray addObjectsFromArray:[self.dbManagerMySounds loadDataFromDB:query]];
-        
-        
-    //    NSOrderedSet *orderedSet = [NSOrderedSet orderedSetWithArray:mySoundsArray];
-       // NSArray *arrayWithoutDuplicates = [orderedSet array];
-        
-        NSLog(@"SOUND ARRAY %@",mySoundsArray);
-        
-     //    return arrayWithoutDuplicates;
-            return mySoundsArray;
+        return mySoundsArray;
     }
     return nil;
-    // Reload the table view.
-    //[self.soundActivitiesTableView reloadData];
 }
 
 -(void)deleteSoundFromDB:(NSDictionary *)soundDict andCompletion:(void (^)(BOOL success))block
@@ -207,30 +179,20 @@
         BOOL isDone = [self.dbManagerMySounds executeQuery:query];
         if (isDone == YES)
         {
-        
-             if ([[soundDict valueForKey:@"soundTypeID"] isEqualToString:@"1"])
+            
+            if ([[soundDict valueForKey:@"soundTypeID"] isEqualToString:@"1"])
             {_soundTypeName=@"Soothing Sound";}
             else
                 if ([[soundDict valueForKey:@"soundTypeID"] isEqualToString:@"2"])
                 {_soundTypeName=@"Interesting Sound";}
-
-            else
-                
-                if ([[soundDict valueForKey:@"soundTypeID"] isEqualToString:@"3"])
-                {_soundTypeName=@"Background Sound";}
-
             
-            
+                else
+                    
+                    if ([[soundDict valueForKey:@"soundTypeID"] isEqualToString:@"3"])
+                    {_soundTypeName=@"Background Sound";}
             [PersistenceStorage setObject:@"Removed Using Sound Other Devices Option" andKey:@"actionTypeForResource"];
             [PersistenceStorage setObject:_soundTypeName andKey:@"skillDetail1"];
             [PersistenceStorage setObject:@"Other Devices" andKey:@"skillDetail2"];
-      
-            //[PersistenceStorage setObject:@"Added Using Sound Other Devices Option" andKey:@"actionTypeForResource"];
-//            [PersistenceStorage setObject:@"Other Devices" andKey:@"skillDetail2"];
-            
-            
-            
-            
             
             NSString *query = [NSString stringWithFormat:@"select * from Plan_Devices where   ID IN (select deviceID from MyDevices where planID ='%@') ",[PersistenceStorage getObjectForKey:@"currentPlanID"]];
             
@@ -255,18 +217,14 @@
                 NSLog(@"%@",outPut);
                 [PersistenceStorage setObject:outPut andKey:@"skillDetail3"];
                 
-                
             }
-            
-            
-            
             [self writeModifiedResource];
             
             NSLog(@"Success");
             block(YES);
         }
         else{
-             block(NO);
+            block(NO);
             
         }
         
@@ -274,25 +232,10 @@
     else if ([soundDict valueForKey:@"websiteID"] != nil)
     {
         
-        
-//NSString *query = [NSString stringWithFormat: @"select * from MyDevices  where soundTypeID = %ld and planID = %@", (long)typeID, [PersistenceStorage getObjectForKey:@"currentPlanID"]];
-        
-        
         NSString *query = [NSString stringWithFormat:@"delete from MyWebsites where websiteID=%@     and planID = %@", [soundDict valueForKey:@"websiteID"], [PersistenceStorage getObjectForKey:@"currentPlanID"]];
-      
-        
-        
-        
         BOOL isDone = [self.dbManagerMySounds executeQuery:query];
         if (isDone == YES)
         {
-            
-            
-            
-            
-            
-            
-            
             if ([[soundDict valueForKey:@"soundTypeID"] isEqualToString:@"1"])
             {_soundTypeName=@"Soothing Sound";}
             else
@@ -302,36 +245,20 @@
                 else
                     
                     if ([[soundDict valueForKey:@"soundTypeID"] isEqualToString:@"3"])
-                    {_soundTypeName=@"Background Sound";}
-            
-            
-            
+                    {
+                        _soundTypeName=@"Background Sound";
+                    }
             [PersistenceStorage setObject:@"Removed Using Sound Website Apps Option" andKey:@"actionTypeForResource"];
             [PersistenceStorage setObject:_soundTypeName andKey:@"skillDetail1"];
             [PersistenceStorage setObject:@"Websites & Apps" andKey:@"skillDetail2"];
             
-            //[PersistenceStorage setObject:@"Added Using Sound Other Devices Option" andKey:@"actionTypeForResource"];
-            //            [PersistenceStorage setObject:@"Other Devices" andKey:@"skillDetail2"];
-            
-            
-            
-            
-            
             NSString *query = [NSString stringWithFormat:@"select * from Plan_Website_Apps where   ID IN (select websiteID from MyWebsites where planID ='%@') ",[PersistenceStorage getObjectForKey:@"currentPlanID"]];
-            
-            
             NSArray *waArrayList = [self.dbManagerMySounds loadDataFromDB:query];
             NSMutableString *waString =[NSMutableString stringWithString:@""];
-            
-            
             for(int i= 0 ;i<[waArrayList count];i++)
             {
-                
-                
                 [waString appendString:[[waArrayList objectAtIndex:i] valueForKey:@"waName"]];
                 [waString appendString:@"|"];
-                
-                
             }
             
             if ([waString length] > 0) {
@@ -339,58 +266,22 @@
                 outPut = [outPut substringToIndex:[outPut length] - 1];
                 NSLog(@"%@",outPut);
                 [PersistenceStorage setObject:outPut andKey:@"skillDetail3"];
-                
-                
             }
-            
-            
-            
             [self writeModifiedResource];
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
             NSLog(@"Success");
             block(YES);
             
         }
         else{
-             block(NO);
+            block(NO);
             
         }
         [self.soundActivitiesTableView reloadData];
     }
-    
-    
-
     else if ([soundDict valueForKey:@"MyOwnSoundID"] != nil)
     {
         
-        
-        //NSString *query = [NSString stringWithFormat: @"select * from MyDevices  where soundTypeID = %ld and planID = %@", (long)typeID, [PersistenceStorage getObjectForKey:@"currentPlanID"]];
-        
-        
         NSString *query = [NSString stringWithFormat:@"delete from MyOwnSounds where MyOwnSoundID=%@     and planID = %@", [soundDict valueForKey:@"MyOwnSoundID"], [PersistenceStorage getObjectForKey:@"currentPlanID"]];
-        
-        
-        
-        
         BOOL isDone = [self.dbManagerMySounds executeQuery:query];
         if (isDone == YES)
         {
@@ -405,10 +296,6 @@
         [self.soundActivitiesTableView reloadData];
     }
     
-    
-    
-    
-    
     else
     {
         NSString *query = [NSString stringWithFormat:@"delete from MySounds where soundID=%@ and planID = %@", [soundDict valueForKey:@"ID"] , [PersistenceStorage getObjectForKey:@"currentPlanID"]];
@@ -421,12 +308,13 @@
             
         }
         else{
-             block(NO);
+            block(NO);
             
         }
         
     }
 }
+
 
 #pragma mark - UITableViewDataSource
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
@@ -434,15 +322,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-   
-    
-    
      return [self.tempSoundsArray count];
-    
-    
-    
-    
-    
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -539,28 +419,6 @@
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             return cell;
     }
-    
-//        
-//        
-//        
-//        
-//        CellIdentifier = @"Cell";
-//        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-//        
-//        if (cell == nil) {
-//            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-//        }
-//        
-//        NSString *str = [[self.tempSoundsArray objectAtIndex:indexPath.row] valueForKey:@"soundName"];
-//        cell.textLabel.text =str;
-//        cell.imageView.image = [UIImage imageNamed:@"u353.png"];
-//        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-//        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-//       // NSLog(@"%@",self.tempSoundsArray) ;
-//
-//            return cell;
-//    }
-
     return nil;
     
 }
@@ -586,34 +444,20 @@
                                         [self deleteSoundFromDB:[self.tempSoundsArray objectAtIndex:indexPath.row] andCompletion:^(BOOL success)
                                          {
                                              if (success) {
-//                                                 [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
-//                                                 UIAlertView *alert = [[UIAlertView alloc]   //show alert box with option to play or exit
-//                                                                       initWithTitle: @"Removed an Item"
-//                                                                       message:@"The item in this list was removed. You should see it cleared from the list when you come back to this screen."
-//                                                                       delegate:self
-//                                                                       cancelButtonTitle:nil
-//                                                                       otherButtonTitles:@"OK",nil];
-//                                                 
-//                                                 
-//                                                 
-//                                                 [alert show];
-                                             
-                                             
-                                             
-                                             [self.tempSoundsArray removeObjectAtIndex:indexPath.row];
-
-                                             
-    [self.soundActivitiesTableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationRight];
+                                                 [self.tempSoundsArray removeObjectAtIndex:indexPath.row];
+                                                 
+                                                 
+                                                 [self.soundActivitiesTableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationRight];
                                                  //    [self.soundActivitiesTableView reloadData];
-     [[NSNotificationCenter defaultCenter] postNotificationName:@"sayHelloNotification" object:nil];
+                                                 [[NSNotificationCenter defaultCenter] postNotificationName:@"sayHelloNotification" object:nil];
                                                  
                                              }
-
+                                             
                                          }];
                                     }];
     button.backgroundColor = [UIColor redColor]; //arbitrary color
     
- 
+    
     return @[button];
 }
 
@@ -674,71 +518,27 @@
 -(void)onsDelete:(id)sender
 
 {
-    //    DeleteCormationManager *manager = [DeleteCormationManager getInstance];
-    //
-    //    [manager showAlertwithPositiveBlock:^(BOOL positive) {
-    //
     NSInteger tag =[(UIGestureRecognizer *)sender view].tag;
-    
-    //  [(UIGestureRecognizer *)sender view].tag
-    
-    
-    
-    //
-    //
-    //
-    
-    
-    
     
     [self deleteSoundFromDB:[self.tempSoundsArray objectAtIndex:tag] andCompletion:^(BOOL success)
      {
          if (success) {
              [self.tempSoundsArray removeObjectAtIndex:tag];
-             //      [self.soundActivitiesTableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationRight];
-         //    [self.soundActivitiesTableView reloadData];
              if([[self delegate] respondsToSelector:@selector(tableViewCellDeleted:)]) {
                 // [[self delegate] tableViewCellDeleted:[self.soundActivitiesArray objectAtIndex:tag]];
              }
          }
          
      }];
-    
-    
-    
-    
-    
-    
-    
     [self setNeedsDisplay];
-    
-    
-    //     [PersistenceStorage setObject:[[userPlansArray objectAtIndex:tag] valueForKey:@"planName"] andKey:@"deletingPlanName"];
-    //    [PersistenceStorage setObject:[[userPlansArray objectAtIndex:tag] valueForKey:@"situationName"] andKey:@"deletingSituationName"];
-    
-    
     [PersistenceStorage setObject:@"OK" andKey:@"soundListMode"];
-    
-    
- //   [self refreshScreen];
-    
-    
-    
-    //DO nothing
+
 }
 
 
-
-
-
-
-
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
     
-    
-    
-    
-    // you need to implement this method too or nothing will work:
     
 }
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
@@ -749,19 +549,8 @@
 
 
 -(void)tableView:(UITableView *)tableView   didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    
-    
-    
-    //   NSIndexPath *selectedIndexPath = [self.tableView indexPathForSelectedRow];
-    // UITableViewCell *cell = [tableView cellForRowAtIndexPath:selectedIndexPath];
-    
-    
-    
-    
+
     UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-    
-  //  NSLog(@"TEST LABEL %@",cell.textLabel.text);
-    
     UILabel *label = (UILabel*)[cell viewWithTag:2222];
     
     if (![[label text] isEqualToString:nil])
@@ -787,50 +576,6 @@
     
     
 }
-
-
-//
-//-(void)tableView:(UITableView *)tableView   didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-//    
-//    
-//    
-// //   NSIndexPath *selectedIndexPath = [self.tableView indexPathForSelectedRow];
-//   // UITableViewCell *cell = [tableView cellForRowAtIndexPath:selectedIndexPath];
-//    
-//    
-//    
-//    
-//    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-//    
-//  //  NSLog(@"TEST LABEL %@",cell.nameLabel.text);
-//
-//    
-//    
-//    if (![cell.textLabel.text isEqualToString:nil])
-//    {
-//        
-//  //      [PersistenceStorage setObject:cell.textLabel.text  andKey:@"soundName" ];
-//     
-//        
-//    //    NSLog(@"TEST LABEL %@",cell.textLabel.text);
-//        
-//    }
-//    
-//    
-//    if([[self delegate] respondsToSelector:@selector(tableViewCellClicked:)]) {
-//        
-////[[self delegate] tableViewCellClicked:[self.soundActivitiesArray objectAtIndex:indexPath.row]];
-//  
-//        
-//        
-//        [[self delegate] tableViewCellClicked:indexPath.row];//[self.tempSoundsArray objectAtIndex:indexPath.row]];
-//        
-//        }
-//    
-////[tableView deselectRowAtIndexPath:indexPath animated:YES];
-//    
-//           
-//    }
 
     
     

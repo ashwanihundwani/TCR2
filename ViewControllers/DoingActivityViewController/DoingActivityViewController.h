@@ -2,7 +2,7 @@
 //  PlansViewController.h
 //  TinnitusCoach
 //
-//  Created by Vikram Singh on 3/18/15.
+//  Created by Creospan on 3/18/15.
 //  Copyright (c) 2015 Creospan. All rights reserved.
 //
 

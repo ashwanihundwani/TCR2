@@ -2,7 +2,7 @@
 //  SupportViewController.m
 //  TinnitusCoach
 //
-//  Created by Jiten on 25/04/15.
+//  Created by Creospan on 25/04/15.
 //  Copyright (c) 2015 Creospan. All rights reserved.
 //
 
@@ -60,8 +60,6 @@
     titleLabel.textColor = pallete.firstObj;
     
     titleLabel.textAlignment = NSTextAlignmentCenter;
-    
-    //titleLabel.textColor = [UIColor colorWithHexValue:@"797979"];
     titleLabel.backgroundColor = [UIColor clearColor];
     titleLabel.text = @"Support";
     
@@ -92,7 +90,6 @@
     familyFriendsArray = [NSMutableArray new];
     dbManager = [[DBManager alloc] initWithDatabaseFileName:@"GNResoundDB.sqlite"];
     [self setData];
-    //[self.supportTableView setTableFooterView:[[UIView alloc] initWithFrame:CGRectZero]];
     self.supportTableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.supportTableView.frame.size.width, 1)];
     
     [self.supportTableView reloadData];
@@ -241,23 +238,7 @@
     if ([[UIApplication sharedApplication] canOpenURL:phoneURL]) {
         [[UIApplication sharedApplication] openURL:phoneURL];
     }
-    
-    
-    
-    
-    
-    
-//    NSLog(@"%@",phoneNumber);
-//    if(phoneNumber && ![phoneNumber isEqualToString:@""])
-//    {
-//     
-//        
-//        NSString *strMob = [[NSString alloc] initWithFormat:@"tel://%@",strm];
-//        
-//        NSString *phoneCallNum = [NSString stringWithFormat:@"tel:%@",phoneNumber];
-//        
-//        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:phoneCallNum]];
-//    }
+
 }
 
 -(UIView*)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
@@ -318,34 +299,9 @@
 }
 
 #pragma open the contacts view
-/*-(void)openContactsViewForProfessional
- {
- UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
- ContactListViewController *contactVC = [ storyBoard instantiateViewControllerWithIdentifier:@"ContactListViewController"];
- contactVC.delegate = self;
- contactVC.contactType = 0;
- [self.navigationController pushViewController:contactVC animated:YES];
- }
- */
-
-/*-(void)openContactsViewForProfessional
- {
- 
- NookViewController *guided = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"NookViewController"];
- [self.navigationController pushViewController:guided animated:YES];
- 
- 
- //  UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
- //  NookViewController *contactVC = [ storyBoard instantiateViewControllerWithIdentifier:@"NookViewController"];
- //  contactVC.delegate = self;
- // contactVC.contactType = 0;
- // [self.navigationController pushViewController:contactVC animated:YES];
- }
- */
 
 -(void)openContactsViewForProfessional
 {
-    //   NSInteger *contactType=0;
     [PersistenceStorage setObject:@"0" andKey:@"contactType"];
     
     
@@ -529,17 +485,6 @@
     
 }
 
-/*-(void)openContactsViewForFamily
- {
- 
- UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
- ContactListViewController *contactVC = [ storyBoard instantiateViewControllerWithIdentifier:@"ContactListViewController"];
- contactVC.delegate = self;
- contactVC.contactType = 1;
- [self.navigationController pushViewController:contactVC animated:YES];
- }
- 
- */
 
 #pragma mark delete and move contacts
 
@@ -599,16 +544,7 @@
         [self setData];
         [self.supportTableView reloadData];
     }
-    //    if (contactType == 0) {
-    //
-    //        [professionalSupportArray addObject:contact];
-    //
-    //    }
-    //    else
-    //    {
-    //        [familyFriendsArray addObject:contact];
-    //    }
-    ;
+
 }
 
 
@@ -624,11 +560,6 @@
         
         UIActivityIndicatorView *activity = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
         [activity startAnimating];
-        //    CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.activityTableView];
-        //    NSIndexPath *indexPath = [self.activityTableView indexPathForRowAtPoint:buttonPosition];
-        //    if (indexPath != nil)
-        //    {
-        //        NSDictionary *dict = [activityArray objectAtIndex:indexPath.row];
         NSString *query = [NSString stringWithFormat:@"insert into My_Contacts (contactName,contactNumber,contactType,createdDate) values('%@','%@','%d',%lf)",contact.contact_name,contact.contact_number,contactType,[currentDate timeIntervalSince1970]];
         
         // Execute the query.
@@ -636,13 +567,7 @@
         
         // If the query was successfully executed then pop the view controller.
         if (dbManager.affectedRows != 0) {
-          //  [activity stopAnimating];
-            
             [self addedContact];
-            
-            
-            
-            // Pop the view controller.
         }
         else{
             return NO;
@@ -651,90 +576,80 @@
     }
     
     return YES;
-    
-    //    }
-    
 }
 
 
 -(void)deletedContact
 {
-         //  NSURL *path = [self getUrlOfFiles:@"TinnitusCoachUsageData.csv"];
-        
-        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
-        NSString *documentsDirectory = [paths objectAtIndex:0];
-        NSString *documentTXTPath = [documentsDirectory stringByAppendingPathComponent:@"TinnitusCoachUsageData.csv"];
-        
-        NSDate *date = [NSDate date];
-        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
-        dateFormatter.dateFormat = @"MM/dd/yy";
-        NSString *dateString = [dateFormatter stringFromDate: date];
-        NSDateFormatter *timeFormatter = [[NSDateFormatter alloc]init];
-        timeFormatter.dateFormat = @"HH:mm:ss";
-        NSString *timeString = [timeFormatter stringFromDate: date];
-        NSString *type = @"Find Support";
-        
-        NSString *str = @"Removed Contact";
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    NSString *documentTXTPath = [documentsDirectory stringByAppendingPathComponent:@"TinnitusCoachUsageData.csv"];
+    
+    NSDate *date = [NSDate date];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
+    dateFormatter.dateFormat = @"MM/dd/yy";
+    NSString *dateString = [dateFormatter stringFromDate: date];
+    NSDateFormatter *timeFormatter = [[NSDateFormatter alloc]init];
+    timeFormatter.dateFormat = @"HH:mm:ss";
+    NSString *timeString = [timeFormatter stringFromDate: date];
+    NSString *type = @"Find Support";
+    
+    NSString *str = @"Removed Contact";
     NSString *finalStr = [NSString stringWithFormat:@"\r%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@",dateString,timeString,type,str,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil];
     
-        NSFileManager *fileManager = [NSFileManager defaultManager];
-        if(![fileManager fileExistsAtPath:documentTXTPath])
-        {
-            [finalStr writeToFile:documentTXTPath atomically:YES];
-        }
-        else
-        {
-            NSFileHandle *myHandle = [NSFileHandle fileHandleForWritingAtPath:documentTXTPath];
-            [myHandle seekToEndOfFile];
-            [myHandle writeData:[finalStr dataUsingEncoding:NSUTF8StringEncoding]];
-            
-        }
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    if(![fileManager fileExistsAtPath:documentTXTPath])
+    {
+        [finalStr writeToFile:documentTXTPath atomically:YES];
+    }
+    else
+    {
+        NSFileHandle *myHandle = [NSFileHandle fileHandleForWritingAtPath:documentTXTPath];
+        [myHandle seekToEndOfFile];
+        [myHandle writeData:[finalStr dataUsingEncoding:NSUTF8StringEncoding]];
         
-   
+    }
+    
+    
     
 }
 
 -(void)addedContact
 {
-
-         //  NSURL *path = [self getUrlOfFiles:@"TinnitusCoachUsageData.csv"];
-        
-        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
-        NSString *documentsDirectory = [paths objectAtIndex:0];
-        NSString *documentTXTPath = [documentsDirectory stringByAppendingPathComponent:@"TinnitusCoachUsageData.csv"];
-        
-        NSDate *date = [NSDate date];
-        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
-        dateFormatter.dateFormat = @"MM/dd/yy";
-        NSString *dateString = [dateFormatter stringFromDate: date];
-        NSDateFormatter *timeFormatter = [[NSDateFormatter alloc]init];
-        timeFormatter.dateFormat = @"HH:mm:ss";
-        NSString *timeString = [timeFormatter stringFromDate: date];
-        NSString *type = @"Find Support";
-        
-     NSString *str = @"Added Contact";
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    NSString *documentTXTPath = [documentsDirectory stringByAppendingPathComponent:@"TinnitusCoachUsageData.csv"];
+    
+    NSDate *date = [NSDate date];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
+    dateFormatter.dateFormat = @"MM/dd/yy";
+    NSString *dateString = [dateFormatter stringFromDate: date];
+    NSDateFormatter *timeFormatter = [[NSDateFormatter alloc]init];
+    timeFormatter.dateFormat = @"HH:mm:ss";
+    NSString *timeString = [timeFormatter stringFromDate: date];
+    NSString *type = @"Find Support";
+    
+    NSString *str = @"Added Contact";
     NSString *finalStr = [NSString stringWithFormat:@"\r%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@",dateString,timeString,type,str,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil];
+    
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    if(![fileManager fileExistsAtPath:documentTXTPath])
+    {
+        [finalStr writeToFile:documentTXTPath atomically:YES];
+    }
+    else
+    {
+        NSFileHandle *myHandle = [NSFileHandle fileHandleForWritingAtPath:documentTXTPath];
+        [myHandle seekToEndOfFile];
+        [myHandle writeData:[finalStr dataUsingEncoding:NSUTF8StringEncoding]];
         
-        NSFileManager *fileManager = [NSFileManager defaultManager];
-        if(![fileManager fileExistsAtPath:documentTXTPath])
-        {
-            [finalStr writeToFile:documentTXTPath atomically:YES];
-        }
-        else
-        {
-            NSFileHandle *myHandle = [NSFileHandle fileHandleForWritingAtPath:documentTXTPath];
-            [myHandle seekToEndOfFile];
-            [myHandle writeData:[finalStr dataUsingEncoding:NSUTF8StringEncoding]];
-            
-        }
-        
+    }
+    
     
     
 }
 
 -(void)writeVisitedSupport{
-    //  NSURL *path = [self getUrlOfFiles:@"TinnitusCoachUsageData.csv"];
-    
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0];
     NSString *documentTXTPath = [documentsDirectory stringByAppendingPathComponent:@"TinnitusCoachUsageData.csv"];
@@ -781,72 +696,8 @@
 
 
 
-
-
-
-/*
- -(BOOL)insertContact:(AddressBookData*)contact withType:(int)contactType
- {
- if (![self isExistContact:contact type:contactType]) {
- NSDate *date = [NSDate date];
- NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
- formatter.dateFormat = @"yyyy-MM-dd HH:mm:ss";
- NSString *dateString = [formatter stringFromDate:date];
- NSDate *currentDate = [formatter dateFromString:dateString];
- 
- UIActivityIndicatorView *activity = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
- [activity startAnimating];
- //    CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.activityTableView];
- //    NSIndexPath *indexPath = [self.activityTableView indexPathForRowAtPoint:buttonPosition];
- //    if (indexPath != nil)
- //    {
- //        NSDictionary *dict = [activityArray objectAtIndex:indexPath.row];
- NSString *query = [NSString stringWithFormat:@"insert into My_Contacts (contactName,contactNumber,contactType,createdDate) values('%@','%@','%d',%lf)",contact.contact_name,contact.contact_number,contactType,[currentDate timeIntervalSince1970]];
- 
- // Execute the query.
- [dbManager executeQuery:query];
- 
- // If the query was successfully executed then pop the view controller.
- if (dbManager.affectedRows != 0) {
- [activity stopAnimating];
- // Pop the view controller.
- }
- else{
- return NO;
- }
- 
- }
- 
- return YES;
- 
- //    }
- 
- }
- */
-
 -(BOOL)isExistContact:(AddressBookData *)contact type:(int)contactType
 {
-    //
-    //    switch (contactType) {
-    //        case 0:
-    //        {
-    //            NSPredicate *predicate = [NSPredicate predicateWithFormat:[NSString stringWithFormat:@"self.contactNumber == %@ AND self.contactType == %d",contact.contact_number,contactType]];
-    //            if ([[professionalSupportArray filteredArrayUsingPredicate:predicate] count] == 0) {
-    //                return NO;
-    //            }
-    //            break;
-    //        }
-    //        case 1:
-    //        {
-    //            NSPredicate *predicate = [NSPredicate predicateWithFormat:[NSString stringWithFormat:@"self.contactNumber == %@ AND self.contactType == %d",contact.contact_number,contactType]];
-    //            if ([[familyFriendsArray filteredArrayUsingPredicate:predicate] count] == 0) {
-    //                return NO;
-    //            }
-    //            break;
-    //        }
-    //        default:
-    //            break;
-    //    }
     NSString *query = [NSString stringWithFormat:@"SELECT * FROM My_Contacts where contactNumber='%@' and contactType=%d ",contact.contact_number,contactType];
     NSArray *allRecordsArray = [dbManager loadDataFromDB:query];
     if ([allRecordsArray count] == 0) {

@@ -27,59 +27,11 @@
 - (void)viewDidLoad {
      [self setUpView];
     [super viewDidLoad];
-    
-    
     self.activties = @[@"Values and Activities", @"Favorites"];
-    
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    
-    /*
-    UIView *titleView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 170, 44)];
-    
-    titleView.backgroundColor = [Utils colorWithHexValue:NAV_BAR_BLACK_COLOR];
-    
-    UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 170, 25)];
-    
-    Pair *pallete = [Utils getColorFontPair:eCFS_PALLETE_1];
-    
-    titleLabel.font = pallete.secondObj;
-    titleLabel.textColor = pallete.firstObj;
-    
-    titleLabel.textAlignment = NSTextAlignmentCenter;
-    
-    //titleLabel.textColor = [UIColor colorWithHexValue:@"797979"];
-    titleLabel.backgroundColor = [UIColor clearColor];
-    // titleLabel.text = @"Add New Plan";
-    
-    titleLabel.text= [NSString stringWithFormat:@"Plan for %@ ",[PersistenceStorage getObjectForKey:@"planName"]];
-    titleLabel.adjustsFontSizeToFitWidth=YES;
-    titleLabel.minimumScaleFactor=0.5;
 
-    
-    UILabel *situationLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 23, 170, 19)];
-    
-    pallete = [Utils getColorFontPair:eCFS_PALLETE_2];
-    
-    situationLabel.font = pallete.secondObj;
-    situationLabel.textColor = pallete.firstObj;
-    
-    situationLabel.textAlignment = NSTextAlignmentCenter;
-    
-    //titleLabel.textColor = [UIColor colorWithHexValue:@"797979"];
-    situationLabel.backgroundColor = [UIColor clearColor];
-    situationLabel.text = [PersistenceStorage getObjectForKey:@"skillName"];//@"Your Situation";
-    
-    [titleView addSubview:titleLabel];
-    [titleView addSubview:situationLabel];
-    
-    self.navigationItem.titleView = titleView;
-
-    
-    self.title = @"Pleasant Activities";
-        // Do any additional setup after loading the view.
-  
-     */
 }
+
 
 -(void)setUpView{
     self.pleasantActivityImageView.image = [UIImage imageNamed:@"5PleasantActivities"];
@@ -95,11 +47,8 @@
 
 -(void)viewDidAppear:(BOOL)animated
 {
-    
-    
     [self.scrollView setFrame:CGRectMake(0.0, 0.0, self.view.frame.size.width, self.view.frame.size.height)];
     [self.scrollView setContentSize:CGSizeMake(320,600)];
-    
     [self.tableView reloadData];
 }
 
@@ -115,11 +64,6 @@
 -(IBAction)viewIntroductionAgainClicked:(id)sender{
     
     [self writeViewedIntroduction];
-    
-    /*
-    PleasantIntroDetailViewController *siv = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"PleasantIntroDetailViewController"];
-    [self.navigationController pushViewController:siv animated:YES];
-     */
     
     NSMutableArray *pageInfos = [NSMutableArray array];
     
@@ -144,6 +88,7 @@
     [self.navigationController pushViewController:swiper animated:YES];
     
 }
+
 
 -(NSString *)planText
 {
@@ -221,9 +166,6 @@
 
 
 -(void)writeViewedIntroduction{
-    //  NSURL *path = [self getUrlOfFiles:@"TinnitusCoachUsageData.csv"];
-    
-    
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0];
     NSString *documentTXTPath = [documentsDirectory stringByAppendingPathComponent:@"TinnitusCoachUsageData.csv"];
@@ -257,16 +199,5 @@
 }
 
  
-
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

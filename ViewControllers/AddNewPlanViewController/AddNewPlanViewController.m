@@ -2,7 +2,7 @@
 //  AddNewPlanViewController.m
 //  TinnitusCoach
 //
-//  Created by Vikram Singh on 3/18/15.
+//  Created by Creospan on 3/18/15.
 //  Copyright (c) 2015 Creospan. All rights reserved.
 //
 
@@ -30,8 +30,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    
     // Do any additional setup after loading the view.
     
     UIView *titleView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 130, 44)];
@@ -46,8 +44,6 @@
     titleLabel.textColor = pallete.firstObj;
     
     titleLabel.textAlignment = NSTextAlignmentCenter;
-    
-    //titleLabel.textColor = [UIColor colorWithHexValue:@"797979"];
     titleLabel.backgroundColor = [UIColor clearColor];
     titleLabel.text = @"Add New Plan";
     
@@ -59,8 +55,6 @@
     situationLabel.textColor = pallete.firstObj;
     
     situationLabel.textAlignment = NSTextAlignmentCenter;
-    
-    //titleLabel.textColor = [UIColor colorWithHexValue:@"797979"];
     situationLabel.backgroundColor = [UIColor clearColor];
     situationLabel.text = @"Your Situation";
     
@@ -89,8 +83,6 @@
     negativeSpacer.width = -8;
     
     self.navigationItem.leftBarButtonItems = [NSArray arrayWithObjects:negativeSpacer, item, nil];
-    //    planListArray = [NSArray arrayWithObjects:@"Falling Asleep", @"Driving", @"Falling Back to Sleep", @"First Thing in the Morning", @"Reading", @"Relaxing", @"Using the Computer", nil];
-    
     self.dbManagerPlansList = [[DBManager alloc]initWithDatabaseFileName:@"GNResoundDB.sqlite"];
     
     [self loadPlanSituation];
@@ -100,9 +92,6 @@
 
 -(void)loadPlanSituation{
     NSString *query = @"select * from Plan_Situatation where situationName NOT IN (select planName from MyPlans)";
-    
-    //  NSString *query = @"select * from Plan_Situatation";
-    
     // Get the results.
     if (planListArray!= nil) {
         planListArray = nil;
@@ -112,6 +101,7 @@
     // Reload the table view.
     [self.plansListTableView reloadData];
 }
+
 
 -(void)writeToMyPlans:(NSString *)planName
 {
@@ -128,54 +118,31 @@
         
         [PersistenceStorage setObject:planName andKey:@"newPlanName"];
         [PersistenceStorage setObject:planName andKey:@"planName"];
-        
-        
         NSString *queryaa = [NSString stringWithFormat: @"select ID from MyPlans where planName == '%@'", sqlPlan];
-        
-        
         [self writeAddedPlan];
-        
-        
         BOOL isDone = [self.dbManagerPlansList executeQuery:query];
         
         NSString *planID = [[[self.dbManagerPlansList loadDataFromDB:queryaa]objectAtIndex:0] valueForKey:@"ID"];
         [PersistenceStorage setObject:planID andKey:@"currentPlanID"];
         
         [PersistenceStorage setObject:[PersistenceStorage getObjectForKey:@"sitName"] andKey:@"situationName"];
-        
-        
-        
-        
         if (isDone == YES)
         {
-            
-            
             MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
             hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark.png"] ];
-            
             hud.mode = MBProgressHUDModeCustomView;
-            
             hud.labelText = @"Added";
-            
             [hud show:YES];
             [hud hide:YES afterDelay:1];
-            
-            
-            
-            //   [[planListArray objectAtIndex:indexPath.row] valueForKey:@"situationName"];
-            
-            
-            
-            
         }
         else{
             NSLog(@"Error");
         }
-
+        
     }
-   }
+}
 
-//}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -220,8 +187,6 @@
     UILabel *label = (UILabel *)[cell viewWithTag:6007];
     
     label.text =[[planListArray objectAtIndex:indexPath.row] valueForKey:@"situationName"];
-    
-    //cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     return cell;
     
 }
@@ -254,44 +219,10 @@
     
 
     if (buttonIndex == 1) {
-        /*    NewPlanAddedViewController *npav = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"NewPlanAddedViewController"];
-         npav.planName = [[alertView textFieldAtIndex:0] text];
-         [self writeToMyPlans:npav.planName];
-         [self.navigationController pushViewController:npav animated:YES];
-         
-         */
-        
-        
-        
-
-        
-        
-      //  NewPlanAddedViewController *npav = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"NewPlanAddedViewController"];
-
-        
-        
-   //     PlansViewController *npav = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"PlansViewController"];
-       // npav.planName = [[alertView textFieldAtIndex:0] text];
-        
-        
-        
-        
-        
-        
         NSString* planName = [[alertView textFieldAtIndex:0] text];
         
         [self writeToMyPlans:planName];
         [self performSelector:@selector(navigateToNewPlanAdded:) withObject:planName afterDelay:1.1];
-        //[self.navigationController pushViewController:npav animated:NO];
-        
-        //[self writeAddedPlan];
-        
-        
-        
-        
-        //    NSString *kPlanName = [NSString stringWithFormat: @"Lorem ipsum %@", text;
-        
-        
     }
 }
 
@@ -312,62 +243,12 @@
     
     
     [PersistenceStorage setObject:sitName andKey:@"sitName"];
-    
-    
-    
-    
-    //NSString *kSituationName = [NSString stringWithFormat: @"Lorem ipsum %@", [[planListArray objectAtIndex:indexPath.row] valueForKey:@"situationName"]];];
-    
-    
-    //To reuse while writing log
-    // End
-    
-    
-    
-    
     UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:@"Add Plan"  message:strRR delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"OK",nil];
     [alertView setAlertViewStyle:UIAlertViewStylePlainTextInput];
-    
-    
-    //[alertView textFieldAtIndex:0].text=@"Hello";
-    
-    
-    
-    //    [[alertView textFieldAtIndex:0].text=[planListArray objectAtIndex:indexPath.row] valueForKey:@"situationName"] ;
-    
     [[alertView textFieldAtIndex:0] setText:[[planListArray objectAtIndex:indexPath.row] valueForKey:@"situationName"]];
-    
     
     [alertView show];
     
-    
-    
-    
-    
-    
-    
-    
-    
-    // [NSString stringWithFormat:@"%@%@",@"Create a new plan for situation ", [[planListArray objectAtIndex:indexPath.row] valueForKey:@"situationName"]];
-    
-    
-    
-    /*
-     UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:@"Tinnitus Coach"  message:@"Create a new plan" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Create Plan",nil];
-     [alertView setAlertViewStyle:UIAlertViewStylePlainTextInput];
-     [alertView show];
-     */
-    
-    
-    
-    
-    
-    /*
-     
-     NewPlanAddedViewController *npav = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"NewPlanAddedViewController"];
-     npav.planName = [[planListArray objectAtIndex:indexPath.row] valueForKey:@"situationName"];
-     [self writeToMyPlans:[[planListArray objectAtIndex:indexPath.row] valueForKey:@"situationName"]];
-     [self.navigationController pushViewController:npav animated:YES];*/
 }
 
 -(void)writeAddedPlan
@@ -387,11 +268,6 @@
     NSString *type = @"Plan";
     
     NSString *str = @"Created Plan";
-    
-    
-    
-    
-    
     NSString   *finalStr = [NSString stringWithFormat:@"\r%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@",dateString,timeString,type,str,nil,[PersistenceStorage getObjectForKey:@"newPlanName"],[PersistenceStorage getObjectForKey:@"sitName"],nil,nil,nil,nil,nil,nil,nil,nil,nil];
     
     NSFileManager *fileManager = [NSFileManager defaultManager];

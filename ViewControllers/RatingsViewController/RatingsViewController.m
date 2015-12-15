@@ -23,19 +23,15 @@
 
 
 -(void)dismissKeyboard {
-  //  [self.view endEditing:YES];}
+
 }
 
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-      //self.title = @"Your Thoughts";
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]
                                    initWithTarget:self
                                    action:@selector(dismissKeyboard)];
-    
- //   [self.view addGestureRecognizer:tap];
-    // Do any additional setup after loading the view.
     [self setUpView];
 
     UIView *titleView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 64)];
@@ -48,15 +44,9 @@
     
     titleLabel.font = pallete.secondObj;
     titleLabel.textColor = pallete.firstObj;
-
-    
     titleLabel.textAlignment = NSTextAlignmentCenter;
-    
-    //titleLabel.textColor = [UIColor colorWithHexValue:@"797979"];
     titleLabel.backgroundColor = [UIColor clearColor];
     titleLabel.text = @"Your Thoughts";
-    
-    
     UIView *line = [[UIView alloc]initWithFrame:CGRectMake(0, titleView.frame.size.height - 1, 320, 1)];
     
     line.backgroundColor = [UIColor colorWithRed:0.0/255.0 green:0.0/255.0 blue:0.098/255.0 alpha:0.22];;
@@ -67,32 +57,25 @@
     
     [self.view addSubview:titleView];
 
-   
-
 }
+
 
 -(void)viewDidDisappear:(BOOL)animated
 {
-   // [PersistenceStorage setObject:@"none" andKey:@"SamplerType"];
-
+   //
 }
 
+
 - (void)viewWillAppear:(BOOL)animated
-{//[super viewWillAppear:animated];
-    
-    //self.title = @"Your Thoughts";
-//[self.navigationItem setTitle:@"Your Thoughts"];
-    
+{
     [self.tabBarController.tabBar setHidden:YES];
 }
 
+
 - (void)viewWillDisappear:(BOOL)animated
-{[self.tabBarController.tabBar setHidden:NO];
+{
+    [self.tabBarController.tabBar setHidden:NO];
 }
-
-
-
-
 
 
 -(void)setUpView{
@@ -100,104 +83,65 @@
     tableArray = @[@{@"name":@"Repeat this exercise",@"image":@"refresh37"},@{@"name":@"Learn about this exercise",@"image":@"lightbulb32"},@{@"name":@"Try another exercise",@"image":@"archive32"},@{@"name":@"Return Home",@"image":@"home32"}];
     
     UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(24, 85, self.view.frame.size.width -20, 45)];
-   
- 
     Pair *pallete = [Utils getColorFontPair:eCFS_PALLETE_3];
     
     label.font = pallete.secondObj;
     label.textColor = pallete.firstObj;
-
+    
     label.text = @"How helpful was the sound? (select one)";
-   
+    
     if (![[PersistenceStorage getObjectForKey:@"SamplerType"] isEqual:  @"Sounds"])
     {
-
-    if ([[PersistenceStorage getObjectForKey:@"exerciseName"] isEqual:  @"Deep Breathing"]) {
-       
-        label.text = @"How helpful was the exercise? \n(select one)";
-        [PersistenceStorage setObject:@"Deep Breathing" andKey:@"skillDetail1"];
-
+        
+        if ([[PersistenceStorage getObjectForKey:@"exerciseName"] isEqual:  @"Deep Breathing"]) {
+            
+            label.text = @"How helpful was the exercise? \n(select one)";
+            [PersistenceStorage setObject:@"Deep Breathing" andKey:@"skillDetail1"];
+            
+        }
+        
+        
+        
+        if ([[PersistenceStorage getObjectForKey:@"exerciseName"] isEqual:  @"Imagery"]) {
+            label.text = @"How helpful was the exercise? \n(select one)";
+            [PersistenceStorage setObject:@"Imagery" andKey:@"skillDetail1"];
+            
+        }
         
     }
-    
-    
-    
-    if ([[PersistenceStorage getObjectForKey:@"exerciseName"] isEqual:  @"Imagery"]) {
-        label.text = @"How helpful was the exercise? \n(select one)";
-        [PersistenceStorage setObject:@"Imagery" andKey:@"skillDetail1"];
-
-    }
-    
-    }
-    
-//    if ([[PersistenceStorage getObjectForKey:@"skillName"] isEqual:  @"Using Sound"]) {
-//        label.text = @"How helpful was the skill? \n(select one)";
-//        [PersistenceStorage setObject:@"Using Sound" andKey:@"skillDetail1"];
-//
-//    }
-//    
-
-    
-
-
-
-
-
-
-
     label.numberOfLines = 2;
-    /*label.font = [UIFont fontWithName:@"Helvetica Neue" size:15.0];*/
-
+    
     [self.view addSubview:label];
     
-     ratingView = [[ASStarRatingView alloc]initWithFrame:CGRectMake(5, 130, 315, 80)];
+    ratingView = [[ASStarRatingView alloc]initWithFrame:CGRectMake(5, 130, 315, 80)];
     [ratingView setMaxAllowedRating:5.0];
     [ratingView setMinAllowedRating:0.0];
     [ratingView setDelegate:self];
     [self.view addSubview:ratingView];
-    
-    
     UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(24, 224, 300, 1)];
     lineView.backgroundColor = [UIColor colorWithRed:0.0/255.0 green:0.0/255.0 blue:0.098/255.0 alpha:0.22];
     [self.view addSubview:lineView];
- 
-    
-    
     UILabel *addlabel = [[UILabel alloc]initWithFrame:CGRectMake(24, 243, self.view.frame.size.width -20, 45)];
     addlabel.text = @"Additional comments or thoughts \n(optional):";
-    
-    
     addlabel.numberOfLines = 2;
-    
     pallete = [Utils getColorFontPair:eCFS_PALLETE_3];
-    
     addlabel.font = pallete.secondObj;
     addlabel.textColor = pallete.firstObj;
-    
     [self.view addSubview:addlabel];
-    
-   self.textView = [[UITextView alloc]initWithFrame:CGRectMake(24, addlabel.frame.origin.y + addlabel.frame.size.height + 22 ,272, 110)];
+    self.textView = [[UITextView alloc]initWithFrame:CGRectMake(24, addlabel.frame.origin.y + addlabel.frame.size.height + 22 ,272, 110)];
     self.textView.layer.borderWidth = 1.0;
     self.textView.layer.borderColor = [UIColor colorWithRed:0.0/255.0 green:0.0/255.0 blue:0.098/255.0 alpha:0.22].CGColor;
     [self.textView setDelegate:self];
     [self.view addSubview:self.textView];
-    
-    
-    
-    
     button = [[UIButton alloc]initWithFrame:CGRectMake(114, self.textView.frame.origin.y + self.textView.frame.size.height + 20, 84, 38)];
     [button setTitle:@"Submit" forState:UIControlStateNormal];
     button.titleLabel.textColor = [UIColor whiteColor];
     button.titleLabel.font = [UIFont fontWithName:@"Helvetica Neue" size:16.0];
     [button addTarget:self action:@selector(buttonTapped) forControlEvents:UIControlEventTouchUpInside];
     [button setBackgroundColor:[Utils colorWithHexValue:BUTTON_GRAY_COLOR_HEX_VALUE]];
-    
-    
-
     button.layer.cornerRadius = 3.0f;
     [button setUserInteractionEnabled:NO];
     [self.navigationItem setHidesBackButton:YES];
-    
     [self.view addSubview:button];
     
 }
@@ -213,32 +157,30 @@
     return YES;
 }
 
+
 -(void)buttonTapped{
-    
-    
     [PersistenceStorage setObject:@"RatingsVC" andKey:@"Referer"];
-
+    
     [self dismissModalViewControllerAnimated:YES];
-
+    
     if ([[PersistenceStorage getObjectForKey:@"skillDetail1"] isEqualToString:@"Timer for Practice"])
-        
-    {        [self writeTimerSoundSelected];
-}
+    {
+        [self writeTimerSoundSelected];
+    }
     else
         
     {
         [self writeWithRating];
+        
+    }
     
 }
-
- }
 
 
 
 
 -(void)writeTimerSoundSelected
 {
-    
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0];
     NSString *documentTXTPath = [documentsDirectory stringByAppendingPathComponent:@"TinnitusCoachUsageData.csv"];
@@ -276,17 +218,10 @@
 
 
 -(void)writeWithRating{
-     NSURL *path = [self getUrlOfFiles:@"TinnitusCoachUsageData.csv"];
-    
-    
-    
+    NSURL *path = [self getUrlOfFiles:@"TinnitusCoachUsageData.csv"];
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0];
     NSString *documentTXTPath = [documentsDirectory stringByAppendingPathComponent:@"TinnitusCoachUsageData.csv"];
-    
-    
-    
-    
     NSString *eventString = [NSString stringWithFormat:@"Date,Time,Event type,EventDetail1,EventDetails2,Plan-Section name,Plan Situation,Skill-Section name,Skill-Section Detail,Skill-Section2,Skill-Section3,Rating,Feedback"];
     NSString *writedStr = [[NSString alloc]initWithContentsOfURL:path encoding:NSUTF8StringEncoding error:nil];
     NSDate *date = [NSDate date];
@@ -320,40 +255,11 @@
         default:
             break;
     }
-    
-    
-//[PersistenceStorage getObjectForKey:@"soundName"]
-  //  [PersistenceStorage getObjectForKey:@"soundURL"]]
-    
-    
-    
     NSString *s = self.textView.text;
-    
-    
     NSString * newString = [s stringByReplacingOccurrencesOfString:@"," withString:@"|"];
-
     NSLog(@"SKILL DETAIL%@",self.skillDetail);
-    
-    
     NSString *str = [[NSNumber numberWithFloat:ratingView.rating] stringValue];
-//    NSString   *finalStr = [NSString stringWithFormat:@"\r%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@",dateString,timeString,type,@"Provided Rating",nil,nil,nil,[PersistenceStorage getObjectForKey:@"SamplerType"], [PersistenceStorage getObjectForKey:@"skillDetail1"],nil,nil,nil,nil,nil,ratingName,newString];
-  
     NSString   *finalStr = [NSString stringWithFormat:@"\r%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@",dateString,timeString,type,@"Provided Rating",nil,nil,nil,[PersistenceStorage getObjectForKey:@"SamplerType"], [PersistenceStorage getObjectForKey:@"skillDetailSampler"],nil,nil,nil,nil,nil,ratingName,newString];
-    
-    
-    
-    
- //   writedStr = [finalStr stringByAppendingString:eventString];
- //   writedStr = [writedStr stringByAppendingString:finalStr];
-    
-  /*  if([[NSFileManager defaultManager] fileExistsAtPath:[NSString stringWithContentsOfURL:path encoding:NSUTF8StringEncoding error:nil]])
-    {
-        [[NSFileManager defaultManager] removeItemAtURL:path error:nil];
-    }
-    [writedStr writeToURL:path atomically:YES encoding:NSStringEncodingConversionAllowLossy error:nil];
-
-   */
-    
     NSFileManager *fileManager = [NSFileManager defaultManager];
     if(![fileManager fileExistsAtPath:documentTXTPath])
     {
@@ -364,10 +270,10 @@
         NSFileHandle *myHandle = [NSFileHandle fileHandleForWritingAtPath:documentTXTPath];
         [myHandle seekToEndOfFile];
         [myHandle writeData:[finalStr dataUsingEncoding:NSUTF8StringEncoding]];
- 
+        
     }
-   
-   }
+    
+}
 
 
 -(void)showTable{
@@ -380,16 +286,11 @@
     }
     
     self.table = [[UITableView alloc]initWithFrame:CGRectInset(self.view.frame, 20, 170) style:UITableViewStyleGrouped];
-    //[self.table setBackgroundColor:[UIColor redColor]];
     [self.table setDelegate:self];
     [self.table setDataSource:self];
     [self.view addSubview:self.table];
 }
 
-//-(void)viewWillAppear:(BOOL)animated{
-  //  [super viewWillAppear:animated];
-    
-//}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -464,62 +365,32 @@
 
 #pragma mark UITableViewDelegate
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    
-    
     switch (indexPath.row) {
         case 0:{
-            
-
-            
             [self.navigationController popViewControllerAnimated:YES];
-
+            
         }
-        
             break;
         case 1:{
-            
-            
             NookUsingSoundViewControllerOne *samplerView = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"NookUsingSoundViewControllerOne"];
             [self.navigationController pushViewController:samplerView animated:NO];
-
             
-           
         }
-            
             break;
         case 2:{
-//            SamplerViewController *samplerView = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"SamplerViewController"];
             [self.navigationController popToRootViewControllerAnimated:YES];
         }
-            
             break;
-        
+            
         case 3:{
-            
             [[self tabBarController] setSelectedIndex:0];
-
-            
-           
-/* HomeViewController *samplerView = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"HomeViewController"];
-            [self.navigationController pushViewController:samplerView animated:NO];
-     //       [self.navigationController popToRootViewControllerAnimated:YES]; */
-
         }
-            
             break;
         default:
             break;
     }
 }
 
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

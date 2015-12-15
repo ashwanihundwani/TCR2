@@ -2,7 +2,7 @@
 //  IntroPageView.m
 //  TinnitusCoach
 //
-//  Created by Ashwani Hundwani on 16/06/2015.
+//  Created by Creospan on 16/06/2015.
 //  Copyright (c) 2015 Creospan. All rights reserved.
 //
 

@@ -8,12 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
+
 @interface CTF04 : UIViewController
 @property (weak, nonatomic) IBOutlet UIImageView *pleasantActivityImageView;
 @property (weak, nonatomic) IBOutlet UIButton *learnMoreButton;
 @property (weak, nonatomic) IBOutlet UIView *secondaryView;
 @property (weak, nonatomic) IBOutlet UITableView *scheduleTableView;
-
 @property (weak, nonatomic) IBOutlet UIButton *viewIntroButton;
 
 @end

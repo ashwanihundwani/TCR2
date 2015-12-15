@@ -33,30 +33,13 @@
         [PersistenceStorage setBool:YES andKey:@"isTinnitusCoachAppFirstLaunchDone"];
         [[UIApplication sharedApplication] cancelAllLocalNotifications];
     }
-    
     [self writeSystemLogLaunched];
-    
-   
-  //  NSLog(@"00000 %@"[PersistenceStorage getObjectForKey:@"TipsActivated"]);
- 
     sleep(3);
-    
-    
     if ([application respondsToSelector:@selector(registerUserNotificationSettings:)]) {
         [application registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeAlert|UIUserNotificationTypeBadge|UIUserNotificationTypeSound categories:nil]];
-     
-    
-        
-        
     }
-    
-   
     UILocalNotification *localNotification = [launchOptions objectForKey:UIApplicationLaunchOptionsLocalNotificationKey];
-    
-   
-    
     if ([localNotification.alertBody isEqualToString:@"Tips for Sleep Feedback"])
-        
     {
         self.isLaunchWithNotification = YES;
         
@@ -66,49 +49,37 @@
             [self showTipsReminderView:^() {
                 
             }];
-        
+            
             [PersistenceStorage setObject:@"Yes" andKey:@"launchSleepTips"];
         }
         
     }
     
     else if ([localNotification.alertBody isEqualToString:@"Weekly Reminder"])
-        
     {
         NSLog(@" app launch with weekly reminder");
         self.isLaunchWithNotification = YES;
         [self showMissedWeeklyReminderView];
         [PersistenceStorage setObject:@"Yes" andKey:@"launchWeeklyReminder"];
-
-    }
-    
-    
-    
-    else if ([localNotification.alertBody length]>20)
         
+    }
+    else if ([localNotification.alertBody length]>20)
     {
         self.isLaunchWithNotification = YES;
-      //  [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
         UIAlertView *alert = [[UIAlertView alloc]   //show alert box with option to play or exit
                               initWithTitle: @"Running Skill"
                               message:localNotification.alertBody
                               delegate:self
                               cancelButtonTitle:nil
                               otherButtonTitles:@"OK",nil];
+        [alert show];
         
-        
-[alert show];
-         
     }else{
         self.isLaunchWithNotification = NO;
     }
- 
-    
     return YES;
     
-    
-    
-    }
+}
 
 
 - (void)applicationWillResignActive:(UIApplication *)application {
@@ -124,7 +95,6 @@
 - (void)applicationWillEnterForeground:(UIApplication *)application {
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
     [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
-    
     [PersistenceStorage setInteger:-1 andKey:@"HomeButtonTapped"];
     [PersistenceStorage setInteger:-1 andKey:@"TabBarButtonTapped"];
 }
@@ -133,39 +103,26 @@
 -(BOOL)tipsReminderExists
 {
     DBManager *manager = [[DBManager alloc]initWithDatabaseFileName:@"GNResoundDB.sqlite"];
-   
-    
     NSString *queryForTips = @"select * from My_Tips";
-    
     NSArray *allMyTips= [manager loadDataFromDB:queryForTips];
-    
     if ([allMyTips count] == 0){
         return NO;
     }
+    NSString *query =  @"select * from MySkillReminders where SkillName = 'Tips for Better Sleep'";
+    return ([[manager loadDataFromDB:query] count] > 0)? true : false;
     
-        
-   NSString *query =  @"select * from MySkillReminders where SkillName = 'Tips for Better Sleep'";
-
-   return ([[manager loadDataFromDB:query] count] > 0)? true : false;
-
 }
 
+
 -(BOOL)shouldShowWR{
-    
-    
     NSDate *currentDate = [NSDate date];
-    
     NSDate *savedDate = [PersistenceStorage getObjectForKey:@"WRSavedDate"];
-    
     if(!savedDate){
         return TRUE;
     }
     
     NSDateComponents *currentComponents = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear | NSCalendarUnitHour | NSCalendarUnitWeekday fromDate:currentDate];
-    
-    
     NSDateComponents *savedComponents = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear | NSCalendarUnitHour fromDate:savedDate];
-    
     if((currentComponents.weekday == 2) && (savedComponents.day < currentComponents.day))
     {
         return YES;
@@ -173,6 +130,7 @@
     
     return NO;
 }
+
 
 -(BOOL)dateChangedForTipsReminder{
     
@@ -241,8 +199,8 @@
         [PersistenceStorage setBool:YES andKey:@"shownTipsReminderToday"];
         [PersistenceStorage setObject:[NSDate date] andKey:@"tipsReminderDate"];
     }
-
- //   [self showTipsReminderView];
+    
+    //   [self showTipsReminderView];
     
     //display the sheduled notification
     NSArray *notificationArray = [application scheduledLocalNotifications];
@@ -265,27 +223,18 @@
         }
         
     }
-
+    
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     
     [self writeSystemLogExit];
-    
-    
-    
-    
-    
-    
 }
 
 
 
-
 -(void)writeSystemLogExit{
-  //  NSURL *path = [self getUrlOfFiles:@"TinnitusCoachUsageData.csv"];
-    
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0];
     NSString *documentTXTPath = [documentsDirectory stringByAppendingPathComponent:@"TinnitusCoachUsageData.csv"];
@@ -298,10 +247,10 @@
     timeFormatter.dateFormat = @"HH:mm:ss";
     NSString *timeString = [timeFormatter stringFromDate: date];
     NSString *type = @"System";
-  
+    
     NSString *str = @"App Exited";
     NSString   *finalStr = [NSString stringWithFormat:@"\r%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@",dateString,timeString,type,str,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil];
-     
+    
     NSFileManager *fileManager = [NSFileManager defaultManager];
     if(![fileManager fileExistsAtPath:documentTXTPath])
     {
@@ -318,8 +267,6 @@
 }
 
 -(void)writeSystemLogLaunched{
-    //  NSURL *path = [self getUrlOfFiles:@"TinnitusCoachUsageData.csv"];
-    
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0];
     NSString *documentTXTPath = [documentsDirectory stringByAppendingPathComponent:@"TinnitusCoachUsageData.csv"];
@@ -346,115 +293,55 @@
         NSFileHandle *myHandle = [NSFileHandle fileHandleForWritingAtPath:documentTXTPath];
         [myHandle seekToEndOfFile];
         [myHandle writeData:[finalStr dataUsingEncoding:NSUTF8StringEncoding]];
-         
+        
     }
     
 }
-
-
-
-/*
- 
- UIApplication *app = [UIApplication sharedApplication];
- NSArray *eventArray = [app scheduledLocalNotifications];
- for (int i=0; i<[eventArray count]; i++)
- {
- UILocalNotification* oneEvent = [eventArray objectAtIndex:i];
- NSDictionary *userInfoCurrent = oneEvent.userInfo;
- NSString *uid=[NSString stringWithFormat:@"%@",[userInfoCurrent valueForKey:@"uid"]];
- if ([uid isEqualToString:uidtodelete])
- {
- //Cancelling local notification
- [app cancelLocalNotification:oneEvent];
- break;
- }
- }
- 
- 
- */
 
 
 
 -(void) application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
 {
- 
+    
     NSLog(@"*****app didReceiveLocalNotification ****** ");
     
-        UIApplicationState state = [application applicationState];
-   
-   
-
+    UIApplicationState state = [application applicationState];
     if ([notification.alertBody isEqualToString:@"Tips for Sleep Feedback"])
-
     {
- 
-    if ([[PersistenceStorage getObjectForKey:@"TipsActivated"] isEqual: @"Yes"])
+        if ([[PersistenceStorage getObjectForKey:@"TipsActivated"] isEqual: @"Yes"])
+        {
+            [self showTipsReminderView:^(){
+            }];
+        }
         
-    {
-
-        [self showTipsReminderView:^(){
-        
-        
-        }];}
-    
     }
-    
-    
     else if ([notification.alertBody isEqualToString:@"Weekly Reminder"])
-        
     {
-        
-        
         [self showMissedWeeklyReminderView];
-        
-        
-        
-        
-        
-        
     }
-
-    
-    
-    
-    
     else //if ([notification.alertBody length]>20)
-    
     {
-                        [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
-            UIAlertView *alert = [[UIAlertView alloc]   //show alert box with option to play or exit
-                                                initWithTitle: @"Running Skill"
-                                               message:notification.alertBody
-                                                 delegate:self
-                                                cancelButtonTitle:nil
-                                                otherButtonTitles:@"OK",nil];
-        
+        [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
+        UIAlertView *alert = [[UIAlertView alloc]   //show alert box with option to play or exit
+                              initWithTitle: @"Running Skill"
+                              message:notification.alertBody
+                              delegate:self
+                              cancelButtonTitle:nil
+                              otherButtonTitles:@"OK",nil];
         
         [PersistenceStorage setObject:notification.alertBody andKey:@"skillDetail1"];
-
         [self writeLogNotification];
-
-        NSLog(@"NAMEooMM   %@",notification.userInfo );
-
-    //    NSLog(@"NAMEMM   %@",notification.userInfo valueForKey:@"Type"] );
-        
-        NSLog(@"NAMEMM   %@",[notification.userInfo valueForKey:@"Type"] );
-        
         [alert show];
-     
-        
-       
-
     }
-        
-    
 }
+
+
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     NSString *title = [alertView buttonTitleAtIndex:buttonIndex];
     NSLog(@"%@",title);
-  
+    
     if([title isEqualToString:@"Button 1"])
     {
         NSLog(@"Button 1 was selected.");
@@ -481,7 +368,7 @@
     mySleepsViewCotroller.dismissBlock = block;
     
     UIWindow *currentWindow = [[UIApplication sharedApplication].windows firstObject];
-   
+    
     [currentWindow.rootViewController presentViewController:mySleepsViewCotroller animated:YES completion:nil];
     
 }
@@ -522,15 +409,8 @@
 }
 
 
-
-
-
 - (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController
 {
-    
-    
-    
-    
     
 }
 
@@ -551,20 +431,14 @@
     NSString *timeString = [timeFormatter stringFromDate: date];
     NSString *type = @"Reminder";
     NSString *str = @"System Triggered Reminder";
-    
     NSString *s=[PersistenceStorage getObjectForKey:@"skillDetail1"];
-    
-
-NSString *filter1= [s stringByReplacingOccurrencesOfString:@"\n" withString:@" "];
+    NSString *filter1= [s stringByReplacingOccurrencesOfString:@"\n" withString:@" "];
     
     NSString * newString = [filter1 stringByReplacingOccurrencesOfString:@"," withString:@"|"];
     
     NSString   *finalStr = [NSString stringWithFormat:@"\r%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@",dateString,timeString,type,str,nil,nil,nil,nil,newString,nil,nil,nil,nil,nil,nil,nil];
     
     [PersistenceStorage setObject:nil andKey:@"skillDetail1"];
-    
-    
-    
     NSFileManager *fileManager = [NSFileManager defaultManager];
     if(![fileManager fileExistsAtPath:documentTXTPath])
     {

@@ -2,7 +2,7 @@
 //  MySleepTipsVC.m
 //  TinnitusCoach
 //
-//  Created by Jiten on 02/05/15.
+//  Created by Creospan on 02/05/15.
 //  Copyright (c) 2015 Creospan. All rights reserved.
 //
 
@@ -79,8 +79,6 @@
     [dateFormatter setDateStyle:NSDateFormatterShortStyle];
     NSString *dateString = [dateFormatter stringFromDate:[NSDate date]];
     UILabel *label1 = (UILabel *)[self.view viewWithTag:900];
-
-    
     label1.text = [NSString stringWithFormat:@"These are the sleep tips selected by you to use today, %@. You can always change the list.", dateString];
     
 }
@@ -112,12 +110,9 @@
     [newTipButton setBackgroundColor:[UIColor colorWithRed:0.0/255.0 green:122.0/255.0 blue:255.0/255.0 alpha:1]];
     newTipButton.layer.cornerRadius = 5.0f;
     [newTipButton addTarget:self action:@selector(onClickNewTipButton) forControlEvents:UIControlEventTouchUpInside];
-    
     nomatchesView.hidden = YES;
     [nomatchesView addSubview:matchesLabel];
     [nomatchesView addSubview:newTipButton];
-    
-    
     [self.tableViewOutlet insertSubview:nomatchesView belowSubview:self.tableViewOutlet];
 }
 
@@ -196,9 +191,6 @@
     
     
     [self.navigationController popToViewController:[viewControllers objectAtIndex:[viewControllers count]-3] animated:NO];
-    
-    //NewPlanAddedViewController *npav = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"NewPlanAddedViewController"];
-    //[self.navigationController :npav animated:YES];
 }
 
 
@@ -212,10 +204,6 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    //    if(_numOfTips == nil)
-    //    {
-    //        return 0;
-    //    }
     if(_numOfTips && [_numOfTips count] > 0)
     {
         [nomatchesView setHidden:YES];
@@ -236,11 +224,6 @@
         return 287;
     else
         return 41;
-    //if(_numOfTips && [_numOfTips count] > 0)
-    //return 287;
-    
-    //else
-    //  return 0;
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -264,18 +247,12 @@
     NSString *tipName = [_numOfTips objectAtIndex:indexPath.section-1];
     if([_allMyTipsDetailDict valueForKey:tipName])
     {
-        //        NSString *tipNmaeStr = [tipName  stringByReplacingOccurrencesOfString:@" " withString:@""];
         NSDictionary *tipsDetailsDict = [[_allMyTipsDetailDict valueForKey:tipName] objectAtIndex:indexPath.row];
-        
         [cell.textLabel setFont:[UIFont systemFontOfSize:14.0f]];
         [cell.textLabel setNumberOfLines:0];
         [cell.textLabel sizeToFit];
         cell.textLabel.text = [tipsDetailsDict valueForKey:@"category"];
     }
-    
-    
-    
-    
     return cell;
 }
 
@@ -283,6 +260,7 @@
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
+
 
 #pragma mark Database Transaction
 -(NSMutableDictionary *)gettingMyTips
@@ -293,6 +271,7 @@
     
     return [self setAllTipsDetails:allMyTips];
 }
+
 -(NSMutableDictionary *)setAllTipsDetails:(NSArray *)allMyTips
 {
     NSMutableArray *allFilteredTipsArray = [NSMutableArray new];
@@ -305,10 +284,6 @@
     for (NSDictionary *myTips in allMyTips) {
         NSString *tipeID = [myTips valueForKey:@"tipsTypeID"];
         NSString  *tipeCatId = [myTips valueForKey:@"tipsTypeCategoryID"];
-        //        NSPredicate *predicate = [NSPredicate predicateWithFormat:[NSString stringWithFormat:@"SELF.tipsTypeID ==%@ AND SELF.ID == %@",[myTips valueForKey:@"tipsTypeID"],[ myTips valueForKey:@"tipsTypeCategoryID"]]];
-        //
-        //        NSArray *filteredArray = [allTipsCotegories filteredArrayUsingPredicate:predicate ];
-        
         NSDictionary *catDetails;
         
         for(NSDictionary *tipscategories in allTipsCotegories){
@@ -322,9 +297,6 @@
         if (catDetails != nil) {
             
             NSString *tID = [myTips valueForKey:@"tipsTypeID"];
-            
-            //            NSPredicate *predicate = [NSPredicate predicateWithFormat:[NSString stringWithFormat:@"self.ID == %@",tID]];
-            //            NSArray *tipsArray = [allTips filteredArrayUsingPredicate:predicate];
             NSDictionary *gotTip;
             
             for (NSDictionary *tipDict in allTips){
@@ -352,11 +324,8 @@
             }
             
         }
-        
-        
-        
+
     }
-    
     
     NSMutableDictionary *welfilteredTips = [NSMutableDictionary new];
     
@@ -366,10 +335,6 @@
             
             
             NSNumber *tipsId = [myFilteredTips valueForKey:@"tipsID"];
-            
-            //                NSPredicate *predicate = [NSPredicate predicateWithFormat:[NSString stringWithFormat:@"self.tipsID == %d",[tipsId intValue]]];
-            //
-            //                NSArray *filterArray = [allFilteredTipsArray  filteredArrayUsingPredicate:predicate];
             NSMutableArray *filterArray = [NSMutableArray new];
             for (NSDictionary *fetchDict in allFilteredTipsArray)
             {
@@ -385,15 +350,12 @@
                 [welfilteredTips setValue:filterArray forKey:[myFilteredTips valueForKey:@"tip"]];
                 
             }
-            
         }
-        
-        
     }
     
     return welfilteredTips;
-    
 }
+
 
 #pragma mark - edit tips vc delegate
 -(void)didSaveTips
@@ -403,14 +365,6 @@
     [_tableViewOutlet reloadData];
 }
 
-/*
- #pragma mark - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- */
+
 
 @end

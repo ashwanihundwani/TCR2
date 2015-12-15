@@ -2,7 +2,7 @@
 //  UsingSoundFeedbackCell.h
 //  TinnitusCoach
 //
-//  Created by Amit on 9/12/15.
+//  Created by Creospan on 9/12/15.
 //  Copyright (c) 2015 Creospan. All rights reserved.
 //
 
@@ -25,12 +25,15 @@
 - (NSInteger)numberOfSectionsInFeeedbackTableView:(UITableView *)tableView inUsingSound:(id)cell;
 - (UITableViewCell *)feeedbackTableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath inUsingSound:(id)cell;
 -(NSString *)feedbackTableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section inUsingSound:(id)cell;
+
 @optional
 -(void)itemClickedForRating:(NSInteger)ratingIndex inCell:(id)cell inUsingSound:(id)cell;
 -(void)deviceItemClickedForRating:(NSInteger)rating :(NSIndexPath*)deviceIndexPath inCell:(id)cell inUsingSound:(id)cell;
 -(void)groupItemSelected:(NSIndexPath*)groupIndexPath inCell:(id)usingSoundCell;
 
 @end
+
+
 
 @interface UsingSoundFeedbackCell : UITableViewCell<UITableViewDelegate, UITableViewDataSource, FeedbackTableViewCellDelegae>
 

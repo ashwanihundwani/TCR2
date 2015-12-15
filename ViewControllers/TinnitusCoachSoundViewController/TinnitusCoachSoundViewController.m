@@ -15,7 +15,6 @@
 @interface TinnitusCoachSoundViewController ()<TinnitusCoachSoundCellProtocol>
 {
     NSArray *tinnitusSoundsArray;
-    //TinnitusCoachSoundCell *selectedCell;
     NSInteger currentPlayingIndex;
 }
 
@@ -55,24 +54,11 @@
     
     UINavigationItem *item = [[UINavigationItem alloc] initWithTitle:@"Add Tinnitus Coach Sound"];
     item.leftBarButtonItem = leftButton;
-   // item.hidesBackButton = YES;
     [myBar pushNavigationItem:item animated:NO];
-    
- //   [self.navigationItem setTitle:@"Type Tester"];
-    
-    
-    
-    
-    // Do any additional setup after loading the view.
-    
     self.tinnitusCoachSoundDescriptionLabel.text = [NSString stringWithFormat:@"Listen to the sounds below. They are %@ to many people. Are any of them %@ for you? Would you like to add any of these to your plan?", [self.soundType stringByReplacingOccurrencesOfString:@"Sound" withString:@""],[self.soundType stringByReplacingOccurrencesOfString:@"Sound" withString:@""]];
     
     self.dbManagerSoundsList = [[DBManager alloc]initWithDatabaseFileName:@"GNResoundDB.sqlite"];
     [self.tinnitusCoachSoundTableView registerNib:[UINib nibWithNibName:@"TinnitusCoachSoundCell" bundle:nil] forCellReuseIdentifier:@"TinnitusCoachSoundCell"];
-
-
-
-
     UIView *titleView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 130, 44)];
     
     titleView.backgroundColor = [Utils colorWithHexValue:NAV_BAR_BLACK_COLOR];
@@ -80,57 +66,29 @@
     UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 130, 25)];
     
     Pair *pallete = [Utils getColorFontPair:eCFS_PALLETE_1];
-    
     titleLabel.font = pallete.secondObj;
     titleLabel.textColor = pallete.firstObj;
-    
     titleLabel.textAlignment = NSTextAlignmentCenter;
-    
-    //titleLabel.textColor = [UIColor colorWithHexValue:@"797979"];
     titleLabel.backgroundColor = [UIColor clearColor];
-    
-     NSString *tinnitusCoachTitle = [NSString stringWithFormat:@"Add %@" , self.soundType];
-    
+    NSString *tinnitusCoachTitle = [NSString stringWithFormat:@"Add %@" , self.soundType];
     titleLabel.text = tinnitusCoachTitle;
-    
-    
-    
-    
-    
-    
     UILabel *situationLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 25, 130, 14)];
-    
     pallete = [Utils getColorFontPair:eCFS_PALLETE_2];
-    
     situationLabel.font = pallete.secondObj;
     situationLabel.textColor = pallete.firstObj;
-    
     situationLabel.textAlignment = NSTextAlignmentCenter;
-    
-    //titleLabel.textColor = [UIColor colorWithHexValue:@"797979"];
     situationLabel.backgroundColor = [UIColor clearColor];
     situationLabel.text = @"Tinnitus Coach Sounds";
-    
     [titleView addSubview:titleLabel];
     [titleView addSubview:situationLabel];
     
     UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:@" " style:UIBarButtonItemStyleBordered target:nil action:nil];
     self.navigationItem.backBarButtonItem = backButton;
-    
-    
     self.navigationItem.titleView = titleView;
-
-    
-    
     pallete = [Utils getColorFontPair:eCFS_PALLETE_3];
     
-    
-
-
-
-
-
 }
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -147,7 +105,7 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [self.tabBarController.tabBar setHidden:YES];
-
+    
     [self loadTinnitusSounds];
     
 }
@@ -157,26 +115,17 @@
 {
     [self.audioPlayer stop];
     [self.tabBarController.tabBar setHidden:NO];
-
+    
 }
 
 -(void)viewDidDisappear:(BOOL)animated
 {
     [self.audioPlayer stop];
-
+    
 }
-
- 
-
-
-
-
-
 
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    
-    
     // [audioPlayer stop];
     
 }
@@ -186,26 +135,15 @@
 -(void)loadTinnitusSounds{
     NSString *query = [NSString stringWithFormat:@"select * from Plan_Sound_List where soundTypeID IN (select ID from Plan_Sound_Types where soundTypeName = '%@') and  ID NOT IN (select soundID from MySounds where planID==%@) ", self.soundType,[PersistenceStorage getObjectForKey:@"currentPlanID"]];
     
-    
-    
-    
-    
-  //  NSString *query = [NSString stringWithFormat:@"select * from Plan_Website_Apps where soundTypeID = %d and ID NOT IN (select websiteID from MyWebsites where planID==%@) ",soundTypeID,[PersistenceStorage getObjectForKey:@"currentPlanID"]];
-
-    
-    
-    
     // Get the results.
     if (tinnitusSoundsArray!= nil) {
         tinnitusSoundsArray = nil;
     }
     tinnitusSoundsArray = [[NSArray alloc] initWithArray:[self.dbManagerSoundsList loadDataFromDB:query]];
-    
-    
-    
     // Reload the table view.
     [self.tinnitusCoachSoundTableView reloadData];
 }
+
 
 -(NSInteger)checkCountForSoundTypeID :(NSInteger )soundTypeID
 {
@@ -217,29 +155,13 @@
     
 }
 
+
 -(void)writeToMySounds:(NSString *)soundID type:(NSString*)soundTypeID
 {
-    
     NSInteger countForSoundType = [self checkCountForSoundTypeID:[soundTypeID integerValue]];
     
     if (countForSoundType < 1000) {
-        
-        
-        //  NSString *duplicateCheck = [NSString stringWithFormat:@"SELECT count(*) from MySounds  where soundTypeID = %@ and PlanID = %@ and SoundID = %@", soundTypeID, [PersistenceStorage getIntegerForKey:@"currentGroupID"], soundID];
-        
-        //  NSString *rowCount = [self.dbManagerSoundsList loadDataFromDB:duplicateCheck];
-        
-        //NSLog(@"%@",rowCount);
-        
-        
-        
-        
         NSString *query = [NSString stringWithFormat:@"insert into MySounds ('planID', 'groupID', 'skillID', 'soundTypeID', 'soundID') values (%ld, %ld, %ld, %ld, %ld)",(long)[PersistenceStorage getIntegerForKey:@"currentPlanID"], (long)[PersistenceStorage getIntegerForKey:@"currentGroupID"], (long)[PersistenceStorage getIntegerForKey:@"currentSkillID"], (long)[soundTypeID integerValue], (long)[soundID integerValue]];
-        
-        
-        
-        
-        
         BOOL isDone = [self.dbManagerSoundsList executeQuery:query];
         if (isDone == YES)
         {
@@ -256,14 +178,18 @@
     }
 }
 
+
+
 #pragma mark - UITableViewDataSource
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     return 1;
 }
 
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return [tinnitusSoundsArray count];
 }
+
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     TinnitusCoachSoundCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TinnitusCoachSoundCell" forIndexPath:indexPath];
@@ -297,8 +223,6 @@
 
 -(void)cancelTapped
 {
-    
- 
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -318,33 +242,6 @@
     
     [hud show:YES];
     [hud hide:YES afterDelay:1];
-    
-    
-   // SoundActivitiesViewController *npsv = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"SoundActivitiesViewController"];
-    
-//    [self.navigationController pushViewController:npsv animated:YES];
-    
-   /* [self dismissViewControllerAnimated:YES completion:^{
-        
-        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-        hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark.png"] ];
-        
-        hud.mode = MBProgressHUDModeCustomView;
-        
-        hud.labelText = @"Removed";
-        
-        [hud show:YES];
-        [hud hide:YES afterDelay:1];
-        
-        
-
-        
-        //    [[NSNotificationCenter defaultCenter] postNotificationName: @"sayHelloNotification"; object: nil;];
-        
-        
-    }];
-*/
-    //  [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 -(void)navigateBack{
@@ -391,9 +288,6 @@
             selectedCell.audioPlayer = nil;
             [self.audioPlayer stop];
             [selectedCell playPauseButton].selected = NO;
-            
-            
-            //            selectedCell.progressView.progress = 0.0;
             [self playFile:argCell.soundURL];
             argCell.audioPlayer = self.audioPlayer;
             [[argCell player]  play];
@@ -418,11 +312,8 @@
             }
             
         }
-    }
-    
-    
-    
-currentPlayingIndex = argCell.addToPlanButton.tag;
+    }    
+    currentPlayingIndex = argCell.addToPlanButton.tag;
     
 }
 

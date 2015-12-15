@@ -37,9 +37,7 @@
     
     if ([[self.checkFlagArray objectAtIndex:index]boolValue]) {
         [self.checkFlagArray replaceObjectAtIndex:index withObject:[NSNumber numberWithBool:NO]];
-        //WebsitesandAppsCell *cell = [self.websitesandAppsSoundTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:index inSection:0]];
         [self.otherDevicesSoundTableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:index inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
-        
     }
     else
     {
@@ -60,9 +58,7 @@
     {
         constant = 36;
         
-        
     }
-    
     NSString *planName = [[otherDevicesSoundsArray objectAtIndex:indexPath.row] valueForKey:@"deviceName"];
     
     CGFloat labelHeight = [Utils heightForLabelForString:planName width:238 font:TITLE_LABEL_FONT];
@@ -130,8 +126,6 @@
     
     UIView *titleView = [[UIView alloc]initWithFrame:CGRectMake(0, 10, 320, 44)];
     
-    //titleView.backgroundColor = [Utils colorWithHexValue:NAV_BAR_BLACK_COLOR];
-    
     UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(60, 0, 200, 44)];
     
     Pair *pallete = [Utils getColorFontPair:eCFS_PALLETE_1];
@@ -156,8 +150,6 @@
     situationLabel.textColor = pallete.firstObj;
     
     situationLabel.textAlignment = NSTextAlignmentCenter;
-    
-    //titleLabel.textColor = [UIColor colorWithHexValue:@"797979"];
     situationLabel.backgroundColor = [UIColor clearColor];
     situationLabel.text = @"Other Devices";
     
@@ -206,16 +198,11 @@
     
     self.otherDevicesSoundDescriptionLabel.text = [NSString stringWithFormat:@"Are there other devices you own that you can use to play %@? (Example: CD player to listen to music from your own collection or to use a fan for sound.) Select and add them to your plan.",self.soundType];
     
-//    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStylePlain target:self action:@selector(addOtherDevices)];
-    
-    // Do any additional setup after loading the view.
-    
     self.dbManagerSoundsList = [[DBManager alloc]initWithDatabaseFileName:@"GNResoundDB.sqlite"];
     
     [self.otherDevicesSoundTableView registerNib:[UINib nibWithNibName:@"OtherDevicesCell" bundle:nil] forCellReuseIdentifier:@"OtherDevicesCell"];
     
     [self.otherDevicesSoundTableView registerNib:[UINib nibWithNibName:@"OtherDevicesWithCommentsCell" bundle:nil] forCellReuseIdentifier:@"OtherDevicesWithCommentsCell"];
-    // Do any additional setup after loading the view.
 }
 
 - (void)didReceiveMemoryWarning {
@@ -253,7 +240,7 @@
     
     NSInteger countForSoundType = [self checkCountForSoundTypeID:soundTypeID];
     NSCountedSet *filter = [NSCountedSet setWithArray:self.checkFlagArray];
-
+    
     
     NSOrderedSet *orderedSet = [NSOrderedSet orderedSetWithArray:otherDevicesSoundsArray];
     if ((countForSoundType + [filter countForObject:@"1"])<=100) {
@@ -267,50 +254,30 @@
                 NSString *commentForSql = [Utils getValidSqlString:comment];
                 
                 [query appendFormat:@"(%ld, %ld, %ld, %ld, %ld, '%@'),",[PersistenceStorage getIntegerForKey:@"currentPlanID"], (long)[PersistenceStorage getIntegerForKey:@"currentGroupID"], [PersistenceStorage getIntegerForKey:@"currentSkillID"], soundTypeID, (long)[[[otherDevicesSoundsArray objectAtIndex:i] valueForKey:@"ID"] integerValue], commentForSql];
+                
+            }
             
-                 }
-
         }
         NSString *newQuery = [query substringToIndex:[query length]-1];
         
         
-         BOOL isDone = [self.dbManagerSoundsList executeQuery:newQuery];
-      
-            SoundActivitiesViewController *npsv = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"SoundActivitiesViewController"];
+        BOOL isDone = [self.dbManagerSoundsList executeQuery:newQuery];
+        
+        SoundActivitiesViewController *npsv = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"SoundActivitiesViewController"];
         
         [self.navigationController pushViewController:npsv animated:YES];
         if (isDone)
-
         {
-            
-            
             [PersistenceStorage setObject:@"Added Using Sound Other Devices Option" andKey:@"actionTypeForResource"];
-             [PersistenceStorage setObject:@"Other Devices" andKey:@"skillDetail2"];
-
-            
-            
-            
-            
-           //  NSString *query = [NSString stringWithFormat:@"select * from Plan_Devices where soundTypeID = '%@' and ID IN (select deviceID from MyDevices where planID ='%@') ",[PersistenceStorage getObjectForKey:@"soundTypeID"],[PersistenceStorage getObjectForKey:@"currentPlanID"]];
-            
-            
+            [PersistenceStorage setObject:@"Other Devices" andKey:@"skillDetail2"];
             NSString *query = [NSString stringWithFormat:@"select * from Plan_Devices where ID IN (select deviceID from MyDevices where planID ='%@') ",[PersistenceStorage getObjectForKey:@"currentPlanID"]];
-            
-            
-            
             NSArray *deviceArrayList = [self.dbManagerSoundsList loadDataFromDB:query];
             NSMutableString *deviceString =[NSMutableString stringWithString:@""];
-          //  NSLog(@"%@",deviceArrayList);
-            
-            
             for(int i= 0 ;i<[deviceArrayList count];i++)
             {
-                
-                
                 [deviceString appendString:[[deviceArrayList objectAtIndex:i] valueForKey:@"deviceName"]];
                 [deviceString appendString:@"|"];
-                
-                
+
             }
             
             if ([deviceString length] > 0) {
@@ -318,12 +285,9 @@
                 outPut = [outPut substringToIndex:[outPut length] - 1];
                 NSLog(@"%@",outPut);
                 [PersistenceStorage setObject:outPut andKey:@"skillDetail3"];
-                
-                
+
             }
-            
-            
-                        [self writeModifiedResource];
+            [self writeModifiedResource];
             
             MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
             hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark.png"] ];
@@ -334,17 +298,11 @@
             
             [hud show:YES];
             [hud hide:YES afterDelay:1];
-            
-            
-            
             NSLog(@"Success");
         }
         else{
             NSLog(@"Error");
         }
-    
-    
-    
     }
     else
     {
@@ -354,6 +312,8 @@
     
     [self performSelector:@selector(navigateBack) withObject:nil afterDelay:1.1];
 }
+
+
 
 -(void)navigateBack{
     [self dismissViewControllerAnimated:YES completion:^{}];
@@ -380,8 +340,6 @@
 }
 
 -(void)loadOtherDevicesSounds{
-  //  NSString *query = [NSString stringWithFormat:@"select * from Plan_Devices"];
-    
     NSInteger soundTypeID = 0;
     if ([self.soundType isEqualToString:@"Soothing Sound"]) {
         soundTypeID = 1;
@@ -398,9 +356,6 @@
     
     NSString *query = [NSString stringWithFormat:@"select * from Plan_Devices where soundTypeID = '%@' and ID NOT IN (select deviceID from MyDevices where planID ='%@' and soundTypeID = '%@' ) ",soundTypeIdStr,[PersistenceStorage getObjectForKey:@"currentPlanID"],soundTypeIdStr];
 
-    
-    NSLog(@"%@",query)    ;
-    
     // Get the results.
     if (otherDevicesSoundsArray!= nil) {
         otherDevicesSoundsArray = nil;
@@ -425,6 +380,7 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     return 1;
 }
+
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return [otherDevicesSoundsArray count];
@@ -491,22 +447,8 @@
     }
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
-
-
 
 -(void)writeModifiedResource{
-    //  NSURL *path = [self getUrlOfFiles:@"TinnitusCoachUsageData.csv"];
-    
-    
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0];
     NSString *documentTXTPath = [documentsDirectory stringByAppendingPathComponent:@"TinnitusCoachUsageData.csv"];
@@ -521,10 +463,7 @@
     NSString *type = @"Skill";
     NSString *optionName = [PersistenceStorage getObjectForKey:@"optionName"];
     NSString *str = [PersistenceStorage getObjectForKey:@"actionTypeForResource"];
-    
     NSMutableString *strItems = [NSMutableString string];
-    
-    
     NSInteger index = 0;
     
     NSMutableArray *filteredItems = [NSMutableArray array];

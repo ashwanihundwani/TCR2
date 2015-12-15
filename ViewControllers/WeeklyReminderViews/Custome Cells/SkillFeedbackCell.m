@@ -18,10 +18,7 @@
 @implementation SkillFeedbackCell
 
 - (void)awakeFromNib {
-    // Initialization code
-    //self.secondaryView.backgroundColor = [UIColor lightGrayColor];
-    //self.secondaryView.layer.cornerRadius = 5.0;
-    //self.secondaryView.layer.masksToBounds = YES;
+
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

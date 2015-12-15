@@ -10,39 +10,11 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-     //NSURL *url = [NSURL URLWithString:fullURL];
     NSString *beasMonoPath  =[[NSBundle mainBundle]pathForResource:@"NookFAQ.html"  ofType:nil];
     NSURL *url = [NSURL URLWithString:beasMonoPath];
     self.title=@"Learning Nook";
-
-    //  NSURL *url = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"2views" ofType:@"png" inDirectory:@"www"]];
-
-    
-   //  NSString *fullURL = @"http://google.com";
- //   NSURL *url = [NSURL URLWithString:fullURL];
     NSURLRequest *requestObj = [NSURLRequest requestWithURL:url];
     [_viewWeb loadRequest:requestObj];
-    
- //   NSString *path = [[NSBundle mainBundle] bundlePath];
-  //  NSURL *baseURL = [NSURL fileURLWithPath:path];
-    //[webView loadHTMLString:htmlString baseURL:baseURL];
-    
-    
-    
-    
-// NSURL *url = [NSURL URLWithString:@"http://google.com"];
-
-    
-  //      NSURLRequest *requestObj = [NSURLRequest requestWithURL:url];
-  //   [_viewWeb loadRequest:requestObj];
-    
-    
- //
-    
-    //[self.webview loadRequest:[NSURLRequest requestWithURL:url]];
-    
-    
-    
 }
 
 - (void)didReceiveMemoryWarning
@@ -57,8 +29,6 @@
 
 
 -(void)writeVisitedPage{
-    //  NSURL *path = [self getUrlOfFiles:@"TinnitusCoachUsageData.csv"];
-    
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0];
     NSString *documentTXTPath = [documentsDirectory stringByAppendingPathComponent:@"TinnitusCoachUsageData.csv"];

@@ -21,15 +21,6 @@
     // Configure the view for the selected state
 }
 
-//-(void)onInfoTap:(id)sender
-//{
-//    if(self.otherDelegate
-//       && [self.otherDelegate respondsToSelector:@selector(didTapInformation:)])
-//    {
-//        [self.otherDelegate didTapInformation:self];
-//    }
-//}
-
 
 -(IBAction)onDeletePressed:(id)sender{
     [self.delegate onDeleteSoundItem:self];

@@ -18,10 +18,7 @@
 @implementation FeedbackDeviceTableViewCell
 
 - (void)awakeFromNib {
-    // Initialization code
-    //self.secondaryView.backgroundColor = [UIColor lightGrayColor];
-    //self.secondaryView.layer.cornerRadius = 5.0;
-    //self.secondaryView.layer.masksToBounds = YES;
+
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -37,9 +34,6 @@
     self.selectedButton.backgroundColor = [UIColor whiteColor];
     [[self.selectedButton viewWithTag:DOT_VIEW_TAG] removeFromSuperview];
     self.selectedButton = nil;
-
- 
-
 }
 
 -(void)fillbutton:(id)button{
@@ -53,14 +47,10 @@
         view.layer.cornerRadius = (btn.width - 12) / 2;
         view.layer.masksToBounds = YES;
         view.tag = DOT_VIEW_TAG;
-        
         [btn addSubview:view];
-        
         self.selectedButton.backgroundColor = [UIColor whiteColor];
         [[self.selectedButton viewWithTag:DOT_VIEW_TAG] removeFromSuperview];
-        
         self.selectedButton = btn;
-        
     }
 }
 
@@ -77,14 +67,10 @@
         view.layer.cornerRadius = (btn.width - 12) / 2;
         view.layer.masksToBounds = YES;
         view.tag = DOT_VIEW_TAG;
-        
         [btn addSubview:view];
-        
         self.selectedButton.backgroundColor = [UIColor whiteColor];
         [[self.selectedButton viewWithTag:DOT_VIEW_TAG] removeFromSuperview];
-        
         self.selectedButton = btn;
-        
     }
     
     NSLog(@"Feedback btn pressed having tag: %ld", ((UIButton*)sender).tag);

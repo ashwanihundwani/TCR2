@@ -3,7 +3,7 @@
 //  SkillDetailViewController.m
 //  TinnitusCoach
 //
-//  Created by Vikram Singh on 3/22/15.
+//  Created by Creospan on 3/22/15.
 //  Copyright (c) 2015 Creospan. All rights reserved.
 //
 
@@ -27,15 +27,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = [self.skillDict valueForKey:@"skillName"];
-    
-    
     if (![[PersistenceStorage getObjectForKey:@"shownCTFIntro"] isEqual: @"OK"])
-        
     {
-        
-        
         NSMutableArray *pageInfos = [NSMutableArray array];
-        
         IntroPageInfo *info = [[IntroPageInfo alloc] initWithimage:[UIImage imageNamed:@"Intro6image1.png"] title: @"What is \"Changing Thoughts and Feelings\" ?" description:@"Changing your thoughts can change how you feel. With this skill you learn common \"thought errors\" and how to correct them to feel better."];
         
         [pageInfos addObject:info];
@@ -104,11 +98,6 @@
     swiper.header = @"Welcome to Changing Thoughts";
     
     [self.navigationController pushViewController:swiper animated:YES];
-    
-    /*
-    ThoughtsIntroDetailViewController *siv = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"ThoughtsIntroDetailViewController"];
-    [self.navigationController pushViewController:siv animated:YES];
-     */
 
 }
 
@@ -133,9 +122,9 @@
     }
     
     [self writeAddedSkill];
-
     
-          }
+    
+}
 
 -(IBAction)addSkillToPlan:(id)sender
 {
@@ -150,8 +139,6 @@
 
 
 -(void)writeAddedSkill{
-    //  NSURL *path = [self getUrlOfFiles:@"TinnitusCoachUsageData.csv"];
-    
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0];
     NSString *documentTXTPath = [documentsDirectory stringByAppendingPathComponent:@"TinnitusCoachUsageData.csv"];
@@ -183,14 +170,5 @@
     
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

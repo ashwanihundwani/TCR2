@@ -42,37 +42,20 @@
     
     titleLabel.font = pallete.secondObj;
     titleLabel.textColor = pallete.firstObj;
-    
-    
     titleLabel.textAlignment = NSTextAlignmentCenter;
-    
-    //titleLabel.textColor = [UIColor colorWithHexValue:@"797979"];
     titleLabel.backgroundColor = [UIColor clearColor];
     titleLabel.text = @"Tinnitus Coach";
-    
-    
     UIView *line = [[UIView alloc]initWithFrame:CGRectMake(0, titleView.frame.size.height - 1, 320, 1)];
-    
     line.backgroundColor = [UIColor colorWithRed:0.0/255.0 green:0.0/255.0 blue:0.098/255.0 alpha:0.22];;
-    
     [titleView addSubview:line];
-    
     [titleView addSubview:titleLabel];
-    
     [self.view addSubview:titleView];
     [self.parentViewController.navigationController popToRootViewControllerAnimated:YES];
 
     [self requestAccessToEvents];
     [self.parentViewController.navigationController popToRootViewControllerAnimated:YES];
-    
-    
-    
-    
-    
     if (![[PersistenceStorage getObjectForKey:@"WRInitialized"] isEqual: @"Yes"])
-        
     {
-        
         NSInteger dayDiff = [Utils getNumDaysToNextMonday];
         NSCalendar *calendar = [NSCalendar currentCalendar];
         NSDateComponents *comp = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear fromDate:[NSDate date]];
@@ -106,13 +89,7 @@
         [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
         [PersistenceStorage setObject:@"Yes" andKey:@"WRInitialized"];
     }
-    
-    
-    
 
-    
-    
-    
 }
 
 - (void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item
@@ -151,14 +128,15 @@
                 NSString *labelText;
                 
                 //Event created
-                          }
+            }
         }];
     }
     
     //Device prior to iOS 6.0  *********************************************
     else{
-     }}
-              
+    }}
+
+
 -(void)setUpViews{
     
 }
@@ -236,41 +214,26 @@
     }
     self.firstLoad = FALSE;
     
-    NSLog(@"%@",[PersistenceStorage getObjectForKey:@"launchSleepTips"]);
-  //  [[UIApplication sharedApplication] cancelAllLocalNotifications];
-    
     if([[PersistenceStorage getObjectForKey:@"launchSleepTips"] isEqualToString:@"Yes"])
-        
     {
-        
         [self showTipsReminderView:^{
-            
-            
             
         }];
         
         [PersistenceStorage setObject:@"No" andKey:@"launchSleepTips"];
     }
-    
-    
-    
     if([[PersistenceStorage getObjectForKey:@"launchWeeklyReminder"] isEqualToString:@"Yes"])
-    
-    {
         
-                UIStoryboard *storyBoard = [ UIStoryboard storyboardWithName:@"Main" bundle:nil];
-                UIViewController *mySleepsViewCotroller = [storyBoard instantiateViewControllerWithIdentifier:@"WeeklyViewController"];
-                UIWindow *currentWindow = [[UIApplication sharedApplication].windows firstObject];
-                [currentWindow.rootViewController presentViewController:mySleepsViewCotroller animated:YES completion:nil];
+    {
+        UIStoryboard *storyBoard = [ UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        UIViewController *mySleepsViewCotroller = [storyBoard instantiateViewControllerWithIdentifier:@"WeeklyViewController"];
+        UIWindow *currentWindow = [[UIApplication sharedApplication].windows firstObject];
+        [currentWindow.rootViewController presentViewController:mySleepsViewCotroller animated:YES completion:nil];
         
         [PersistenceStorage setObject:@"No" andKey:@"launchWeeklyReminder"];
         
         
     }
-    
-    
-    
-    
     
     
 }
@@ -280,20 +243,10 @@
 - (IBAction)SamplerButtonTapped:(id)sender {
     [PersistenceStorage setInteger:1 andKey:@"HomeButtonTapped"];
     [[self tabBarController] setSelectedIndex:1];
-  
-    
-//    
-//    
-//    UIStoryboard *storyBoard = [ UIStoryboard storyboardWithName:@"Main" bundle:nil];
-//    UIViewController *mySleepsViewCotroller = [storyBoard instantiateViewControllerWithIdentifier:@"TipsReminder"];
-//    UIWindow *currentWindow = [[UIApplication sharedApplication].windows firstObject];
-//    [currentWindow.rootViewController presentViewController:mySleepsViewCotroller animated:YES completion:nil];
-    
-    
-    
-    
-    
+
 }
+
+
 - (IBAction)PlansButtonTapped:(id)sender {
     [PersistenceStorage setInteger:2 andKey:@"HomeButtonTapped"];
     [[self tabBarController] setSelectedIndex:2];
@@ -325,22 +278,8 @@
         [PersistenceStorage setInteger:4 andKey:@"HomeButtonTapped"];
         [[self tabBarController] setSelectedIndex:4];
     }
-//    UIStoryboard *storyBoard = [ UIStoryboard storyboardWithName:@"Main" bundle:nil];
-//    UIViewController *mySleepsViewCotroller = [storyBoard instantiateViewControllerWithIdentifier:@"WeeklyViewController"];
-//    UIWindow *currentWindow = [[UIApplication sharedApplication].windows firstObject];
-//    [currentWindow.rootViewController presentViewController:mySleepsViewCotroller animated:YES completion:nil];
-//    
-
-
 
 }
-
-
-
-
-
-
-
 
 
 
@@ -350,22 +289,5 @@
 }
 
 
-
-
-
-
-
-
-
-
-/*
- #pragma mark - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- */
 
 @end

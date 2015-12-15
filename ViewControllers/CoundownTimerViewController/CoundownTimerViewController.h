@@ -26,7 +26,6 @@
 
 @property (nonatomic, retain) UILabel *myCounterLabel;
 -(void)updateCounter:(NSTimer *)theTimer;
-//-(IBAction:(id)sender)countdownTimer;
 
 @end
 

@@ -20,22 +20,15 @@
 @property(nonatomic,strong)  UITextView *textView;
 @property(nonatomic,strong) UITableView *table;
 
-// -(IBAction)textFieldReturn:(id)sender;
-
 
 @end
 
 @implementation ActivityRatingsViewController
 
 
-
-
-
 -(void)dismissKeyboard {
-    //  [self.view endEditing:YES];
+
 }
-
-
 
 
 - (void)viewDidLoad {
@@ -54,8 +47,6 @@
     
     
     titleLabel.textAlignment = NSTextAlignmentCenter;
-    
-    //titleLabel.textColor = [UIColor colorWithHexValue:@"797979"];
     titleLabel.backgroundColor = [UIColor clearColor];
     titleLabel.text = @"Your Thoughts";
     
@@ -69,52 +60,35 @@
     [titleView addSubview:titleLabel];
     
     [self.view addSubview:titleView];
-    
-    
-    
-    
-    //    self.skillSection = [self.skillDict valueForKey:@"skillName"];
-    
     self.skillSection = [PersistenceStorage getObjectForKey:@"skillName"];
-    
-    
-    //   UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]
-    //                                initWithTarget:self
-    //                              action:@selector(dismissKeyboard)];
-    
-    //    [self.view addGestureRecognizer:tap];
-    
-    
-    
     // Do any additional setup after loading the view.
     [self setUpView];
     
-    
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{//[super viewWillAppear:animated];
 
+- (void)viewWillAppear:(BOOL)animated
+{
     [self.tabBarController.tabBar setHidden:YES];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
-{[self setView:nil];
-    
+{
+    [self setView:nil];
     [self.tabBarController.tabBar setHidden:NO];
 }
 
 
 -(void) ViewDidDisappear: (bool) animated
 {
-    [self setView:nil]; }
+    [self setView:nil];
+}
 
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     [textField resignFirstResponder]; // Dismiss the keyboard.
     // Execute any additional code
-    
     return YES;
 }
 
@@ -148,12 +122,8 @@
     
     UILabel *addlabel = [[UILabel alloc]initWithFrame:CGRectMake(24, 263, self.view.frame.size.width -20, 45)];
     addlabel.text = @"Additional comments or thoughts \n(optional):";
-    
-    
     addlabel.numberOfLines = 2;
-    
     pallete = [Utils getColorFontPair:eCFS_PALLETE_3];
-    
     addlabel.font = pallete.secondObj;
     addlabel.textColor = pallete.firstObj;
     
@@ -164,10 +134,7 @@
     self.textView.layer.borderColor = [UIColor colorWithRed:0.0/255.0 green:0.0/255.0 blue:0.098/255.0 alpha:0.22].CGColor;
     [self.textView setDelegate:self];
     [self.view addSubview:self.textView];
-    
-    
-    
-    
+
     button = [[UIButton alloc]initWithFrame:CGRectMake(114, self.textView.frame.origin.y + self.textView.frame.size.height + 20, 84, 38)];
     [button setTitle:@"Submit" forState:UIControlStateNormal];
     button.titleLabel.textColor = [UIColor whiteColor];
@@ -186,23 +153,14 @@
 -(void)buttonTapped{
     
     [PersistenceStorage setObject:@"ActivityRatingsVC" andKey:@"Referer"];
-    
-    
     [self dismissModalViewControllerAnimated:YES];
     ActivitiesViewController *samplerView = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"ActivitiesViewController"];
     [self.navigationController pushViewController:samplerView animated:NO];
     
     [self writeWithRating];
-    
-    
-    
-    
-    
-    
-    
-    
-    // [self showTable];
+
 }
+
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range
  replacementText:(NSString *)text {
@@ -217,19 +175,9 @@
 
 
 -(void)writeWithRating{
-    NSURL *path = [self getUrlOfFiles:@"TinnitusCoachUsageData.csv"];
-    
-    
-    
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0];
     NSString *documentTXTPath = [documentsDirectory stringByAppendingPathComponent:@"TinnitusCoachUsageData.csv"];
-    
-    
-    
-    
-    //  NSString *eventString = [NSString stringWithFormat:@"Date,Time,Event type,EventDetail1,EventDetails2,Plan-Section name,Plan Situation,Skill-Section name,Skill-Section Detail,Skill-Section2,Skill-Section3,Rating,Feedback"];
-    //    NSString *writedStr = [[NSString alloc]initWithContentsOfURL:path encoding:NSUTF8StringEncoding error:nil];
     NSDate *date = [NSDate date];
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
     dateFormatter.dateFormat = @"MM/dd/yy";
@@ -261,33 +209,14 @@
         default:
             break;
     }
-    //  NSString *str = [[NSNumber numberWithFloat:ratingView.rating] stringValue];
     
     NSString *s = self.textView.text;
 
     
     NSString * newString = [s stringByReplacingOccurrencesOfString:@"," withString:@"|"];
-    
-//    NSCharacterSet *doNotWant = [NSCharacterSet characterSetWithCharactersInString:@"/:,"];
-  //  s = [[s componentsSeparatedByCharactersInSet: doNotWant] componentsJoinedByString: @"C"];
-    
-    
-    
     NSString *str = @"Provided Rating";
     NSString * activityString = [[PersistenceStorage getObjectForKey:@"activityName"] stringByReplacingOccurrencesOfString:@"," withString:@"|"];
     NSString   *finalStr = [NSString stringWithFormat:@"\r%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@",dateString,timeString,type,str,nil,[PersistenceStorage getObjectForKey:@"planName"],[PersistenceStorage getObjectForKey:@"situationName"],[PersistenceStorage getObjectForKey:@"skillName"],[PersistenceStorage getObjectForKey:@"valueName"],activityString,@"Do Activity Now",nil,nil,nil,ratingName,newString];
-    
-    //   writedStr = [finalStr stringByAppendingString:eventString];
-    //   writedStr = [writedStr stringByAppendingString:finalStr];
-    
-    /*  if([[NSFileManager defaultManager] fileExistsAtPath:[NSString stringWithContentsOfURL:path encoding:NSUTF8StringEncoding error:nil]])
-     {
-     [[NSFileManager defaultManager] removeItemAtURL:path error:nil];
-     }
-     [writedStr writeToURL:path atomically:YES encoding:NSStringEncodingConversionAllowLossy error:nil];
-     
-     */
-    
     NSFileManager *fileManager = [NSFileManager defaultManager];
     if(![fileManager fileExistsAtPath:documentTXTPath])
     {
@@ -316,18 +245,11 @@
     }
     
     self.table = [[UITableView alloc]initWithFrame:CGRectInset(self.view.frame, 20, 170) style:UITableViewStyleGrouped];
-    //[self.table setBackgroundColor:[UIColor redColor]];
     [self.table setDelegate:self];
     [self.table setDataSource:self];
-    //  [self.view addSubview:self.table];
-    
     [self.view addSubview:self.table];
 }
 
-//-(void)viewWillAppear:(BOOL)animated{
-//  [super viewWillAppear:animated];
-
-//}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

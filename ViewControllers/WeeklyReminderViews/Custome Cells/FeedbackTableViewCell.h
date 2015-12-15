@@ -21,13 +21,16 @@
 - (NSInteger)numberOfSectionsInFeeedbackTableView:(UITableView *)tableView;
 - (UITableViewCell *)feeedbackTableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath;
 -(NSString *)feedbackTableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section;
+
 @optional
+
 -(void)itemClickedForRating:(NSInteger)ratingIndex inCell:(id)cell;
 -(void)deviceItemClickedForRating:(NSInteger)rating :(NSIndexPath*)deviceIndexPath inCell:(id)cell;
 -(void)deviceItemSelected:(NSIndexPath*)deviceIndexPath inCell:(id)feedbackCell;
 -(void)groupItemSelected:(id)feedbackCell;
 
 @end
+
 
 @interface FeedbackTableViewCell : UITableViewCell <UITableViewDelegate, UITableViewDataSource, FeedBackDeviceTableViewCellDelegate>
 @property (weak, nonatomic) IBOutlet UIButton *noatallButton;

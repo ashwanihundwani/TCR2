@@ -12,11 +12,6 @@
 
 - (void)awakeFromNib {
     // Initialization code
-
-    
-    
-    
-    
     self.player = [[CEPlayer alloc] init];
     self.player.delegate = self;
     
@@ -38,35 +33,10 @@
 
 - (IBAction)playPauseButton:(UIButton *)sender
 {
- /*
-    if (!_audioPlayer) {
-        NSString *path = [[NSBundle mainBundle]pathForResource:self.soundURL ofType:nil];
-        _audioPlayer = [[AVAudioPlayer alloc]initWithContentsOfURL:[NSURL URLWithString:path] error:NULL];
-    }
-  */
     if ([self.delegate respondsToSelector:@selector(didSelectPlayPauseButton:)]) {
         [self.delegate didSelectPlayPauseButton:self];
     }
-    
-    
-    //    if(sender.selected) // Shows the Pause symbol
-    //    {
-    //        sender.selected = NO;
-    //        [self.player pause];
-    //        [audioPlayer pause];
-    //
-    //    }
-    //    else    // Shows the Play symbol
-    //    {
-    //        NSString *path = [[NSBundle mainBundle]pathForResource:self.soundURL ofType:nil];
-    //        audioPlayer = [[AVAudioPlayer alloc]initWithContentsOfURL:[NSURL URLWithString:path] error:NULL];
-    //
-    //
-    //        sender.selected = YES;
-    //        [self.player play];
-    //        [audioPlayer play];
-    //
-    //    }
+
 }
 
 

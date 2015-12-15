@@ -16,8 +16,6 @@
     
     NSMutableDictionary *_allMyTipsDetailDict;
     NSMutableArray *_selectedMyTipsArray;
-
-    
     NSMutableSet *sectionViewArray;
 }
 @property (nonatomic, strong) NSMutableArray *numOfTips;
@@ -70,13 +68,8 @@
 
 -(void)onClickReturnTipsButton:(id)sender
 {
-    NSLog(@"Selected used tips are : %@",_selectedMyTipsArray);
-
-    
     UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     RatingsViewController *ratingVC = [storyBoard instantiateViewControllerWithIdentifier:@"RatingsViewController"];
-  ///     ratingVC.isFromTips = YES;
-  //  [self.navigationController pushViewController:ratingVC animated:YES];
 }
 
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
@@ -147,13 +140,6 @@
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-//    static NSString *cellIdenfier = @"CellIdentifier";
-//    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdenfier];
-//    if(cell == nil)
-//    {
-//        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIdenfier];
-//    }
-
     static NSString *cellIdentifier = @"CellIdentifier";
     EditTipsCell *cell = (EditTipsCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     if(cell == nil)
@@ -208,47 +194,15 @@
     {
         NSDictionary *tipsDetailsDict = [[_allMyTipsDetailDict valueForKey:tipName] objectAtIndex:indexPath.row];
         if ([_selectedMyTipsArray containsObject:tipsDetailsDict]) {
-            
-            //       [self deleteMyTips:categoryDetails];
             [_selectedMyTipsArray removeObject:tipsDetailsDict];
         }
         else
         {
-            //        [self insertMyTips:categoryDetails];
             [_selectedMyTipsArray addObject:tipsDetailsDict];
         }
         
     }
     [_tableViewOutlet reloadData];
-    
-    
-    /*NSDictionary *tipsDetailsDict = [allTipsArray objectAtIndex:indexPath.section-1];
-    // NSPredicate *predicate = [ NSPredicate predicateWithFormat:[NSString stringWithFormat:@"self.tipsTypeID == %d",[[tipsDetailsDict valueForKey:@"ID"] intValue]]];
-    
-    //    NSDictionary *categoryDetails =  [[allTipsCategoriesArray filteredArrayUsingPredicate:predicate] objectAtIndex:indexPath.row];
-    
-    NSMutableArray *sortArray = [NSMutableArray new];
-    for(NSDictionary *categoriesDict in allTipsCategoriesArray) {
-        
-        if ([[categoriesDict valueForKey:@"tipsTypeID"] isEqualToString:[tipsDetailsDict valueForKey:@"ID"]]) {
-            [sortArray addObject:categoriesDict];
-            
-        }
-    }
-    
-    NSDictionary *categoryDetails =  [sortArray objectAtIndex:indexPath.row];
-    if ([selectedCategories containsObject:categoryDetails]) {
-        
-        [self deleteMyTips:categoryDetails];
-    }
-    else
-    {
-        [self insertMyTips:categoryDetails];
-    }*/
-    
-    
-    
-    
     
 }
 
@@ -261,6 +215,8 @@
     
     return [self setAllTipsDetails:allMyTips];
 }
+
+
 -(NSMutableDictionary *)setAllTipsDetails:(NSArray *)allMyTips
 {
     NSMutableArray *allFilteredTipsArray = [NSMutableArray new];
@@ -273,12 +229,7 @@
     for (NSDictionary *myTips in allMyTips) {
         NSString *tipeID = [myTips valueForKey:@"tipsTypeID"];
         NSString  *tipeCatId = [myTips valueForKey:@"tipsTypeCategoryID"];
-        //        NSPredicate *predicate = [NSPredicate predicateWithFormat:[NSString stringWithFormat:@"SELF.tipsTypeID ==%@ AND SELF.ID == %@",[myTips valueForKey:@"tipsTypeID"],[ myTips valueForKey:@"tipsTypeCategoryID"]]];
-        //
-        //        NSArray *filteredArray = [allTipsCotegories filteredArrayUsingPredicate:predicate ];
-        
         NSDictionary *catDetails;
-        
         for(NSDictionary *tipscategories in allTipsCotegories){
             if ([tipeCatId isEqualToString:[tipscategories valueForKey:@"ID"]] && [ tipeID isEqualToString:[tipscategories valueForKey:@"tipsTypeID"]]) {
                 
@@ -290,9 +241,6 @@
         if (catDetails != nil) {
             
             NSString *tID = [myTips valueForKey:@"tipsTypeID"];
-            
-            //            NSPredicate *predicate = [NSPredicate predicateWithFormat:[NSString stringWithFormat:@"self.ID == %@",tID]];
-            //            NSArray *tipsArray = [allTips filteredArrayUsingPredicate:predicate];
             NSDictionary *gotTip;
             
             for (NSDictionary *tipDict in allTips){
@@ -313,16 +261,9 @@
                 NSNumber *myTipsID = [NSNumber numberWithInt:[[myTips valueForKey:@"ID"] intValue]];
                 
                 NSDictionary *tipsDetailDict = [ NSDictionary dictionaryWithObjects:@[myTipsID,tipsID,strTipName,strTipCategoryText] forKeys:@[@"ID",@"tipsID",@"tip",@"category"]];
-                
-                
                 [allFilteredTipsArray addObject:tipsDetailDict];
-                
             }
-            
         }
-        
-        
-        
     }
     
     
@@ -331,13 +272,7 @@
     for (NSDictionary *myFilteredTips in allFilteredTipsArray)
     {
         if (![[welfilteredTips allKeys] containsObject:[myFilteredTips valueForKey:@"tip"]]) {
-            
-            
             NSNumber *tipsId = [myFilteredTips valueForKey:@"tipsID"];
-            
-            //                NSPredicate *predicate = [NSPredicate predicateWithFormat:[NSString stringWithFormat:@"self.tipsID == %d",[tipsId intValue]]];
-            //
-            //                NSArray *filterArray = [allFilteredTipsArray  filteredArrayUsingPredicate:predicate];
             NSMutableArray *filterArray = [NSMutableArray new];
             for (NSDictionary *fetchDict in allFilteredTipsArray)
             {
@@ -351,12 +286,9 @@
             
             if (filterArray.count > 0) {
                 [welfilteredTips setValue:filterArray forKey:[myFilteredTips valueForKey:@"tip"]];
-                
             }
             
         }
-        
-        
     }
     
     return welfilteredTips;

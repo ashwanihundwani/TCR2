@@ -161,8 +161,6 @@
     titleLabel.textColor = pallete.firstObj;
     
     titleLabel.textAlignment = NSTextAlignmentCenter;
-    
-    //titleLabel.textColor = [UIColor colorWithHexValue:@"797979"];
     titleLabel.backgroundColor = [UIColor clearColor];
     titleLabel.text = [PersistenceStorage getObjectForKey:@"valueName"];
     
@@ -196,7 +194,6 @@
     [self.activityTableView registerNib:[UINib nibWithNibName:@"ActivityCell" bundle:nil] forCellReuseIdentifier:@"ActivityCell"];
     [self.activityTableView setDataSource:self];
     [self.activityTableView setDelegate:self];
-    //    [self.activityTableView setBackgroundColor:[UIColor lightGrayColor]];
     [self loadData];
 }
 
@@ -204,12 +201,6 @@
     self.manager = [[DBManager alloc]initWithDatabaseFileName:@"GNResoundDB.sqlite"];
     
     NSString *query = [NSString stringWithFormat:@"SELECT * FROM Plan_Activities LEFT OUTER  JOIN myReminders ON Plan_Activities.ActivityName = MyReminders.ActName and MyReminders.PlanName = '%@' where valueName IS '%@' order by  CreatedDate DESC",[Utils getValidSqlString:[PersistenceStorage getObjectForKey:@"planName"]],[PersistenceStorage getObjectForKey:@"valueName"]];
-    
-    
-    
-    
-    
-    
     // Get the results.
     if (activityArray!= nil) {
         activityArray = nil;
@@ -218,44 +209,22 @@
     
     
     NSString *queryFav = [NSString stringWithFormat:@"SELECT * FROM Plan_Activities  LEFT OUTER  JOIN myReminders ON Plan_Activities.ActivityName = MyReminders.ActName  inner join MyActivities on Plan_Activities.ID=MyActivities.activityID where MyActivities.planID = %@  order by  CreatedDate DESC",[PersistenceStorage getObjectForKey:@"currentPlanID"]];
-    
-    
-    
-    
-    //  LEFT OUTER  JOIN myReminders ON Plan_Activities.ActivityName = MyReminders.ActName  where valueName IS '%@' order by  CreatedDate DESC",[PersistenceStorage getObjectForKey:@"valueName"]
-    
-    
     // Get the results.
     if (favoritesArray!= nil) {
         favoritesArray = nil;
     }
     favoritesArray = [[NSArray alloc] initWithArray:[self.manager loadDataFromDB:queryFav]];
     // Reload the table view.
-    
-    
-    // NSLog(@"FAV ARRAY %@",favoritesArray);
-    //   NSLog(@"FAV ARRAY %@",activityArray);
-    
-    // Reload the table view.
     [self.activityTableView reloadData];
 }
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    //[self setUpView];
-    
-    //  [self.activityTableView reloadData];
-    //[self loadData];
 }
 
 
 
-
-
-
 -(void)viewWillDisAppear:(BOOL)animated{
-    
-    
     
     
 }
@@ -263,31 +232,13 @@
 
 -(void)viewDidAppear:(BOOL)animated{
     [self setUpView];
-    //  [self.activityTableView reloadData];
-    
-    // [self loadData];
-    
-    // NSLog(@"Did appear");
-    
-    
     UILabel *firstLabel = (UILabel *)[self.view viewWithTag:200];
-    
     firstLabel.text = [PersistenceStorage getObjectForKey:@"valueDescription"];
-    
-    
-    
     self.title = [PersistenceStorage getObjectForKey:@"valueName"];
     if ([[PersistenceStorage getObjectForKey:@"Referer"] isEqual: @"DoingActivityVC"]) {
         ActivityRatingsViewController *ratingsView = [[UIStoryboard storyboardWithName:@"Main"bundle:nil]instantiateViewControllerWithIdentifier:@"ActivityRatingsViewController"];
-        
-        //ratingsView.skillSection = @"Sounds";
-        //  ratingsView.skillDetail = self.name;
-        
-        //[self.navigationController pushViewController:ratingsView animated:YES];
         [self.navigationController presentModalViewController:ratingsView animated:YES];
     }
-    
-    
     if ([[PersistenceStorage getObjectForKey:@"Referer"] isEqual: @"ActivityRatingsVC"]) {
         NSString *actionSheetTitle = @"Where would you like to go now?"; //Action Sheet Title
         NSString *other0 = @"Repeat This Skill"; //Action Sheet Button Titles
@@ -304,30 +255,18 @@
                                       otherButtonTitles:other0, other1, other2, other3, nil];
         
         [actionSheet showInView:self.view];
-        
-        
-        
-        
         [PersistenceStorage setObject:@"OK" andKey:@"Referer"];
-        
     }
-    
     if([PersistenceStorage getBoolForKey:@"NewUserDefinedActivityAdded"]){
         [PersistenceStorage setBool:NO andKey:@"NewUserDefinedActivityAdded"];
         //show hUD
         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark.png"] ];
-        
         hud.mode = MBProgressHUDModeCustomView;
-        
         hud.labelText = @"Added Activity";
-        
         [hud show:YES];
         [hud hide:YES afterDelay:1];
     }
-    
-    
-    
     
 }
 
@@ -337,18 +276,9 @@
 {
     //Get the name of the current pressed button
     NSString *buttonTitle = [actionSheet buttonTitleAtIndex:buttonIndex];
-    
-    //   NSString * theValue = [(UILabel*)[self viewWithTag:t200] text];
-    
-    
-    
-    
     if  ([buttonTitle isEqualToString:@"Repeat This Skill"]) {
         
-        PleasantActivityViewController *pa = nil;//[[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"PleasantActivityViewController"];
-        //   audioPanning.url = [dict valueForKey:@"soundURL"];
-        // audioPanning.name = [dict valueForKey:@"soundName"];
-        // audioPanning.panning = audio;
+        PleasantActivityViewController *pa = nil;//[[UIStoryboard storyboardWithName:@"Main"
         for (UIViewController* controller in [self.navigationController viewControllers]) {
             if([controller isKindOfClass:[PleasantActivityViewController class]]){
                 pa = (PleasantActivityViewController*)controller;
@@ -366,32 +296,20 @@
         NookPA *samplerView = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"NookPA"];
         [self.navigationController pushViewController:samplerView animated:NO];
     }
-    
     if ([buttonTitle isEqualToString:@"Try Another Skill"]) {
         NewPlanAddedViewController *samplerView = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"NewPlanAddedViewController"];
         [self.navigationController pushViewController:samplerView animated:YES];
         
     }
-    
-    
     if ([buttonTitle isEqualToString:@"Return Home"]) {
         [[self tabBarController] setSelectedIndex:0];
         
     }
-    
-    
-    
     if ([buttonTitle isEqualToString:@"Do Activity Now"]) {
         DoingActivityViewController *svc1 = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"DoingActivityViewController"];
         [self.navigationController pushViewController:svc1 animated:YES];
-        
-        //[self.navigationController presentModalViewController:svc1 animated:NO];
     }
-    
-    
-    
     if ([buttonTitle isEqualToString:@"Schedule Activity"]) {
-        //  [PersistenceStorage setObject:@"Yes" andKey:@"showCancelActivityButton"];
         ScheduleViewController *svc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"ScheduleViewController"];
         svc.name = strAct;
         svc.activityText = strAct;
@@ -406,12 +324,6 @@
         svc.name = strAct;
         [self.navigationController pushViewController:svc animated:YES];
     }
-    
-    
-    
-    
-    
-    
     
 }
 
@@ -541,12 +453,8 @@
         if (indexPath != nil)
         {
             NSDictionary *dict = [activityArray objectAtIndex:indexPath.row];
-            
-            
-            
             NSString *query = [NSString stringWithFormat:@"delete from  Plan_Activities where ActivityName = '%@' and cantDelete is not 1",[dict valueForKey:@"activityName"]];
             NSString *queryFav = [NSString stringWithFormat:@"delete from  MyActivities where ActivityName = '%@' and skillID = %@ and planID = %@",[dict valueForKey:@"activityName"],[PersistenceStorage getObjectForKey:@"currentSkillID"], [PersistenceStorage getObjectForKey:@"currentPlanID"]];
-            
             NSString *queryClear = [NSString stringWithFormat:@"delete from MyReminders where ActName = '%@' and PlanName = '%@' and SkillName = 'Pleasant Activities'",[dict valueForKey:@"activityName"],[Utils getValidSqlString:[PersistenceStorage getObjectForKey:@"planName"]]];
             // Execute the query.
             [self.manager executeQuery:query];
@@ -564,10 +472,6 @@
                 // now delete the entry
                 [self.manager executeQuery:queryClear];
             }
-            //[self.activityTableView reloadData];
-            
-            // If the query was successfully executed then pop the view controller.
-            //    if (self.manager.affectedRows != 0) {
             MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
             hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark.png"] ];
             
@@ -577,20 +481,9 @@
             
             [hud show:YES];
             [hud hide:YES afterDelay:1];
-            
-            
-            
         }
-        
-        //  [self.activityTableView reloadData];
-        
-        
         [self loadData];
-        
-        
-        
-        
-        
+
     } negativeBlock:^(BOOL negative) {
         
         //DO nothing
@@ -614,9 +507,6 @@
     if (indexPath != nil)
     {
         NSDictionary *dict = [activityArray objectAtIndex:indexPath.row];
-        
-        
-        
         NSString *query = [NSString stringWithFormat:@"delete from  Plan_Activities where ActivityName = '%@' and cantDelete is not 1",[dict valueForKey:@"activityName"]];
         NSString *queryFav = [NSString stringWithFormat:@"delete from  MyActivities where ActivityName = '%@' and skillID = %@ and planID = %@",[dict valueForKey:@"activityName"],[PersistenceStorage getObjectForKey:@"currentSkillID"], [PersistenceStorage getObjectForKey:@"currentPlanID"]];
         
@@ -651,27 +541,12 @@
         
         [hud show:YES];
         [hud hide:YES afterDelay:1];
-        
-        
-        
     }
-    
-    //  [self.activityTableView reloadData];
-    
     
     [self loadData];
     
     
 }
-
-
-
-
-
-
-
-
-
 
 
 
@@ -689,7 +564,6 @@
         
         NSUInteger characterCount = [[dict valueForKey:@"ScheduledDate"] length];
         if (characterCount == 0)
-            
         {
             
             UIActionSheet *sheet = [[UIActionSheet alloc]initWithTitle:[dict valueForKey:@"activityName"] delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Do Activity Now",@"Schedule Activity", nil];
@@ -715,9 +589,6 @@
         
         HomeViewController *svc1 = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"HomeViewController"];
         [self.navigationController pushViewController:svc1 animated:YES];
-        
-        //  [self.navigationController pushViewController:viewControllerToPush animated:YES];
-        //
     }
 }
 
@@ -740,9 +611,6 @@
     if (indexPath != nil)
     {
         NSDictionary *dict = [activityArray objectAtIndex:indexPath.row];
-        
-        
-        
         NSString *query = [NSString stringWithFormat:@"insert into MyActivities (valueID,activityID,isFavourite,isSchedule,timeStamp,valueName,activityName,skillID,planID) values(%i,%ld,'%d',%i,'%@','%@','%@',%ld,%ld)",0,[[dict valueForKey:@"ID"] integerValue],1,YES,dateString,[dict valueForKey:@"valueName"],[dict valueForKey:@"activityName"],[PersistenceStorage getIntegerForKey:@"currentSkillID"],[PersistenceStorage getIntegerForKey:@"currentPlanID"]];
         
         // Execute the query.
@@ -763,16 +631,11 @@
                 
                 [hud show:YES];
                 [hud hide:YES afterDelay:1];
-                
-                
+
             }
             else{
                 NSLog(@"Could not execute the query.");
             }
-            
-            
-            
-            
             [activity stopAnimating];
             // Pop the view controller.
             NSString *queryFav = [NSString stringWithFormat:@"SELECT * FROM Plan_Activities  LEFT OUTER  JOIN myReminders ON Plan_Activities.ActivityName = MyReminders.ActName  inner join MyActivities on Plan_Activities.ID=MyActivities.activityID order by  CreatedDate DESC"];
@@ -794,16 +657,6 @@
     
     
 }
-
-/*
- #pragma mark - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- */
 
 
 -(NSArray *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -829,41 +682,12 @@
 - (IBAction)addActivityTapped:(id)sender {
     AddActivityViewController *addvc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"AddActivityViewController"];
     
-    //UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:addvc];
-    // nav.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
-    //[self presentViewController:nav animated:YES completion:^{
-    
-    // }];
     
     [self.navigationController presentModalViewController:addvc animated:YES];
-    
-    
-    
-    
-    //    AddActivityViewController *controller = [[AddActivityViewController alloc] init];
-    //    controller.onCompletion = ^(id result) {
-    //        [self setUpView]
-    //        [self dismissViewControllerAnimated:YES completion:nil];
+
 }
 
 
-/*
- 
- - (IBAction)addActivityTapped:(id)sender {
- AddActivityViewController *addvc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"AddActivityViewController"];
- 
- //UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:addvc];
- // nav.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
- //[self presentViewController:nav animated:YES completion:^{
- 
- // }];
- 
- [self.navigationController presentModalViewController:addvc animated:YES];
- 
- 
- 
- }
- */
 -(NSString*)eventPAExists:(NSString*)activityName{
     //check for the Event
     //get the skill first
@@ -877,6 +701,7 @@
     }
     return calEvent;
 }
+
 
 -(void)removeEventFromCalender{
     EKEventStore *store = [[EKEventStore alloc] init];

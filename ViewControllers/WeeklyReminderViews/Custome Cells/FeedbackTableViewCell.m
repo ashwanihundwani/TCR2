@@ -19,9 +19,6 @@
 
 - (void)awakeFromNib {
     // Initialization code
-    //self.secondaryView.backgroundColor = [UIColor lightGrayColor];
-    //self.secondaryView.layer.cornerRadius = 5.0;
-    //self.secondaryView.layer.masksToBounds = YES;
     self.feedbackTableView.delegate =self;
     self.feedbackTableView.dataSource = self;
     [self.feedbackTableView registerNib:[UINib nibWithNibName:@"FeedbackDeviceTableViewCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"FeedbackDeviceCellIdentifier"];
@@ -47,7 +44,6 @@
 -(void)fillbutton:(id)button{
     UIButton *btn = (UIButton *)button;
     if(btn != self.selectedButton){
-        
         btn.backgroundColor = [Utils colorWithHexValue:BUTTON_BLUE_COLOR_HEX_VALUE];
         UIView *view = [[UIView alloc]initWithFrame:CGRectMake(6, 6, btn.width - 12, btn.height - 12)];
         
@@ -55,22 +51,18 @@
         view.layer.cornerRadius = (btn.width - 12) / 2;
         view.layer.masksToBounds = YES;
         view.tag = DOT_VIEW_TAG;
-        
         [btn addSubview:view];
-        
         self.selectedButton.backgroundColor = [UIColor whiteColor];
         [[self.selectedButton viewWithTag:DOT_VIEW_TAG] removeFromSuperview];
-        
         self.selectedButton = btn;
-        
     }
 }
+
 
 -(IBAction)feedbackBtnPressed:(id)sender{
     
     NSLog(@"Feedback btn pressed having tag: %ld", ((UIButton*)sender).tag);
     [self.delegate itemClickedForRating:((UIButton*)sender).tag inCell:self];
-    
 }
 
 -(IBAction)itemSelected:(id)sender{

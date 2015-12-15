@@ -2,8 +2,8 @@
 //  UIView+Capture.h
 //  Tradus
 //
-//  Created by Ashwani Hundwani on 15/12/13.
-//  Copyright (c) 2013 Vijay Singh. All rights reserved.
+//  Created by Creospan on 15/12/13.
+//  Copyright (c) Creospan. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>

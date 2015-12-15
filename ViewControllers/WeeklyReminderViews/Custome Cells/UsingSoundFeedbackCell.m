@@ -2,7 +2,7 @@
 //  UsingSoundFeedbackCell.m
 //  TinnitusCoach
 //
-//  Created by Amit on 9/12/15.
+//  Created by Creospan on 9/12/15.
 //  Copyright (c) 2015 Creospan. All rights reserved.
 //
 

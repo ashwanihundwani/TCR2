@@ -2,7 +2,7 @@
 //  MySleepTipsVC.h
 //  TinnitusCoach
 //
-//  Created by Jiten on 02/05/15.
+//  Created by Creospan on 02/05/15.
 //  Copyright (c) 2015 Creospan. All rights reserved.
 //
 
