@@ -10,7 +10,7 @@
         <link rel="stylesheet" type="text/css" href="af.ui.css" />
         <link rel="stylesheet" type="text/css" href="icons.css" />
         <script type="text/javascript" charset="utf-8" src="appframework.ui.min.js"></script>
-        <link rel="stylesheet" type="text/css" href="style.css" />
+        <link rel="stylesheet" type="text/css" href="style1.css" />
         <!-- phantom library, needed for XDK "legacy" container api calls -->
         <script src="intelxdk.js"></script>
         <!-- phantom library, needed for Cordova api calls -->
@@ -36,6 +36,16 @@
                               $.ui.launch();
                               });
             </script>
+        
+        <script>
+            
+            function accessedArticle(article)
+            {
+                window.location.href = "tcappweb1://" + "Accessed%20Article/"+ "Deep%20Breathing/" + article;
+                
+                //alert(window.location.href);
+            }
+        </script>
     </head>
 
         <body vlink="black" link="black" bgcolor="white">
@@ -46,15 +56,16 @@
                  <!--List View Page-->
                 <div class="panel" title="Deep Breathing" id="listview" data-footer="none" selected="true">
                     <ul class="list">
-                      <a href="#item1">
+                      <a href="#item1" onclick="accessedArticle('Introduction%20to%20%27Deep%20Breathing%27')">
                       <div class="list-div">
+                          <b>
                         <li>
                           Introduction to 'Deep Breathing'
                         </li>
                         <img class="next-chevron" align="right" src="Next-Arrow.png"></img>
                       </div>
                       </a>
-                      <a href="#item2">
+                      <a href="#item2" onclick="accessedArticle('%27Deep%20Breathing%27%20instructions%20-%20steps%201-4')">
                         <div class="list-div">
                           <li>
                           'Deep Breathing' instructions - steps 1-4
@@ -62,7 +73,7 @@
                           <img class="next-chevron" align="right" src="Next-Arrow.png"></img>
                         </div>
                         </a>
-                        <a href="#item3">
+                        <a href="#item3" onclick="accessedArticle('%27Deep%20Breathing%27%20instructions%20-%20steps%205-9')">
                         <div class="list-div">
                           <li>
                             'Deep Breathing' instructions - steps 5-9
@@ -70,7 +81,7 @@
                           <img class="next-chevron" align="right" src="Next-Arrow.png"></img>
                         </div>
                         </a>
-
+                        </b>
                     </ul>
                 </div>
 
@@ -89,7 +100,7 @@
                   <br />
                   <p> You can preview the 'Deep Breathing' video below:</p>
 
-                    <video width = 300 controls>
+                    <video width = 300 controls onplay="playVideo('Deep-Breathing-Video')">
                       <source src="DeepBreathingLesson.mp4">
                     </video>
 
@@ -128,7 +139,7 @@
                   <br />
                     <p> For videos on deep breathing, you can use the 'Deep Breathing' skill in a plan. </p>
                       <br />
-                      <video width=300 controls>
+                      <video width=300 controls onplay="playVideo('Deep-Breathing-Video')">
                       <source src="DeepBreathingLesson.mp4"></video>
 
 
@@ -155,5 +166,10 @@
 
             </div>
         </div>
+        <script>
+            function playVideo(videoName) {
+                window.location.href = "tcappweb://" + "Played-Video/" + videoName;
+            }
+        </script>
     </body>
 </html>

@@ -2,7 +2,7 @@
 //  SkillDetailViewController.m
 //  TinnitusCoach
 //
-//  Created by Vikram Singh on 3/22/15.
+//  Created by Creospan on 3/22/15.
 //  Copyright (c) 2015 Creospan. All rights reserved.
 //
 
@@ -58,8 +58,9 @@
         hud.labelText = @"Added Skill";
         
         [hud show:YES];
-        [hud hide:YES afterDelay:1];    }
+        [hud hide:YES afterDelay:1];
     }
+}
 
 
 -(IBAction)addSkillToPlan:(id)sender
@@ -69,14 +70,5 @@
 
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

@@ -2,8 +2,8 @@
 //  ViewController.m
 //  testAudioPanning
 //
-//  Created by Vikram Singh on 3/15/15.
-//  Copyright (c) 2015 Vikram Singh. All rights reserved.
+//  Created by Creospan on 3/15/15.
+//  Copyright (c) 2015 Creospan. All rights reserved.
 //
 
 #import "VideoPlayerViewController.h"
@@ -35,26 +35,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
      self.title = @"Video Player";
-    // Do any additional setup after loading the view, typically from a nib.
-   // self.tintColor= [UIColor purpleColor];
-    
-//[self initializeAudioPlayerWith:@"rain.mp3"];
-  
-    
-    
-    
-    
-    
     NSError *sessionError = nil;
-//    [[AVAudioSession sharedInstance] setDelegate:self];
-    //[[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:&sessionError];
-    
-    
-    
-    
-    
-    
-    
     NSString *str = [[NSBundle mainBundle]pathForResource:self.videoURL ofType:nil];
     NSURL *url = [NSURL fileURLWithPath:
                   str];
@@ -65,58 +46,29 @@
     
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector: @selector(playbackDidFinish:) name:MPMoviePlayerPlaybackDidFinishNotification object:self.videoPlayer];
-    
-    
-    
     self.videoPlayer.movieSourceType = MPMovieSourceTypeFile;
-    
-    // self.videoPlayer.view.frame = CGRectMake(25, self.viewForControl.frame.origin.y + self.viewForControl.frame.size.height +30, self.view.bounds.size.width-45, 120);
-    
-    
     self.videoPlayer.view.frame = CGRectMake(0,80,320,475);
-    
-    //   self.videoPlayer.view.frame = CGRectMake(5, self.viewForControl.frame.origin.y-150 + self.viewForControl.frame.size.height +30, self.view.bounds.size.width-15, 400);
-    
     [self.view addSubview:self.videoPlayer.view];
     self.audioSeekSlider.minimumValue = 0;
     self.audioSeekSlider.maximumValue = self.videoPlayer.duration;
-    
-    // Set shouldAutoplay to YES
-    
-    //[self.videoPlayer movieControlMode:MPMovieControlModeDefault];
-    
-    //    [self.videoPlayer setControlStyle:MPMovieControlStyleNone];
-    
-    
-    //[self.videoPlayer setControlStyle:MPMovieControlStyleFullscreen];
-    
     [self.videoPlayer setControlStyle:MPMovieControlStyleDefault];
-    
-    
     [self.videoPlayer prepareToPlay];
-    
-
-    
-    
-    
-    
-   
-//     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(movieFinishedCallback:) name:MPMoviePlayerPlaybackDidFinishNotification object:self.videoPlayer.moviePlayer];
 }
+
 
 -(void)viewDidAppear:(BOOL)animated
 {
-[self.videoPlayer play];
+    [self.videoPlayer play];
 }
 
 
 
 - (void)playbackDidFinish:(NSNotification*)aNotification
-{}
+{
+    [self.videoPlayer setCurrentPlaybackTime:self.videoPlayer.endPlaybackTime];
+}
 
 -(void)movieFinishedCallback:(NSNotification*)aNotification {
-    // [self dismissMoviePlayerViewControllerAnimated];
-    NSLog(@"%@",aNotification);
     NSNumber *reason = [aNotification.userInfo objectForKey:MPMoviePlayerPlaybackDidFinishReasonUserInfoKey];
     if ([reason intValue] == MPMovieFinishReasonUserExited) {
         RatingsViewController *ratingsView = [[UIStoryboard storyboardWithName:@"Main"bundle:nil]instantiateViewControllerWithIdentifier:@"RatingsViewController"];
@@ -133,8 +85,6 @@
     [super viewWillAppear:animated];
     [self.tabBarController.tabBar setHidden:YES] ;
     UIBarButtonItem *doneButton = [[UIBarButtonItem alloc]initWithTitle:@"Done" style:UIBarButtonItemStyleDone target:self action:@selector(doneTapped)];
-  //  self.navigationItem.rightBarButtonItems = @[doneButton];
-    //self.navigationItem.rightBarButtonItem = doneButton;
      self.navigationItem.rightBarButtonItem = doneButton;
 self.navigationItem.hidesBackButton = YES;
         self.soundNameLabel.text = self.name;
@@ -148,12 +98,12 @@ self.navigationItem.hidesBackButton = YES;
     }
 }
 
+
 //done button
 -(void)doneTapped{
     SkillRatingsViewController *ratingsView = [[UIStoryboard storyboardWithName:@"Main"bundle:nil]instantiateViewControllerWithIdentifier:@"SkillRatingsViewController"];
     ratingsView.skillSection = @"Sounds";
     ratingsView.skillDetail = self.name;
-   // [self presentModalViewController:ratingsView animated:YES];
  [self.navigationController pushViewController:ratingsView animated:YES];
 }
 
@@ -163,24 +113,14 @@ self.navigationItem.hidesBackButton = YES;
 -(IBAction)doneButtonTapped:(id)sender
 {
     
-    
-    
-//([PersistenceStorage getObjectForKey:@"skillDetail1"] == @"Video Introduction")
-    //    if ([labelOne.text isEqual: @"One"]) {
-    
-    
-    if    ([[PersistenceStorage getObjectForKey:@"skillDetail1"] isEqual:@"Video Introduction"])
-    
+    if([[PersistenceStorage getObjectForKey:@"skillDetail1"] isEqualToString:@"Watched Video Introduction"])
     {
-
-        [PersistenceStorage setObject:@"NoOne" andKey:@"Referer"];
+        [PersistenceStorage setObject:@"VideoIntroduction" andKey:@"Referer"];
     }
     else
-        
     {
+        [PersistenceStorage setObject:@"VideoPlayerViewController" andKey:@"Referer"];
         
-    [PersistenceStorage setObject:@"VideoPlayerViewController" andKey:@"Referer"];
-    
     }
     
     [self dismissModalViewControllerAnimated:NO];
@@ -193,41 +133,35 @@ self.navigationItem.hidesBackButton = YES;
 
 -(void)playVideo{
     if (self.videoPlayer.playbackState == MPMoviePlaybackStateStopped) {
-     
         
-    NSString *str = [[NSBundle mainBundle]pathForResource:self.videoURL ofType:nil];
-    NSURL *url = [NSURL fileURLWithPath:
-                  str];
-    self.videoPlayer.shouldAutoplay = YES;
-
-   self.videoPlayer = [[MPMoviePlayerController alloc]
-                                           initWithContentURL:url];
-    self.videoPlayer.movieSourceType = MPMovieSourceTypeFile;
-
-           
-     
-          self.videoPlayer.view.frame = CGRectMake(0,125,320,463);
         
-    [self.view addSubview:self.videoPlayer.view];
+        NSString *str = [[NSBundle mainBundle]pathForResource:self.videoURL ofType:nil];
+        NSURL *url = [NSURL fileURLWithPath:
+                      str];
+        self.videoPlayer.shouldAutoplay = YES;
+        
+        self.videoPlayer = [[MPMoviePlayerController alloc]
+                            initWithContentURL:url];
+        self.videoPlayer.movieSourceType = MPMovieSourceTypeFile;
+        self.videoPlayer.view.frame = CGRectMake(0,125,320,463);
+        
+        [self.view addSubview:self.videoPlayer.view];
         self.audioSeekSlider.minimumValue = 0;
         self.audioSeekSlider.maximumValue = self.videoPlayer.duration;
-
-    // Set shouldAutoplay to YES
+        
+        // Set shouldAutoplay to YES
         [self.videoPlayer prepareToPlay];
         [self.videoPlayer play];
-        
         [self.videoPlayer setControlStyle:MPMovieControlStyleFullscreen];
 
-       
+    }
+    else{
+        
+        [self.videoPlayer play];
         
     }
-
-else{
-    
-    [self.videoPlayer play];
-
 }
-}
+
 
 -(void)initializeAudioPlayerWith:(NSString *)fileName
 {
@@ -287,19 +221,19 @@ else{
         }
         
     }else{
-    if ([self.audioPlayer isPlaying]) {
-        [self.audioPlayer pause];
-        [self.playPauseButton setTitle:@"Play" forState:UIControlStateNormal];
-        self.updateTimer = nil;
-
-    }
-    else
-    {
-        [self.audioPlayer play];
-        [self.playPauseButton setTitle:@"Pause" forState:UIControlStateNormal];
-        self.updateTimer = [NSTimer scheduledTimerWithTimeInterval:.01 target:self selector:@selector(updateCurrentTime) userInfo:self.audioPlayer repeats:YES];
-
-    }
+        if ([self.audioPlayer isPlaying]) {
+            [self.audioPlayer pause];
+            [self.playPauseButton setTitle:@"Play" forState:UIControlStateNormal];
+            self.updateTimer = nil;
+            
+        }
+        else
+        {
+            [self.audioPlayer play];
+            [self.playPauseButton setTitle:@"Pause" forState:UIControlStateNormal];
+            self.updateTimer = [NSTimer scheduledTimerWithTimeInterval:.01 target:self selector:@selector(updateCurrentTime) userInfo:self.audioPlayer repeats:YES];
+            
+        }
     }
 }
 
@@ -317,8 +251,7 @@ else{
 -(IBAction)panSeekSliderValueChanged:(id)sender
 {
     if (self.panning == audio) {
-
-    [self.audioPlayer setPan:self.panSeekSlider.value];
+        [self.audioPlayer setPan:self.panSeekSlider.value];
     }else{
     }
 }
@@ -354,6 +287,13 @@ else{
     [super viewWillDisappear:animated];
     [self.audioPlayer stop]; // Or pause
     [self.videoPlayer stop];
+}
+
+#pragma mark -
+
+- (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag{
+    
+    NSLog(@"audio player finished playing , Update UI");
 }
 
 @end

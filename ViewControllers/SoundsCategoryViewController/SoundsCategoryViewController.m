@@ -15,6 +15,7 @@
 #import "SoundIntroDetailViewController.h"
 #import "NookUsingSoundViewControllerOne.h"
 #import <MediaPlayer/MPMediaPickerController.h>
+#import "MBProgressHUD.h"
 
 @interface SoundsCategoryViewController ()
 {
@@ -22,33 +23,122 @@
 }
 @property (weak, nonatomic) IBOutlet UITableView *soundCategoryTableView;
 @property (nonatomic, strong) DBManager *dbManager;
+@property (nonatomic) BOOL isNewOwnSoundAdded;
 @end
 
 @implementation SoundsCategoryViewController
 
+-(CGFloat)heightForIndexPath:(NSIndexPath *)indexPath
+{
+    CGFloat constant = 27;
+    
+    NSString *str = [[[[arrayOfSoundCategories objectAtIndex:indexPath.section] valueForKey:@"soundCategories"] objectAtIndex:indexPath.row] valueForKey:@"text"];
+    CGFloat labelHeight = [Utils heightForLabelForString:str width:200 font:TITLE_LABEL_FONT];
+    
+    constant += labelHeight;
+    
+    return constant;
+    
+}
+
+
+-(UIView *)tableHeaderView
+{
+    UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 30)];
+    
+    UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(22, 15, 276, 20)
+                           ];
+    
+    titleLabel.numberOfLines = 1000;
+    
+    titleLabel.backgroundColor = [UIColor clearColor];
+    view.backgroundColor = [Utils colorWithHexValue:@"EFEFF4"];
+    
+    titleLabel.text = @"Below are four different Soothing Sound sources for you to explore to come up with ideas to add to your plan.";;
+    
+    Pair *pallete = [Utils getColorFontPair:eCFS_PALLETE_2];
+    
+    titleLabel.font = pallete.secondObj;
+    titleLabel.textColor = pallete.firstObj;
+    
+    CGFloat height = [Utils heightForLabelForString:titleLabel.text width:276 font:pallete.secondObj];
+    
+    titleLabel.height = height;
+    
+    view.height += height;
+    
+    [view addSubview:titleLabel];
+    
+    return view;
+}
+
+-(void)cancel
+{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 - (void)viewDidLoad {
     
-  arrayOfSoundCategories = [NSArray arrayWithObjects:@{@"sectionText":[NSString stringWithFormat: @"Pick %@ stored on your phone:",self.soundType], @"soundCategories":@[@{@"text":[NSString stringWithFormat:@"Tinnitus Coach %@ ",self.soundType], @"image":@"TCSounds.png"}, @{@"text":@"My Own Sounds", @"image":@"MyOwn.png"} ]}, @{@"sectionText":[NSString stringWithFormat:@"Pick %@ from the Internet:", self.soundType], @"soundCategories":@[@{@"text":@"Website & Apps", @"image":@"Website.png"}]}, @{@"sectionText":[NSString stringWithFormat:@"Make a list of %@ played from other devices you own:",self.soundType], @"soundCategories":@[@{@"text":@"Other Devices", @"image":@"Devices.png"}]}, nil];
     [super viewDidLoad];
+    
+    self.soundCategoryTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    
+    self.soundCategoryTableView.tableHeaderView = [self tableHeaderView];
+    
+    self.soundCategoryTableView.backgroundColor = [UIColor whiteColor];
+    
+    UIView *titleView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 200, 44)];
+    
+    titleView.backgroundColor = [Utils colorWithHexValue:NAV_BAR_BLACK_COLOR];
+    
+    UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 200, 44)];
+    
+    Pair *pallete = [Utils getColorFontPair:eCFS_PALLETE_1];
+    
+    titleLabel.font = pallete.secondObj;
+    titleLabel.textColor = pallete.firstObj;
+    titleLabel.textAlignment = NSTextAlignmentCenter;
+    titleLabel.backgroundColor = [UIColor clearColor];
+    titleLabel.text = [NSString stringWithFormat:@"Add %@", self.soundType];
+    
+    [titleView addSubview:titleLabel];
+    
+    self.navigationItem.titleView = titleView;
+    
+    UIImageView *backImg = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 15, 20)];
+    
+    backImg.image = [UIImage imageNamed:@"Active_Back-Arrow.png"];
+    
+    UILabel *backLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 32, 60, 20)];
+    
+    [backLabel addSubview:backImg];
+    
+    backLabel.text = @"";
+       
+    pallete = [Utils getColorFontPair:eCFS_PALLETE_3];
+    
+    backLabel.font = pallete.secondObj;
+    backLabel.textColor = pallete.firstObj;
+    
+    [Utils addTapGestureToView:backLabel target:self
+                      selector:@selector(cancel)];
+    
+    UIBarButtonItem *item = [[UIBarButtonItem alloc]initWithCustomView:backLabel];
+    
+    UIBarButtonItem *negativeSpacer = [[UIBarButtonItem alloc]
+                                       initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace
+                                       target:nil action:nil];
+    negativeSpacer.width = -8;
+    
+    self.navigationItem.leftBarButtonItems = [NSArray arrayWithObjects:negativeSpacer, item, nil];
+    
+    arrayOfSoundCategories = [NSArray arrayWithObjects:@{@"sectionText":[NSString stringWithFormat: @"Pick %@ stored on your phone:",self.soundType], @"soundCategories":@[@{@"text":[NSString stringWithFormat:@"Tinnitus Coach %@ ",self.soundType], @"image":@"TCSounds.png"}, @{@"text":@"My Own Sounds", @"image":@"MyOwn.png"} ]}, @{@"sectionText":[NSString stringWithFormat:@"Pick %@ from the Internet:", self.soundType], @"soundCategories":@[@{@"text":@"Website & Apps", @"image":@"Website.png"}]}, @{@"sectionText":[NSString stringWithFormat:@"Make a list of %@ played from other devices you own:",self.soundType], @"soundCategories":@[@{@"text":@"Other Devices", @"image":@"Devices.png"}]}, nil];
     
     self.dbManager = [[DBManager alloc]initWithDatabaseFileName:@"GNResoundDB.sqlite"];
-    
-    
-/*arrayOfSoundCategories = [NSArray arrayWithObjects:@{@"sectionText":[NSString stringWithFormat: @"Pick %@ stored on your phone:",self.soundType], @"soundCategories":@[@{@"text":[NSString stringWithFormat:@"Tinnitus Coach %@ ",self.soundType], @"image":@"u353.png"}, @{@"text":@"My Own Sounds", @"image":@"iphone.png"}]}, @{@"sectionText":[NSString stringWithFormat:@"Pick %@ from the Internet:", self.soundType], @"soundCategories":@[@{@"text":@"Website & Apps", @"image":@"globe.png"}]}, @{@"sectionText":[NSString stringWithFormat:@"Make a list of %@ played from other devices you own:",self.soundType], @"soundCategories":@[@{@"text":@"Other Devices", @"image":@"u317.png"}]}, nil];
-    [super viewDidLoad];
-  */
-    
-    
-    
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]
                                                                    initWithTarget:self
                                                                   action:@selector(dismissKeyboard)];
-                                   
-                               //         [self.view addGestureRecognizer:tap];
-    
-    
-    //[self.soundCategoryTableView reloadData];
-    // Do any additional setup after loading the view.
+    self.isNewOwnSoundAdded = NO;
 }
 
 
@@ -70,11 +160,26 @@
     [self.tabBarController.tabBar setHidden:YES];
 }
 
+-(void) viewDidAppear:(BOOL)animated{
+    if(self.isNewOwnSoundAdded){
+        self.isNewOwnSoundAdded = NO;
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark.png"] ];
+        
+        hud.mode = MBProgressHUDModeCustomView;
+        
+        hud.labelText = @"Added";
+        
+        [hud show:YES];
+        [hud hide:YES afterDelay:1];
+    }
+}
+
+
 - (void)viewWillDisappear:(BOOL)animated
 {
     [self.tabBarController.tabBar setHidden:NO];
 }
-
 
 
 -(IBAction)viewIntroductionAgainClicked:(id)sender{
@@ -85,15 +190,11 @@
 
 
 
-
-
 -(IBAction)learnMoreClicked:(id)sender{
     NookUS *siv = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"NookUS"];
     [self.navigationController pushViewController:siv animated:YES];
     
 }
-
-
 
 
 
@@ -113,18 +214,56 @@
     if (cell == nil) {
         cell =  [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"Cell"];
         
-        UIImageView *accessory = [[UIImageView alloc]initWithFrame:CGRectMake(293, 15, 13, 13)];
+        UIImageView *accessory = [[UIImageView alloc]initWithFrame:CGRectMake(286, 15, 13, 13)];
         
         [accessory setImage:[UIImage imageNamed:@"Active_Next-Arrow.png"]];
         
         [cell addSubview:accessory];
         
+        UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(13, 8, 26, 26)];
+        
+        imageView.tag = 1006;
+        
+        [cell addSubview:imageView];
+        
+        UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(55 , 11, 200, 20)];
+        
+        titleLabel.numberOfLines = 1000;
+        
+        titleLabel.tag = 1007;
+        
+        Pair *pallete = [Utils getColorFontPair:eCFS_PALLETE_4];
+        
+        titleLabel.font = pallete.secondObj;
+        titleLabel.textColor = pallete.firstObj;
+        
+        [cell addSubview:titleLabel];
+        
+        UIView *separator = [[UIView alloc]initWithFrame:CGRectMake(55, 43, 298, 1)];
+        
+        separator.tag = 1234;
+        separator.backgroundColor = [Utils colorWithHexValue:@"EEEEEE"];
+        
+        [cell addSubview:separator];
     }
-    cell.textLabel.text =[[[[arrayOfSoundCategories objectAtIndex:indexPath.section] valueForKey:@"soundCategories"] objectAtIndex:indexPath.row] valueForKey:@"text"];
-    cell.textLabel.font = [UIFont boldSystemFontOfSize:14.0];
-    cell.imageView.frame = CGRectMake(5.0, 5.0, 19.0, 19.0);
-    cell.imageView.image = [UIImage imageNamed:[[[[arrayOfSoundCategories objectAtIndex:indexPath.section] valueForKey:@"soundCategories"] objectAtIndex:indexPath.row] valueForKey:@"image"]];
-  //  cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    UILabel *titleLabel = (UILabel *)[cell viewWithTag:1007];
+    
+    titleLabel.text = [[[[arrayOfSoundCategories objectAtIndex:indexPath.section] valueForKey:@"soundCategories"] objectAtIndex:indexPath.row] valueForKey:@"text"];
+    
+    CGFloat labelHeight = [Utils heightForLabelForString:titleLabel.text width:200 font:TITLE_LABEL_FONT];
+    
+    
+    titleLabel.height = labelHeight;
+    
+    UIView *separator = [cell viewWithTag:1234];
+    
+    CGFloat height = [self heightForIndexPath:indexPath];
+    
+    separator.y = height - 1;
+    
+    UIImageView *imageView = (UIImageView *)[cell viewWithTag:1006];
+    
+    imageView.image = [UIImage imageNamed:[[[[arrayOfSoundCategories objectAtIndex:indexPath.section] valueForKey:@"soundCategories"] objectAtIndex:indexPath.row] valueForKey:@"image"]];
     return cell;
     
 }
@@ -132,31 +271,50 @@
 
 #pragma mark - UITableViewDelegate
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 38.0f;
+    return [self heightForIndexPath:indexPath];
 }
+
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    return 60.0f;
+    CGFloat constant = 22;
+    
+    Pair *pallete = [Utils getColorFontPair:eCFS_PALLETE_3];
+    
+    CGFloat height = [Utils heightForLabelForString:[[arrayOfSoundCategories objectAtIndex:section] valueForKey:@"sectionText"] width:276 font:pallete.secondObj];
+    
+    return constant + height;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
-    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, self.soundCategoryTableView.frame.size.width-15, 60.0)];
-    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(10.0, 5.0, self.soundCategoryTableView.frame.size.width-15, 50.0)];
-    label.textColor = [UIColor grayColor];
-    label.font = [UIFont boldSystemFontOfSize:14.0];
-    label.numberOfLines = 0;
+    
+    UIView *videoHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 22)];
+    
+    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(22.0, 13.0, 276, 20)];
+    label.numberOfLines = 1000;
     label.text = [[arrayOfSoundCategories objectAtIndex:section] valueForKey:@"sectionText"];
+    
     Pair *pallete = [Utils getColorFontPair:eCFS_PALLETE_3];
-   // label.font = pallete.secondObj;
+    label.font = pallete.secondObj;
     label.textColor = pallete.firstObj;
     
+    CGFloat height = [Utils heightForLabelForString:label.text width:276 font:label.font];
     
+    label.height = height;
     
-    [headerView addSubview:label];
-    return headerView;
+    videoHeaderView.height += height;
+    
+    UIView *line = [[UIView alloc]initWithFrame:CGRectMake(20, videoHeaderView.frame.size.height - 1, 300, 1)];
+    
+    line.backgroundColor = [UIColor colorWithRed:0.0/255.0 green:0.0/255.0 blue:0.098/255.0 alpha:0.22];;
+    
+    [videoHeaderView addSubview:line];
+    
+    [videoHeaderView addSubview:label];
+    return videoHeaderView;
     
 }
+
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
@@ -189,22 +347,7 @@
 }
 
 - (void) OldshowMyOwnSounds{
-    /*
-    // if the user has already chosen some music, display that list
-    if (userMediaItemCollection) {
-        
-        MusicTableViewController *controller = [[MusicTableViewController alloc] initWithNibName: @"MusicTableView" bundle: nil];
-        controller.delegate = self;
-        
-        controller.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
-        
-        [self presentModalViewController: controller animated: YES];
-        [controller release];
-        
-        // else, if no music is chosen yet, display the media item picker
-    } else {
-        
-    */    MPMediaPickerController *picker =
+   MPMediaPickerController *picker =
         [[MPMediaPickerController alloc] initWithMediaTypes: MPMediaTypeAny];
         
         picker.delegate						= self;
@@ -239,17 +382,16 @@
         [self presentModalViewController: picker animated: YES];
 }
 
+
 - (void) mediaPicker: (MPMediaPickerController *) mediaPicker didPickMediaItems: (MPMediaItemCollection *) collection {
-    
-    
     MPMediaItem *item = [[collection items] objectAtIndex:0];
     NSURL *turl = [item valueForProperty:MPMediaItemPropertyAssetURL];
     NSString *titl = [item valueForProperty:MPMediaItemPropertyTitle];
-
+    
     NSString *url  = [turl absoluteString];
     
     [PersistenceStorage setObject:url andKey:@"mediaURL"];
- 
+    
     NSInteger soundTypeID = 0;
     if ([self.soundType isEqualToString:@"Soothing Sound"]) {
         soundTypeID = 1;
@@ -260,58 +402,21 @@
     else if ([self.soundType isEqualToString:@"Background Sound"]) {
         soundTypeID = 3;
     }
-
-    
-    NSLog(@"ULLL %@",url);
-    
-    
     NSString *duplicateCheck = [NSString stringWithFormat:@"SELECT count(*) from MyOwnSounds  where soundTypeID = %d and PlanID = %d and URL = '%@'", soundTypeID, [PersistenceStorage getIntegerForKey:@"currentPlanID"], url];
-    NSLog(@"%@",duplicateCheck);
     
     NSString *rowCount = [self.dbManager loadDataFromDB:duplicateCheck];
     
-		  NSLog(@"%@", [rowCount valueForKey:@"count(*)"]);
-		  
-		//  if ([rowCount valueForKey:@"count(*)"]==0)
-        //  {
-              
-              
-           
-    
-            NSString *query = [NSString stringWithFormat:@"insert into MyOwnSounds ('planID', 'groupID', 'skillID', 'soundTypeID', 'URL','comments') values (%ld, %ld, %ld, %d,'%@','%@')",(long)[PersistenceStorage getIntegerForKey:@"currentPlanID"], (long)[PersistenceStorage getIntegerForKey:@"currentGroupID"], (long)[PersistenceStorage getIntegerForKey:@"currentSkillID"], soundTypeID,url,titl];
-    
-     
-              
-    
+    NSString *query = [NSString stringWithFormat:@"insert into MyOwnSounds ('planID', 'groupID', 'skillID', 'soundTypeID', 'URL','comments') values (%ld, %ld, %ld, %d,'%@','%@')",(long)[PersistenceStorage getIntegerForKey:@"currentPlanID"], (long)[PersistenceStorage getIntegerForKey:@"currentGroupID"], (long)[PersistenceStorage getIntegerForKey:@"currentSkillID"], soundTypeID,url,titl];
     BOOL isDone = [self.dbManager executeQuery:query];
     if (isDone == YES)
     {
         NSLog(@"Success");
-
+        
     }
-    
-      //    }
-          
-
-
     [self dismissModalViewControllerAnimated: YES];
- //   NSLog(@"Collection %@",url);
-    
-    
-   // NSError *error;
-//self.player = [[AVAudioPlayer alloc] url error:&error];
-    
-  //  if (!error) {
-    //    [self.player prepareToPlay];
-      //  [self.player play];
-//    }
-
-    
+    self.isNewOwnSoundAdded = YES;
 }
 
-    //selectedSongCollection=mediaItemCollection;
-//}
-//After you are done with selecting the song, implement the delegate to dismiss the picker:
 
 - (void) mediaPickerDidCancel: (MPMediaPickerController *) mediaPicker
 {
@@ -320,38 +425,14 @@
 
 
 
-
-
-
-
-
-
 - (void)showWebsitesandApps
 {
     WebsitesandAppsViewController *wav = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"WebsitesandAppsViewController"];
     wav.soundType = self.soundType;
-    
-    
-  //  MyCustomViewController *myModalViewController = [[WebsitesandAppsViewController alloc] init];
-  //  [myModalViewController setTitle:@"Foo"];
-    
- //   UIViewController *vc = [UIViewController new];
- //   UINavigationController *nav = [[UINavigationController alloc] initWithRoot:vc];
-   // [self presentViewController:nav animated:YES completion:nil];
-    
-    
-   // UINavigationController *modalNavController = [[UINavigationController alloc] initWithRootView:wav];
-   // [myModalViewController release];
-    
     // This is intended to be presented in another view controller class
     [self presentModalViewController:wav animated:YES];
-    
-    
-    
-    
-    
-    //[self.navigationController presentModalViewController:wav animated:YES];
 }
+
 
 - (void)showOtherDevices
 {
@@ -360,14 +441,5 @@
     [self.navigationController presentModalViewController:odv animated:YES];
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

@@ -20,42 +20,47 @@
 @property(nonatomic,strong)  UITextView *textView;
 @property(nonatomic,strong) UITableView *table;
 
-// -(IBAction)textFieldReturn:(id)sender;
-
-
 @end
 
 @implementation SkillRatingsViewController
 
 
-
-
-
 -(void)dismissKeyboard {
-//[self.view endEditing:YES];
+
 }
-
-
 
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-      self.title = @"Your Thoughts";
     
-    //self.skillSection = [self.skillDict valueForKey:@"skillName"];
+    UIView *titleView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 64)];
+    
+    titleView.backgroundColor = [Utils colorWithHexValue:NAV_BAR_BLACK_COLOR];
+    
+    UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 10, 320, 64)];
+    
+    Pair *pallete = [Utils getColorFontPair:eCFS_PALLETE_1];
+    
+    titleLabel.font = pallete.secondObj;
+    titleLabel.textColor = pallete.firstObj;
+    
+    
+    titleLabel.textAlignment = NSTextAlignmentCenter;
+    titleLabel.backgroundColor = [UIColor clearColor];
+    titleLabel.text = @"Your Thoughts";
+    
+    
+    UIView *line = [[UIView alloc]initWithFrame:CGRectMake(0, titleView.frame.size.height - 1, 320, 1)];
+    
+    line.backgroundColor = [UIColor colorWithRed:0.0/255.0 green:0.0/255.0 blue:0.098/255.0 alpha:0.22];;
+    
+    [titleView addSubview:line];
+    
+    [titleView addSubview:titleLabel];
+    
+    [self.view addSubview:titleView];
     
     self.skillSection = [PersistenceStorage getObjectForKey:@"skillName"];
-
-    
-    
-    //  UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]
-      //                             initWithTarget:self
-        //                           action:@selector(dismissKeyboard)];
-    
-    //[self.view addGestureRecognizer:tap];
-    
-    
-    
     // Do any additional setup after loading the view.
     [self setUpView];
    
@@ -65,9 +70,7 @@
 
 
 - (void)viewWillAppear:(BOOL)animated
-{//[super viewWillAppear:animated];
-    self.title = @"Your Thoughts";
-
+{
     [self.tabBarController.tabBar setHidden:YES];
 }
 
@@ -97,54 +100,60 @@
     [self.table registerClass:[UITableViewCell class] forCellReuseIdentifier:@"Cell"];
     tableArray = @[@{@"name":@"Repeat this skill",@"image":@"refresh37"},@{@"name":@"Learn about this skill",@"image":@"archive32"},@{@"name":@"Try another skill",@"image":@"archive32"},@{@"name":@"Return Home",@"image":@"home32"}];
     
-    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(10, 60, self.view.frame.size.width -20, 80)];
-    label.text = @"How helpful was the skill you just completed? (select one)";
-    label.numberOfLines = 2;
-    label.font = [UIFont fontWithName:@"Helvetica Neue" size:15.0];
+    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(24, 85, self.view.frame.size.width -20, 65)];
+    label.text = @"How helpful was the skill you just completed? \n(select one)";
+    label.numberOfLines = 3;
+    
+    Pair *pallete = [Utils getColorFontPair:eCFS_PALLETE_3];
+    
+    label.font = pallete.secondObj;
+    label.textColor = pallete.firstObj;
 
     [self.view addSubview:label];
     
-     ratingView = [[ASStarRatingView alloc]initWithFrame:CGRectMake(0, 140, 320, 90)];
+     ratingView = [[ASStarRatingView alloc]initWithFrame:CGRectMake(5, 150, 315, 80)];
     [ratingView setMaxAllowedRating:5.0];
     [ratingView setMinAllowedRating:0.0];
     [ratingView setDelegate:self];
     [self.view addSubview:ratingView];
     
     
-    UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(10, 240, 300, 1)];
+    UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(24, 244, 300, 1)];
     lineView.backgroundColor = [UIColor colorWithRed:0.0/255.0 green:0.0/255.0 blue:0.098/255.0 alpha:0.22];
     [self.view addSubview:lineView];
- 
+    
+    UILabel *addlabel = [[UILabel alloc]initWithFrame:CGRectMake(24, 263, self.view.frame.size.width -20, 45)];
+    addlabel.text = @"Additional comments or thoughts \n(optional):";
     
     
-    UILabel *addlabel = [[UILabel alloc]initWithFrame:CGRectMake(10, ratingView.frame.origin.y + ratingView.frame.size.height, self.view.frame.size.width -20, 80)];
-    addlabel.text = @"Additional comments or thoughts (optional):";
-    addlabel.font = [UIFont fontWithName:@"Helvetica Neue" size:15.0];
     addlabel.numberOfLines = 2;
+    
+    pallete = [Utils getColorFontPair:eCFS_PALLETE_3];
+    
+    addlabel.font = pallete.secondObj;
+    addlabel.textColor = pallete.firstObj;
+    
     [self.view addSubview:addlabel];
     
-   self.textView = [[UITextView alloc]initWithFrame:CGRectMake(10, addlabel.frame.origin.y+ addlabel.frame.size.height-15, self.view.frame.size.width -20 , 80 )];
-    
-     
-    
-    
-    
-    
+    self.textView = [[UITextView alloc]initWithFrame:CGRectMake(24, addlabel.frame.origin.y + addlabel.frame.size.height + 22 ,272, 110)];
     self.textView.layer.borderWidth = 1.0;
-    self.textView.layer.borderColor = [UIColor grayColor].CGColor;
+    self.textView.layer.borderColor = [UIColor colorWithRed:0.0/255.0 green:0.0/255.0 blue:0.098/255.0 alpha:0.22].CGColor;
     [self.textView setDelegate:self];
     [self.view addSubview:self.textView];
     
-    button = [[UIButton alloc]initWithFrame:CGRectMake(120, self.textView.frame.origin.y + self.textView.frame.size.height + 10, 100, 30)];
+    
+    
+    
+    button = [[UIButton alloc]initWithFrame:CGRectMake(114, self.textView.frame.origin.y + self.textView.frame.size.height + 20, 84, 38)];
     [button setTitle:@"Submit" forState:UIControlStateNormal];
     button.titleLabel.textColor = [UIColor whiteColor];
-    button.font = [UIFont fontWithName:@"Helvetica Neue" size:15.0];
+    button.titleLabel.font = [UIFont fontWithName:@"Helvetica Neue" size:16.0];
     [button addTarget:self action:@selector(buttonTapped) forControlEvents:UIControlEventTouchUpInside];
-    [button setBackgroundColor:[UIColor colorWithRed:0.0/255.0 green:122.0/255.0 blue:255.0/255.0 alpha:1]];
-
-    button.layer.cornerRadius = 5.0f;
+    [button setBackgroundColor:[Utils colorWithHexValue:BUTTON_GRAY_COLOR_HEX_VALUE]];
+    button.layer.cornerRadius = 3.0f;
     [button setUserInteractionEnabled:NO];
     [self.navigationItem setHidesBackButton:YES];
+    
     [self.view addSubview:button];
     
 }
@@ -153,9 +162,6 @@
 -(void)buttonTapped{
     
     [PersistenceStorage setObject:@"SkillRatingsViewController" andKey:@"Referer"];
-
-       
-    
     if ([[PersistenceStorage getObjectForKey:@"skillDetail1"] isEqualToString:@"Timer for Practice"])
         
     {        [self writeTimerSoundSelected];
@@ -166,46 +172,39 @@
         [self writeWithRating];
         
     }
-    
-    
-
     if ([[PersistenceStorage getObjectForKey:@"ItsMondayShowWR"] isEqualToString:@"SomeOtherDay"])
-        
-        
-    {    [PersistenceStorage setObject:@"SkillRatingsViewController" andKey:@"Referer"];
-        
-        [self dismissViewControllerAnimated:YES completion:^{}];
+    {    [PersistenceStorage setObject:@"" andKey:@"Referer"];
+        [PersistenceStorage setObject:@"No" andKey:@"ItsMondayShowWR"];
+        [self dismissViewControllerAnimated:YES completion:^{
+            
+            if(self.dismissBlock){
+                
+                self.dismissBlock();
+            }
+            
+        }];
         
     }
-
-    
-    
-    
-    
-    
     
     if ([[PersistenceStorage getObjectForKey:@"ItsMondayShowWR"] isEqualToString:@"Yes"])
-
-    
     {    [PersistenceStorage setObject:@"OK" andKey:@"Referer"];
-
+        
         [self dismissViewControllerAnimated:YES completion:^{
-         [PersistenceStorage setObject:@"No" andKey:@"ItsMondayShowWR"];
-
-     
-    UIStoryboard *storyBoard = [ UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    UIViewController *mySleepsViewCotroller = [storyBoard instantiateViewControllerWithIdentifier:@"WeeklyViewController"];
-    UIWindow *currentWindow = [[UIApplication sharedApplication].windows firstObject];
-    [currentWindow.rootViewController presentViewController:mySleepsViewCotroller animated:YES completion:nil];
-    }];
+            [PersistenceStorage setObject:@"No" andKey:@"ItsMondayShowWR"];
+            UIStoryboard *storyBoard = [ UIStoryboard storyboardWithName:@"Main" bundle:nil];
+            UIViewController *mySleepsViewCotroller = [storyBoard instantiateViewControllerWithIdentifier:@"WeeklyViewController"];
+            UIWindow *currentWindow = [[UIApplication sharedApplication].windows firstObject];
+            [currentWindow.rootViewController presentViewController:mySleepsViewCotroller animated:YES completion:nil];
+        }];
+        
+    }
+    else
+        
+    {
+        [self dismissModalViewControllerAnimated:YES];
+    }
     
-}
-        else
-            
-        {    [self dismissModalViewControllerAnimated:YES];
-        }
-
-
+    
 }
 
 
@@ -251,13 +250,9 @@
         default:
             break;
     }
-    //  NSString *str = [[NSNumber numberWithFloat:ratingView.rating] stringValue];
     
     NSString *s = self.textView.text;
-    
-    
     NSString * newString = [s stringByReplacingOccurrencesOfString:@"," withString:@"|"];
-
     NSString   *finalStr = [NSString stringWithFormat:@"\r%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@",dateString,timeString,type,str,nil,[PersistenceStorage getObjectForKey:@"planName"],[PersistenceStorage getObjectForKey:@"situationName"],[PersistenceStorage getObjectForKey:@"skillName"],[PersistenceStorage getObjectForKey:@"skillDetail1"],[PersistenceStorage getObjectForKey:@"skillDetail2"],nil,nil,nil,nil,ratingName,newString];
     
      [PersistenceStorage setObject:nil andKey:@"skillDetail1"];
@@ -297,17 +292,11 @@
 
 
 -(void)writeWithRating{
-     NSURL *path = [self getUrlOfFiles:@"TinnitusCoachUsageData.csv"];
-   
+    NSURL *path = [self getUrlOfFiles:@"TinnitusCoachUsageData.csv"];
+    
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0];
     NSString *documentTXTPath = [documentsDirectory stringByAppendingPathComponent:@"TinnitusCoachUsageData.csv"];
-    
-    
-    
-    
-  //  NSString *eventString = [NSString stringWithFormat:@"Date,Time,Event type,EventDetail1,EventDetails2,Plan-Section name,Plan Situation,Skill-Section name,Skill-Section Detail,Skill-Section2,Skill-Section3,Rating,Feedback"];
-//    NSString *writedStr = [[NSString alloc]initWithContentsOfURL:path encoding:NSUTF8StringEncoding error:nil];
     NSDate *date = [NSDate date];
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
     dateFormatter.dateFormat = @"MM/dd/yy";
@@ -339,45 +328,19 @@
         default:
             break;
     }
-  //  NSString *str = [[NSNumber numberWithFloat:ratingView.rating] stringValue];
-    
     NSString *s = self.textView.text;
     NSCharacterSet *doNotWant = [NSCharacterSet characterSetWithCharactersInString:@"/:,"];
     s = [[s componentsSeparatedByCharactersInSet: doNotWant] componentsJoinedByString: @"|"];
     NSString *str = @"Provided Rating";
-
     
-    if ([[PersistenceStorage getObjectForKey:@"skillName"] isEqualToString:@"Changing Thoughts & Feelings"])
-    
-    {
-       // NSLog(@"%@",[PersistenceStorage getObjectForKey:@"ctf06textRating"]);
-
+    if([[PersistenceStorage getObjectForKey:@"TipsReminder"] isEqualToString:@"TipsReminderRating"]){
+        
         NSString *s = self.textView.text;
         
         
         NSString * newString = [s stringByReplacingOccurrencesOfString:@"," withString:@"|"];
-
-        NSString *ctf01TextRating = [PersistenceStorage getObjectForKey:@"ctf01textRating"];
-        NSString *ctf02TextRating = [PersistenceStorage getObjectForKey:@"ctf02textRating"];   ///BUG
-        NSString *ctf05TextRating = [PersistenceStorage getObjectForKey:@"ctf05textRating"];
-        NSLog(@"%@",ctf02TextRating);
-
         
-        NSString * ctf01TextRatingModified = [ctf01TextRating stringByReplacingOccurrencesOfString:@"," withString:@"|"];
-        NSString * ctf02TextRatingModified = [ctf02TextRating stringByReplacingOccurrencesOfString:@"," withString:@"|"];
-        NSString * ctf05TextRatingModified = [ctf05TextRating stringByReplacingOccurrencesOfString:@"," withString:@"|"];
-
-        
-        
-        
-        NSString *finalStr = [NSString stringWithFormat:@"\r%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@",dateString,timeString,type,str,nil,[PersistenceStorage getObjectForKey:@"planName"],[PersistenceStorage getObjectForKey:@"situationName"],[PersistenceStorage getObjectForKey:@"skillName"],ctf01TextRatingModified,ctf02TextRatingModified,[PersistenceStorage getObjectForKey:@"ctf03textRating"],[PersistenceStorage getObjectForKey:@"ctf04textRating"],ctf05TextRatingModified,[PersistenceStorage getObjectForKey:@"ctf06textRating"],ratingName,newString];
-        
-
-        NSLog(@"%@",finalStr);
-        
-        
-        
-   //     NSString *finalStr = [NSString stringWithFormat:@"\r%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@",dateString,timeString,type,str,nil,[PersistenceStorage getObjectForKey:@"planName"],[PersistenceStorage getObjectForKey:@"situationName"],[PersistenceStorage getObjectForKey:@"skillName"],[PersistenceStorage getObjectForKey:@"ctf01textRating"],[PersistenceStorage getObjectForKey:@"ctf02textRating"],[PersistenceStorage getObjectForKey:@"ctf03textRating"],[PersistenceStorage getObjectForKey:@"ctf04textRating"],[PersistenceStorage getObjectForKey:@"ctf05textRating"],[PersistenceStorage getObjectForKey:@"ctf06textRating"],ratingName,newString];
+        NSString *finalStr = [NSString stringWithFormat:@"\r%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@",dateString,timeString,type,str,nil,[PersistenceStorage getObjectForKey:@"planNameTips"],[PersistenceStorage getObjectForKey:@"situationNameTips"],[PersistenceStorage getObjectForKey:@"skillNameTips"],[PersistenceStorage getObjectForKey:@"skillDetailTips"],nil,nil,nil,nil,nil,ratingName,newString];
         
         NSFileManager *fileManager = [NSFileManager defaultManager];
         if(![fileManager fileExistsAtPath:documentTXTPath])
@@ -391,19 +354,48 @@
             [myHandle writeData:[finalStr dataUsingEncoding:NSUTF8StringEncoding]];
             
         }
-
+        
+        [PersistenceStorage setObject:@"" andKey:@"TipsReminder"];
+        
+    }
+    
+    else if ([[PersistenceStorage getObjectForKey:@"skillName"] isEqualToString:@"Changing Thoughts & Feelings"])
+        
+    {
+        NSString *s = self.textView.text;
+        NSString * newString = [s stringByReplacingOccurrencesOfString:@"," withString:@"|"];
+        NSString *ctf01TextRating = [PersistenceStorage getObjectForKey:@"ctf01textRating"];
+        NSString *ctf02TextRating = [PersistenceStorage getObjectForKey:@"ctf02textRating"];   ///BUG
+        NSString *ctf05TextRating = [PersistenceStorage getObjectForKey:@"ctf05textRating"];
+        NSString * ctf01TextRatingModified = [ctf01TextRating stringByReplacingOccurrencesOfString:@"," withString:@"|"];
+        NSString * ctf02TextRatingModified = [ctf02TextRating stringByReplacingOccurrencesOfString:@"," withString:@"|"];
+        NSString * ctf05TextRatingModified = [ctf05TextRating stringByReplacingOccurrencesOfString:@"," withString:@"|"];
+        NSString *finalStr = [NSString stringWithFormat:@"\r%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@",dateString,timeString,type,str,nil,[PersistenceStorage getObjectForKey:@"planName"],[PersistenceStorage getObjectForKey:@"situationName"],[PersistenceStorage getObjectForKey:@"skillName"],ctf01TextRatingModified,ctf02TextRatingModified,[PersistenceStorage getObjectForKey:@"ctf03textRating"],[PersistenceStorage getObjectForKey:@"ctf04textRating"],ctf05TextRatingModified,[PersistenceStorage getObjectForKey:@"ctf06textRating"],ratingName,newString];
+        NSFileManager *fileManager = [NSFileManager defaultManager];
+        if(![fileManager fileExistsAtPath:documentTXTPath])
+        {
+            [finalStr writeToFile:documentTXTPath atomically:YES];
+        }
+        else
+        {
+            NSFileHandle *myHandle = [NSFileHandle fileHandleForWritingAtPath:documentTXTPath];
+            [myHandle seekToEndOfFile];
+            [myHandle writeData:[finalStr dataUsingEncoding:NSUTF8StringEncoding]];
+            
+        }
+        
     } else
         
         if ([[PersistenceStorage getObjectForKey:@"skillName"] isEqualToString:@"Using Sound"])
         {
-        
+            
             NSString *s = self.textView.text;
             
             NSString *type = @"Skill";
-
+            
             NSString * newString = [s stringByReplacingOccurrencesOfString:@"," withString:@"|"];
             
-            NSString *finalStr = [NSString stringWithFormat:@"\r%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@",dateString,timeString,type,str,nil,[PersistenceStorage getObjectForKey:@"planName"],[PersistenceStorage getObjectForKey:@"situationName"],[PersistenceStorage getObjectForKey:@"skillName"],[PersistenceStorage getObjectForKey:@"skillDetail1"],[PersistenceStorage getObjectForKey:@"skillDetail2"],[PersistenceStorage getObjectForKey:@"deviceArray"],nil,nil,nil,ratingName,newString];
+            NSString *finalStr = [NSString stringWithFormat:@"\r%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@",dateString,timeString,type,str,nil,[PersistenceStorage getObjectForKey:@"planName"],[PersistenceStorage getObjectForKey:@"situationName"],[PersistenceStorage getObjectForKey:@"skillName"],[PersistenceStorage getObjectForKey:@"skillDetail1"],[PersistenceStorage getObjectForKey:@"skillDetail2"],[PersistenceStorage getObjectForKey:@"skillDetail4"],nil,nil,nil,ratingName,newString];
             
             NSFileManager *fileManager = [NSFileManager defaultManager];
             if(![fileManager fileExistsAtPath:documentTXTPath])
@@ -419,47 +411,33 @@
             }
             
         }
-
-        
     
         else
-        
-    {
-        
-        NSString *s = self.textView.text;
-        
-        
-        NSString * newString = [s stringByReplacingOccurrencesOfString:@"," withString:@"|"];
-
-        NSString *finalStr = [NSString stringWithFormat:@"\r%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@",dateString,timeString,type,str,nil,[PersistenceStorage getObjectForKey:@"planName"],[PersistenceStorage getObjectForKey:@"situationName"],[PersistenceStorage getObjectForKey:@"skillName"],[PersistenceStorage getObjectForKey:@"skillDetail1"],nil,nil,nil,nil,nil,ratingName,newString];
-        
-        NSFileManager *fileManager = [NSFileManager defaultManager];
-        if(![fileManager fileExistsAtPath:documentTXTPath])
         {
-            [finalStr writeToFile:documentTXTPath atomically:YES];
-        }
-        else
-        {
-            NSFileHandle *myHandle = [NSFileHandle fileHandleForWritingAtPath:documentTXTPath];
-            [myHandle seekToEndOfFile];
-            [myHandle writeData:[finalStr dataUsingEncoding:NSUTF8StringEncoding]];
+            
+            NSString *s = self.textView.text;
+            
+            
+            NSString * newString = [s stringByReplacingOccurrencesOfString:@"," withString:@"|"];
+            
+            NSString *finalStr = [NSString stringWithFormat:@"\r%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@",dateString,timeString,type,str,nil,[PersistenceStorage getObjectForKey:@"planName"],[PersistenceStorage getObjectForKey:@"situationName"],[PersistenceStorage getObjectForKey:@"skillName"],[PersistenceStorage getObjectForKey:@"skillDetail1"],nil,nil,nil,nil,nil,ratingName,newString];
+            
+            NSFileManager *fileManager = [NSFileManager defaultManager];
+            if(![fileManager fileExistsAtPath:documentTXTPath])
+            {
+                [finalStr writeToFile:documentTXTPath atomically:YES];
+            }
+            else
+            {
+                NSFileHandle *myHandle = [NSFileHandle fileHandleForWritingAtPath:documentTXTPath];
+                [myHandle seekToEndOfFile];
+                [myHandle writeData:[finalStr dataUsingEncoding:NSUTF8StringEncoding]];
+                
+            }
             
         }
-
-    }
-
     
- //   writedStr = [finalStr stringByAppendingString:eventString];
- //   writedStr = [writedStr stringByAppendingString:finalStr];
-    
-  /*  if([[NSFileManager defaultManager] fileExistsAtPath:[NSString stringWithContentsOfURL:path encoding:NSUTF8StringEncoding error:nil]])
-    {
-        [[NSFileManager defaultManager] removeItemAtURL:path error:nil];
-    }
-    [writedStr writeToURL:path atomically:YES encoding:NSStringEncodingConversionAllowLossy error:nil];
-
-   */
-      }
+}
 
 
 
@@ -482,10 +460,6 @@
       [self.view addSubview:self.table];
 }
 
-//-(void)viewWillAppear:(BOOL)animated{
-  //  [super viewWillAppear:animated];
-    
-//}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -531,6 +505,7 @@
 
 #pragma mark StarratingDelegate
 -(void)ratingAdded{
+    [button setBackgroundColor:[Utils colorWithHexValue:BUTTON_BLUE_COLOR_HEX_VALUE]];
     [button setUserInteractionEnabled:YES];
 }
 
@@ -571,102 +546,34 @@
 
 #pragma mark UITableViewDelegate
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    
-    
-     switch (indexPath.row) {
+    switch (indexPath.row) {
         case 0:{
-            
-//[self dismissModalViewControllerAnimated:YES];
-            
             [self.navigationController popViewControllerAnimated:YES];
-
         }
-        
             break;
-   //     case 2:{
-            
-//[self dismissModalViewControllerAnimated:YES];
-            
- 
-       /*
-            
-            [PersistenceStorage setObject:str andKey:@"sskillname"];
-
-            
-  //[self.skillDict valueForKey:@"skillName"]
-            
-            if ([PersistenceStorage getIntegerForKey:@"currentSkillID"] == 2)
-            {
-                
-                
-              //  [self.skillDict valueForKey:[PersistenceStorage getObjectForKey:@"currentSkillID"]]
- 
-            DeepBreathingViewController *samplerView = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"DeepBreathingViewController"];
-            [self.navigationController pushViewController:samplerView animated:NO];
-            }
-            
-            
-
-            if ([PersistenceStorage getIntegerForKey:@"currentSkillID"] == 3)
-            {
-                 ImageryViewController *samplerView = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"ImageryViewController"];
-                [self.navigationController pushViewController:samplerView animated:NO];
-            }
-            
-         */
-     //   }
-            
-      //      break;
-             
         case 1:{
             
             NookUsingSoundViewControllerOne *samplerView = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"NookUsingSoundViewControllerOne"];
             [self.navigationController pushViewController:samplerView animated:NO];
-
-            
         }
-            
             break;
-        
+            
         case 2:{
-           
-        [self.navigationController popToRootViewControllerAnimated:YES];
-
+            
+            [self.navigationController popToRootViewControllerAnimated:YES];
+            
+        }
+            break;
+            
+        case 3:{
+            [[self tabBarController] setSelectedIndex:0];
         }
             
             break;
-             
-         case 3:{
- //            [self.navigationController popToRootViewControllerAnimated:YES];
-
-             
-             
-             
-             
-             
-             
-             
-             
-             [[self tabBarController] setSelectedIndex:0];
-         }
-             
-             break;
-
-             
-             
         default:
             break;
     }
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

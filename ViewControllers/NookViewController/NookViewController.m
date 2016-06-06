@@ -36,9 +36,6 @@
 #import "EditTFListVC.h"
 
 
-
-
-
 @interface NookViewController (){
     NSArray *LogArray;}
 
@@ -48,49 +45,23 @@
 
 @implementation NookViewController
 
- 
-
-
 - (void)viewDidLoad {
     [super viewDidLoad];
-  self.title = @"Learning Nook";
-  //self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@" "
-//style:UIBarButtonItemStylePlain target:self   action:@selector(popToPlansView)];
-   
-   // self.navigationItem.title = @"New Title";
-  [self.navigationItem.leftBarButtonItem setTitle:@"Back"];    // Do any additional setup after loading the view.
-    
-    
-    NSLog(@"%@",[PersistenceStorage getObjectForKey:@"WRInitialized"]);
-    
-    
-    
-    
-    
-    
-    
+    self.title = @"Learning Nook";
+    [self.navigationItem.leftBarButtonItem setTitle:@"Back"];    // Do any additional setup after loading the view.
     [self setUpView];
- }
+}
 
 - (void)viewDidAppear:(BOOL)animated {
     self.title = @"Learning Nook";
-
     [self.tabBarController.tabBar setHidden:NO];
-    
-    
-    
-    
     [self writeVisitedNook];
 }
 
 
 - (void)viewDidDisappear:(BOOL)animated {
     self.title = @"Learning Nook";
-    
-  
 }
-
-
 
 -(void)setUpView{
     [self.faqsButton.layer setCornerRadius:7.5];
@@ -126,21 +97,15 @@
  
 
 - (IBAction)soundTapped:(id)sender {
-// WeeklyViewController *sound = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"WeeklyViewController"];
     NookUS *sound = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"NookUS"];
-    
-    
     [self.navigationController pushViewController:sound animated:YES];
     
  }
+
  - (IBAction)breathingTapped:(id)sender {
      NookDB *breathing = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"NookDB"];
      [self.navigationController pushViewController:breathing animated:YES];
 }
-
-
-
-
 
 
 - (IBAction)guidedTapped:(id)sender {
@@ -154,19 +119,14 @@
 
 - (IBAction)resourcesTapped:(id)sender {
     NookRes *sound = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"NookRes"];
-[self.navigationController pushViewController:sound animated:YES];
+    [self.navigationController pushViewController:sound animated:YES];
 }
- - (IBAction)tipsTapped:(id)sender {
-   NookTBS *breathing = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"NookTBS"];
-     [self.navigationController pushViewController:breathing animated:YES];
- }
 
 
-// -(IBAction)tipsTapped:(id)sender {
-//    TipsReminder *breathing = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"TipsReminder"];
-//    [self.navigationController pushViewController:breathing animated:YES];
-//}
-
+- (IBAction)tipsTapped:(id)sender {
+    NookTBS *breathing = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"NookTBS"];
+    [self.navigationController pushViewController:breathing animated:YES];
+}
 
 
 - (IBAction)thoughtsTapped:(id)sender {
@@ -180,10 +140,8 @@
 
 - (IBAction)FAQTapped:(id)sender {
     NookFAQ *breathing = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"NookFAQ"];
-[self.navigationController pushViewController:breathing animated:YES];
+    [self.navigationController pushViewController:breathing animated:YES];
 }
-
-
 
 
 - (IBAction)pleasantTapped:(id)sender {
@@ -200,10 +158,8 @@
     [self.navigationController pushViewController:imagery animated:YES];
 }
 
+
 -(void)writeVisitedNook{
-    //  NSURL *path = [self getUrlOfFiles:@"TinnitusCoachUsageData.csv"];
-    
-    
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0];
     NSString *documentTXTPath = [documentsDirectory stringByAppendingPathComponent:@"TinnitusCoachUsageData.csv"];
@@ -216,34 +172,30 @@
     timeFormatter.dateFormat = @"HH:mm:ss";
     NSString *timeString = [timeFormatter stringFromDate: date];
     NSString *type = @"Navigation";
-    
     NSString *str = @"Nook";
-    NSString   *finalStr = [NSString stringWithFormat:@"\r%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@",dateString,timeString,type,nil,str,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil];
+    NSString * navMethod = @"";
+    NSInteger selectedIndex = self.tabBarController.selectedIndex;
+    if([PersistenceStorage getIntegerForKey:@"HomeButtonTapped"] == self.tabBarController.selectedIndex ){
+        navMethod = @"Navigated from Home Screen";
+        [PersistenceStorage setInteger:-1 andKey:@"HomeButtonTapped"];
+    }else if([PersistenceStorage getIntegerForKey:@"TabBarButtonTapped"] == self.tabBarController.selectedIndex){
+        navMethod = @"Navigated from Nav Bar";
+        [PersistenceStorage setInteger:-1 andKey:@"TabBarButtonTapped"];
+    }else{
+        navMethod = nil;
+        return;
+    }
+    NSLog(@"navigation method is:%@ and parent controller is: %@", navMethod, [[self parentViewController] class]);
+    NSString   *finalStr = [NSString stringWithFormat:@"\r%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@",dateString,timeString,type,navMethod,str,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil];
     
     NSFileManager *fileManager = [NSFileManager defaultManager];
-    
-    
-   [PersistenceStorage setObject:finalStr andKey:@"SituationName"];
-
-    
-    
+    [PersistenceStorage setObject:finalStr andKey:@"SituationName"];
     self.manager = [[DBManager alloc]initWithDatabaseFileName:@"GNResoundDB.sqlite"];
-    
-    
-    
     NSString *query = [NSString stringWithFormat:@"select SituationName from MyPlans where ID=%@",[PersistenceStorage getObjectForKey:@"currentPlanID"]];
-
-    
     if (LogArray!= nil) {
         LogArray = nil;
     }
     LogArray = [[NSArray alloc] initWithArray:[self.manager loadDataFromDB:query]];
-    
-
-    
- 
-    
-    
     if(![fileManager fileExistsAtPath:documentTXTPath])
     {
         [finalStr writeToFile:documentTXTPath atomically:YES];
@@ -256,12 +208,7 @@
         
     }
     
-    
-    
+}
 
-    
-    
-    
-    
-    
-}@end
+
+@end

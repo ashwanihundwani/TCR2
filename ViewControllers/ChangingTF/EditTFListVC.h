@@ -7,6 +7,8 @@
 
 #import <UIKit/UIKit.h>
 #import "DBManager.h"
+
+
 @protocol EditRipsListDelegate1<NSObject>
 @optional
 -(void)didSaveTF;

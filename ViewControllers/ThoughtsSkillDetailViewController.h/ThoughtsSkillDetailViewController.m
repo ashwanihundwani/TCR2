@@ -3,7 +3,7 @@
 //  SkillDetailViewController.m
 //  TinnitusCoach
 //
-//  Created by Vikram Singh on 3/22/15.
+//  Created by Creospan on 3/22/15.
 //  Copyright (c) 2015 Creospan. All rights reserved.
 //
 
@@ -11,6 +11,9 @@
 #import "ThoughtsIntroDetailViewController.h"
 #import "NookCTF.h"
 #import "MBProgressHUD.h"
+
+#import "SwiperViewController.h"
+#import "IntroPageInfo.h"
 
 
 @interface ThoughtsSkillDetailViewController ()
@@ -24,15 +27,32 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = [self.skillDict valueForKey:@"skillName"];
-    
-    
     if (![[PersistenceStorage getObjectForKey:@"shownCTFIntro"] isEqual: @"OK"])
-        
     {
+        NSMutableArray *pageInfos = [NSMutableArray array];
+        IntroPageInfo *info = [[IntroPageInfo alloc] initWithimage:[UIImage imageNamed:@"Intro6image1.png"] title: @"What is \"Changing Thoughts and Feelings\" ?" description:@"Changing your thoughts can change how you feel. With this skill you learn common \"thought errors\" and how to correct them to feel better."];
         
+        [pageInfos addObject:info];
         
-        ThoughtsIntroDetailViewController *siv = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"ThoughtsIntroDetailViewController"];
-        [self.navigationController pushViewController:siv animated:YES];
+        IntroPageInfo *info2 = [[IntroPageInfo alloc] initWithimage:[UIImage imageNamed:@"Intro6image2.png"] title: @"What are  \"Thought Errors\" ?" description:@"Thoughts that are not helpful or unhealthy are called \"thought errors\". Many people make thought errors that cause them to feel sad or upset. If you are aware of the most common thought errors, you can catch yourself and correct your thinking."];
+        
+        [pageInfos addObject:info2];
+        
+        IntroPageInfo *info3 = [[IntroPageInfo alloc] initWithimage:[UIImage imageNamed:@"Intro6image3.png"] title: @"How do thoughts affect my feelings?" description:@"What you think affects how you feel. Imagine you are expecting guests for dinner, and they are late. If you think \"it's rude to be late\" you might be worried. Different thoughts about the same situation lead to different feelings."];
+        
+        [pageInfos addObject:info3];
+        
+        IntroPageInfo *info4 = [[IntroPageInfo alloc] initWithimage:[UIImage imageNamed:@"Intro6image4.png"] title: @"How can I change my negative feelings?" description:@"You may not be able to change events in your life, or your tinnitus. However, the way you think about events is under your control. Change your thoughts, and your feelings will change too. With this skill, you will learn a step-by-step approach to changing thoughts."];
+        
+        [pageInfos addObject:info4];
+        
+        SwiperViewController *swiper = [[SwiperViewController alloc]init];
+        
+        swiper.pageInfos = pageInfos;
+        
+        swiper.header = @"Welcome to Changing Thoughts";
+        
+        [self.navigationController pushViewController:swiper animated:YES];
         
     }
     
@@ -52,8 +72,32 @@
 }
 
 -(IBAction)viewIntroductionAgainClicked:(id)sender{
-    ThoughtsIntroDetailViewController *siv = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"ThoughtsIntroDetailViewController"];
-    [self.navigationController pushViewController:siv animated:YES];
+    
+    NSMutableArray *pageInfos = [NSMutableArray array];
+    
+    IntroPageInfo *info = [[IntroPageInfo alloc] initWithimage:[UIImage imageNamed:@"Intro6image1.png"] title: @"What is \"Changing Thoughts and Feelings\" ?" description:@"Changing your thoughts can change how you feel. With this skill you learn common \"thought errors\" and how to correct them to feel better."];
+    
+    [pageInfos addObject:info];
+    
+    IntroPageInfo *info2 = [[IntroPageInfo alloc] initWithimage:[UIImage imageNamed:@"Intro6image2.png"] title: @"What are  \"Thought Errors\" ?" description:@"Thoughts that are not helpful or unhealthy are called \"thought errors\". Many people make thought errors that cause them to feel sad or upset. If you are aware of the most common thought errors, you can catch yourself and correct your thinking."];
+    
+    [pageInfos addObject:info2];
+    
+    IntroPageInfo *info3 = [[IntroPageInfo alloc] initWithimage:[UIImage imageNamed:@"Intro6image3.png"] title: @"How do thoughts affect my feelings?" description:@"What you think affects how you feel. Imagine you are expecting guests for dinner, and they are late. If you think \"it's rude to be late\" you might be worried. Different thoughts about the same situation lead to different feelings."];
+    
+    [pageInfos addObject:info3];
+    
+    IntroPageInfo *info4 = [[IntroPageInfo alloc] initWithimage:[UIImage imageNamed:@"Intro6image4.png"] title: @"How can I change my negative feelings?" description:@"You may not be able to change events in your life, or your tinnitus. However, the way you think about events is under your control. Change your thoughts, and your feelings will change too. With this skill, you will learn a step-by-step approach to changing thoughts."];
+    
+    [pageInfos addObject:info4];
+    
+    SwiperViewController *swiper = [[SwiperViewController alloc]init];
+    
+    swiper.pageInfos = pageInfos;
+    
+    swiper.header = @"Welcome to Changing Thoughts";
+    
+    [self.navigationController pushViewController:swiper animated:YES];
 
 }
 
@@ -78,21 +122,23 @@
     }
     
     [self writeAddedSkill];
-
     
-          }
+    
+}
 
 -(IBAction)addSkillToPlan:(id)sender
 {
     [self writeToMySkills];
-    [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:[self.navigationController.viewControllers count]-3] animated:YES];
+    [self performSelector:@selector(navigateBacktoPlan) withObject:nil afterDelay:1.2];
+    
+}
 
+-(void)navigateBacktoPlan{
+    [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:[self.navigationController.viewControllers count]-3] animated:YES];
 }
 
 
 -(void)writeAddedSkill{
-    //  NSURL *path = [self getUrlOfFiles:@"TinnitusCoachUsageData.csv"];
-    
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0];
     NSString *documentTXTPath = [documentsDirectory stringByAppendingPathComponent:@"TinnitusCoachUsageData.csv"];
@@ -124,14 +170,5 @@
     
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

@@ -2,8 +2,8 @@
 //  ViewController.m
 //  testAudioPanning
 //
-//  Created by Vikram Singh on 3/15/15.
-//  Copyright (c) 2015 Vikram Singh. All rights reserved.
+//  Created by Creospan on 3/15/15.
+//  Copyright (c) 2015 Creospan. All rights reserved.
 //
 
 #import "AudioPanningViewController.h"
@@ -38,24 +38,14 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-     self.title = @"Sound Player";
+    self.title = @"Sound Player";
     // Do any additional setup after loading the view, typically from a nib.
-   // self.tintColor= [UIColor purpleColor];
     [self createAndDisplayMPVolumeView];
-[self initializeAudioPlayerWith:@"rain.mp3"];
-    
+    [self initializeAudioPlayerWith:@"rain.mp3"];
     timer = [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(updateCounter:) userInfo:nil repeats:YES];
-
-    
     NSError *sessionError = nil;
-//    [[AVAudioSession sharedInstance] setDelegate:self];
     [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:&sessionError];
-    
-    
     [self.audioPlayer setVolume:1.0];
-    
-   
-//     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(movieFinishedCallback:) name:MPMoviePlayerPlaybackDidFinishNotification object:self.videoPlayer.moviePlayer];
 }
 
 
@@ -63,33 +53,15 @@
 -(void) createAndDisplayMPVolumeView
 
 {
-    
     // Create a simple holding UIView and give it a frame
-    
     UIView *volumeHolder = [[UIView alloc] initWithFrame: CGRectMake(64, 474, 195, 25)];
-    
-    
-    
     // set the UIView backgroundColor to clear.
-    
     [volumeHolder setBackgroundColor: [UIColor clearColor]];
-    
-    
-    
     // add the holding view as a subView of the main view
-    
     [self.view addSubview: volumeHolder];
-    
-    
-    
     // Create an instance of MPVolumeView and give it a frame
-    
     MPVolumeView *myVolumeView = [[MPVolumeView alloc] initWithFrame: volumeHolder.bounds];
-    
-    
-    
     // Add myVolumeView as a subView of the volumeHolder
-    
     [volumeHolder addSubview: myVolumeView];
     
 }
@@ -100,15 +72,9 @@
 
 -(IBAction)doneButtonTapped:(id)sender
 {
-    
     [PersistenceStorage setObject:@"AudioPlayerOneViewController" andKey:@"Referer"];
     [self dismissModalViewControllerAnimated:NO];
-    
-    
 }
-
-
-
 
 
 -(void)movieFinishedCallback:(NSNotification*)aNotification {
@@ -194,11 +160,7 @@ self.navigationItem.hidesBackButton = YES;
     
     [self.audioPlayer setVolume:self.volumeSeekSlider.value];
     [self.audioPlayer setPan:self.panSeekSlider.value];
-//    [self.audioPlayer play];
     [self playSoundTapped:nil];
-    
- 
-
 
 }
 
@@ -207,157 +169,92 @@ self.navigationItem.hidesBackButton = YES;
 {
     timer = nil;
     
-     NSString *buttonTitle = [actionSheetTimer buttonTitleAtIndex:buttonIndex];
+    NSString *buttonTitle = [actionSheetTimer buttonTitleAtIndex:buttonIndex];
     UILabel *firstLabel = (UILabel *)[self.view viewWithTag:555];
     
-
+    
     self.audioSeekSlider.value = 0;
-
+    
     [self.audioPlayer setCurrentTime:0];
     
     if ([actionSheetTimer.title isEqualToString:@"Select Time"]) {
         
         self.audioPlayer.numberOfLoops = -1;
-
+        
         
         
         if  ([buttonTitle isEqualToString:@"Infinitely"]) {
             
             [PersistenceStorage setObject:@600000 andKey:@"timerDuration"];
             firstLabel.text = @"Infinitely";
-            
-            
-            // secondsLeft1 = [PersistenceStorage getObjectForKey:@"timerDuration"];
         }
         
-
         if  ([buttonTitle isEqualToString:@"Once"]) {
             self.audioPlayer.numberOfLoops = 0;
-
+            
             [PersistenceStorage setObject:@60 andKey:@"timerDuration"];
             firstLabel.text = @"Once";
-            
-            
-            // secondsLeft1 = [PersistenceStorage getObjectForKey:@"timerDuration"];
         }
-        
-
-        
-        
         if  ([buttonTitle isEqualToString:@"1 min"]) {
             
             [PersistenceStorage setObject:@60 andKey:@"timerDuration"];
             firstLabel.text = @"1 min";
-            
-            
-            // secondsLeft1 = [PersistenceStorage getObjectForKey:@"timerDuration"];
         }
-        
-        
-        
         if  ([buttonTitle isEqualToString:@"5 min"]) {
             
             [PersistenceStorage setObject:@300 andKey:@"timerDuration"];
             firstLabel.text= @"05:00 min";
-            
-            
-            // secondsLeft1 = [PersistenceStorage getObjectForKey:@"timerDuration"];
         }
-
-        
-        
         if  ([buttonTitle isEqualToString:@"15 min"]) {
             
             [PersistenceStorage setObject:@900 andKey:@"timerDuration"];
             firstLabel.text= @"05:00 min";
-            
-            
-            // secondsLeft1 = [PersistenceStorage getObjectForKey:@"timerDuration"];
         }
-
-        
-        
         if  ([buttonTitle isEqualToString:@"20 min"]) {
             
             [PersistenceStorage setObject:@1200 andKey:@"timerDuration"];
             firstLabel.text= @"20:00 min";
-            
-            
-            // secondsLeft1 = [PersistenceStorage getObjectForKey:@"timerDuration"];
         }
-        
-        
-        
         if  ([buttonTitle isEqualToString:@"30 min"]) {
             
             [PersistenceStorage setObject:@1800 andKey:@"timerDuration"];
             firstLabel.text= @"30:00 min";
-            
-            
-            // secondsLeft1 = [PersistenceStorage getObjectForKey:@"timerDuration"];
         }
-        
-        
         
         if  ([buttonTitle isEqualToString:@"1 hour"]) {
             
             [PersistenceStorage setObject:@3600 andKey:@"timerDuration"];
             firstLabel.text= @"60:00 min";
-
-            
-            
-            
-            
-            
-            
-            // secondsLeft1 = [PersistenceStorage getObjectForKey:@"timerDuration"];
         }
-        
-        
-        
-        
-      
-
-        }
-            if  ([buttonTitle isEqualToString:@"3 hours"]) {
-            
-                [PersistenceStorage setObject:@10800 andKey:@"timerDuration"];
-                firstLabel.text= @"3 hours";
-
-            }
-                if  ([buttonTitle isEqualToString:@"6 hours"]) {
-                    
-                    [PersistenceStorage setObject:@21600 andKey:@"timerDuration"];
-                    firstLabel.text= @"6 hours";
-
-                }
-                    if  ([buttonTitle isEqualToString:@"9 hours"]) {
-                        
-                        [PersistenceStorage setObject:@32400 andKey:@"timerDuration"];
-                        firstLabel.text= @"9 hours";
-
-                    }
-        
-        [self countdownTimer:nil];
-
-        
-        [[self.view viewWithTag:220] setHidden:NO];
-        
-        
-        
-        
-        
-        // }
-        
         
     }
+    if  ([buttonTitle isEqualToString:@"3 hours"]) {
+        
+        [PersistenceStorage setObject:@10800 andKey:@"timerDuration"];
+        firstLabel.text= @"3 hours";
+        
+    }
+    if  ([buttonTitle isEqualToString:@"6 hours"]) {
+        
+        [PersistenceStorage setObject:@21600 andKey:@"timerDuration"];
+        firstLabel.text= @"6 hours";
+        
+    }
+    if  ([buttonTitle isEqualToString:@"9 hours"]) {
+        
+        [PersistenceStorage setObject:@32400 andKey:@"timerDuration"];
+        firstLabel.text= @"9 hours";
+        
+    }
+    
+    [self countdownTimer:nil];
+    [[self.view viewWithTag:220] setHidden:NO];
+    
+}
 
 
 
 - (IBAction)countdownTimer:(id)sender {
-    
-    
-    
     NSString *tDuration = [PersistenceStorage getObjectForKey:@"timerDuration"];
     
     
@@ -378,50 +275,39 @@ self.navigationItem.hidesBackButton = YES;
 - (void)updateCounter:(NSTimer *)theTimer
 {
     // Create date from the elapsed time
-    
     UILabel *firstLabel = (UILabel *)[self.view viewWithTag:555];
-
-    
     NSDate *currentDate = [NSDate date];
     NSTimeInterval timeInterval = [currentDate timeIntervalSinceDate:self.startDate];
-  //  NSLog(@"TIMER INTERAL %@",timeInterval);
-
-    
     if (![firstLabel.text isEqualToString:@"Once"] && ![firstLabel.text isEqualToString:@"Infinitely"] )
-    
     {
- 
-    
-    
-    if ([[PersistenceStorage getObjectForKey:@"timerDuration"] intValue] > 10)
-    {
-    if (timeInterval<0)
-    {int ti = (int)(fabs(timeInterval));
-        
-         NSInteger seconds = ti % 60;
-        NSInteger minutes = (ti / 60) % 60;
-        NSInteger hours = (ti / 3600);
-        
-         NSString *displayTime = [NSString stringWithFormat:@"%02ld:%02ld:%02ld %@",  (long)hours,(long)minutes, (long)seconds,@"min" ] ;
-        
-        
-        firstLabel.text = displayTime;
-      //  NSLog(@"DISPLAY TIME %@",timeInterval);
-
-    }
-    else
-    {
-        NSLog(@"%@",[PersistenceStorage getObjectForKey:@"timerDuration"]);
-        firstLabel.text= @"Ended Timed Playback";
-        [self.audioPlayer stop];
-        [[self.view viewWithTag:77] setHidden:NO];
-        
-    }
-    }
+        if ([[PersistenceStorage getObjectForKey:@"timerDuration"] intValue] > 10)
+        {
+            if (timeInterval<0)
+            {int ti = (int)(fabs(timeInterval));
+                
+                NSInteger seconds = ti % 60;
+                NSInteger minutes = (ti / 60) % 60;
+                NSInteger hours = (ti / 3600);
+                
+                NSString *displayTime = [NSString stringWithFormat:@"%02ld:%02ld:%02ld %@",  (long)hours,(long)minutes, (long)seconds,@"min" ] ;
+                
+                
+                firstLabel.text = displayTime;
+                
+            }
+            else
+            {
+                NSLog(@"%@",[PersistenceStorage getObjectForKey:@"timerDuration"]);
+                firstLabel.text= @"Ended Timed Playback";
+                [self.audioPlayer stop];
+                [[self.view viewWithTag:77] setHidden:NO];
+                
+            }
+        }
         
     }
     
-        
+    
 }
 
 
@@ -439,26 +325,25 @@ self.navigationItem.hidesBackButton = YES;
         else
         {
             [self.videoPlayer play];
-//[self playVideo];
             [self.playPauseButton setTitle:@"Pause" forState:UIControlStateNormal];
             self.updateTimer = [NSTimer scheduledTimerWithTimeInterval:.01 target:self selector:@selector(updateCurrentTime) userInfo:self.videoPlayer repeats:YES];
             
         }
         
     }else{
-    if ([self.audioPlayer isPlaying]) {
-        [self.audioPlayer pause];
-        [self.playPauseButton setTitle:@"Play" forState:UIControlStateNormal];
-        self.updateTimer = nil;
-
-    }
-    else
-    {
-        [self.audioPlayer play];
-        [self.playPauseButton setTitle:@"Pause" forState:UIControlStateNormal];
-        self.updateTimer = [NSTimer scheduledTimerWithTimeInterval:.01 target:self selector:@selector(updateCurrentTime) userInfo:self.audioPlayer repeats:YES];
-
-    }
+        if ([self.audioPlayer isPlaying]) {
+            [self.audioPlayer pause];
+            [self.playPauseButton setTitle:@"Play" forState:UIControlStateNormal];
+            self.updateTimer = nil;
+            
+        }
+        else
+        {
+            [self.audioPlayer play];
+            [self.playPauseButton setTitle:@"Pause" forState:UIControlStateNormal];
+            self.updateTimer = [NSTimer scheduledTimerWithTimeInterval:.01 target:self selector:@selector(updateCurrentTime) userInfo:self.audioPlayer repeats:YES];
+            
+        }
     }
 }
 
@@ -494,10 +379,7 @@ self.navigationItem.hidesBackButton = YES;
 
 - (IBAction)sliderChanged:(id)sender {
     // Fast skip the music when user scroll the UISlider
-    [self.audioPlayer stop];
     [self.audioPlayer setCurrentTime:self.audioSeekSlider.value];
-    [self.audioPlayer prepareToPlay];
-    [self.audioPlayer play];
 }
 
 
@@ -521,9 +403,6 @@ self.navigationItem.hidesBackButton = YES;
     NSString *other8 = @"3 hours";
     NSString *other9 = @"6 hours";
     NSString *other10 = @"9 hours";
-    
-    
- 
     NSString *cancelTitle = @"Cancel";
     UIActionSheet *actionSheetTimer = [[UIActionSheet alloc]
                                   initWithTitle:actionSheetTitle
@@ -536,13 +415,6 @@ self.navigationItem.hidesBackButton = YES;
 
 
 
-
-
-
-
-
-
-
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
@@ -552,6 +424,13 @@ self.navigationItem.hidesBackButton = YES;
 
     [self.audioPlayer stop]; // Or pause
     [self.videoPlayer stop];
+}
+
+#pragma mark - AVAudioPlayerDelegate
+
+- (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag{
+    [self.playPauseButton setTitle:@"Play" forState:UIControlStateNormal];
+    self.updateTimer = nil;
 }
 
 @end

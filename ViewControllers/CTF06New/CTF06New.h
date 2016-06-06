@@ -8,11 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
+
+
 @interface CTF06New : UIViewController <UITableViewDataSource, UITableViewDelegate>
- @property (weak, nonatomic) IBOutlet UITableView *EmotionsTableView;
+
+@property (weak, nonatomic) IBOutlet UITableView *EmotionsTableView;
 @property (weak, nonatomic) IBOutlet UITableView *NewEmotionsTableView;
-
-
-  
 
 @end

@@ -152,24 +152,26 @@ body {
 
 
 
-
 #afui .header h1 {
     
-    position: absolute;
-    width: 45%;
+    position: relative;
+    width: 260px;
     z-index: 1;
     height: 44px;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: bold;
-    left: 27.5%;
+    left: 10%;
     color: inherit;
-    padding: 10px 0;
+    padding: 15px 0;
     text-shadow: rgba(0,0,0,0.8) 0 -1px 0;
     text-align: center;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden;
-} /* This is text that appears in the header at the top of the screen */
+   
+    /*  white-space: nowrap;
+     text-overflow: ellipsis;
+     overflow: hidden;*/
+    
+    
+}/* This is text that appears in the header at the top of the screen */
 
 
 /**********************************************************
@@ -687,7 +689,9 @@ body {
 
 #afui  .header h1 {
     text-shadow:none;
-    width:45%;
+    text-align: center;
+    
+    width:90%px;
 }
 
 #afui .backButton {

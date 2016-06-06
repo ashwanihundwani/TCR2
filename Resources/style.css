@@ -108,7 +108,10 @@ header a {
 }
 
 #pageTitle, #afui.ios7 .header h1 {
-	word-wrap: normal;
+	/*word-wrap: normal;*/
+    /*word-wrap: break-word;*/
+    -webkit-line-clamp: 3;
+    word-break: break-all;
 	display:inline-block;
 	overflow: visible;
 	white-space: normal;

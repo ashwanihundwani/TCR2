@@ -13,6 +13,5 @@
 @property (weak, nonatomic) IBOutlet UILabel *textInfo;
 
 @property (nonatomic,strong) DBManager *manager;
-//- (IBAction)addButtonTapped:(id)sender;
 
 @end

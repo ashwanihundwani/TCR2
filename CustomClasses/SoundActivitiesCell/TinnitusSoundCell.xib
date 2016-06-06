@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7702" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="TinnitusSoundCell" id="KGk-i7-Jjw" customClass="TinnitusSoundCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="i2H-5t-myg" userLabel="Back View">
+                        <rect key="frame" x="10" y="10" width="300" height="34"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="34" id="Zee-rC-4tR"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="Zee-rC-4tR"/>
+                            </mask>
+                        </variation>
+                    </view>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TSO-xY-Y6s">
+                        <rect key="frame" x="0.0" y="0.0" width="50" height="44"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="44" id="Xd8-aQ-bee"/>
+                            <constraint firstAttribute="width" constant="50" id="qM6-PR-ji1"/>
+                        </constraints>
+                        <inset key="imageEdgeInsets" minX="15" minY="12" maxX="7" maxY="4"/>
+                        <state key="normal" title="Button" image="Active_Trash_Button.png">
+                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                        <connections>
+                            <action selector="onDelete:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="Kn6-0n-wBI"/>
+                        </connections>
+                    </button>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="u353.png" translatesAutoresizingMaskIntoConstraints="NO" id="XMC-8B-QvR">
+                        <rect key="frame" x="63" y="13" width="27" height="27"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="27" id="Ard-Nx-4bW"/>
+                            <constraint firstAttribute="height" constant="27" id="HbT-lC-ZYE"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="100" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7zp-hc-6R4">
+                        <rect key="frame" x="113" y="16" width="169" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="21" id="Trx-7Q-MWS"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="Trx-7Q-MWS"/>
+                            </mask>
+                        </variation>
+                    </label>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Active_Next-Arrow.png" translatesAutoresizingMaskIntoConstraints="NO" id="bHL-Hb-ue5">
+                        <rect key="frame" x="290" y="20" width="13" height="13"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="13" id="lyH-4l-HfA"/>
+                            <constraint firstAttribute="height" constant="13" id="r2l-ol-IK6"/>
+                        </constraints>
+                    </imageView>
+                </subviews>
+                <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803915" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                <constraints>
+                    <constraint firstAttribute="centerY" secondItem="XMC-8B-QvR" secondAttribute="centerY" id="1gu-xP-UO0"/>
+                    <constraint firstAttribute="bottom" secondItem="i2H-5t-myg" secondAttribute="bottom" constant="-1" id="3b9-nq-Upo"/>
+                    <constraint firstAttribute="centerY" secondItem="TSO-xY-Y6s" secondAttribute="centerY" constant="-5" id="43H-kA-MSq"/>
+                    <constraint firstAttribute="centerY" secondItem="XMC-8B-QvR" secondAttribute="centerY" constant="-5" id="7gl-0C-ZvP"/>
+                    <constraint firstItem="7zp-hc-6R4" firstAttribute="leading" secondItem="XMC-8B-QvR" secondAttribute="trailing" constant="23" id="9Ct-hn-vfq"/>
+                    <constraint firstAttribute="trailing" secondItem="bHL-Hb-ue5" secondAttribute="trailing" constant="17" id="9jH-0r-Ig5"/>
+                    <constraint firstItem="XMC-8B-QvR" firstAttribute="leading" secondItem="TSO-xY-Y6s" secondAttribute="trailing" constant="13" id="BNY-zW-Dv0"/>
+                    <constraint firstAttribute="trailing" secondItem="bHL-Hb-ue5" secondAttribute="trailing" constant="11" id="FSU-uM-BcL"/>
+                    <constraint firstAttribute="centerY" secondItem="bHL-Hb-ue5" secondAttribute="centerY" id="GC4-65-rwu"/>
+                    <constraint firstItem="TSO-xY-Y6s" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="JgS-PK-zqp"/>
+                    <constraint firstItem="i2H-5t-myg" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="JjC-NT-yUW"/>
+                    <constraint firstAttribute="centerY" secondItem="7zp-hc-6R4" secondAttribute="centerY" constant="-5" id="Vp4-e5-iIM"/>
+                    <constraint firstAttribute="centerX" secondItem="7zp-hc-6R4" secondAttribute="centerX" id="Wf0-0f-EmF"/>
+                    <constraint firstItem="i2H-5t-myg" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="ZDf-nm-GjZ"/>
+                    <constraint firstItem="7zp-hc-6R4" firstAttribute="top" secondItem="i2H-5t-myg" secondAttribute="top" constant="6" id="aAc-ei-ebR"/>
+                    <constraint firstAttribute="trailing" secondItem="i2H-5t-myg" secondAttribute="trailing" constant="10" id="b11-cT-nUC"/>
+                    <constraint firstAttribute="trailing" secondItem="bHL-Hb-ue5" secondAttribute="trailing" constant="11" id="eMm-lJ-agv"/>
+                    <constraint firstAttribute="trailing" secondItem="bHL-Hb-ue5" secondAttribute="trailing" constant="11" id="fgQ-ZW-NuF"/>
+                    <constraint firstAttribute="centerX" secondItem="bHL-Hb-ue5" secondAttribute="centerX" id="gOK-cR-5Ad"/>
+                    <constraint firstItem="bHL-Hb-ue5" firstAttribute="leading" secondItem="7zp-hc-6R4" secondAttribute="trailing" constant="8" id="gyh-5a-t0M"/>
+                    <constraint firstAttribute="centerY" secondItem="TSO-xY-Y6s" secondAttribute="centerY" id="iBF-ka-7H3"/>
+                    <constraint firstItem="TSO-xY-Y6s" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="tKF-nB-jfG"/>
+                    <constraint firstAttribute="centerY" secondItem="bHL-Hb-ue5" secondAttribute="centerY" constant="-5" id="wC7-M7-rGv"/>
+                    <constraint firstItem="7zp-hc-6R4" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="16" id="y02-0l-xzR"/>
+                    <constraint firstItem="7zp-hc-6R4" firstAttribute="bottom" secondItem="i2H-5t-myg" secondAttribute="bottom" constant="-7" id="zLJ-iH-E7Q"/>
+                    <constraint firstAttribute="centerY" secondItem="7zp-hc-6R4" secondAttribute="centerY" id="zSZ-dR-awD"/>
+                </constraints>
+                <variation key="default">
+                    <mask key="constraints">
+                        <exclude reference="43H-kA-MSq"/>
+                        <exclude reference="iBF-ka-7H3"/>
+                        <exclude reference="1gu-xP-UO0"/>
+                        <exclude reference="Vp4-e5-iIM"/>
+                        <exclude reference="Wf0-0f-EmF"/>
+                        <exclude reference="y02-0l-xzR"/>
+                        <exclude reference="zSZ-dR-awD"/>
+                        <exclude reference="FSU-uM-BcL"/>
+                        <exclude reference="GC4-65-rwu"/>
+                        <exclude reference="eMm-lJ-agv"/>
+                        <exclude reference="fgQ-ZW-NuF"/>
+                        <exclude reference="gOK-cR-5Ad"/>
+                    </mask>
+                </variation>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="titleLabel" destination="7zp-hc-6R4" id="BY2-5i-l7q"/>
+            </connections>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="Active_Next-Arrow.png" width="30" height="30"/>
+        <image name="Active_Trash_Button.png" width="55" height="55"/>
+        <image name="u353.png" width="30" height="30"/>
+    </resources>
+</document>

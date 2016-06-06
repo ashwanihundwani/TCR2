@@ -10,7 +10,7 @@
     <link rel="stylesheet" type="text/css" href="af.ui.css" />
     <link rel="stylesheet" type="text/css" href="icons.css" />
     <script type="text/javascript" charset="utf-8" src="appframework.ui.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="style.css" />
+    <link rel="stylesheet" type="text/css" href="style1.css" />
 
     <!-- phantom library, needed for XDK "legacy" container api calls -->
     <script src="intelxdk.js"></script>
@@ -37,6 +37,16 @@
             $.ui.launch();
         });
     </script>
+    
+    <script>
+        
+        function accessedArticle(article)
+        {
+            window.location.href = "tcappweb1://" + "Accessed%20Article/"+ "Pleasant%20Activities/" + article;
+            
+            //alert(window.location.href);
+        }
+    </script>
 </head>
 <body vlink="black" link="black">
 <font size="3">
@@ -45,8 +55,8 @@
     <!--List View Page-->
         <div class="panel" title="Pleasant Activities" id="listview" data-footer="none" selected="true">
             <ul class="list">
-
-                <a href="#item1">
+                <b>
+                <a href="#item1" onclick="accessedArticle('Introduction%20to%20Pleasant%20Activities')">
                 <div class="list-div">
                   <li>
                     Introduction to Pleasant Activities
@@ -55,7 +65,7 @@
                 </div>
                 </a>
 
-                <a href="#item2">
+                <a href="#item2"  onclick="accessedArticle('Planning')">
                   <div class="list-div">
                     <li>
                     Planning
@@ -64,7 +74,7 @@
                   </div>
                   </a>
 
-                <a href="#item3">
+                <a href="#item3" onclick="accessedArticle('Values')">
                 <div class="list-div">
                   <li>
                     Values
@@ -73,7 +83,7 @@
                 </div>
                 </a>
 
-                 <a href="#item4">
+                 <a href="#item4" onclick="accessedArticle('Step%201:%20Make%20a%20list%20of%20pleasant%20activities')">
                  <div class="list-div">
                    <li>
                      Step 1: Make a list of pleasant activities
@@ -82,7 +92,7 @@
                  </div>
                  </a>
 
-                <a href="#item5">
+<a href="#item5" onclick="accessedArticle('Step%202:%20Plan%20pleasant%20activities')">
                 <div class="list-div">
                   <li>
                     Step 2: Plan pleasant activities
@@ -91,7 +101,7 @@
                 </div>
                 </a>
 
-                <a href="#item6">
+                <a href="#item6" onclick="accessedArticle('Step%203:%20Evaluate')">
                 <div class="list-div">
                   <li>
                     Step 3: Evaluate
@@ -99,6 +109,7 @@
                   <img class="next-chevron" align="right" src="Next-Arrow.png"></img>
                 </div>
                 </a>
+                <b>
                 </ul>
 
         </div>
@@ -108,26 +119,26 @@
         <div class="panel" title=" " id="item1" data-footer="none">
 
 
-			<p>Some people with tinnitus feel like they can&rsquo;t enjoy life again unless the tinnitus is quieter or gone. Because of this, they may stop doing many of their usual activities, especially activities they enjoy. </p>
+			<p style="padding-bottom:10px;">Some people with tinnitus feel like they can&rsquo;t enjoy life again unless the tinnitus is quieter or gone. Because of this, they may stop doing many of their usual activities, especially activities they enjoy. </p>
 			<p></p>
-			<p>If you are doing fewer activities because of tinnitus, then you are more likely to be focused on your tinnitus, and you are more likely to feel unhappy. </p>
+			<p style="padding-bottom:10px;">If you are doing fewer activities because of tinnitus, then you are more likely to be focused on your tinnitus, and you are more likely to feel unhappy. </p>
 			<p></p>
-			<p>One way to start feeling better is to plan pleasant activities even when your tinnitus is bothering you. Pleasant activities can help you enjoy life and pay less attention to your tinnitus. </p>
+			<p style="padding-bottom:10px;">One way to start feeling better is to plan pleasant activities even when your tinnitus is bothering you. Pleasant activities can help you enjoy life and pay less attention to your tinnitus. </p>
 			<p></p>
-			<p>At first, you might feel like you are &ldquo;relearning&rdquo; how to enjoy pleasant activities. The activities might be harder to enjoy than they were without tinnitus. With time, you can learn to enjoy the activities even with tinnitus. </p>
+			<p style="padding-bottom:10px;">At first, you might feel like you are &ldquo;relearning&rdquo; how to enjoy pleasant activities. The activities might be harder to enjoy than they were without tinnitus. With time, you can learn to enjoy the activities even with tinnitus. </p>
 
         </div>
 
         <div class="panel" title=" " id="item2" data-footer="none">
-            <p><p> One way to increase pleasant activities is to plan ahead. This may sound simple, but most of the time we wait until we feel better to do something we enjoy. </p>
+            <p style="padding-bottom:10px;"> One way to increase pleasant activities is to plan ahead. This may sound simple, but most of the time we wait until we feel better to do something we enjoy. </p>
 <p></p>
-<p> If you let how you feel guide what you do, then you may end up staying home and not doing anything. If you schedule pleasant activities you will find it easier to do something you enjoy. As a result, you may feel more pleasure! </p>
+<p style="padding-bottom:10px;"> If you let how you feel guide what you do, then you may end up staying home and not doing anything. If you schedule pleasant activities you will find it easier to do something you enjoy. As a result, you may feel more pleasure! </p>
 <p></p>
-<p> Plan at least one pleasant activity each day. The Tinnitus Coach has a list of activities you can look at for ideas. It can also help you schedule pleasant activities </p>
+<p style="padding-bottom:10px;"> Plan at least one pleasant activity each day. The Tinnitus Coach has a list of activities you can look at for ideas. It can also help you schedule pleasant activities </p>
  </p>
 
         <div class="panel" title=" " id="item3" data-footer="none">
-		<p><p> When thinking about which activities are the best fit for you, think about what you value in life. Values are like directions on a compass--they point you where you wish to go.  Values can be things like caring for others, service, adventure, scholarship, leadership, faith, family, love, discipline, focus, or fitness.    </p>
+		<p style="padding-bottom:10px;"> When thinking about which activities are the best fit for you, think about what you value in life. Values are like directions on a compass--they point you where you wish to go.  Values can be things like caring for others, service, adventure, scholarship, leadership, faith, family, love, discipline, focus, or fitness.    </p>
 <p></p>
 <p spacebelow="10"> If you pick pleasant activities that fit with your values, the activities can add meaning to your life. The Tinnitus Coach guides you to choose activities based on your values.    </p> </p>
 
@@ -136,7 +147,7 @@
 
 
         <div class="panel" title=" " id="item4" data-footer="none">
-            <p>Make a list of 10 pleasant activities that you would enjoy. These activities can be done with other people or just by yourself. Make sure that each activity is pleasant for you.<br>
+            <p style="padding-bottom:10px;">Make a list of 10 pleasant activities that you would enjoy. These activities can be done with other people or just by yourself. Make sure that each activity is pleasant for you.<br>
  		 </p>
         </div>
 
@@ -146,7 +157,7 @@
 
         <div class="panel" title=" " id="item6" data-footer="none">
             <p>
-            <p> Once per week ask yourself the following questions: </p>
+            <p style="padding-bottom:10px;"> Once per week ask yourself the following questions: </p>
 
             <ol>
                 <li> 1. Did I do all of my scheduled pleasant activities each day?</li>

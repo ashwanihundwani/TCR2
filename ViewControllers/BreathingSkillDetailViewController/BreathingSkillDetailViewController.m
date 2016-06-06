@@ -2,7 +2,7 @@
 //  SkillDetailViewController.m
 //  TinnitusCoach
 //
-//  Created by Vikram Singh on 3/22/15.
+//  Created by Creospan on 3/22/15.
 //  Copyright (c) 2015 Creospan. All rights reserved.
 //
 
@@ -10,6 +10,9 @@
 #import "BreathingSkillDetailViewController.h"
 #import "NookDB.h"
 #import "MBProgressHUD.h"
+
+#import "SwiperViewController.h"
+#import "IntroPageInfo.h"
 
 
 @interface BreathingSkillDetailViewController ()
@@ -23,15 +26,28 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = [self.skillDict valueForKey:@"skillName"];
-
-    
     if (![[PersistenceStorage getObjectForKey:@"shownBreathingIntro"] isEqual: @"OK"])
-        
     {
+        NSMutableArray *pageInfos = [NSMutableArray array];
         
+        IntroPageInfo *info = [[IntroPageInfo alloc] initWithimage:[UIImage imageNamed:@"Intro2image1.png"] title: @"Why is \"Deep Breathing\" helpful?" description:DEEP_BREATHING_INTRO_PAGE1_TEXT];
         
-        BreathingIntroDetailViewController *siv = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"BreathingIntroDetailViewController"];
-        [self.navigationController pushViewController:siv animated:YES];
+        [pageInfos addObject:info];
+        
+        IntroPageInfo *info2 = [[IntroPageInfo alloc] initWithimage:[UIImage imageNamed:@"Intro2image2.png"] title: @"How can  \"Deep Breathing\" help me with my tinnitus?" description:DEEP_BREATHING_INTRO_PAGE2_TEXT];
+        
+        [pageInfos addObject:info2];
+        IntroPageInfo *info3 = [[IntroPageInfo alloc] initWithimage:[UIImage imageNamed:@"Intro2image3.png"] title: @"How do I do \"Deep Breathing\"?" description:DEEP_BREATHING_INTRO_PAGE3_TEXT];
+        
+        [pageInfos addObject:info3];
+        
+        SwiperViewController *swiper = [[SwiperViewController alloc]init];
+        
+        swiper.pageInfos = pageInfos;
+        
+        swiper.header = @"Welcome to Deep Breathing";
+        
+        [self.navigationController pushViewController:swiper animated:YES];
         
     }
     
@@ -51,8 +67,27 @@
 }
 
 -(IBAction)viewIntroductionAgainClicked:(id)sender{
-    BreathingIntroDetailViewController *siv = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"BreathingIntroDetailViewController"];
-    [self.navigationController pushViewController:siv animated:YES];
+    
+    NSMutableArray *pageInfos = [NSMutableArray array];
+    
+    IntroPageInfo *info = [[IntroPageInfo alloc] initWithimage:[UIImage imageNamed:@"Intro2image1.png"] title: @"Why is \"Deep Breathing\" helpful?" description:DEEP_BREATHING_INTRO_PAGE1_TEXT];
+    
+    [pageInfos addObject:info];
+    
+    IntroPageInfo *info2 = [[IntroPageInfo alloc] initWithimage:[UIImage imageNamed:@"Intro2image2.png"] title: @"How can  \"Deep Breathing\" help me with my tinnitus?" description:DEEP_BREATHING_INTRO_PAGE2_TEXT];
+    
+    [pageInfos addObject:info2];
+    IntroPageInfo *info3 = [[IntroPageInfo alloc] initWithimage:[UIImage imageNamed:@"Intro2image3.png"] title: @"How do I do \"Deep Breathing\"?" description:DEEP_BREATHING_INTRO_PAGE3_TEXT];
+    
+    [pageInfos addObject:info3];
+    
+    SwiperViewController *swiper = [[SwiperViewController alloc]init];
+    
+    swiper.pageInfos = pageInfos;
+    
+    swiper.header = @"Welcome to Deep Breathing";
+    
+    [self.navigationController pushViewController:swiper animated:YES];
 
 }
 
@@ -73,19 +108,12 @@
         hud.labelText = @"Added Skill";
         
         [hud show:YES];
-        [hud hide:YES afterDelay:1];    }
+        [hud hide:YES afterDelay:1];
+    }
     else{
         NSLog(@"Error");
     }
-    
-    
-    
     [self writeAddedSkill];
-    
-    
-    
-    
-    
     
 }
 
@@ -93,8 +121,6 @@
 
 
 -(void)writeAddedSkill{
-    //  NSURL *path = [self getUrlOfFiles:@"TinnitusCoachUsageData.csv"];
-    
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0];
     NSString *documentTXTPath = [documentsDirectory stringByAppendingPathComponent:@"TinnitusCoachUsageData.csv"];
@@ -132,18 +158,12 @@
 -(IBAction)addSkillToPlan:(id)sender
 {
     [self writeToMySkills];
+    [self performSelector:@selector(navigateBacktoPlan) withObject:nil afterDelay:1.2];
+    
+}
+
+-(void)navigateBacktoPlan{
     [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:[self.navigationController.viewControllers count]-3] animated:YES];
-
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

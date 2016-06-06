@@ -11,6 +11,9 @@
 #import "SamplerViewController.h"
 #import "HomeViewController.h"
 
+
+
+
 @interface CTFRatingsViewController : UIViewController
 @property(nonatomic,strong) NSString *skillSection;
 @property(nonatomic,strong) NSString *skillDetail;

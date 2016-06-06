@@ -19,8 +19,6 @@
     NSURLRequest *requestObj = [NSURLRequest requestWithURL:url];
     [_viewWeb loadRequest:requestObj];
     
-    
-    
 }
 
 

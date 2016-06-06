@@ -9,8 +9,11 @@
 
         <link rel="stylesheet" type="text/css" href="af.ui.css" />
         <link rel="stylesheet" type="text/css" href="icons.css" />
-        <script type="text/javascript" charset="utf-8" src="appframework.ui.min.js"></script>
-        <link rel="stylesheet" type="text/css" href="style.css" />
+        <script type="text/javascript" charset="utf-8" src="appframework.ui.min.js">
+            
+            
+        </script>
+        <link rel="stylesheet" type="text/css" href="style1.css" />
 
         <!-- phantom library, needed for XDK "legacy" container api calls -->
         <script src="intelxdk.js"></script>
@@ -20,7 +23,9 @@
         <script src="xhr.js"></script>
 
         <script>
-            var onDeviceReady=function(){                             // called when Cordova is ready
+            var onDeviceReady=function(){
+                
+                // called when Cordova is ready
                 if( window.Cordova && navigator.splashscreen ) {     // Cordova API detected
                     $.ui.launch();
                     navigator.splashscreen.hide() ;                 // hide splash screen
@@ -32,11 +37,25 @@
         <script>
             $.ui.autoLaunch = false;
             $.ui.backButtonText = "Guided Meditation";
-
+            
+            
             $(document).ready(function(){
                               $.ui.launch();
                               });
             </script>
+        <script>
+        
+            </script>
+        
+        <script>
+            
+            function accessedArticle(article)
+            {
+                window.location.href = "tcappweb1://" + "Accessed%20Article/"+ "Guided%20Meditation/" + article;
+                
+                //alert(window.location.href);
+            }
+        </script>
     </head>
 
     <body vlink="black" link="black" bgcolor="white">
@@ -47,29 +66,30 @@
                     <!--List View Page-->
                     <div class="panel" title="Guided Meditation" id="listview" data-footer="none" selected="true">
                         <ul class="list">
-                            <a href="#item1"><div class="list-div"><li>What is mindfulness?</li>
+                            <b>
+                            <a href="#item1" onclick="accessedArticle('What%20is%20mindfulness?')"><div class="list-div"><li>What is mindfulness?</li>
                             <img class="next-chevron" align="right" src="Next-Arrow.png"></img>
                             </div></a>
-                            <a href="#item2"><div class="list-div"><li>How can mindfulness help someone with tinnitus?</li>
+                            <a href="#item2" onclick="accessedArticle('How%20can%20mindfulness%20help%20someone%20with%20tinnitus?')"><div class="list-div"><li>How can mindfulness help someone with tinnitus?</li>
                             <img class="next-chevron" align="right" src="Next-Arrow.png"></img>
                             </div></a>
-                            <a href="#item3"><div class="list-div"><li>How to: Everyday Mindfulness</li>
+                            <a href="#item3" onclick="accessedArticle('How%20to: everyday%20mindfulness')"><div class="list-div"><li>How to: everyday mindfulness</li>
                             <img class="next-chevron" align="right" src="Next-Arrow.png"></img>
                             </div></a>
-                             <a href="#item4"><div class="list-div"><li>How to: Mindful Breathing</li>
+                             <a href="#item4" onclick="accessedArticle('How%20to: mindful%20breathing')"><div class="list-div"><li>How to: mindful breathing</li>
                              <img class="next-chevron" align="right" src="Next-Arrow.png"></img>
                              </div></a>
-                            <a href="#item5"><div class="list-div"><li>What is guided meditation?</li>
+                            <a href="#item5" onclick="accessedArticle('What%20is%20guided%20meditation?')"><div class="list-div"><li>What is guided meditation?</li>
                             <img class="next-chevron" align="right" src="Next-Arrow.png"></img>
                             </div></a>
-
+                            </b>
                         </ul>
                     </div>
 
                     <!--Detail View Pages for each list items-->
                     <div class="panel" title=" " id="item1" data-footer="none">
                       <br />
-                        <p>  Mindfulness is becoming a "detached observer" of your own body and mind.</p>
+                        <p style="padding-bottom:10px;">  Mindfulness is becoming a "detached observer" of your own body and mind.</p>
 
                           <p>This means being non-judgmentally aware and accepting of pleasant and unpleasant events, thoughts, sensations, and emotions in the present moment, including the experience of tinnitus.  </p>
                         <br />
@@ -94,6 +114,7 @@
 <div class="panel" title="   " id="item4" data-footer="none">
   <br />
     <p>Another way to practice mindfulness is to spend time focusing your attention on breathing. </p>
+    <br />
       <p>Set aside time to complete this activity without interruption. Find a quiet place to sit and tell other people you need some quiet time alone. Make sure your phone won't ring. Sit comfortably with your back straight.
     </p>
     <br />
@@ -119,16 +140,16 @@
 
 <div class="panel" title="   " id="item5" data-footer="none">
 <br />
-<p>Guided meditation is a good way to learn to relax. You listen to a voice that will guide you through breathing and mental imagery exercises.</p> <p>There are six different guided meditation exercises that are available for you to use as a part of this program. Each audio recording guides you through a different way of helping the body and mind relax.
+<p style="padding-bottom:10px;">Guided meditation is a good way to learn to relax. You listen to a voice that will guide you through breathing and mental imagery exercises.</p> <p>There are six different guided meditation exercises that are available for you to use as a part of this program. Each audio recording guides you through a different way of helping the body and mind relax.
     </p>
     <br />
-    <p>
+    <p style="padding-bottom:10px;">
     You can let the recordings lead you through each exercise every time you want to use them. Or, once you are familiar with the exercises, you can practice them on your own. Use these anytime you wish to feel refreshed and relaxed. Below is a description of each guided meditation available in the Tinnitus Coach.</p>
                         <br />
                         <br>
                         <p><b>Mindful Breathing</b></p>
                          Allow yourself to find a quiet place in your mind by focusing on your breathing.
-                        <p><audio controls autoplay>
+                        <p><audio controls autoplay onplaying="playAudio('200', 'Mindful-Breathing')" id = "200">
                             <source src="5MindfulBreathing.mp3" type="audio/mpeg" />
                         </audio>
                         <br>
@@ -136,14 +157,14 @@
 
 
                         Visualize your breath moving through parts of your body while becoming aware of all sensations you feel.
-                        <p><audio controls autoplay>
+                        <p><audio controls autoplay onplaying="playAudio('201', 'Body-Scan')" id = "201" >
                             <source src="3BodyScan.mp3" type="audio/mpeg" />
                         </audio>
                         <br>
                         <br><p><b>Passive Muscle Relaxation</b></p>
 
 
-Focus on parts of your body while breathing deeply to induce relaxation.                        <p><audio controls autoplay>
+Focus on parts of your body while breathing deeply to induce relaxation.                        <p><audio controls autoplay onplaying="playAudio('202', 'Passive-Muscle-Relaxation')" id = "202">
                             <source src="2PassiveMuscleRelaxation.mp3" type="audio/mpeg" />
                         </audio>
 
@@ -151,7 +172,7 @@ Focus on parts of your body while breathing deeply to induce relaxation.        
                         <br><p><b> Progressive Muscle Relaxation</b></p>
 
 
-In this exercise, you tense each part of the body in turn and then let the tension go.                          <p><audio controls autoplay>
+In this exercise, you tense each part of the body in turn and then let the tension go.                          <p><audio controls autoplay onplaying="playAudio('203','Progressive-Muscle-Relaxation')" id = "203">
                             <source src="1ProgressiveMuscleRelaxation.mp3" type="audio/mpeg" />
                         </audio>
 
@@ -159,7 +180,7 @@ In this exercise, you tense each part of the body in turn and then let the tensi
                         <br><p><b>Mountain Stream Imagery</b></p>
 
 
-Use the power of visualization to follow a path to a cool mountain stream where you will be calm, relaxed and refreshed.                         <p><audio controls autoplay>
+Use the power of visualization to follow a path to a cool mountain stream where you will be calm, relaxed and refreshed.                         <p><audio controls autoplay onplaying="playAudio('204','Mountain-Stream-Imagery')" id = "204">
                             <source src="4MountainStreamImagery.mp3" type="audio/mpeg" />
                         </audio>
 
@@ -168,7 +189,7 @@ Use the power of visualization to follow a path to a cool mountain stream where 
 
 
                         This will guide you through a visualization exercise to help you grow tired and sleepy. Listen to this recording to help you fall asleep.
-                        <p><audio controls autoplay>
+                        <p><audio controls autoplay id = "205" onplaying="playAudio('205','Circling-to-Sleep')">
                             <source src="CirclingToSleep.mp3" type="audio/mpeg" />
                         </audio>
 
@@ -178,7 +199,27 @@ Use the power of visualization to follow a path to a cool mountain stream where 
 
                     </div>
 
-
                     </div>
+                    <script>
+                        
+                        var playingAudioId = "";
+                        function playAudio(audioID, audioName)
+                        {
+                            window.location.href = "tcappweb://" + "Played-Sound/" + audioName;
+                            if(playingAudioId == audioID) return;
+                            
+                            if(playingAudioId == "")
+                            {
+                                
+                            }
+                            else
+                            {
+                                document.getElementById(playingAudioId).pause();
+                            }
+                    
+                            playingAudioId = audioID;
+                        }
+                    </script>
     </body>
+    
 </html>

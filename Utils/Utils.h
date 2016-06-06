@@ -70,7 +70,13 @@ typedef enum
                     target:(id)target
                   selector:(SEL)selector;
 
++(void)addSwipeGestureToView:(UIView *)view
+                      target:(id)target
+                    selector:(SEL)selector;
+
 +(UIFont *)helveticaNueueFontWithSize:(NSInteger)size;
+
++(UIFont *)helveticaNueueMediumFontWithSize:(NSInteger)size;
 
 +(Pair *)getColorFontPair:(EPallete)pallete;
 
@@ -92,5 +98,8 @@ typedef enum
                             width:(CGFloat)width
                              font:(UIFont *)font;
 
++(NSInteger)getNumDaysToNextMonday;
+
++(NSString *)getValidSqlString:(NSString *)inputString;
 
 @end

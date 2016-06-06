@@ -9,7 +9,7 @@
 #import "ValueAndActivitiesViewController.h"
 
 @interface ValueAndActivitiesViewController ()<UITableViewDelegate,UITableViewDataSource>{
-   NSArray *valueandActivityArray;
+    NSArray *valueandActivityArray;
 }
 @property (nonatomic, strong) DBManager *dbManagerValues;
 
@@ -17,12 +17,95 @@
 
 @implementation ValueAndActivitiesViewController
 
+-(CGFloat)heightForIndexPath:(NSIndexPath *)indexPath
+{
+    CGFloat constant = 27;
+    
+    CGFloat labelHeight = [Utils heightForLabelForString:[valueandActivityArray objectAtIndex:indexPath.row] width:230 font:TITLE_LABEL_FONT];
+    
+    constant += labelHeight;
+    
+    return constant;
+    
+}
+
+-(UIView *)tableHeaderView
+{
+    UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 30)];
+    
+    UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(22, 15, 276, 20)
+                           ];
+    titleLabel.numberOfLines = 1000;
+    titleLabel.backgroundColor = [UIColor clearColor];
+    view.backgroundColor = [Utils colorWithHexValue:@"EFEFF4"];
+    
+    titleLabel.text = @"Click on the value below to see a list of activities that fit that value.";
+    
+    Pair *pallete = [Utils getColorFontPair:eCFS_PALLETE_2];
+    
+    titleLabel.font = pallete.secondObj;
+    titleLabel.textColor = pallete.firstObj;
+    
+    CGFloat height = [Utils heightForLabelForString:titleLabel.text width:276 font:pallete.secondObj];
+    
+    titleLabel.height = height;
+    
+    view.height += height;
+    
+    [view addSubview:titleLabel];
+    
+    return view;
+}
+
+
+-(void)cancel
+{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-     self.title = @"Values and Activities";
+    self.valueActivityTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    
+    UIView *titleView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 200, 44)];
+    
+    titleView.backgroundColor = [Utils colorWithHexValue:NAV_BAR_BLACK_COLOR];
+    
+    UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 200, 44)];
+    
+    Pair *pallete = [Utils getColorFontPair:eCFS_PALLETE_1];
+    
+    titleLabel.font = pallete.secondObj;
+    titleLabel.textColor = pallete.firstObj;
+    titleLabel.textAlignment = NSTextAlignmentCenter;
+    titleLabel.backgroundColor = [UIColor clearColor];
+    titleLabel.text = @"Values and Activities";
+    
+    [titleView addSubview:titleLabel];
+    
+    self.navigationItem.titleView = titleView;
+    
+    UIImageView *backLabel = [[UIImageView alloc]initWithFrame:CGRectMake(10, 10, 15, 20)];
+    
+    backLabel.image = [UIImage imageNamed:@"Active_Back-Arrow.png"];
+    
+    [Utils addTapGestureToView:backLabel target:self
+                      selector:@selector(cancel)];
+    
+    UIBarButtonItem *item = [[UIBarButtonItem alloc]initWithCustomView:backLabel];
+    
+    UIBarButtonItem *negativeSpacer = [[UIBarButtonItem alloc]
+                                       initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace
+                                       target:nil action:nil];
+    negativeSpacer.width = -8;
+    
+    self.navigationItem.leftBarButtonItems = [NSArray arrayWithObjects:negativeSpacer, item, nil];
+    self.valueActivityTableView.tableHeaderView = [self tableHeaderView];
     self.dbManagerValues = [[DBManager alloc]initWithDatabaseFileName:@"GNResoundDB.sqlite"];
-     [self setupTable];
+    [self setupTable];
 }
+
 
 -(void)setupTable{
     [self.valueActivityTableView setDataSource:self];
@@ -37,56 +120,85 @@
     return [valueandActivityArray count];
 }
 
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return [self heightForIndexPath:indexPath];
+}
+
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     UITableViewCell *cell;
-    cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];
+    cell = [tableView dequeueReusableCellWithIdentifier:@"ValueCell"];
     if (cell==nil) {
-        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Cell"];
+        
+        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"ValueCell"];
+        
+        UIImageView *accessory = [[UIImageView alloc]initWithFrame:CGRectMake(286, 15, 13, 13)];
+        
+        accessory.tag = 12323;
+        
+        [accessory setImage:[UIImage imageNamed:@"Active_Next-Arrow.png"]];
+        
+        [cell addSubview:accessory];
+        
+        UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(22 , 13, 230, 20)];
+        
+        titleLabel.numberOfLines = 1000;
+        
+        titleLabel.tag = 1007;
+        
+        Pair *pallete = [Utils getColorFontPair:eCFS_PALLETE_4];
+        
+        titleLabel.font = pallete.secondObj;
+        titleLabel.textColor = pallete.firstObj;
+        
+        [cell addSubview:titleLabel];
+        
+        UIView *separator = [[UIView alloc]initWithFrame:CGRectMake(22, 43, 298, 1)];
+        
+        separator.tag = 345;
+        
+        separator.backgroundColor = [Utils colorWithHexValue:@"EEEEEE"];
+        
+        [cell addSubview:separator];
     }
-    cell.textLabel.text = [valueandActivityArray objectAtIndex:indexPath.row];
-
-    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    UILabel *label = (UILabel *)[cell viewWithTag:1007];
+    
+    label.text = [valueandActivityArray objectAtIndex:indexPath.row];
+    
+    CGFloat labelHeight = [Utils heightForLabelForString:[valueandActivityArray objectAtIndex:indexPath.row] width:230 font:TITLE_LABEL_FONT];
+    
+    label.height = labelHeight;
+    
+    UIView *separator = [cell viewWithTag:345];
+    
+    CGFloat height = [self heightForIndexPath:indexPath];
+    
+    separator.y = height - 1;
+    
+    UIImageView *accessory = (UIImageView *)[cell viewWithTag:12323];
+    
+    accessory.y = height/2 - accessory.height/2;
+    
+    
     return cell;
 }
+
 
 #pragma mark UITableViewDelegate
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     NSString *valName = [valueandActivityArray objectAtIndex:indexPath.row];
-   
-
     NSString *query = [NSString stringWithFormat: @"select ValueDescription from Plan_Values where valueName = '%@'", valName];
- 
-    
-    
     NSArray *mySoundsArray = [[NSArray alloc] initWithArray:[self.dbManagerValues loadDataFromDB:query]];
-    
-    
     [PersistenceStorage setObject:valName andKey:@"valueName"];
-    
-    
     NSArray *temp=  [mySoundsArray valueForKey:@"valueDescription"];
-    
-    
-    
-//    [PersistenceStorage setObject:[mySoundsArray valueForKey:@"valueDescription"] andKey:@"valueDescriptiontemp"];
-
-NSLog(@"%@",[temp objectAtIndex:0]);
-    
-    
     [PersistenceStorage setObject:[temp objectAtIndex:0] andKey:@"valueDescription"];
-
-  //  [[[PersistenceStorage getObjectForKey:@"valueDescriptiontemo"] allObjects]objectAtIndex:0];
-    
-    
-    
     if (indexPath.row < 400) {
-        
-
-        
         ActivitiesViewController *avc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"ActivitiesViewController"];
         [self.navigationController pushViewController:avc animated:YES];
     }
 }
+
 
 -(BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath{
     return NO;
@@ -97,14 +209,5 @@ NSLog(@"%@",[temp objectAtIndex:0]);
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

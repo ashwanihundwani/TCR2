@@ -2,8 +2,8 @@
 //  ViewController.m
 //  testAudioPanning
 //
-//  Created by Vikram Singh on 3/15/15.
-//  Copyright (c) 2015 Vikram Singh. All rights reserved.
+//  Created by Creospan on 3/15/15.
+//  Copyright (c) 2015 Creospan. All rights reserved.
 //
 
 #import "AudioPlayerViewController.h"
@@ -32,56 +32,26 @@
     [super viewDidLoad];
      self.title = @"Sound Player";
     // Do any additional setup after loading the view, typically from a nib.
-   // self.tintColor= [UIColor purpleColor];
     [self createAndDisplayMPVolumeView];
-
     [self initializeAudioPlayerWith:@"rain.mp3"];
-    
-    
     NSError *sessionError = nil;
-//    [[AVAudioSession sharedInstance] setDelegate:self];
     [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:&sessionError];
-    
-    
     [self.audioPlayer setVolume:1.0];
-    
-    
-   
-//     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(movieFinishedCallback:) name:MPMoviePlayerPlaybackDidFinishNotification object:self.videoPlayer.moviePlayer];
+
 }
 
 
-
 -(void) createAndDisplayMPVolumeView
-
 {
-    
     // Create a simple holding UIView and give it a frame
-    
     UIView *volumeHolder = [[UIView alloc] initWithFrame: CGRectMake(64, 474, 195, 25)];
-    
-    
-    
     // set the UIView backgroundColor to clear.
-    
     [volumeHolder setBackgroundColor: [UIColor clearColor]];
-    
-    
-    
     // add the holding view as a subView of the main view
-    
     [self.view addSubview: volumeHolder];
-    
-    
-    
     // Create an instance of MPVolumeView and give it a frame
-    
     MPVolumeView *myVolumeView = [[MPVolumeView alloc] initWithFrame: volumeHolder.bounds];
-    
-    
-    
     // Add myVolumeView as a subView of the volumeHolder
-    
     [volumeHolder addSubview: myVolumeView];
     
 }
@@ -108,18 +78,16 @@
     [super viewWillAppear:animated];
     [self.tabBarController.tabBar setHidden:YES] ;
     UIBarButtonItem *doneButton = [[UIBarButtonItem alloc]initWithTitle:@"Done" style:UIBarButtonItemStyleDone target:self action:@selector(doneTapped)];
-  //  self.navigationItem.rightBarButtonItems = @[doneButton];
-    //self.navigationItem.rightBarButtonItem = doneButton;
-     self.navigationItem.rightBarButtonItem = doneButton;
-self.navigationItem.hidesBackButton = YES;
-        self.soundNameLabel.text = self.name;
+    self.navigationItem.rightBarButtonItem = doneButton;
+    self.navigationItem.hidesBackButton = YES;
+    self.soundNameLabel.text = self.name;
     if (self.panning == audio ) {
         self.soundNameLabel.hidden = NO;
         self.videoPlayer.view.hidden = YES;
     }else{
         self.soundNameLabel.hidden = YES;
         self.videoPlayer.view.hidden = NO;
-
+        
     }
 }
 
@@ -133,43 +101,32 @@ self.navigationItem.hidesBackButton = YES;
 
 -(void)playVideo{
     if (self.videoPlayer.playbackState == MPMoviePlaybackStateStopped) {
-     
-        
-    NSString *str = [[NSBundle mainBundle]pathForResource:self.videoURL ofType:nil];
-    NSURL *url = [NSURL fileURLWithPath:
-                  str];
-    self.videoPlayer.shouldAutoplay = YES;
-
-   self.videoPlayer = [[MPMoviePlayerController alloc]
-                                           initWithContentURL:url];
-    self.videoPlayer.movieSourceType = MPMovieSourceTypeFile;
-
-   // self.videoPlayer.view.frame = CGRectMake(25, self.viewForControl.frame.origin.y + self.viewForControl.frame.size.height +30, self.view.bounds.size.width-45, 120);
         
         
+        NSString *str = [[NSBundle mainBundle]pathForResource:self.videoURL ofType:nil];
+        NSURL *url = [NSURL fileURLWithPath:
+                      str];
+        self.videoPlayer.shouldAutoplay = YES;
         
-     
-          self.videoPlayer.view.frame = CGRectMake(5, self.viewForControl.frame.origin.y-150 + self.viewForControl.frame.size.height +30, self.view.bounds.size.width-15, 400);
+        self.videoPlayer = [[MPMoviePlayerController alloc]
+                            initWithContentURL:url];
+        self.videoPlayer.movieSourceType = MPMovieSourceTypeFile;
+        self.videoPlayer.view.frame = CGRectMake(5, self.viewForControl.frame.origin.y-150 + self.viewForControl.frame.size.height +30, self.view.bounds.size.width-15, 400);
         
-    [self.view addSubview:self.videoPlayer.view];
+        [self.view addSubview:self.videoPlayer.view];
         self.audioSeekSlider.minimumValue = 0;
         self.audioSeekSlider.maximumValue = self.videoPlayer.duration;
-
-    // Set shouldAutoplay to YES
+        
+        // Set shouldAutoplay to YES
         [self.videoPlayer prepareToPlay];
         [self.videoPlayer play];
-        
-        
-       
+    }
+    else{
+        [self.videoPlayer play];
         
     }
-
-else{
-    
-    [self.videoPlayer play];
-
 }
-}
+
 
 -(void)initializeAudioPlayerWith:(NSString *)fileName
 {
@@ -192,21 +149,15 @@ else{
     // Get conversion to hours, minutes, seconds
     unsigned int unitFlags = NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond;
     NSDateComponents *breakdownInfo = [sysCalendar components:unitFlags fromDate:date1  toDate:date2  options:0];
- 
-    
     self.endPointLabel.text = [NSString stringWithFormat:@"%02ld:%02ld:%02ld", (long)[breakdownInfo hour], (long)[breakdownInfo minute], (long)[breakdownInfo second]];
-    
     self.startPointLabel.text = [NSString stringWithFormat:@"00:00:00"];
-    
     self.audioSeekSlider.value = 0;
     self.audioPlayer.numberOfLoops = -1;
     self.audioSeekSlider.minimumValue = 0;
     self.audioSeekSlider.maximumValue = self.audioPlayer.duration;
-    
     [self.audioPlayer setVolume:self.volumeSeekSlider.value];
     [self.audioPlayer setPan:self.panSeekSlider.value];
     [self playSoundTapped:nil];
-
 
 }
 
@@ -231,19 +182,19 @@ else{
         }
         
     }else{
-    if ([self.audioPlayer isPlaying]) {
-        [self.audioPlayer pause];
-        [self.playPauseButton setTitle:@"Play" forState:UIControlStateNormal];
-        self.updateTimer = nil;
-
-    }
-    else
-    {
-        [self.audioPlayer play];
-        [self.playPauseButton setTitle:@"Pause" forState:UIControlStateNormal];
-        self.updateTimer = [NSTimer scheduledTimerWithTimeInterval:.01 target:self selector:@selector(updateCurrentTime) userInfo:self.audioPlayer repeats:YES];
-
-    }
+        if ([self.audioPlayer isPlaying]) {
+            [self.audioPlayer pause];
+            [self.playPauseButton setTitle:@"Play" forState:UIControlStateNormal];
+            self.updateTimer = nil;
+            
+        }
+        else
+        {
+            [self.audioPlayer play];
+            [self.playPauseButton setTitle:@"Pause" forState:UIControlStateNormal];
+            self.updateTimer = [NSTimer scheduledTimerWithTimeInterval:.01 target:self selector:@selector(updateCurrentTime) userInfo:self.audioPlayer repeats:YES];
+            
+        }
     }
 }
 
@@ -299,5 +250,13 @@ else{
     [self.audioPlayer stop]; // Or pause
     [self.videoPlayer stop];
 }
+
+#pragma mark - AVAudioPlayerDelegate
+
+- (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag{
+    [self.playPauseButton setTitle:@"Play" forState:UIControlStateNormal];
+    self.updateTimer = nil;
+}
+
 
 @end

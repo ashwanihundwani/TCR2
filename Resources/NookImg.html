@@ -10,7 +10,7 @@
         <link rel="stylesheet" type="text/css" href="af.ui.css" />
         <link rel="stylesheet" type="text/css" href="icons.css" />
         <script type="text/javascript" charset="utf-8" src="appframework.ui.min.js"></script>
-        <link rel="stylesheet" type="text/css" href="style.css" />
+        <link rel="stylesheet" type="text/css" href="style1.css" />
 
         <!-- phantom library, needed for XDK "legacy" container api calls -->
         <script src="intelxdk.js"></script>
@@ -36,7 +36,16 @@
             $(document).ready(function(){
                               $.ui.launch();
                               });
-            </script>
+                </script>
+            <script>
+                    
+                    function accessedArticle(article)
+                    {
+                        window.location.href = "tcappweb1://" + "Accessed%20Article/"+ "Imagery/" + article;
+                        
+                        //alert(window.location.href);
+                    }
+                </script>
     </head>
     <body vlink="black" link="black">
         <font size="3">
@@ -45,27 +54,29 @@
               <!--List View Page-->
               <div class="panel" title="Imagery" id="listview" data-footer="none" selected="true">
                   <ul class="list">
-                    <a href="#item1">
+                      <b>
+                    <a href="#item1" onclick="accessedArticle('Introduction%20to%20%27Imagery%27')">
                       <div class="list-div"><li>
                       Introduction to 'Imagery'
                       </li>
                       <img class="next-chevron" align="right" src="Next-Arrow.png"></img>
                     </div>
                     </a>
-                    <a href="#item2">
+                    <a href="#item2" onclick="accessedArticle('%27Imagery%27%20instructions%20-%20steps%201-4')">
                       <div class="list-div"><li>
                       'Imagery' instructions - steps 1-4
                       </li>
                       <img class="next-chevron" align="right" src="Next-Arrow.png"></img>
                     </div>
                     </a>
-                    <a href="#item3">
+                    <a href="#item3" onclick="accessedArticle('%27Imagery%27%20instructions%20-%20steps%205-7')">
                       <div class="list-div"><li>
                       'Imagery' instructions - steps 5-7
                     </li>
                     <img class="next-chevron" align="right" src="Next-Arrow.png"></img>
                   </div>
                     </a>
+                    </b>
                   </ul>
               </div>
 
@@ -83,17 +94,17 @@
                   <br />
                     <p> For videos on deep breathing, you can use the 'Imagery' skill in a plan.</p>
                       <br />
-                      <video width=300 controls>
+                      <video width=300 controls onplay="playVideo('Imagery-Video')">
                         <source src="ImageryLesson.mp4"></video></p>
 
-                    <p> Many more relaxation videos are available online at websites like YouTube.com.</font></p>
+                    <p> Many more relaxation videos are available online at websites like YouTube.com.</p>
                     <br />
                     <p><i> Step 1 of 7: </i></p>
 
                     <p>Choose a place you will imagine. You can imagine any place that would be calming and peaceful for you. You should feel safe there.</p> <br />
                     <p>When you are choosing what you will imagine, think about these things:
                       <br />
-                  <ol class="bullet-lists" style="margin-left: 20px; padding-left: 0px;">
+                  <ul class="bullet-lists" style="margin-left: 20px; padding-left: 0px;">
 
                     <li>The place: Where do you want to be?</li>
                     <p>Examples: the beach or in your kitchen</p>
@@ -112,24 +123,24 @@
 
                     	<li>Taste: What can you taste?</li>
                     <p>Examples: salty air, sweet berries, cool water, or warm food</p>
-                  </ol>
+                  </ul>
 
-                    <p> Choose a place you will imagine. You can imagine any place that would be calming and peaceful for you. You should feel safe there.</font></p>
+                    <p> Choose a place you will imagine. You can imagine any place that would be calming and peaceful for you. You should feel safe there.</p>
                     <br />
-                    <p><i> Step 2 of 7:</font></i></p>
-                    <p> Sit in a chair with your feet flat on the floor or propped up. Place your hands in your lap or on the arms of the chair. Make sure you are comfortable. </font></p>
+                    <p><i> Step 2 of 7:</i></p>
+                    <p> Sit in a chair with your feet flat on the floor or propped up. Place your hands in your lap or on the arms of the chair. Make sure you are comfortable. </p>
                     <br />
-                    <p><i> Step 3 of 7:</font></i></p>
-                    <p> Many people who have tinnitus find it useful to use sound while practicing relaxation techniques. You might consider using a neutral sound, or a sound that is soothing for you.</font></p>
+                    <p><i> Step 3 of 7:</i></p>
+                    <p> Many people who have tinnitus find it useful to use sound while practicing relaxation techniques. You might consider using a neutral sound, or a sound that is soothing for you.</p>
                     <br />
-                    <p><i> Step 4 of 7:</font></i></p>
-                    <p> Place one hand on your stomach and one hand on your chest. Take a normal breath in and notice which hand moves the most. Most likely it will be the hand on your chest. This shows that you tend to breathe shallow breaths from your chest. Now try to take a breath from your abdomen (stomach). You might feel like you are pushing your stomach out. That is how it feels when you are more relaxed and breathing more deeply. </font></p>
+                    <p><i> Step 4 of 7:</i></p>
+                    <p> Place one hand on your stomach and one hand on your chest. Take a normal breath in and notice which hand moves the most. Most likely it will be the hand on your chest. This shows that you tend to breathe shallow breaths from your chest. Now try to take a breath from your abdomen (stomach). You might feel like you are pushing your stomach out. That is how it feels when you are more relaxed and breathing more deeply.</p>
                     <p></p>  </p>
 
 
                     <div class="panel" title="   " id="item3" data-footer="none">
                     <br />
-                    <p> You can preview the 'Imagery' video below:</p>  <br /> <video width = 300 controls>
+                    <p> You can preview the 'Imagery' video below:</p>  <br /> <video width = 300 controls onplay="playVideo('Imagery-Video')">
                         <source src="ImageryLesson.mp4"></video></p>
                     <br />
                     <p> Many more relaxation videos are available online at websites like YouTube.com. </p>
@@ -159,15 +170,15 @@
                         </li>
                     </ul><p></p><br>
 
-                    <p><i> Step 7 of 7:</font></i></p>
+                    <p><i> Step 7 of 7:</i></p>
                     <p> When you are ready to stop the Deep Breathing exercise, count back from 3 to 1:
                         <br>
                         3 - Become aware of your surroundings
                         <br>2 - Move your feet, legs, hands, arms, and rotate your head
                         <br>1 - Open your eyes feeling relaxed
-                    </font></p>
+                    </p>
 
-                    </font></p>
+                    </p>
                     <p></p>
 
                     <p></p>  </p>
@@ -175,5 +186,10 @@
 
                 </div>
             </div>
+            <script>
+                function playVideo(videoName) {
+                    window.location.href = "tcappweb://" + "Played-Video/" + videoName;
+                }
+            </script>
             </body>
 </html>

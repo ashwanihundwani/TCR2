@@ -2,7 +2,7 @@
 //  ViewController.m
 //  testAudioPanning
 //
-//  Created by Vikram Singh on 3/15/15.
+//  Created by Creospan on 3/15/15.
 //  Copyright (c) 2015 Vikram Singh. All rights reserved.
 //
 
@@ -31,54 +31,24 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"Sound Player";
-    // Do any additional setup after loading the view, typically from a nib.
-    // self.tintColor= [UIColor purpleColor];
-    
     [self initializeAudioPlayerWith:@"rain.mp3"];
-    
-    
     NSError *sessionError = nil;
-    //    [[AVAudioSession sharedInstance] setDelegate:self];
     [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:&sessionError];
-    
-    
-    
-    
-    //     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(movieFinishedCallback:) name:MPMoviePlayerPlaybackDidFinishNotification object:self.videoPlayer.moviePlayer];
     [self createAndDisplayMPVolumeView];
 }
 
 
 -(void) createAndDisplayMPVolumeView
-
 {
-    
     // Create a simple holding UIView and give it a frame
-    
     UIView *volumeHolder = [[UIView alloc] initWithFrame: CGRectMake(64, 474, 195, 25)];
-    
-    
-    
     // set the UIView backgroundColor to clear.
-    
     [volumeHolder setBackgroundColor: [UIColor clearColor]];
-    
-    
-    
     // add the holding view as a subView of the main view
-    
     [self.view addSubview: volumeHolder];
-    
-    
-    
     // Create an instance of MPVolumeView and give it a frame
-    
     MPVolumeView *myVolumeView = [[MPVolumeView alloc] initWithFrame: volumeHolder.bounds];
-    
-    
-    
     // Add myVolumeView as a subView of the volumeHolder
-    
     [volumeHolder addSubview: myVolumeView];
     
 }
@@ -86,21 +56,12 @@
 
 
 - (void)viewDidAppear:(BOOL)animated
-
-{  //  [self playSoundTapped];
-    
-    
+{
     [self.audioPlayer setVolume:1.0];
-    
     self.navigationController.navigationBar.hidden = NO;
-    //   self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem://UIBarButtonSystemItemCancel target:self action:@selector(cancelAction)];
-    //  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(saveAction)];
-    
-    
 }
 
 -(void)movieFinishedCallback:(NSNotification*)aNotification {
-    // [self dismissMoviePlayerViewControllerAnimated];
     NSNumber *reason = [aNotification.userInfo objectForKey:MPMoviePlayerPlaybackDidFinishReasonUserInfoKey];
     if ([reason intValue] == MPMovieFinishReasonUserExited) {
         RatingsViewController *ratingsView = [[UIStoryboard storyboardWithName:@"Main"bundle:nil]instantiateViewControllerWithIdentifier:@"RatingsViewController"];
@@ -117,8 +78,6 @@
     [super viewWillAppear:animated];
     [self.tabBarController.tabBar setHidden:YES] ;
     UIBarButtonItem *doneButton = [[UIBarButtonItem alloc]initWithTitle:@"Done" style:UIBarButtonItemStyleDone target:self action:@selector(doneTapped)];
-    //  self.navigationItem.rightBarButtonItems = @[doneButton];
-    //self.navigationItem.rightBarButtonItem = doneButton;
     self.navigationItem.rightBarButtonItem = doneButton;
     self.navigationItem.hidesBackButton = YES;
     self.soundNameLabel.text = self.name;
@@ -147,8 +106,6 @@
 
 -(void)playVideo{
     if (self.videoPlayer.playbackState == MPMoviePlaybackStateStopped) {
-        
-        
         NSString *str = [[NSBundle mainBundle]pathForResource:self.videoURL ofType:nil];
         NSURL *url = [NSURL fileURLWithPath:
                       str];
@@ -157,12 +114,6 @@
         self.videoPlayer = [[MPMoviePlayerController alloc]
                             initWithContentURL:url];
         self.videoPlayer.movieSourceType = MPMovieSourceTypeFile;
-        
-        // self.videoPlayer.view.frame = CGRectMake(25, self.viewForControl.frame.origin.y + self.viewForControl.frame.size.height +30, self.view.bounds.size.width-45, 120);
-        
-        
-        
-        
         self.videoPlayer.view.frame = CGRectMake(5, self.viewForControl.frame.origin.y-150 + self.viewForControl.frame.size.height +30, self.view.bounds.size.width-15, 400);
         
         [self.view addSubview:self.videoPlayer.view];
@@ -172,10 +123,6 @@
         // Set shouldAutoplay to YES
         [self.videoPlayer prepareToPlay];
         [self.videoPlayer play];
-        
-        
-        
-        
     }
     
     else{
@@ -209,7 +156,6 @@
     unsigned int unitFlags = NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond;
     NSDateComponents *breakdownInfo = [sysCalendar components:unitFlags fromDate:date1  toDate:date2  options:0];
     
-    
     self.endPointLabel.text = [NSString stringWithFormat:@"%02ld:%02ld:%02ld", (long)[breakdownInfo hour], (long)[breakdownInfo minute], (long)[breakdownInfo second]];
     
     self.startPointLabel.text = [NSString stringWithFormat:@"00:00:00"];
@@ -229,10 +175,6 @@
 
 - (IBAction)playSoundTapped:(id)sender
 {
-    
-    
-    
-    
     // When button is tapped, play sound
     if (self.panning == video) {
         if (self.videoPlayer.playbackState == MPMoviePlaybackStatePlaying) {
@@ -267,6 +209,7 @@
     }
 }
 
+
 -(void)updateCurrentTimeForPlayer:(AVAudioPlayer *)p
 {
     self.startPointLabel.text = [NSString stringWithFormat:@"%02d:%02d:%02d", (int)p.currentTime / 3600, (int)p.currentTime / 60, (int)p.currentTime % 60, nil];
@@ -284,19 +227,10 @@
 
 -(IBAction)doneButtonTapped:(id)sender
 {
-    /*    RatingsViewController *ratingsView = [[UIStoryboard storyboardWithName:@"Main"bundle:nil]instantiateViewControllerWithIdentifier:@"RatingsViewController"];
-     ratingsView.skillSection = @"Sounds";
-     ratingsView.skillDetail = self.name;
-     
-     //[self.navigationController pushViewController:ratingsView animated:YES];
-     [self.navigationController presentModalViewController:ratingsView animated:YES];
-     
-     */
     [PersistenceStorage setObject:@"AudioPanningVC" andKey:@"Referer"];
     [self dismissModalViewControllerAnimated:NO];
-    
-    
 }
+
 
 -(IBAction)panSeekSliderValueChanged:(id)sender
 {
@@ -306,6 +240,7 @@
     }else{
     }
 }
+
 
 -(IBAction)volumeSeekSliderValueChanged:(id)sender
 {
@@ -319,10 +254,7 @@
 
 - (IBAction)sliderChanged:(id)sender {
     // Fast skip the music when user scroll the UISlider
-    //   [self.audioPlayer stop];
     [self.audioPlayer setCurrentTime:self.audioSeekSlider.value];
-    // [self.audioPlayer prepareToPlay];
-    //[self.audioPlayer play];
 }
 
 
@@ -338,6 +270,13 @@
     [super viewWillDisappear:animated];
     [self.audioPlayer stop]; // Or pause
     [self.videoPlayer stop];
+}
+
+#pragma mark - AVAudioPlayerDelegate
+
+- (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag{
+    [self.playPauseButton setTitle:@"Play" forState:UIControlStateNormal];
+    self.updateTimer = nil;
 }
 
 @end

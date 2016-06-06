@@ -9,10 +9,15 @@
 #import <UIKit/UIKit.h>
 #import "EmotionsCell.h"
 
-@interface CTF06NewOne : UIViewController <UITableViewDataSource, UITableViewDelegate>
 
-{	UISegmentedControl *segmentedControl;
+
+
+@interface CTF06NewOne : UIViewController <UITableViewDataSource, UITableViewDelegate>
+{
+    UISegmentedControl *segmentedControl;
 }
+
+
 @property (nonatomic,weak) IBOutlet UISegmentedControl *segmentedControl;
 
 @property (weak, nonatomic) IBOutlet UITextField *nameTextField;

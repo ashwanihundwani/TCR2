@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6250" systemVersion="14A389" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7702" systemVersion="14A389" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -14,42 +13,65 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jl4-qJ-zuD">
-                        <rect key="frame" x="49" y="11" width="261" height="24"/>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cnp-g1-23w" userLabel="BackView">
+                        <rect key="frame" x="10" y="10" width="300" height="39"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="100" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MB8-DB-2cT">
+                        <rect key="frame" x="22" y="21" width="238" height="16"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="24" id="lit-xH-3BI"/>
+                            <constraint firstAttribute="height" constant="16" id="CYM-IF-tJ0"/>
+                            <constraint firstAttribute="width" constant="238" id="nft-hC-ETw"/>
                         </constraints>
-                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="CYM-IF-tJ0"/>
+                            </mask>
+                        </variation>
                     </label>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="E1a-YE-1Ym">
-                        <rect key="frame" x="9" y="7" width="35" height="35"/>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Qab-E5-aQc">
+                        <rect key="frame" x="273" y="17" width="24" height="24"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="35" id="Fwz-y4-ljM"/>
-                            <constraint firstAttribute="width" constant="35" id="nCa-5t-ABT"/>
+                            <constraint firstAttribute="height" constant="24" id="ZVM-Nn-pHg"/>
+                            <constraint firstAttribute="width" constant="24" id="owt-ZR-cJA"/>
                         </constraints>
-                        <state key="normal" backgroundImage="u630.png">
-                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                        </state>
-                    </button>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="keyPath">
+                                <integer key="value" value="14"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </view>
                 </subviews>
+                <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.96470588235294119" alpha="1" colorSpace="calibratedRGB"/>
                 <constraints>
-                    <constraint firstItem="jl4-qJ-zuD" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="11" id="7Y2-of-OHA"/>
-                    <constraint firstItem="E1a-YE-1Ym" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="7" id="dUg-v7-YUS"/>
-                    <constraint firstItem="jl4-qJ-zuD" firstAttribute="leading" secondItem="E1a-YE-1Ym" secondAttribute="trailing" constant="5" id="eKh-ww-FrT"/>
-                    <constraint firstItem="E1a-YE-1Ym" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="9" id="jhU-C2-l70"/>
-                    <constraint firstAttribute="trailing" secondItem="jl4-qJ-zuD" secondAttribute="trailing" constant="10" id="uol-he-aRG"/>
+                    <constraint firstItem="MB8-DB-2cT" firstAttribute="top" secondItem="cnp-g1-23w" secondAttribute="top" constant="11" id="A7T-8C-2DT"/>
+                    <constraint firstItem="Qab-E5-aQc" firstAttribute="centerY" secondItem="cnp-g1-23w" secondAttribute="centerY" constant="-0.5" id="AaD-iW-h89"/>
+                    <constraint firstAttribute="trailing" secondItem="cnp-g1-23w" secondAttribute="trailing" constant="10" id="DQ8-ct-kb8"/>
+                    <constraint firstItem="cnp-g1-23w" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="PXt-ia-PXd"/>
+                    <constraint firstAttribute="bottom" secondItem="cnp-g1-23w" secondAttribute="bottom" id="UXc-8T-LlE"/>
+                    <constraint firstItem="cnp-g1-23w" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="Uyb-cI-AuM"/>
+                    <constraint firstItem="Qab-E5-aQc" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="17" id="eOq-wp-fg2"/>
+                    <constraint firstItem="MB8-DB-2cT" firstAttribute="bottom" secondItem="cnp-g1-23w" secondAttribute="bottom" constant="-12" id="ium-tV-pHl"/>
+                    <constraint firstItem="MB8-DB-2cT" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="21" id="svq-Po-pYw"/>
+                    <constraint firstAttribute="trailing" secondItem="Qab-E5-aQc" secondAttribute="trailing" constant="23" id="u1s-u4-hnW"/>
+                    <constraint firstItem="MB8-DB-2cT" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="22" id="ubB-DV-qyh"/>
                 </constraints>
+                <variation key="default">
+                    <mask key="constraints">
+                        <exclude reference="svq-Po-pYw"/>
+                        <exclude reference="eOq-wp-fg2"/>
+                    </mask>
+                </variation>
             </tableViewCellContentView>
             <connections>
-                <outlet property="checkBoxButton" destination="E1a-YE-1Ym" id="Vbd-rc-qpQ"/>
-                <outlet property="nameLabel" destination="jl4-qJ-zuD" id="VEn-qS-esc"/>
+                <outlet property="checkView" destination="Qab-E5-aQc" id="isR-3c-q9r"/>
+                <outlet property="nameLabel" destination="MB8-DB-2cT" id="SyM-Ul-8qK"/>
             </connections>
             <point key="canvasLocation" x="298" y="201"/>
         </tableViewCell>
     </objects>
-    <resources>
-        <image name="u630.png" width="32" height="32"/>
-    </resources>
 </document>

@@ -2,8 +2,8 @@
 //  ViewController.h
 //  testAudioPanning
 //
-//  Created by Vikram Singh on 3/15/15.
-//  Copyright (c) 2015 Vikram Singh. All rights reserved.
+//  Created by Creospan on 3/15/15.
+//  Copyright (c) 2015 Creospan. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>

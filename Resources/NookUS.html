@@ -10,7 +10,7 @@
     <link rel="stylesheet" type="text/css" href="af.ui.css" />
     <link rel="stylesheet" type="text/css" href="icons.css" />
     <script type="text/javascript" charset="utf-8" src="appframework.ui.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="style.css" />
+    <link rel="stylesheet" type="text/css" href="style1.css" />
 
     <!-- phantom library, needed for XDK "legacy" container api calls -->
     <script src="intelxdk.js"></script>
@@ -48,30 +48,32 @@
         <div class="panel" title="Using Sound" id="listview" data-footer="none" selected="true">
 
          <ul class="list">
-            <a href="#item1">
+             <b>
+            <a href="#item1" onclick="accessedArticle('Introduction%20to%20%27Using%20Sound%27')">
               <div class="list-div">
                 <li>Introduction to 'Using Sound'</li>
                 <img class="next-chevron" align="right" src="Next-Arrow.png"></img>
               </div>
             </a>
-            <a href="#item3">
+            <a href="#item3" onclick="accessedArticle('Soothing%20sound')">
               <div class="list-div">
                 <li>Soothing sound</li>
                 <img class="next-chevron" align="right" src="Next-Arrow.png"></img>
               </div>
             </a>
-            <a href="#item4">
+            <a href="#item4" onclick="accessedArticle('Interesting%20sound')">
               <div class="list-div">
                 <li>Interesting sound</li>
                 <img class="next-chevron" align="right" src="Next-Arrow.png"></img>
               </div>
             </a>
-            <a href="#item5">
+            <a href="#item5" onclick="accessedArticle('Background%20sound')">
               <div class="list-div">
                 <li>Background sound</li>
                 <img class="next-chevron" align="right" src="Next-Arrow.png"></img>
               </div>
             </a>
+            </b>
             </ul>
 
         </div>
@@ -107,7 +109,7 @@
             <p><strong>How can Soothing Sound help?</strong></p>
 
 
-            <ul>
+            <ul class="bullet-lists">
                 <li> By giving you a sense of relief from stress and tension caused by tinnitus </li><br>(Note: Soothing Sound can give you that sense of relief without changing the sound of your tinnitus!)
             </ul>
 
@@ -116,23 +118,24 @@
             <p><strong>When can I use Soothing Sound?</strong></p>
 
 
-            <ul>
+            <ul class="bullet-lists">
                 <li> Any time tinnitus bothers you</li>
              </ul>
             <br>
 
             <p><b>Possible Soothing Sounds:</b></p>
 
-            <p><audio controls autoplay>
+            <p><audio controls autoplay onplaying="playAudio('201', 'Babbling-Brook')" id = "201">
                 <source src="BabblingBrook.mp3" type="audio/mpeg" />
             </audio><br><b> Babbling Brook</b></p>
 
-            <p><audio controls autoplay>
+            <p><audio controls autoplay onplaying="playAudio('202','Crackling-Fire')" id = "202">
                 <source src="CracklingFire.mp3" type="audio/mpeg" />
             </audio><br><b>Crackling Fire</b></p>
 
           </p>
-
+          <br>
+          <p> To hear more sounds, go to "Add and Use Plans" from the home page, and add "Using Sound" to a plan.</p>
         </div>
 
         <div class="panel" title=" " id="item4" data-footer="none">
@@ -152,7 +155,7 @@
               <p><strong>How can Interesting Sound help?</strong></p>
 
 
-              <ul>
+              <ul class="bullet-lists">
                   <li> By helping you shift your attention away from your tinnitus</li>
               </ul>
 
@@ -171,7 +174,7 @@
               <p><strong>Interesting Sound and sleep</strong></p>
 
 
-              <ul>
+              <ul class="bullet-lists">
                 <li>Interesting sound can be a powerful way to get your mind off of your tinnitus. This helps some people relax enough to get to sleep. It might not be helpful for others.</l1>
                 <l1>Be open to using sound in surprising or unusual ways to manage your tinnitus!</li>
               </ul>
@@ -180,14 +183,15 @@
 
               <p><b>Possible Interesting Sounds:</b></p>
 
-             <p><audio controls autoplay>
+             <p><audio controls autoplay onplaying="playAudio('203','Apollo-11')" id = "203">
                <source src="Apollo11.mp3" type="audio/mpeg" />
              </audio><br><b> Apollo 11</b></p>
 
-<p><audio controls autoplay>
+<p><audio controls autoplay onplaying="playAudio('204','What-Sticks')" id = "204">
     <source src="WhatSticks.mp3" type="audio/mpeg" />
 </audio><br><b>What Sticks</b></p>
-
+<br>
+<p> To hear more sounds, go to "Add and Use Plans" from the home page, and add "Using Sound" to a plan.</p>
 
             </html>
 </p>
@@ -249,22 +253,65 @@
 
               <p>Note: Sometimes Background Sound helps right away. Sometimes it takes weeks or months before you notice it is helping.</p>
             <br>
-
+            <p> <p> <strong>When can I use Background Sound?</strong></p>
+            
+            <ul class="bullet-lists">
+                <li> Any time your tinnitus bothers you</li>
+                <li> A constant background of sound can help you notice your tinnitus less often. Background Sound should always be set to a comfortable loudness level. The sound should become a natural part of your day.</li>
+            </ul>
+            
+            <p>&nbsp;</p>
             <p><b>Possible Background Sounds:</b></p>
 
-            <p><audio controls autoplay>
+            <p><audio controls autoplay onplaying="playAudio('205','Fish-Tank')" id = "205">
                 <source src="FishTank.mp3" type="audio/mpeg" />
             </audio><br><b> Fish Tank</b></p>
 
-            <p><audio controls autoplay>
+            <p><audio controls autoplay onplaying="playAudio('206','Pink-Noise')" id = "206">
                 <source src="PinkNoise.mp3" type="audio/mpeg" />
             </audio><br><b>Pink Noise</b></p>
 
             </p></p>
+            <br>
+            <p> To hear more sounds, go to "Add and Use Plans" from the home page, and add "Using Sound" to a plan.</p>
         </div>
 
 
     </div>
 </div>
+<script>
+    
+    var playingAudioId = "";
+    function playAudio(audioID, audioName)
+    {
+        window.location.href = "tcappweb://" + "Played-Sound/"+ audioName;
+
+//alert(window.location.href);
+
+        if(playingAudioId == audioID) return;
+        
+        if(playingAudioId == "")
+        {
+            
+        }
+        else
+        {
+            document.getElementById(playingAudioId).pause();
+            
+        }
+        
+        playingAudioId = audioID;
+    }
+</script>
+
+<script>
+    
+    function accessedArticle(article)
+    {
+        window.location.href = "tcappweb1://" + "Accessed%20Article/"+ "Using%20Sounds/" + article;
+        
+        //alert(window.location.href);
+    }
+</script>
 </body>
 </html>

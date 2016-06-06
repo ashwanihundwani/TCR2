@@ -8,6 +8,18 @@
 
 #import <UIKit/UIKit.h>
 
-@interface TipsViewController : UIViewController
+#import "BaseSkilDetailViewController.h"
+
+@interface TipsViewController : BaseSkilDetailViewController
+
+
 {IBOutlet UISwitch *switch1;}
+
+@property (nonatomic,strong) DBManager *manager;
+
+@property(nonatomic, strong)NSArray *exercises;
+
+@property(weak, nonatomic)IBOutlet UITableView *tableView;
+
+- (void) toggle1: (BOOL) state;
 @end

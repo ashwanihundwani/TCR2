@@ -2,11 +2,11 @@
 //  MySleepTipsVC.m
 //  TinnitusCoach
 //
-//  Created by Jiten on 02/05/15.
+//  Created by Creospan on 02/05/15.
 //  Copyright (c) 2015 Creospan. All rights reserved.
 //
-#define UN_SELECTED_IMAGE @"u630.png"
-#define SELECTED_IMAGE @"u648.png"
+#define UN_SELECTED_IMAGE @""
+#define SELECTED_IMAGE @"Selected_CheckBox.png.png"
 
 #define EMPTY_TABLEVIEW @"You have no sleep tips added to \nyour list. Please add at least \none tip to proceed!"
 
@@ -14,18 +14,20 @@
 #import "MyTipsHeaderView.h"
 #import "NewPlanAddedViewController.h"
 #import "EditTipsCell.h"
+#import "SkillRatingsViewController.h"
 
 @interface TipsReminder ()<UITableViewDataSource, UITableViewDelegate>
 {
     UIView *nomatchesView;
-    //    NSArray *allTipsArray,*allTipsWithCategories;
     NSMutableDictionary *_allMyTipsDetailDict;
     NSMutableArray *_selectedMyTipsArray;
 }
+
 @property(strong,nonatomic)DBManager *dbManager;
 @property (weak, nonatomic) IBOutlet UITableView *tableViewOutlet;
 
 @property (nonatomic, strong) NSMutableArray *numOfTips;
+
 @end
 
 @implementation TipsReminder
@@ -34,7 +36,6 @@
     [super viewDidLoad];
     [self.navigationItem setTitle:@"Sleep Tips Reminder"];
     [self emptyView];
-  //  [self.tableViewOutlet setContentInset:UIEdgeInsetsMake(-50,0,0,30)];
     // Do any additional setup after loading the view.
     self.dbManager = [[DBManager alloc]initWithDatabaseFileName:@"GNResoundDB.sqlite"];
     _allMyTipsDetailDict = [NSMutableDictionary dictionaryWithDictionary:[self gettingMyTips]];
@@ -46,82 +47,24 @@
 
 -(void)viewDidAppear:(BOOL)animated
 {
-    
-    
-    
-    // REVISIT THIS    VIKRAM
-//    NSArray *notificationArray = [[UIApplication sharedApplication] scheduledLocalNotifications];
-//    for(UILocalNotification *notification in notificationArray)
-//    {
-////        if ([notification.alertBody isEqualToString:@"your alert body"]  && (notification.fireDate == your alert date time))
-//         //   NSString *uid=[NSString stringWithFormat:@"%@",[userInfoCurrent valueForKey:@"UUID"]];
-//        if ([uid isEqualToString:@"tipsNotification"])
-//        
-//        {
-//            // delete this notification
-//            [[UIApplication sharedApplication] cancelLocalNotification:notification] ;
-//        }
-//    }
-//    
-//    
-    
-    
-    
-//    UIApplication *app = [UIApplication sharedApplication];
-//    NSArray *eventArray = [app scheduledLocalNotifications];
-//    
-//    NSLog(@"evenetArray  %@",eventArray);
-//    
-//    for (int i=0; i<[eventArray count]; i++)
-//    {
-//        UILocalNotification* oneEvent = [eventArray objectAtIndex:i];
-//        NSDictionary *userInfoCurrent = oneEvent.userInfo;
-//        
-//        NSLog(@"userInfo  %@",userInfoCurrent);
-//        
-//        
-//        NSString *uid=[NSString stringWithFormat:@"%@",[userInfoCurrent valueForKey:@"UUID"]];
-//        if ([uid isEqualToString:@"tipsNotification"])
-//        {
-//            NSLog(@"CNCELLING");  //Cancelling local notification
-//            [app cancelLocalNotification:oneEvent];
-//            break;
-//        }
-//    }
-//    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     NSString *queryForTips = @"select * from My_Tips";
     NSArray *allMyTips= [self.dbManager loadDataFromDB:queryForTips];
     NSLog(@"allmytips count %d",[allMyTips count]);
     if ([allMyTips count] == 0)
     {
         [self dismissViewControllerAnimated:YES completion:^{
-            
+            self.dismissBlock();
         }];
-        
-        
     }
 }
 
+
+
 - (void)viewWillAppear:(BOOL)animated
 {
-  
-    
-    
-    
     [self.tabBarController.tabBar setHidden:YES];
 }
+
 
 - (void)viewWillDisappear:(BOOL)animated
 {
@@ -129,13 +72,10 @@
 }
 
 
-
-
 -(void)emptyView
 {
     nomatchesView = [[UIView alloc] initWithFrame:self.view.frame];
     nomatchesView.backgroundColor = [UIColor clearColor];
-    
     UILabel *matchesLabel = [[UILabel alloc] initWithFrame:CGRectMake(0,0,nomatchesView.frame.size.width,150)];
     matchesLabel.font = [UIFont boldSystemFontOfSize:18];
     matchesLabel.numberOfLines = 0;
@@ -148,21 +88,8 @@
     
     //Here is the text for when there are no results
     matchesLabel.text = EMPTY_TABLEVIEW;
-    
-//    UIButton *newTipButton = [UIButton buttonWithType:UIButtonTypeCustom];
-//    newTipButton.frame = CGRectMake(60, matchesLabel.frame.origin.y+ matchesLabel.frame.size.height+20, nomatchesView.frame.size.width-120, 30);
-//    [newTipButton setTitle:@"Select Tips" forState:UIControlStateNormal];
-//    [newTipButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-//    [newTipButton.titleLabel setFont:[UIFont boldSystemFontOfSize:15]];
-//    [newTipButton setBackgroundColor:[UIColor colorWithRed:0.0/255.0 green:122.0/255.0 blue:255.0/255.0 alpha:1]];
-//    newTipButton.layer.cornerRadius = 5.0f;
-//    [newTipButton addTarget:self action:@selector(onClickNewTipButton) forControlEvents:UIControlEventTouchUpInside];
-    
     nomatchesView.hidden = YES;
     [nomatchesView addSubview:matchesLabel];
-  //  [nomatchesView addSubview:newTipButton];
-    
-    
     [self.tableViewOutlet insertSubview:nomatchesView belowSubview:self.tableViewOutlet];
 }
 
@@ -232,6 +159,8 @@
     [mytipsHeaderView.btnEditTips addTarget:self action:@selector(onClickEditTipsButton) forControlEvents:UIControlEventTouchUpInside];
     return mytipsHeaderView;
 }
+
+
 -(void)toggleCategoryImage:(BOOL)isSelected andCell:(EditTipsCell *)cell
 {
     if([cell.imgCategory.image isEqual:[UIImage imageNamed:SELECTED_IMAGE]])
@@ -244,6 +173,7 @@
     }
 }
 
+
 -(void)onClickToggleCategory:(id)sender
 {
     CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tableViewOutlet];
@@ -253,9 +183,7 @@
     {
         [self toggleCategoryImage:YES andCell:cell];
     }
-    
-    
-    
+
     NSString *tipName = [_numOfTips objectAtIndex:indexPath.section-1];
     
     if([_allMyTipsDetailDict valueForKey:tipName])
@@ -281,92 +209,106 @@
 
 -(void)onClickReturnTipsButton:(id)sender
 {
-    
-    NSLog(@"Selected used tips are : %@",_selectedMyTipsArray);
-   // [[NSNotificationCenter defaultCenter] postNotificationName:@"setNotificationFlag" object:nil userInfo:nil];
-    
-    
-    
-    
     NSMutableString *mainString=[[NSMutableString alloc]initWithString:@""];
     
-        for (NSDictionary *tArr in _selectedMyTipsArray) {
-    
-            NSString *string=[tArr valueForKey:@"category"];
-            [mainString appendFormat:@"%@|",string];
-            
-    
-        }
+    for (NSDictionary *tArr in _selectedMyTipsArray) {
+        
+        NSString *string=[tArr valueForKey:@"category"];
+        [mainString appendFormat:@"%@|",string];
+        
+        
+    }
     [PersistenceStorage setObject:mainString andKey:@"skillDetail1"];
     
     [self dismissViewControllerAnimated:YES completion:^{
-        //
-        //        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-        //        hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark.png"] ];
-        //
-        //        hud.mode = MBProgressHUDModeCustomView;
-        //
-        //        hud.labelText = @"Thanks for the feedback!";
-        //
-        //        [hud show:YES];
-        //        [hud hide:YES afterDelay:1];
-        //
-        //
-        
-        //        UIStoryboard *storyBoard = [ UIStoryboard storyboardWithName:@"Main" bundle:nil];
-        //        UIViewController *mySleepsViewCotroller = [storyBoard instantiateViewControllerWithIdentifier:@"SkillRatingsViewController"];
-        //        UIWindow *currentWindow = [[UIApplication sharedApplication].windows firstObject];
-        //        [currentWindow.rootViewController presentViewController:mySleepsViewCotroller animated:YES completion:nil];
-        
-        
-        
-        
         NSDateFormatter* day = [[NSDateFormatter alloc] init];
         [day setDateFormat: @"EEEE"];
-         NSString *weekday =[day stringFromDate:[NSDate date]];
-       
-
+        NSString *weekday =[day stringFromDate:[NSDate date]];
+        if ([weekday isEqualToString:@"Monday"])
+        {       [PersistenceStorage setObject:@"Yes" andKey:@"ItsMondayShowWR"];
+        }
+        else
+        {
+            [PersistenceStorage setObject:@"SomeOtherDay" andKey:@"ItsMondayShowWR"];
+            
+        }
+        NSString *query = @"select * from My_Tips";
+        NSArray *allMyTips=[NSArray arrayWithArray:[self.dbManager loadDataFromDB:query]];
+        NSMutableString *planIDs = [NSMutableString string];
+        NSMutableSet *distinctPlanIDs = [NSMutableSet set];
+        for(NSDictionary *dict in allMyTips){
+            [distinctPlanIDs addObject:[dict objectForKey:@"planID"]];
+        }
+        NSInteger count = distinctPlanIDs.count;
+        for(NSString *planID in distinctPlanIDs){
+            
+            [planIDs appendString:@"'"];
+            [planIDs appendString:planID];
+            [planIDs appendString:@"'"];
+            count--;
+            if (count > 0) {
+                [planIDs appendString:@","];
+            }
+        }
+        NSString *query1 = [NSString stringWithFormat:@"select * from MyPlans where ID IN (%@)",planIDs];
+        NSArray *plans = [self.dbManager loadDataFromDB:query1];
+        NSMutableString *planNames = [NSMutableString string];
+        count = plans.count;
+        for(NSDictionary *plan in plans){
+            [planNames appendString:[plan objectForKey:@"planName"]];
+            count--;
+            if(count > 0){
+                [planNames appendString:@"|"];
+            }
+        }
         
-       // int weekday = [[[NSCalendar currentCalendar] components:NSWeekdayCalendarUnit fromDate:theDate] weekday];
+        NSMutableString *string = [NSMutableString string];
+        
+        NSInteger outerCount = _allMyTipsDetailDict.count;
+        
+        for(NSString *detail in [_allMyTipsDetailDict allKeys]){
+            
+            outerCount--;
+            NSArray *items = [_allMyTipsDetailDict objectForKey:detail];
+            
+            count = items.count;
+            
+            for(NSDictionary *dict in items){
+                
+                [string appendString:[dict objectForKey:@"category"]];
+                count--;
+                if(count > 0 || outerCount > 0){
+                    [string appendString:@"|"];
+                }
+                
+            }
+        }
+        
+        [PersistenceStorage setObject:@"TipsReminderRating" andKey:@"TipsReminder"];
+        
+        [PersistenceStorage setObject:@"Tips for Better Sleep" andKey:@"skillNameTips"];
+        
+        [PersistenceStorage setObject:planNames andKey:@"planNameTips"];
+        
+        [PersistenceStorage setObject:planNames andKey:@"situationNameTips"];
+        
+        string = [[string stringByReplacingOccurrencesOfString:@"," withString:@">"] mutableCopy];
+        
+        [PersistenceStorage setObject:string andKey:@"skillDetailTips"];
+        //TODO - plan & situation name.
         
         
-        
-       if ([weekday isEqualToString:@"Monday"])
-       {       [PersistenceStorage setObject:@"Yes" andKey:@"ItsMondayShowWR"];
-       }
-else
-{
-     [PersistenceStorage setObject:@"SomeOtherDay" andKey:@"ItsMondayShowWR"];
-    
-}
-    
         UIStoryboard *storyBoard = [ UIStoryboard storyboardWithName:@"Main" bundle:nil];
-        UIViewController *mySleepsViewCotroller = [storyBoard instantiateViewControllerWithIdentifier:@"SkillRatingsViewController"];
+        SkillRatingsViewController *mySleepsViewCotroller = [storyBoard instantiateViewControllerWithIdentifier:@"SkillRatingsViewController"];
+        
+        mySleepsViewCotroller.dismissBlock = self.dismissBlock;
         UIWindow *currentWindow = [[UIApplication sharedApplication].windows firstObject];
-        [currentWindow.rootViewController presentViewController:mySleepsViewCotroller animated:YES completion:nil];
-        
-        
-        
+        [currentWindow.rootViewController presentViewController:mySleepsViewCotroller animated:YES completion:^{
+            
+        }];
         
     }];
     
-    
-    
-    
-    
-    
-    
-    
-  //  [self cancelTapped];
-    
-    
-   // NSArray *viewControllers = [self.navigationController viewControllers];
-    
-    
-   // [self.navigationController popToViewController:[viewControllers objectAtIndex:[viewControllers count]-3] animated:NO];
-    
-    //NewPlanAddedViewController *npav = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"NewPlanAddedViewController"];
-    //[self.navigationController :npav animated:YES];
 }
 
 
@@ -379,29 +321,22 @@ else
 
     
     }
-    
 
-//    [self dismissViewControllerAnimated:YES completion:^{
-//        
-//    }];
 
 
 -(void)onClickEditTipsButton
 {
-    //    [self dismissViewControllerAnimated:YES completion:nil];
-    
+
     UIStoryboard *main = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     EditTipListVC *vc = [main instantiateViewControllerWithIdentifier:@"EditTipListVC"];
     vc.delegate = self;
     [self.navigationController pushViewController:vc animated:YES];
 }
 
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    //    if(_numOfTips == nil)
-    //    {
-    //        return 0;
-    //    }
+
     if(_numOfTips && [_numOfTips count] > 0)
     {
         [nomatchesView setHidden:YES];
@@ -422,11 +357,7 @@ else
         return 287;
     else
         return 41;
-    //if(_numOfTips && [_numOfTips count] > 0)
-    //return 287;
-    
-    //else
-    //  return 0;
+
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -440,12 +371,6 @@ else
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    //    static NSString *cellIdenfier = @"CellIdentifier";
-    //    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdenfier];
-    //    if(cell == nil)
-    //    {
-    //        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIdenfier];
-    //    }
     static NSString *cellIdentifier = @"CellIdentifier";
     EditTipsCell *cell = (EditTipsCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     if(cell == nil)
@@ -468,42 +393,64 @@ else
         if ([_selectedMyTipsArray containsObject:tipsDetailsDict]) {
             
             //        [self onClickToggleCategory:cell.btnToggleCategory];
-            [self toggleCategoryImage:YES andCell:cell];
+            cell.checkImage.image = [UIImage imageNamed:SELECTED_IMAGE];
+            cell.checkImage.hidden = FALSE;
             
         }
-        //        NSString *tipNmaeStr = [tipName  stringByReplacingOccurrencesOfString:@" " withString:@""];
-        
-        
-        //        [cell.textLabel setFont:[UIFont systemFontOfSize:14.0f]];
-        //        [cell.textLabel setNumberOfLines:0];
-        //        [cell.textLabel sizeToFit];
+        else{
+            
+            cell.checkImage.image = [UIImage imageNamed:UN_SELECTED_IMAGE];
+            cell.checkImage.hidden = TRUE;
+            
+        }
         cell.lblTitle.text = [tipsDetailsDict valueForKey:@"category"];
     }
     
-    
-    
-    
     return cell;
 }
+
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
+
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 61;
+    CGFloat constant = 27;
+    
+    NSString *tipName = [_numOfTips objectAtIndex:indexPath.section-1];
+    
+    if([_allMyTipsDetailDict valueForKey:tipName])
+        
+    {
+        NSDictionary *tipsDetailsDict = [[_allMyTipsDetailDict valueForKey:tipName] objectAtIndex:indexPath.row];
+        
+        NSString *string = [tipsDetailsDict valueForKey:@"category"];
+        
+        CGFloat labelHeight = [Utils heightForLabelForString:string width:255 font:TITLE_LABEL_FONT];
+        
+        constant += labelHeight;
+        
+        return constant;
+    }
+    
+    
+    return 0;
+   
 }
+
 #pragma mark Database Transaction
 -(NSMutableDictionary *)gettingMyTips
 {
     NSString *query = @"select * from My_Tips";
     
     NSArray *allMyTips=[NSArray arrayWithArray:[self.dbManager loadDataFromDB:query]];
-    
     return [self setAllTipsDetails:allMyTips];
 }
+
+
 -(NSMutableDictionary *)setAllTipsDetails:(NSArray *)allMyTips
 {
     NSMutableArray *allFilteredTipsArray = [NSMutableArray new];
@@ -516,12 +463,7 @@ else
     for (NSDictionary *myTips in allMyTips) {
         NSString *tipeID = [myTips valueForKey:@"tipsTypeID"];
         NSString  *tipeCatId = [myTips valueForKey:@"tipsTypeCategoryID"];
-        //        NSPredicate *predicate = [NSPredicate predicateWithFormat:[NSString stringWithFormat:@"SELF.tipsTypeID ==%@ AND SELF.ID == %@",[myTips valueForKey:@"tipsTypeID"],[ myTips valueForKey:@"tipsTypeCategoryID"]]];
-        //
-        //        NSArray *filteredArray = [allTipsCotegories filteredArrayUsingPredicate:predicate ];
-        
         NSDictionary *catDetails;
-        
         for(NSDictionary *tipscategories in allTipsCotegories){
             if ([tipeCatId isEqualToString:[tipscategories valueForKey:@"ID"]] && [ tipeID isEqualToString:[tipscategories valueForKey:@"tipsTypeID"]]) {
                 
@@ -533,9 +475,6 @@ else
         if (catDetails != nil) {
             
             NSString *tID = [myTips valueForKey:@"tipsTypeID"];
-            
-            //            NSPredicate *predicate = [NSPredicate predicateWithFormat:[NSString stringWithFormat:@"self.ID == %@",tID]];
-            //            NSArray *tipsArray = [allTips filteredArrayUsingPredicate:predicate];
             NSDictionary *gotTip;
             
             for (NSDictionary *tipDict in allTips){
@@ -564,8 +503,6 @@ else
             
         }
         
-        
-        
     }
     
     
@@ -574,13 +511,7 @@ else
     for (NSDictionary *myFilteredTips in allFilteredTipsArray)
     {
         if (![[welfilteredTips allKeys] containsObject:[myFilteredTips valueForKey:@"tip"]]) {
-            
-            
             NSNumber *tipsId = [myFilteredTips valueForKey:@"tipsID"];
-            
-            //                NSPredicate *predicate = [NSPredicate predicateWithFormat:[NSString stringWithFormat:@"self.tipsID == %d",[tipsId intValue]]];
-            //
-            //                NSArray *filterArray = [allFilteredTipsArray  filteredArrayUsingPredicate:predicate];
             NSMutableArray *filterArray = [NSMutableArray new];
             for (NSDictionary *fetchDict in allFilteredTipsArray)
             {
@@ -598,35 +529,22 @@ else
             }
             
         }
-        
-        
     }
-    
-    
-    
-    
-    
     
     return welfilteredTips;
     
 }
+
 
 #pragma mark - edit tips vc delegate
 -(void)didSaveTips
 {
     _allMyTipsDetailDict = [NSMutableDictionary dictionaryWithDictionary:[self gettingMyTips]];
     _numOfTips = [NSMutableArray arrayWithArray:[_allMyTipsDetailDict allKeys]];
+    
+    
     [_tableViewOutlet reloadData];
 }
 
-/*
- #pragma mark - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- */
 
 @end

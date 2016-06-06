@@ -2,7 +2,7 @@
 //  MySleepTipsVC.m
 //  TinnitusCoach
 //
-//  Created by Jiten on 02/05/15.
+//  Created by Creospan on 02/05/15.
 //  Copyright (c) 2015 Creospan. All rights reserved.
 //
 
@@ -26,8 +26,30 @@
 
 @implementation MySleepTipsVC
 
+-(void)cancel{
+    
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    UIImageView *backLabel = [[UIImageView alloc]initWithFrame:CGRectMake(10, 10, 15, 20)];
+    
+    backLabel.image = [UIImage imageNamed:@"Active_Back-Arrow.png"];
+    
+    [Utils addTapGestureToView:backLabel target:self
+                      selector:@selector(cancel)];
+    
+    UIBarButtonItem *item = [[UIBarButtonItem alloc]initWithCustomView:backLabel];
+    
+    UIBarButtonItem *negativeSpacer = [[UIBarButtonItem alloc]
+                                       initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace
+                                       target:nil action:nil];
+    negativeSpacer.width = -8;
+    
+    self.navigationItem.leftBarButtonItems = [NSArray arrayWithObjects:negativeSpacer, item, nil];
+    
     [self.navigationItem setTitle:@"My Sleep Tips"];
     [self emptyView];
     // Do any additional setup after loading the view.
@@ -57,8 +79,6 @@
     [dateFormatter setDateStyle:NSDateFormatterShortStyle];
     NSString *dateString = [dateFormatter stringFromDate:[NSDate date]];
     UILabel *label1 = (UILabel *)[self.view viewWithTag:900];
-
-    
     label1.text = [NSString stringWithFormat:@"These are the sleep tips selected by you to use today, %@. You can always change the list.", dateString];
     
 }
@@ -90,12 +110,9 @@
     [newTipButton setBackgroundColor:[UIColor colorWithRed:0.0/255.0 green:122.0/255.0 blue:255.0/255.0 alpha:1]];
     newTipButton.layer.cornerRadius = 5.0f;
     [newTipButton addTarget:self action:@selector(onClickNewTipButton) forControlEvents:UIControlEventTouchUpInside];
-    
     nomatchesView.hidden = YES;
     [nomatchesView addSubview:matchesLabel];
     [nomatchesView addSubview:newTipButton];
-    
-    
     [self.tableViewOutlet insertSubview:nomatchesView belowSubview:self.tableViewOutlet];
 }
 
@@ -119,7 +136,7 @@
     {
         CGRect frame = self.tableViewOutlet.frame;
         UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.tableViewOutlet.frame.size.width, 20)];
-        [view setBackgroundColor:[UIColor lightGrayColor]];
+        [view setBackgroundColor:[Utils colorWithHexValue:@"EFEFF4"]];
         
         UILabel *lblTitle = [[UILabel alloc] initWithFrame:CGRectMake(20, 10, frame.size.width-20, 21)];
         [lblTitle setBackgroundColor:[UIColor clearColor]];
@@ -144,7 +161,7 @@
         [btn setTitle:@"Return to Plan" forState:UIControlStateNormal];
         [btn setBackgroundColor:[UIColor colorWithRed:0.0/255.0 green:122.0/255.0 blue:255.0/255.0 alpha:1]];
         [btn.titleLabel setFont:[UIFont boldSystemFontOfSize:14.0f]];
-        btn.layer.cornerRadius = 3.0f;
+        btn.layer.cornerRadius = 5.0f;
         [btn addTarget:self action:@selector(onClickReturnTipsButton:) forControlEvents:UIControlEventTouchUpInside];
         [btn.titleLabel setTextColor:[UIColor whiteColor]];
         [view addSubview:btn];
@@ -174,9 +191,6 @@
     
     
     [self.navigationController popToViewController:[viewControllers objectAtIndex:[viewControllers count]-3] animated:NO];
-    
-    //NewPlanAddedViewController *npav = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"NewPlanAddedViewController"];
-    //[self.navigationController :npav animated:YES];
 }
 
 
@@ -190,10 +204,6 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    //    if(_numOfTips == nil)
-    //    {
-    //        return 0;
-    //    }
     if(_numOfTips && [_numOfTips count] > 0)
     {
         [nomatchesView setHidden:YES];
@@ -214,11 +224,6 @@
         return 287;
     else
         return 41;
-    //if(_numOfTips && [_numOfTips count] > 0)
-    //return 287;
-    
-    //else
-    //  return 0;
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -242,18 +247,12 @@
     NSString *tipName = [_numOfTips objectAtIndex:indexPath.section-1];
     if([_allMyTipsDetailDict valueForKey:tipName])
     {
-        //        NSString *tipNmaeStr = [tipName  stringByReplacingOccurrencesOfString:@" " withString:@""];
         NSDictionary *tipsDetailsDict = [[_allMyTipsDetailDict valueForKey:tipName] objectAtIndex:indexPath.row];
-        
         [cell.textLabel setFont:[UIFont systemFontOfSize:14.0f]];
         [cell.textLabel setNumberOfLines:0];
         [cell.textLabel sizeToFit];
         cell.textLabel.text = [tipsDetailsDict valueForKey:@"category"];
     }
-    
-    
-    
-    
     return cell;
 }
 
@@ -262,15 +261,17 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
+
 #pragma mark Database Transaction
 -(NSMutableDictionary *)gettingMyTips
 {
-    NSString *query = @"select * from My_Tips";
+    NSString *query = [NSString stringWithFormat:@"select * from My_Tips where planID = %@ and skillID = %@",[PersistenceStorage getObjectForKey:@"currentPlanID"],[PersistenceStorage getObjectForKey:@"currentSkillID"]] ;
     
     NSArray *allMyTips=[NSArray arrayWithArray:[self.dbManager loadDataFromDB:query]];
     
     return [self setAllTipsDetails:allMyTips];
 }
+
 -(NSMutableDictionary *)setAllTipsDetails:(NSArray *)allMyTips
 {
     NSMutableArray *allFilteredTipsArray = [NSMutableArray new];
@@ -283,10 +284,6 @@
     for (NSDictionary *myTips in allMyTips) {
         NSString *tipeID = [myTips valueForKey:@"tipsTypeID"];
         NSString  *tipeCatId = [myTips valueForKey:@"tipsTypeCategoryID"];
-        //        NSPredicate *predicate = [NSPredicate predicateWithFormat:[NSString stringWithFormat:@"SELF.tipsTypeID ==%@ AND SELF.ID == %@",[myTips valueForKey:@"tipsTypeID"],[ myTips valueForKey:@"tipsTypeCategoryID"]]];
-        //
-        //        NSArray *filteredArray = [allTipsCotegories filteredArrayUsingPredicate:predicate ];
-        
         NSDictionary *catDetails;
         
         for(NSDictionary *tipscategories in allTipsCotegories){
@@ -300,9 +297,6 @@
         if (catDetails != nil) {
             
             NSString *tID = [myTips valueForKey:@"tipsTypeID"];
-            
-            //            NSPredicate *predicate = [NSPredicate predicateWithFormat:[NSString stringWithFormat:@"self.ID == %@",tID]];
-            //            NSArray *tipsArray = [allTips filteredArrayUsingPredicate:predicate];
             NSDictionary *gotTip;
             
             for (NSDictionary *tipDict in allTips){
@@ -330,11 +324,8 @@
             }
             
         }
-        
-        
-        
+
     }
-    
     
     NSMutableDictionary *welfilteredTips = [NSMutableDictionary new];
     
@@ -344,10 +335,6 @@
             
             
             NSNumber *tipsId = [myFilteredTips valueForKey:@"tipsID"];
-            
-            //                NSPredicate *predicate = [NSPredicate predicateWithFormat:[NSString stringWithFormat:@"self.tipsID == %d",[tipsId intValue]]];
-            //
-            //                NSArray *filterArray = [allFilteredTipsArray  filteredArrayUsingPredicate:predicate];
             NSMutableArray *filterArray = [NSMutableArray new];
             for (NSDictionary *fetchDict in allFilteredTipsArray)
             {
@@ -363,15 +350,12 @@
                 [welfilteredTips setValue:filterArray forKey:[myFilteredTips valueForKey:@"tip"]];
                 
             }
-            
         }
-        
-        
     }
     
     return welfilteredTips;
-    
 }
+
 
 #pragma mark - edit tips vc delegate
 -(void)didSaveTips
@@ -381,14 +365,6 @@
     [_tableViewOutlet reloadData];
 }
 
-/*
- #pragma mark - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- */
+
 
 @end

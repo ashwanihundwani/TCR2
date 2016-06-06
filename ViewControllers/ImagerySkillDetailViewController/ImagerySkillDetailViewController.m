@@ -2,7 +2,7 @@
 //  SkillDetailViewController.m
 //  TinnitusCoach
 //
-//  Created by Vikram Singh on 3/22/15.
+//  Created by Creospan on 3/22/15.
 //  Copyright (c) 2015 Creospan. All rights reserved.
 //
 
@@ -11,7 +11,8 @@
 #import "NookImg.h"
 #import "MBProgressHUD.h"
 
-
+#import "SwiperViewController.h"
+#import "IntroPageInfo.h"
 
 @interface ImagerySkillDetailViewController ()
 
@@ -26,19 +27,32 @@
     self.title = [self.skillDict valueForKey:@"skillName"];
     // Do any additional setup after loading the view.
     
-      if (![[PersistenceStorage getObjectForKey:@"shownImageryIntro"] isEqual: @"OK"])
+    if (![[PersistenceStorage getObjectForKey:@"shownImageryIntro"] isEqual: @"OK"])
     {
+        NSMutableArray *pageInfos = [NSMutableArray array];
         
+        IntroPageInfo *info = [[IntroPageInfo alloc] initWithimage:[UIImage imageNamed:@"Intro3image1.png"] title: @"Why is \"Imagery\" helpful?" description:@"Imagery is imagining a calm and peaceful place. Imagining the sights, sounds, and smells of the place can help you relax. You can combine Imagery with Deep Breathing  to feel even more relaxed."];
         
-        ImageryIntroDetailViewController *siv = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"ImageryIntroDetailViewController"];
-        [self.navigationController pushViewController:siv animated:YES];
+        [pageInfos addObject:info];
+        
+        IntroPageInfo *info2 = [[IntroPageInfo alloc] initWithimage:[UIImage imageNamed:@"Intro3image2.png"] title: @"How can  \"Imagery\" help me with my tinnitus?" description:@"Imagery can reduce the tension and stress caused by tinnitus. Using imagery won’t change your tinnitus, but it can help you relax. Being relaxed can help you cope with your tinnitus. "];
+        
+        [pageInfos addObject:info2];
+        IntroPageInfo *info3 = [[IntroPageInfo alloc] initWithimage:[UIImage imageNamed:@"Intro3image3.png"] title: @"How do I do \"Imagery\"?" description:@"A video will show you how to do Imagery. After you watch the video you will have access to a timer that will help you practice on your own. "];
+        
+        [pageInfos addObject:info3];
+        
+        SwiperViewController *swiper = [[SwiperViewController alloc]init];
+        
+        swiper.pageInfos = pageInfos;
+        
+        swiper.header = @"Welcome to Imagery";
+        
+        [self.navigationController pushViewController:swiper animated:YES];
         
     }
     
     [PersistenceStorage setObject:@"OK" andKey:@"shownImageryIntro"];
-    
-
-    
     
 }
 
@@ -53,10 +67,29 @@
 }
 
 -(IBAction)viewIntroductionAgainClicked:(id)sender{
-    ImageryIntroDetailViewController *siv = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"ImageryIntroDetailViewController"];
-    [self.navigationController pushViewController:siv animated:YES];
+    NSMutableArray *pageInfos = [NSMutableArray array];
+    
+    IntroPageInfo *info = [[IntroPageInfo alloc] initWithimage:[UIImage imageNamed:@"Intro3image1.png"] title: @"Why is \"Imagery\" helpful?" description:@"Imagery is imagining a calm and peaceful place. Imagining the sights, sounds, and smells of the place can help you relax. You can combine Imagery with Deep Breathing  to feel even more relaxed."];
+    
+    [pageInfos addObject:info];
+    
+    IntroPageInfo *info2 = [[IntroPageInfo alloc] initWithimage:[UIImage imageNamed:@"Intro3image2.png"] title: @"How can  \"Imagery\" help me with my tinnitus?" description:@"Imagery can reduce the tension and stress caused by tinnitus. Using imagery won’t change your tinnitus, but it can help you relax. Being relaxed can help you cope with your tinnitus. "];
+    
+    [pageInfos addObject:info2];
+    IntroPageInfo *info3 = [[IntroPageInfo alloc] initWithimage:[UIImage imageNamed:@"Intro3image3.png"] title: @"How do I do \"Imagery\"?" description:@"A video will show you how to do Imagery. After you watch the video you will have access to a timer that will help you practice on your own. "];
+    
+    [pageInfos addObject:info3];
+    
+    SwiperViewController *swiper = [[SwiperViewController alloc]init];
+    
+    swiper.pageInfos = pageInfos;
+    
+    swiper.header = @"Welcome to Imagery";
+    
+    [self.navigationController pushViewController:swiper animated:YES];
 
 }
+
 
 -(void)writeToMySkills
 {
@@ -75,15 +108,9 @@
         hud.labelText = @"Added Skill";
         
         [hud show:YES];
-        [hud hide:YES afterDelay:1];    }
-
-   
+        [hud hide:YES afterDelay:1];
+    }
     [self writeAddedSkill];
-    
-    
-    
-    
-    
     
 }
 
@@ -91,8 +118,6 @@
 
 
 -(void)writeAddedSkill{
-    //  NSURL *path = [self getUrlOfFiles:@"TinnitusCoachUsageData.csv"];
-    
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0];
     NSString *documentTXTPath = [documentsDirectory stringByAppendingPathComponent:@"TinnitusCoachUsageData.csv"];
@@ -128,18 +153,13 @@
 -(IBAction)addSkillToPlan:(id)sender
 {
     [self writeToMySkills];
+    [self performSelector:@selector(navigateBacktoPlan) withObject:nil afterDelay:1.2];
+    
+}
+
+-(void)navigateBacktoPlan{
     [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:[self.navigationController.viewControllers count]-3] animated:YES];
-
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

@@ -1,0 +1,125 @@
+
+/*
+	Primary Blue: #0088D1;
+
+	Blue 2: #0681FF;
+*/
+
+
+#header {
+	display:inline-block;
+}
+
+#content .list li:first-child {
+	border-top: none;
+}
+#content #listview {
+	margin-left: 25px;
+	background-color: white;
+}
+
+#content, #afui {
+	background-color: white;
+}
+
+#content .list a {
+	width: 100%;
+	text-decoration: none;
+}
+
+.padding-left {
+	margin-left: 15px;
+}
+
+#content .list a:active {
+	color: #0088D1;
+}
+
+#content .list li {
+	width: 80%;
+	display: inline-block;
+	border: none;
+}
+
+.next-chevron {
+	height: 12px;
+	width: 16px;
+	display: inline-block;
+	vertical-align: middle;
+	position: relative;
+	top: 50%;
+  transform: translateY(-50%);
+}
+
+#listview .list-div {
+	width: 100%;
+	height: 55px;
+	padding-right: 45px;
+	border-bottom: 1px solid rgba(128, 128, 128, 0.28);
+	vertical-align: text-bottom;
+	display: table;
+	padding-top: 30px;
+  /*vertical-align: middle;*/
+	width: 100%;
+}
+
+#listview .list-div li {
+	padding: 0px 0px 0px 0px;
+	position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+#afui .panel, #afui.ios7 .panel {
+	background-color: white;
+}
+p{
+    font-size: 18px !important;
+}
+.gray-font {
+	color: rgba(128, 128, 128, 0.28);
+}
+
+a.backButton:active {
+	background-color: inherit;
+}
+
+#basics-header {
+	width: 100%;
+	border-bottom: 1px solid rgba(128, 128, 128, 0.28);
+}
+
+#basics-header > h4 {
+	padding: 12px 0px;
+	color: #0681FF;
+}
+
+header a {
+	padding: 20px 30px;
+}
+
+#tin-basics p {
+	font-size: 14px;
+}
+.img-border {
+	padding-bottom: 20px;
+	border-bottom: 1px solid rgba(128, 128, 128, 0.28);
+}
+
+.width-limit {
+	width: 95%;
+}
+
+.bullet-lists {
+	list-style-type: circle inside;
+ 	margin-left:15px;
+}
+
+.bullet-lists li {
+ padding-left:1px;
+ padding-bottom: 4px;
+ font-size: 18px !important;
+}
+/*#afui .header {
+	height: 60px;
+}*/

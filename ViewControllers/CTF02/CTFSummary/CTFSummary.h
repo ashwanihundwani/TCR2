@@ -7,15 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+
 @interface CTFSummary : UIViewController
 @property (weak, nonatomic) IBOutlet UITextField *nameTextField;
 @property (weak, nonatomic) IBOutlet UIButton *addButton;
 @property (weak, nonatomic) IBOutlet UILabel *textInfo;
-
- 
-
-//@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
-
 @property (nonatomic,strong) DBManager *manager;
 
 @end

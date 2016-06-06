@@ -2,7 +2,7 @@
 //  SkillDetailViewController.m
 //  TinnitusCoach
 //
-//  Created by Vikram Singh on 3/22/15.
+//  Created by Creospan on 3/22/15.
 //  Copyright (c) 2015 Creospan. All rights reserved.
 //
 
@@ -10,6 +10,9 @@
 #import "PleasantIntroDetailViewController.h"
 #import "NookPA.h"
 #import "MBProgressHUD.h"
+
+#import "SwiperViewController.h"
+#import "IntroPageInfo.h"
 
 
 @interface PleasantSkillDetailViewController ()
@@ -23,14 +26,29 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = [self.skillDict valueForKey:@"skillName"];
-
     if (![[PersistenceStorage getObjectForKey:@"shownPleasantIntro"] isEqual: @"OK"])
-        
     {
+        NSMutableArray *pageInfos = [NSMutableArray array];
         
+        IntroPageInfo *info = [[IntroPageInfo alloc] initWithimage:[UIImage imageNamed:@"Intro5image1.png"] title: P_A_PAGE1_TITLE description:@"Working and doing chores are important. It is also important to do some things just because you enjoy them. Pleasant activities are activities you enjoy."];
         
-        PleasantIntroDetailViewController *siv = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"PleasantIntroDetailViewController"];
-        [self.navigationController pushViewController:siv animated:YES];
+        [pageInfos addObject:info];
+        
+        IntroPageInfo *info2 = [[IntroPageInfo alloc] initWithimage:[UIImage imageNamed:@"Intro5image2.png"] title: @"How can \"Pleasant Activities\" help me?" description:P_A_INTRO_PAGE2];
+        
+        [pageInfos addObject:info2];
+        
+        IntroPageInfo *info3 = [[IntroPageInfo alloc] initWithimage:[UIImage imageNamed:@"Intro5image3.png"] title: P_A_PAGE3_TITLE description:P_A_INTRO_PAGE3];
+        
+        [pageInfos addObject:info3];
+        
+        SwiperViewController *swiper = [[SwiperViewController alloc]init];
+        
+        swiper.pageInfos = pageInfos;
+        
+        swiper.header = @"Welcome to Pleasant Activities";
+        
+        [self.navigationController pushViewController:swiper animated:YES];
         
     }
     
@@ -50,8 +68,28 @@
 }
 
 -(IBAction)viewIntroductionAgainClicked:(id)sender{
-    PleasantIntroDetailViewController *siv = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"PleasantIntroDetailViewController"];
-    [self.navigationController pushViewController:siv animated:YES];
+
+    NSMutableArray *pageInfos = [NSMutableArray array];
+    
+    IntroPageInfo *info = [[IntroPageInfo alloc] initWithimage:[UIImage imageNamed:@"Intro5image1.png"] title: P_A_PAGE1_TITLE description:@"Working and doing chores are important. It is also important to do some things just because you enjoy them. Pleasant activities are activities you enjoy."];
+    
+    [pageInfos addObject:info];
+    
+    IntroPageInfo *info2 = [[IntroPageInfo alloc] initWithimage:[UIImage imageNamed:@"Intro5image2.png"] title: @"How can \"Pleasant Activities\" help me?" description:P_A_INTRO_PAGE2];
+    
+    [pageInfos addObject:info2];
+    
+    IntroPageInfo *info3 = [[IntroPageInfo alloc] initWithimage:[UIImage imageNamed:@"Intro5image3.png"] title: P_A_PAGE3_TITLE description:P_A_INTRO_PAGE3];
+    
+    [pageInfos addObject:info3];
+    
+    SwiperViewController *swiper = [[SwiperViewController alloc]init];
+    
+    swiper.pageInfos = pageInfos;
+    
+    swiper.header = @"Welcome to Pleasant Activities";
+    
+    [self.navigationController pushViewController:swiper animated:YES];
 
 }
 
@@ -72,13 +110,9 @@
         hud.labelText = @"Added Skill";
         
         [hud show:YES];
-        [hud hide:YES afterDelay:1];    }
+        [hud hide:YES afterDelay:1];
+    }
     [self writeAddedSkill];
-    
-    
-    
-    
-    
     
 }
 
@@ -86,8 +120,6 @@
 
 
 -(void)writeAddedSkill{
-    //  NSURL *path = [self getUrlOfFiles:@"TinnitusCoachUsageData.csv"];
-    
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0];
     NSString *documentTXTPath = [documentsDirectory stringByAppendingPathComponent:@"TinnitusCoachUsageData.csv"];
@@ -123,18 +155,12 @@
 -(IBAction)addSkillToPlan:(id)sender
 {
     [self writeToMySkills];
+    [self performSelector:@selector(navigateBacktoPlan) withObject:nil afterDelay:1.2];
+    
+}
+
+-(void)navigateBacktoPlan{
     [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:[self.navigationController.viewControllers count]-3] animated:YES];
-
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

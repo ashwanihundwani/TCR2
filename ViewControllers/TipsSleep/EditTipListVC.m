@@ -6,8 +6,8 @@
 //  Copyright (c) 2015 Creospan. All rights reserved.
 //
 
-#define UN_SELECTED_IMAGE @"u630.png"
-#define SELECTED_IMAGE @"u648.png"
+#define UN_SELECTED_IMAGE @""
+#define SELECTED_IMAGE @"Selected_Checkbox.png"
 
 #import "EditTipListVC.h"
 #import "EditTipsCell.h"
@@ -20,16 +20,39 @@
     
     NSMutableSet *sectionViewArray;
     NSMutableArray *selectedCategories,*tempSelectedCategories;
-    //    NSMutableArray *selectedIndexes;
     
 }
+
 @property(nonatomic,strong)DBManager *dbManager;
 @end
 
 @implementation EditTipListVC
 
+-(void)cancel{
+    
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    UIImageView *backLabel = [[UIImageView alloc]initWithFrame:CGRectMake(10, 10, 15, 20)];
+    
+    backLabel.image = [UIImage imageNamed:@"Active_Back-Arrow.png"];
+    
+    [Utils addTapGestureToView:backLabel target:self
+                      selector:@selector(cancel)];
+    
+    UIBarButtonItem *item = [[UIBarButtonItem alloc]initWithCustomView:backLabel];
+    
+    UIBarButtonItem *negativeSpacer = [[UIBarButtonItem alloc]
+                                       initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace
+                                       target:nil action:nil];
+    negativeSpacer.width = -8;
+    
+    self.navigationItem.leftBarButtonItems = [NSArray arrayWithObjects:negativeSpacer, item, nil];
+
     
     [self.navigationItem setTitle:@"Edit Tip List"];
     
@@ -92,8 +115,6 @@
         UILabel *lblTitle2 = [[UILabel alloc] initWithFrame:CGRectMake(20, 15, frame.size.width-25, 70)];
         [lblTitle2 setBackgroundColor:[UIColor clearColor]];
          [lblTitle2 setNumberOfLines:0];
-   //     [lblTitle2 sizeToFit];
-        
         [lblTitle2 setText:@"Note: It is normal to wake up a few times during the night. Very few people sleep through the night without interruptions."];
         [lblTitle2 setFont:[UIFont systemFontOfSize:13]];
         [view addSubview:lblTitle2];
@@ -127,12 +148,10 @@
     }
     
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.tableViewOutlet.frame.size.width, 5)];
-    [view setBackgroundColor:[UIColor lightGrayColor]] ;//] colorWithRed:245.0/255.0 green:245.0/255.0 blue:245.0/255.0 alpha:1]];
+    [view setBackgroundColor:[Utils colorWithHexValue:@"EEEEEE"]] ;//] colorWithRed:245.0/255.0 green:245.0/255.0 blue:245.0/255.0 alpha:1]];
     
     UILabel *lblTitle = [[UILabel alloc] initWithFrame:CGRectMake(X_POs, 5, frame.size.width-20, DEFAULT_HEIGHT_LABEL)];
-   // [lblTitle setBackgroundColor:[[UIColor lightGrayColor ]] ;//] colorWithRed:245.0/255.0 green:245.0/255.0 blue:245.0/255.0 alpha:1]];
-   
-    [lblTitle setBackgroundColor:[UIColor lightGrayColor]];//
+    [lblTitle setBackgroundColor:[Utils colorWithHexValue:@"EEEEEE"]];//
      [lblTitle setText:aTitle];
     [lblTitle setFont:[UIFont boldSystemFontOfSize:15]];
     [view addSubview:lblTitle];
@@ -149,7 +168,9 @@
     y_Pos = lblDesc.frame.origin.y + lblDesc.frame.size.height + V_PADDING;
     
     UIButton *btnToggleHeader = [UIButton buttonWithType:UIButtonTypeCustom];
-    btnToggleHeader.frame = CGRectMake(frame.size.width-75, 3, 68, 32);
+    btnToggleHeader.frame = CGRectMake(frame.size.width-40, 0, 44, 44);
+    btnToggleHeader.imageEdgeInsets = UIEdgeInsetsMake(6, 12, 18, 12);
+    
     [btnToggleHeader addTarget:self action:@selector(onClickToggleHeader:) forControlEvents:UIControlEventTouchUpInside];
     [btnToggleHeader setBackgroundColor:[UIColor clearColor]];
     btnToggleHeader.tag = index;
@@ -204,6 +225,8 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
+
+
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
     if(section == 0)
@@ -214,6 +237,7 @@
     
     return [self headerViewWith:[tipsDetailsDict valueForKey:@"tipsTypeName"] andDescription:[tipsDetailsDict valueForKey:@"tipsTypeDescription"] andIndexpath:section].frame.size.height;
 }
+
 
 -(IBAction)onClickToggleHeader:(id)sender
 {
@@ -247,10 +271,13 @@
     [self.tableViewOutlet reloadSections:sectionToReload withRowAnimation:UITableViewRowAnimationAutomatic];
 }
 
+
+
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     return [allTipsArray count]+2;
 }
+
 
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
@@ -290,9 +317,36 @@
     }
     
     return [sortArray count];
-    
-    // return 4;
+
 }
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    CGFloat constant = 27;
+    
+    NSDictionary *tipsDetailsDict = [allTipsArray objectAtIndex:indexPath.section-1];
+    
+    NSMutableArray *sortArray = [NSMutableArray new];
+    for(NSDictionary *categoriesDict in allTipsCategoriesArray) {
+        
+        if ([[categoriesDict valueForKey:@"tipsTypeID"] isEqualToString:[tipsDetailsDict valueForKey:@"ID"]]) {
+            [sortArray addObject:categoriesDict];
+            
+        }
+    }
+    
+    NSDictionary *categoryDetails =  [sortArray objectAtIndex:indexPath.row];
+    
+    NSString *string = [categoryDetails valueForKey:@"tipsText"];
+
+    
+    CGFloat labelHeight = [Utils heightForLabelForString:string width:255 font:TITLE_LABEL_FONT];
+    
+    constant += labelHeight;
+    
+    return constant;
+}
+
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *cellIdentifier = @"CellIdentifier";
@@ -307,9 +361,6 @@
     [cell.btnToggleCategory setTag:indexPath.row];
     
     NSDictionary *tipsDetailsDict = [allTipsArray objectAtIndex:indexPath.section-1];
-    // NSPredicate *predicate = [ NSPredicate predicateWithFormat:[NSString stringWithFormat:@"self.tipsTypeID == %d",[[tipsDetailsDict valueForKey:@"ID"] intValue]]];
-    
-    //    NSDictionary *categoryDetails =  [[allTipsCategoriesArray filteredArrayUsingPredicate:predicate] objectAtIndex:indexPath.row];
     
     NSMutableArray *sortArray = [NSMutableArray new];
     for(NSDictionary *categoriesDict in allTipsCategoriesArray) {
@@ -323,10 +374,10 @@
     NSDictionary *categoryDetails =  [sortArray objectAtIndex:indexPath.row];
     
     if ([selectedCategories containsObject:categoryDetails]) {
-        
-        //        [self onClickToggleCategory:cell.btnToggleCategory];
-        [self toggleCategoryImage:YES andCell:cell];
-        
+        cell.checkImage.hidden = false;
+    }
+    else{
+        cell.checkImage.hidden = true;
     }
     cell.lblTitle.text = [categoryDetails valueForKey:@"tipsText"];
     
@@ -374,9 +425,6 @@
     NSIndexSet *sectionToReload5 = [NSIndexSet indexSetWithIndexesInRange:range5];
     [self.tableViewOutlet reloadSections:sectionToReload5 withRowAnimation:UITableViewRowAnimationAutomatic];
     
-    
-    
-    
 }
 
 
@@ -389,20 +437,26 @@
     CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tableViewOutlet];
     NSIndexPath *indexPath = [self.tableViewOutlet indexPathForRowAtPoint:buttonPosition];
     EditTipsCell *cell = (EditTipsCell *)[self.tableViewOutlet cellForRowAtIndexPath:indexPath];
+    
+    UIButton *btn = (UIButton *)sender;
+
+    if(cell.checkImage.hidden){
+    
+        cell.checkImage.hidden = false;
+    }
+    else{
+        cell.checkImage.hidden = true;
+    }
+    
+    
     [cell.btnToggleCategory setImage:[UIImage imageNamed:@"Selected_Checkbox.png"] forState:UIControlStateSelected | UIControlStateHighlighted];
     if (indexPath != nil)
     {
-        [self toggleCategoryImage:YES andCell:cell];
     }
     
     NSDictionary *tipsDetailsDict = [allTipsArray objectAtIndex:indexPath.section-1];
-    // NSPredicate *predicate = [ NSPredicate predicateWithFormat:[NSString stringWithFormat:@"self.tipsTypeID == %d",[[tipsDetailsDict valueForKey:@"ID"] intValue]]];
-    
-    //    NSDictionary *categoryDetails =  [[allTipsCategoriesArray filteredArrayUsingPredicate:predicate] objectAtIndex:indexPath.row];
-    
     NSMutableArray *sortArray = [NSMutableArray new];
     for(NSDictionary *categoriesDict in allTipsCategoriesArray) {
-        
         if ([[categoriesDict valueForKey:@"tipsTypeID"] isEqualToString:[tipsDetailsDict valueForKey:@"ID"]]) {
             [sortArray addObject:categoriesDict];
             
@@ -411,13 +465,10 @@
     
     NSDictionary *categoryDetails =  [sortArray objectAtIndex:indexPath.row];
     if ([selectedCategories containsObject:categoryDetails]) {
-        
-        //       [self deleteMyTips:categoryDetails];
         [selectedCategories removeObject:categoryDetails];
     }
     else
     {
-        //        [self insertMyTips:categoryDetails];
         [selectedCategories addObject:categoryDetails];
     }
     [_tableViewOutlet reloadData];
@@ -455,19 +506,17 @@
     }
 }
 
+
 -(NSArray *)getSelectedTips
 {
     
-    NSString *myTipsQuery = @"select * from My_Tips";
+    NSString *myTipsQuery =  [NSString stringWithFormat:@"select * from My_Tips where planID = %@ and skillID = %@",[PersistenceStorage getObjectForKey:@"currentPlanID"],[PersistenceStorage getObjectForKey:@"currentSkillID"]] ;
     NSArray *myTipsArray = [self.dbManager loadDataFromDB:myTipsQuery];
     
     allMyTips = [NSArray arrayWithArray:myTipsArray];
     NSMutableArray *selectedArray = [NSMutableArray new];
     for(NSDictionary *tipsDict in myTipsArray)
     {
-        //        tipsTypeID tipsTypeCategoryID
-        
-        
         for(NSDictionary *tipsCategory in allTipsCategoriesArray) {
             
             if ([[tipsCategory valueForKey:@"tipsTypeID"] isEqualToString:[tipsDict valueForKey:@"tipsTypeID"]] && [[ tipsCategory valueForKey:@"ID"] isEqualToString:[tipsDict valueForKey:@"tipsTypeCategoryID"]]) {
@@ -481,14 +530,13 @@
     return selectedArray;
 }
 
+
 #pragma mark add myTips
 -(void)insertMyTips:(NSDictionary*)selectedTipsCategories
 {
     int planID = (int)[PersistenceStorage getIntegerForKey:@"currentPlanID"];
     int skillID = (int)[PersistenceStorage getIntegerForKey:@"currentSkillID"];
     int grouID = (int)[PersistenceStorage getIntegerForKey:@"currentGroupID"];
-    
-    
     NSString *inserQquery = [NSString stringWithFormat:@"insert into My_Tips (planID,groupID,skillID,tipsTypeID,tipsTypeCategoryID) values(%d,%d,%d,%d,%d)",planID,grouID,skillID,[[selectedTipsCategories valueForKey:@"tipsTypeID"] intValue],[[selectedTipsCategories valueForKey:@"ID"] intValue]];
     
     // Execute the query.
@@ -502,11 +550,8 @@
     else{
         NSLog(@"Could not execute the query.");
     }
-    
-    //    [selectedCategories removeAllObjects];
-    //    [selectedCategories addObjectsFromArray:[self getSelectedTips]];
-    //    [_tableViewOutlet reloadData];
 }
+
 
 #pragma mark - deletingMyTips
 -(void)deleteMyTips:(NSDictionary*)selectedTipsCategories
@@ -515,24 +560,14 @@
     
     for(NSDictionary *tipsDict in allMyTips)
     {
-        //        tipsTypeID tipsTypeCategoryID
-        
-        
-        
-        
+
         if ([[selectedTipsCategories valueForKey:@"tipsTypeID"] isEqualToString:[tipsDict valueForKey:@"tipsTypeID"]] && [[selectedTipsCategories valueForKey:@"ID"] isEqualToString:[tipsDict valueForKey:@"tipsTypeCategoryID"]]) {
             
             ID = [tipsDict valueForKey:@"ID"];
         }
         
-        
     }
-    
-    
-    NSString *deleteQquery = [NSString stringWithFormat:@"delete from My_Tips where ID=%@",ID];
-    
-    
-    
+    NSString *deleteQquery = [NSString stringWithFormat:@"delete from My_Tips where ID=%@ , skillID = %@ and planID =%@",ID,[PersistenceStorage getObjectForKey:@"currentSkillID"],[PersistenceStorage getObjectForKey:@"currentPlanID"]];
     
     // Execute the query.
     [self.dbManager executeQuery:deleteQquery];
@@ -545,19 +580,8 @@
     else{
         NSLog(@"Could not execute the query.");
     }
-    
-    //    [selectedCategories removeAllObjects];
-    //    [selectedCategories addObjectsFromArray:[self getSelectedTips]];
-    //    [_tableViewOutlet reloadData];
+
 }
-/*
- #pragma mark - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- */
+
 
 @end

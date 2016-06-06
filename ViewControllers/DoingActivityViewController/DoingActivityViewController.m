@@ -15,76 +15,72 @@
 #import "NewPlanAddedViewController.h"
 #import "MBProgressHUD.h"
 
- 
+
 @implementation DoingActivityViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self.navigationItem setHidesBackButton:YES];
+    [self.tabBarController.tabBar setHidden:YES];
+    UIView *titleView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 64)];
+    
+    titleView.backgroundColor = [Utils colorWithHexValue:NAV_BAR_BLACK_COLOR];
+    
+    UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 20, 320, 44)];
+    
+    Pair *pallete = [Utils getColorFontPair:eCFS_PALLETE_1];
+    
+    titleLabel.font = pallete.secondObj;
+    titleLabel.textColor = pallete.firstObj;
+    
+    titleLabel.textAlignment = NSTextAlignmentCenter;
+    titleLabel.backgroundColor = [UIColor clearColor];
+    titleLabel.text = @"Current Activity";
+    
+    [titleView addSubview:titleLabel];
+    
+    UIView *line = [[UIView alloc]initWithFrame:CGRectMake(0, titleView.frame.size.height - 1, 320, 1)];
+    
+    line.backgroundColor = [UIColor colorWithRed:0.0/255.0 green:0.0/255.0 blue:0.098/255.0 alpha:0.22];;
+    
+    [titleView addSubview:line];
+    
+    [self.view addSubview:titleView];
+}
 
-    self.title = @"Current Activity";
-    }
 
 -(void)viewWillAppear:(BOOL)animated
 {
-    
-//        [self writeVisitedPlans];
-   
-    NSString *alertMsg = [NSString stringWithFormat:@"You are at the moment enaged with the activity '%@'. If you are finished, tap on “I’m Done Now” to provide some feedback. Alternatively, you can cancel the current activity.",[PersistenceStorage getObjectForKey:@"activityName"]];
+    NSString *alertMsg = [NSString stringWithFormat:@"When you are done with the activity %@ tap on \"I am Done Now.\"\n\n Alternatively, you can cancel the current activity.",[PersistenceStorage getObjectForKey:@"activityName"]];
     UILabel *theText = (UILabel *)[self.view viewWithTag:100];
-
+    
+    theText.numberOfLines = 1000;
+    
+    self.textLabelHeightConst.constant = [Utils heightForLabelForString:alertMsg width:276 font:theText.font] + 10;
     theText.text = alertMsg;
-
+    
 }
 
 - (IBAction)cancelActivityClicked:(id)sender {
-  //  ActivitiesViewController *samplerView = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"ActivitiesViewController"];
-  //  [self.navigationController pushViewController:samplerView animated:NO];}
-    
     [PersistenceStorage setObject:@" " andKey:@"Referer"];
-    [self dismissModalViewControllerAnimated:NO];
-
-    
-    
-//[self.navigationController popToRootViewControllerAnimated:YES];
+    [self.navigationController popViewControllerAnimated:NO];
 }
 
 
- - (IBAction)doneActivityClicked:(id)sender {
-        ActivityRatingsViewController *svc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"ActivityRatingsViewController"];
-         [self.navigationController pushViewController:svc animated:YES];
-        
-    }
-
-
+- (IBAction)doneActivityClicked:(id)sender {
+    ActivityRatingsViewController *svc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"ActivityRatingsViewController"];
+    [self dismissModalViewControllerAnimated:NO];
+    
+}
 
 
 
 -(IBAction)doneButtonTapped:(id)sender
 {
-    /*    RatingsViewController *ratingsView = [[UIStoryboard storyboardWithName:@"Main"bundle:nil]instantiateViewControllerWithIdentifier:@"RatingsViewController"];
-     ratingsView.skillSection = @"Sounds";
-     ratingsView.skillDetail = self.name;
-     
-     //[self.navigationController pushViewController:ratingsView animated:YES];
-     [self.navigationController presentModalViewController:ratingsView animated:YES];
-     
-     */
     [PersistenceStorage setObject:@"DoingActivityVC" andKey:@"Referer"];
-    [self dismissModalViewControllerAnimated:NO];
-    
-    
+    [self.navigationController popViewControllerAnimated:NO];
+
 }
 
 
-    
-/*
-- (IBAction)doneActivityClicked:(id)sender
-    {
-    ActivityRatingsViewController *samplerView = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"ActivityRatingsViewController"];
-    [self.navigationController pushViewController:samplerView animated:NO];
-}
-   // [self presentModalViewController:samplerView animated:YES];
-*/
-        
+
 @end

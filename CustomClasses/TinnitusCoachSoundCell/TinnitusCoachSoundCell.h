@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "CEPlayer.h"
 #import "CERoundProgressView.h"
-//static AVAudioPlayer *audioPlayer;
+
 @protocol TinnitusCoachSoundCellProtocol <NSObject>
 @optional
 -(void)didSelectPlayPauseButton:(id)cell;

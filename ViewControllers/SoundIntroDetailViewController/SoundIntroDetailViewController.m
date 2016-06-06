@@ -2,7 +2,7 @@
 //  SkillIntroductionViewController.m
 //  TinnitusCoach
 //
-//  Created by Vikram Singh on 3/22/15.
+//  Created by Creospan on 3/22/15.
 //  Copyright (c) 2015 Creospan. All rights reserved.
 //
 
@@ -51,50 +51,21 @@
     
     MYIntroductionPanel *panel3 = [[MYIntroductionPanel alloc] initWithimage:[UIImage imageNamed:@"Intro1image3.png"] title: @"What is special about \"Using Sound\"?" description:@"The sources of sounds that can be used for tinnitus are almost endless. Where does one even start? Tinnitus Coach contains sounds that are helpful for many people; however its main purpose is not to provide you with all of the sounds you will need. Instead, it guides you to discover sounds from various sources."];
     
-    
-    
-    
-    //STEP 2 Create IntroductionView
-    
-    
-    /*A more customized version*/
-    
-    //    NSMutableAttributedString * string1 = [[NSMutableAttributedString alloc] initWithString:@"Welcome to the Party !"];
-    //    [string1 addAttribute:NSForegroundColorAttributeName value:[UIColor whiteColor] range:NSMakeRange(0, [string1 length])];
-    //
-    //    NSMutableAttributedString * string2 = [[NSMutableAttributedString alloc] initWithString:@"X a Post"];
-    //    [string2 addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:NSMakeRange(0, [string2 length])];
-    //
-    //    NSMutableAttributedString * string3 = [[NSMutableAttributedString alloc] initWithString:@"Check Posts"];
-    //    [string3 addAttribute:NSForegroundColorAttributeName value:[UIColor greenColor] range:NSMakeRange(0, [string3 length])];
-    //
-    //    NSMutableAttributedString * string4 = [[NSMutableAttributedString alloc] initWithString:@"Flag a Post"];
-    //    [string4 addAttribute:NSForegroundColorAttributeName value:[UIColor whiteColor] range:NSMakeRange(0, [string4 length])];
-    
     MYIntroductionView *introductionView = [[MYIntroductionView alloc] initWithFrame:CGRectMake(20, 0, self.view.bounds.size.width-40, 500) headerTexts:@[@"What is \"Using Sounds\"?", @"What can I expect from \"Using Sound\"?", @"What is special about \"Using Sound\"?"] panels:@[panel1, panel2, panel3] languageDirection:MYLanguageDirectionLeftToRight];
-    
-    
-    //    MYIntroductionView *introductionView = [[MYIntroductionView alloc] initWithFrame:CGRectMake(20, 0, self.view.bounds.size.width-20, self.view.bounds.size.height) headerTexts:@[@"What is \"Using Sounds\"?", @"What can I expect from \"Using Sound\"?", @"What is special about \"Using Sound\"?"] panels:@[panel1, panel2, panel3] languageDirection:MYLanguageDirectionLeftToRight];
-    
     [introductionView setBackgroundColor:[UIColor whiteColor]];
-    
-    
     [introductionView.BackgroundImageView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
     [introductionView.HeaderImageView setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
     [introductionView.HeaderLabel setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
     [introductionView.HeaderView setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
     [introductionView.PageControl setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
     [introductionView.SkipButton setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
-    
-    
-    
-    
     //Set delegate to self for callbacks (optional)
     introductionView.delegate = self;
     
     //STEP 3: Show introduction view
     [introductionView showInView:self.view animateDuration:0.0];
 }
+
 
 -(void)introductionDidFinishWithType:(MYFinishType)finishType
 {
@@ -103,14 +74,6 @@
     [self.navigationController popViewControllerAnimated:NO];
 }
 
-/*
- #pragma mark - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- */
+
 
 @end

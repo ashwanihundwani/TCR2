@@ -17,4 +17,6 @@
 @property(nonatomic,strong) NSString *ratingName;
 @property(nonatomic, strong) NSDictionary *skillDict;
 
+@property (nonatomic, strong) void (^dismissBlock)();
+
 @end

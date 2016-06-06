@@ -6,48 +6,151 @@
 //  Copyright (c) 2015 Creospan. All rights reserved.
 //
 #import "MBProgressHUD.h"
+
+
+#import "DateCell.h"
+#import "RepeatCell.h"
+
+#define DATE_FORMAT @"hh:mm a, MM/dd/yy"
+
 #import "ActivitiesViewController.h"
 
 #import "ScheduleViewController.h"
 #import <EventKitUI/EventKitUI.h>
+#import "DeleteCormationManager.h"
+
+@implementation ScheduleInfo
 
 
+@end
 
-@interface ScheduleViewController ()
-{NSArray *remindersArray;
+@interface ScheduleViewController ()<UITableViewDataSource, UITableViewDelegate>
+{
+    NSArray *remindersArray;
+    NSString* CalenderEventID;
 }
 
 
 
 
-
-@property(nonatomic,strong) NSDate *startDate;
-@property(nonatomic,strong) NSDate  *endDate;
+@property(nonatomic, strong)ScheduleInfo *scheduleInfo;
 @end
 
 @implementation ScheduleViewController
+-(void)onDateSelected:(id)sender
+{
+    self.scheduleInfo.startDate = [Utils stringFromDate:self.datePicker.date inFormat:DATE_FORMAT];
+    NSDate *date = [[NSDate alloc]initWithTimeInterval:3600 sinceDate:self.datePicker.date];
+    self.scheduleInfo.endDate = [Utils stringFromDate:date inFormat:DATE_FORMAT];
+    [self.scheduleTableView reloadData];
+}
+
+-(void)cancel
+{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    UIView *titleView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 130, 44)];
+    
+    titleView.backgroundColor = [Utils colorWithHexValue:NAV_BAR_BLACK_COLOR];
+    
+    UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 130, 44
+                                                                   )];
+    Pair *pallete = [Utils getColorFontPair:eCFS_PALLETE_1];
+    titleLabel.font = pallete.secondObj;
+    titleLabel.textColor = pallete.firstObj;
+    titleLabel.textAlignment = NSTextAlignmentCenter;
+    titleLabel.backgroundColor = [UIColor clearColor];
+    titleLabel.text = @"Add Event";
+    [titleView addSubview:titleLabel];
+    self.navigationItem.titleView = titleView;
+    UILabel *backLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 0, 60, 20)];
+    backLabel.text = @"Cancel";
+    pallete = [Utils getColorFontPair:eCFS_PALLETE_3];
+    backLabel.font = pallete.secondObj;
+    backLabel.textColor = pallete.firstObj;
+    
+    [Utils addTapGestureToView:backLabel target:self
+                      selector:@selector(cancel)];
+    
+    UIBarButtonItem *item = [[UIBarButtonItem alloc]initWithCustomView:backLabel];
+    
+    UIBarButtonItem *negativeSpacer = [[UIBarButtonItem alloc]
+                                       initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace
+                                       target:nil action:nil];
+    negativeSpacer.width = -8;
+    
+    self.navigationItem.leftBarButtonItems = [NSArray arrayWithObjects:negativeSpacer, item, nil];
+    
+    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc]initWithTitle:@"Done" style:UIBarButtonItemStyleDone target:self action:@selector(doneClicked)];
+    self.navigationItem.rightBarButtonItem = doneButton;
+    
+    self.scheduleTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    
+    self.scheduleInfo = [[ScheduleInfo alloc]init];
+    
+    self.scheduleInfo.startDate = [Utils stringFromDate:[NSDate date] inFormat:DATE_FORMAT];
+    
+    NSDate *date = [[NSDate alloc]initWithTimeInterval:3600 sinceDate:[NSDate date]];
+    
+    self.scheduleInfo.endDate = [Utils stringFromDate:date inFormat:DATE_FORMAT];
+    
+    [self.datePicker addTarget:self action:@selector(onDateSelected:) forControlEvents:UIControlEventValueChanged];
+    
+    self.datePicker.hidden = NO;
+    
+    self.scheduleInfo.remType = eRT_NEVER;
     self.title = @"Add Event";
     // Do any additional setup after loading the view.
     [self setUpView];
+    self.manager = [[DBManager alloc]initWithDatabaseFileName:@"GNResoundDB.sqlite"];
 }
 
+
 -(void)setUpView{
-    [self.datePicker setHidden:YES];
-    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc]initWithTitle:@"Done" style:UIBarButtonItemStyleDone target:self action:@selector(doneClicked)];
-    self.navigationItem.rightBarButtonItem = doneButton;
     self.activityName.text = self.name;
+    self.datePicker.minimumDate =[NSDate date];
+    
+    if(self.inputDate){
+        
+        NSDateFormatter *outputFormatter = [[NSDateFormatter alloc] init];
+        [outputFormatter setDateFormat:DATE_FORMAT];
+        
+        NSString *title = [outputFormatter stringFromDate:self.inputDate];
+        self.scheduleInfo.startDate = title;
+
+        NSDate *date = [[NSDate alloc]initWithTimeInterval:3600 sinceDate:self.inputDate];
+    
+        self.scheduleInfo.endDate = [Utils stringFromDate:date inFormat:DATE_FORMAT];
+        [self.startButton setTitle:title forState:UIControlStateNormal];
+        //end date
+        
+        self.datePicker.date = self.inputDate;
+    }
+    
+    if(self.repeatText){
+        UIButton *repeatLabel = (UIButton *)[self.view viewWithTag:355];
+        
+        [repeatLabel setTitle:self.repeatText forState:UIControlStateNormal];
+        
+        if([self.repeatText isEqualToString:@"Daily"]){
+            self.scheduleInfo.remType = eRT_DAILY;
+        }
+        else if([self.repeatText isEqualToString:@"Weekly"]){
+            self.scheduleInfo.remType = eRT_WEEKLY;
+        }
+    }
 }
+
+
 
 - (void)viewDidDisappear:(BOOL)animated {
 
-
-[PersistenceStorage setObject:@"No" andKey:@"showCancelActivityButton"];
-
-
-
+    [PersistenceStorage setObject:@"No" andKey:@"showCancelActivityButton"];
 }
 
 
@@ -56,147 +159,93 @@
     [self.tabBarController.tabBar setHidden:YES];
 }
 
+
 - (void)viewWillDisappear:(BOOL)animated
 {
     [self.tabBarController.tabBar setHidden:NO];
 }
 
 
-
 - (void)viewDidAppear:(BOOL)animated {
-    
     
     NSLog(@"%@",[PersistenceStorage getObjectForKey:@"skillName"]);
     
-    
-    UILabel *tlabel = [self.view viewWithTag:555];
-
-    
-if (![[PersistenceStorage getObjectForKey:@"showCancelActivityButton"] isEqualToString:@"No"])
-{
-     tlabel.hidden = NO;
-
-    
-}
-else
-{
-    tlabel.hidden  = YES;
-}
-
-    [PersistenceStorage setObject:@"No" andKey:@"showCancelActivityButton"];
-
-
 }
 
 - (IBAction)DeleteReminder:(id)sender {
+    NSString *skillName = [PersistenceStorage getObjectForKey:@"skillName"];
     
+    if([skillName isEqualToString:@"Deep Breathing"]
+       || [skillName isEqualToString:@"Imagery"]
+       || [skillName isEqualToString:@"Guided Meditation"]){
+        
+        if(self.delegate
+           && [self.delegate respondsToSelector:@selector(didTapDelete:)]){
+            [self.delegate didTapDelete:self];
+            [PersistenceStorage setObject:@"No" andKey:@"showCancelActivityButton"];
+            [self.scheduleTableView reloadData];
+        }
+        return;
+    }
     
-    [self writeSkillReminderToggle:@"Turned Off Reminder"];
-
-    
-    NSString *query = [NSString stringWithFormat: @"select * from MyReminders where ActName = '%@'", [PersistenceStorage getObjectForKey:@"activityName"] ];
-    
-    
-    
-    NSString *queryClear = [NSString stringWithFormat:@"delete from MyReminders where ActName = '%@'",[PersistenceStorage getObjectForKey:@"activityName"]];
-    
-    //  NSString *queryDelete = [NSString stringWithFormat:@"delete from MyReminders where ActivityName = %ld", [PersistenceStorage getObjectForKey:@"activityName"] ];
-    
-    
-    
-    self.manager = [[DBManager alloc]initWithDatabaseFileName:@"GNResoundDB.sqlite"];
-    remindersArray = [[NSArray alloc] initWithArray:[self.manager loadDataFromDB:query]];
+    CalenderEventID = nil;
+    CalenderEventID = [self eventPAExists];
+    if (CalenderEventID != nil) {
+        EKEventStore *store = [EKEventStore new];
+        NSError* err = nil;
+        EKEvent* eventToRemove = [store eventWithIdentifier:CalenderEventID];
+        [store removeEvent:eventToRemove span:EKSpanFutureEvents commit:YES error:&err];
+        if(err != nil){
+            NSLog(@"Error in deletining event from calender:%@", [eventToRemove description]);
+        }
+    }
+    NSString *queryClear = [NSString stringWithFormat:@"delete from MyReminders where ActName = '%@' and SkillName ='%@' and PlanName = '%@'",[PersistenceStorage getObjectForKey:@"activityName"],@"Pleasant Activities",[Utils getValidSqlString:[PersistenceStorage getObjectForKey:@"planName"]]];
     
     
     if ([remindersArray count]== 1) {
         
-        
-        NSDictionary *dict = [remindersArray objectAtIndex:0];
-        NSString *strAct = [dict valueForKey:@"CalendarEventID"];
-        [PersistenceStorage setObject:strAct andKey:@"EventID"];
-        
-        
-    }
-    
-    
-    
-    
-    //clear notification
-    
-    NSArray *notificationArray = [[UIApplication sharedApplication] scheduledLocalNotifications];
-    NSLog(@"notify array %@",notificationArray);
-    
-    for(UILocalNotification *notification in notificationArray){
-        if ([notification.alertBody containsString:[PersistenceStorage getObjectForKey:@"activityName"]]) {
-            [[UIApplication sharedApplication] cancelLocalNotification:notification] ;
+        if(self.delegate
+           && [self.delegate respondsToSelector:@selector(didTapDelete:)]){
+            
+            [self.delegate didTapDelete:self];
+            
+            [PersistenceStorage setObject:@"No" andKey:@"showCancelActivityButton"];
+            
+            [self.scheduleTableView reloadData];
+            
+            
         }
         
-        
     }
-    
-    
-    
-    
-    /*
-     
-     NSString *query = [NSString stringWithFormat: @"delete from MyReminders where ActivityName = %ld", [PersistenceStorage getObjectForKey:@"activityName"] ];
-     
-     
-     BOOL isDone = [self.manager executeQuery:queryClear];
-     if (isDone == YES)
-     {
-     
-     
-     
-     
-     
-     
-     //   [[planListArray objectAtIndex:indexPath.row] valueForKey:@"situationName"];
-     
-     
-     
-     
-     }
-     else{
-     }
-     
-     
-     
-     if ([remindersArray count]== 1) {
-     
-     //label.text = @"Reminder set";
-     
-     NSDictionary *dict = [remindersArray objectAtIndex:0];
-     NSString *strAct = [dict valueForKey:@"ScheduledDate"];
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     */
-    
-    
-    
-    
-    
-    
-    
-    
+    else{
+        NSString *query = [NSString stringWithFormat: @"select * from MyReminders where ActName = '%@'", [PersistenceStorage getObjectForKey:@"activityName"] ];
+
+        NSString *queryClear = [NSString stringWithFormat:@"delete from MyReminders where ActName = '%@'",[PersistenceStorage getObjectForKey:@"activityName"]];
+        self.manager = [[DBManager alloc]initWithDatabaseFileName:@"GNResoundDB.sqlite"];
+        remindersArray = [[NSArray alloc] initWithArray:[self.manager loadDataFromDB:query]];
+        if ([remindersArray count]== 1) {
+            NSDictionary *dict = [remindersArray objectAtIndex:0];
+            NSString *strAct = [dict valueForKey:@"CalendarEventID"];
+            [PersistenceStorage setObject:strAct andKey:@"EventID"];
+        }
+        //clear notification
+        NSArray *notificationArray = [[UIApplication sharedApplication] scheduledLocalNotifications];
+        NSLog(@"notify array %@",notificationArray);
+        
+        for(UILocalNotification *notification in notificationArray){
+            if ([notification.alertBody containsString:[PersistenceStorage getObjectForKey:@"activityName"]]) {
+                [[UIApplication sharedApplication] cancelLocalNotification:notification] ;
+            }
+        }
+        [self.manager executeQuery:queryClear];
+        ActivitiesViewController *svc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"ActivitiesViewController"];
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+    [self writeSkillReminderToggle:@"Turned Off Reminder"];
+    //clear notification
+    [self deleteExistingPAEventNotitfication];
     [self.manager executeQuery:queryClear];
-    
-    
-    ActivitiesViewController *svc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"ActivitiesViewController"];
-    // [self.navigationController pushViewController:svc animated:NO];
     [self.navigationController popViewControllerAnimated:YES];
-    
-    //    [self.manager executeQuery:queryClear];
     
     
 }
@@ -211,648 +260,444 @@ else
 #pragma mark DoneClicked
 -(void)doneClicked{
     
-    
-if (self.datePicker.hidden==0)
-{
-
-    
-    
-    
-    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateStyle:NSDateFormatterShortStyle];
-    [formatter setTimeStyle:NSDateFormatterShortStyle];
-    
-    
-    
-    
-    
-    NSString * schDate = [formatter stringFromDate:self.datePicker.date];
-    
-    
-    [PersistenceStorage setObject:schDate andKey:@"localScheduledDate"];
-    
-
-    self.manager = [[DBManager alloc]initWithDatabaseFileName:@"GNResoundDB.sqlite"];
-    
-    NSLog(@"%@",      [PersistenceStorage getObjectForKey:@"skillName"]);
-    
-    //[button.controlName isEqualToString:controlName]
-    
-    if ([[PersistenceStorage getObjectForKey:@"skillName"] isEqualToString:@"Pleasant Activities"]
-        
-        && ![[PersistenceStorage getObjectForKey:@"showCancelActivityButton"] isEqualToString:@"Yes"])
-    
+    if (self.datePicker.hidden==0)
     {
-        
-        
+        CalenderEventID = nil;
+        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+        [formatter setDateStyle:NSDateFormatterShortStyle];
+        [formatter setTimeStyle:NSDateFormatterShortStyle];
+        NSString * schDate = self.scheduleInfo.startDate;
+        [PersistenceStorage setObject:schDate andKey:@"localScheduledDate"];
+        self.manager = [[DBManager alloc]initWithDatabaseFileName:@"GNResoundDB.sqlite"];
+        NSLog(@"%@",      [PersistenceStorage getObjectForKey:@"skillName"]);
+        if ([[PersistenceStorage getObjectForKey:@"skillName"] isEqualToString:@"Pleasant Activities"]
+            && ![[PersistenceStorage getObjectForKey:@"showCancelActivityButton"] isEqualToString:@"Yes"])
+        {
+            NSString * schDate = self.scheduleInfo.startDate;
+            UIButton *repeatLabel = (UIButton *)[self.view viewWithTag:355];
+            NSString *buttonTitle =repeatLabel.currentTitle;
+            CalenderEventID = [self eventPAExists];
+            EKEventStore *store = [EKEventStore new];
+            [store requestAccessToEntityType:EKEntityTypeEvent completion:^(BOOL granted, NSError *error) {
+                if (!granted) { return; }
+                if(CalenderEventID != nil){
+                    NSError* err = nil;
+                    EKEvent* eventToRemove = [store eventWithIdentifier:CalenderEventID];
+                    [store removeEvent:eventToRemove span:EKSpanFutureEvents commit:YES error:&err];
+                    if(err != nil){
+                        NSLog(@"Error in deletining event from calender:%@", [eventToRemove description]);
+                    }
+                }
+                EKEvent *event = [EKEvent eventWithEventStore:store];
+                NSDate *twoYearsFromNow = [NSDate dateWithTimeIntervalSinceNow:63113851];
+                EKRecurrenceRule *recurrance;
+                NSDateComponents *comp = [[NSDateComponents alloc]init];
+                
+                // The application actually allows multiple combinations of reminder periods and expiry for contacts - I've
+                // only included the 2 week reminder here for simplicity
+                [comp setYear:0];
+                [comp setMonth:0];
+                [comp setDay:14];
+                if  (self.scheduleInfo.remType == eRT_DAILY) {
+                    recurrance = [[EKRecurrenceRule alloc] initRecurrenceWithFrequency:EKRecurrenceFrequencyDaily interval:1 end:[EKRecurrenceEnd recurrenceEndWithEndDate:twoYearsFromNow]];
+                    
+                }
+                else if (self.scheduleInfo.remType == eRT_WEEKLY) {
+                    recurrance = [[EKRecurrenceRule alloc] initRecurrenceWithFrequency:EKRecurrenceFrequencyWeekly interval:1 end:[EKRecurrenceEnd recurrenceEndWithEndDate:twoYearsFromNow]];
+                    
+                }
+                
+                else {
+                    recurrance = [[EKRecurrenceRule alloc] initRecurrenceWithFrequency:EKRecurrenceFrequencyYearly interval:1 end:[EKRecurrenceEnd recurrenceEndWithEndDate:twoYearsFromNow]];
+                    
+                    
+                }
 
-        NSString * schDate = self.startDate;
+                NSString *TC = @"  Tinnitus Coach: ";
+                event.title = [TC stringByAppendingString:self.name];
+                event.startDate = [Utils dateWithString:self.scheduleInfo.startDate inFormat:DATE_FORMAT] ;//[NSDate date]; //today
+                event.endDate =  [Utils dateWithString:self.scheduleInfo.endDate inFormat:DATE_FORMAT] ;  //event.startDate dateByAddingTimeInterval:60*60];  //set 1 hour meeting
+                event.recurrenceRules=@[recurrance];
+                event.calendar = [store defaultCalendarForNewEvents];
+                NSError *err = nil;
+                [store saveEvent:event span:EKSpanThisEvent commit:YES error:&err];
+                NSString *savedEventId = event.eventIdentifier;  //save the event id if you want to access this later
+                [PersistenceStorage setObject:savedEventId andKey:@"lastEventIdentifer"];  ///STORE to test it for deletion
+                NSString *queryClear = [NSString stringWithFormat:@"delete from MyReminders where ActName = '%@' and PlanName = '%@' and SkillName = 'Pleasant Activities'",[PersistenceStorage getObjectForKey:@"activityName"],[Utils getValidSqlString:[PersistenceStorage getObjectForKey:@"planName"]]];
+                NSString *query = [NSString stringWithFormat:@"insert into MyReminders ('ID','ActName','ScheduledDate','CalendarEventID','PlanName','SkillName') values(1,'%@','%@','%@','%@','Pleasant Activities')",[PersistenceStorage getObjectForKey:@"activityName"],[PersistenceStorage getObjectForKey:@"localScheduledDate"],[PersistenceStorage getObjectForKey:@"lastEventIdentifer"],[Utils getValidSqlString:[PersistenceStorage getObjectForKey:@"planName"]]];
+                // Execute the query.
+                [self.manager executeQuery:queryClear];
+                [self.manager executeQuery:query];
+            }];
+            
+            if (CalenderEventID != nil) {
+                // event exixts lets delete the corresponding notiifcation
+                [self deleteExistingPAEventNotitfication];
+            }
+            // Schedule the notification
+            
+            UILocalNotification* localNotification = [[UILocalNotification alloc] init];
+            localNotification.fireDate = [Utils dateWithString:self.scheduleInfo.startDate inFormat:DATE_FORMAT] ;
+            NSString *str = [NSString stringWithFormat:@"%@%@%@%@%@%@",@"\nThe '",[PersistenceStorage getObjectForKey:@"activityName"],@"' pleasant activity is scheduled now in '",[PersistenceStorage getObjectForKey:@"planName"],@"' plan.\n\n You can access and run this activity from this plan. In the plan, look for the skill 'Pleasant Activities' and the list of values: ",[PersistenceStorage getObjectForKey:@"valueName"]];
+            localNotification.alertBody =  str;
+            NSDictionary *infoDict = [NSDictionary dictionaryWithObjectsAndKeys:@"Pleasant Activities", @"Type", [PersistenceStorage getObjectForKey:@"planName"],@"PlanName",[PersistenceStorage getObjectForKey:@"activityName"],@"Activity",nil];
+            localNotification.userInfo = infoDict;//[NSMutableDictionary dictionaryWithObject:@"targetURL" forKey:@"Test"];
+            
+            [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
+            
+            MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+            hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark.png"] ];
+            hud.mode = MBProgressHUDModeCustomView;
+            hud.labelText = @"Scheduled Reminder";
+            [hud show:YES];
+            [hud hide:YES afterDelay:1];
+            [self writeSkillReminderToggle:@"On"];
+        }
         
-     //   localScheduledDate
-        
-      //  [PersistenceStorage setObject:schDate andKey:@"localScheduledDate"];
-        
-      //  [PersistenceStorage setObject:schDate andKey:@"scheduledDate"];
+        if ([[PersistenceStorage getObjectForKey:@"skillName"] isEqualToString:@"Imagery"]){
+            NSString * schDate = self.scheduleInfo.startDate;
+            [PersistenceStorage setObject:schDate andKey:@"scheduledDate"];
+            UIButton *repeatLabel = (UIButton *)[self.view viewWithTag:355];
+            NSString *buttonTitle =repeatLabel.currentTitle;
+            NSLog(@"%@", buttonTitle);
+            // check if event exist and if so rescehdule it
+            CalenderEventID = [self eventExists];
+            EKEventStore *store = [EKEventStore new];
+            [store requestAccessToEntityType:EKEntityTypeEvent completion:^(BOOL granted, NSError *error) {
+                if (!granted) { return; }
+                if(CalenderEventID != nil){
+                    NSError* err = nil;
+                    EKEvent* eventToRemove = [store eventWithIdentifier:CalenderEventID];
+                    [store removeEvent:eventToRemove span:EKSpanFutureEvents commit:YES error:&err];
+                    if(err != nil){
+                        NSLog(@"Error in deletining event from calender:%@", [eventToRemove description]);
+                    }
+                }
+                EKEvent *event =[EKEvent eventWithEventStore:store] ;
+                NSDate *twoYearsFromNow = [NSDate dateWithTimeIntervalSinceNow:63113851];
+                EKRecurrenceRule *recurrance;
+                NSDateComponents *comp = [[NSDateComponents alloc]init];
+                [comp setYear:0];
+                [comp setMonth:0];
+                [comp setDay:14];
+                if  (self.scheduleInfo.remType == eRT_DAILY) {
+                    recurrance = [[EKRecurrenceRule alloc] initRecurrenceWithFrequency:EKRecurrenceFrequencyDaily interval:1 end:[EKRecurrenceEnd recurrenceEndWithEndDate:twoYearsFromNow]];
+                    
+                }
+                else if (self.scheduleInfo.remType == eRT_DAILY) {
+                    recurrance = [[EKRecurrenceRule alloc] initRecurrenceWithFrequency:EKRecurrenceFrequencyWeekly interval:1 end:[EKRecurrenceEnd recurrenceEndWithEndDate:twoYearsFromNow]];
+                    
+                }
+                else {
+                    recurrance = [[EKRecurrenceRule alloc] initRecurrenceWithFrequency:EKRecurrenceFrequencyYearly interval:1 end:[EKRecurrenceEnd recurrenceEndWithEndDate:twoYearsFromNow]];
+                }
+                NSString *TC = @"Tinnitus Coach: SKILL  ";
+                event.title = @"  Tinnitus Coach - Imagery Skill";///[TC stringByAppendingString:self.name];
+                event.startDate = [Utils dateWithString:self.scheduleInfo.startDate inFormat:DATE_FORMAT] ;//[NSDate date]; //today
+                event.endDate =  [Utils dateWithString:self.scheduleInfo.endDate inFormat:DATE_FORMAT] ; //event.startDate dateByAddingTimeInterval:60*60];  //set 1 hour meeting
+                event.recurrenceRules=@[recurrance];
+                event.calendar = [store defaultCalendarForNewEvents];
+                NSError *err = nil;
+                [store saveEvent:event span:EKSpanThisEvent commit:YES error:&err];
+                NSString *savedEventId = event.eventIdentifier;  //save the event id if you want to access this later
+                [PersistenceStorage setObject:savedEventId andKey:@"lastEventIdentifer"];  ///STORE to test it for deletion
+                NSLog(@"%@", [PersistenceStorage getObjectForKey:@"lastEventIdentifer"]);
+                NSString *queryClear = [NSString stringWithFormat:@"delete from MySkillReminders where SkillName = 'Imagery' and PlanName = '%@'",[Utils getValidSqlString:[PersistenceStorage getObjectForKey:@"planName"]]];
+                
+                NSString *dateWithRepeat = [PersistenceStorage getObjectForKey:@"localScheduledDate"];
+                NSString *text = nil;
+                if(self.scheduleInfo.remType == eRT_DAILY)
+                {
+                    text = @"Daily";
+                }
+                else if(self.scheduleInfo.remType == eRT_WEEKLY){
+                    text = @"Weekly";
+                }
+                
+                if(text){
+                    
+                    dateWithRepeat = [[[PersistenceStorage getObjectForKey:@"localScheduledDate"] stringByAppendingString:@"\n"] stringByAppendingString:text];
+                }
+                NSString *query = [NSString stringWithFormat:@"insert into MySkillReminders ('ID','SkillName','ScheduledDate','CalendarEventID','PlanName') values(1,'%@','%@','%@','%@' )",@"Imagery",dateWithRepeat,[PersistenceStorage getObjectForKey:@"lastEventIdentifer"],[Utils getValidSqlString:[PersistenceStorage getObjectForKey:@"planName"]]];
+                
+                [self.manager executeQuery:queryClear];
+                [self.manager executeQuery:query];
+            }];
+            
+            if (CalenderEventID != nil) {
+                // event exixts lets delete the corresponding notiifcation
+                [self deleteExistingEventNotitfication];
+            }
+            UILocalNotification* localNotification = [[UILocalNotification alloc] init];
+            localNotification.fireDate = [Utils dateWithString:self.scheduleInfo.startDate inFormat:DATE_FORMAT] ;
+            NSString *str = [NSString stringWithFormat:@"%@%@%@",@"\nThe 'Imagery' skill is scheduled now in '",[PersistenceStorage getObjectForKey:@"planName"],@"' plan.\n\n You can access and run this skill from this plan."];
+            localNotification.alertBody =  str;
+            localNotification.applicationIconBadgeNumber = [[UIApplication sharedApplication] applicationIconBadgeNumber] + 1;
+            
+            NSDictionary *infoDict = [NSDictionary dictionaryWithObjectsAndKeys:@"Imagery", @"Type", [PersistenceStorage getObjectForKey:@"planName"],@"PlanName",nil];
+            localNotification.userInfo = infoDict;
+            [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
+            [self writeSkillReminder:@"On"];
+        }
+        if ([[PersistenceStorage getObjectForKey:@"skillName"] isEqualToString:@"Guided Meditation"]){
+            
+            NSString * schDate = self.scheduleInfo.startDate;
+            [PersistenceStorage setObject:schDate andKey:@"scheduledDate"];
+            UIButton *repeatLabel = (UIButton *)[self.view viewWithTag:355];
+            NSString *buttonTitle =repeatLabel.currentTitle;
+            NSLog(@"%@", buttonTitle);
+            CalenderEventID = [self eventExists];
+            EKEventStore *store = [EKEventStore new];
+            [store requestAccessToEntityType:EKEntityTypeEvent completion:^(BOOL granted, NSError *error) {
+                if (!granted) { return; }
+                if(CalenderEventID != nil){
+                    NSError* err = nil;
+                    EKEvent* eventToRemove = [store eventWithIdentifier:CalenderEventID];
+                    [store removeEvent:eventToRemove span:EKSpanFutureEvents commit:YES error:&err];
+                    if(err != nil){
+                        NSLog(@"Error in deletining event from calender:%@", [eventToRemove description]);
+                    }
+                }
+                EKEvent *event =[EKEvent eventWithEventStore:store] ;
+                NSDate *twoYearsFromNow = [NSDate dateWithTimeIntervalSinceNow:63113851];
+                EKRecurrenceRule *recurrance;
+                NSDateComponents *comp = [[NSDateComponents alloc]init];
+                [comp setYear:0];
+                [comp setMonth:0];
+                [comp setDay:14];
+                if  (self.scheduleInfo.remType == eRT_DAILY) {
+                    recurrance = [[EKRecurrenceRule alloc] initRecurrenceWithFrequency:EKRecurrenceFrequencyDaily interval:1 end:[EKRecurrenceEnd recurrenceEndWithEndDate:twoYearsFromNow]];
+                    
+                }
+                else if (self.scheduleInfo.remType == eRT_WEEKLY) {
+                    recurrance = [[EKRecurrenceRule alloc] initRecurrenceWithFrequency:EKRecurrenceFrequencyWeekly interval:1 end:[EKRecurrenceEnd recurrenceEndWithEndDate:twoYearsFromNow]];
+                    
+                }
+                
+                else {
+                    recurrance = [[EKRecurrenceRule alloc] initRecurrenceWithFrequency:EKRecurrenceFrequencyYearly interval:1 end:[EKRecurrenceEnd recurrenceEndWithEndDate:twoYearsFromNow]];
+                    
+                }
 
-        UIButton *repeatLabel = (UIButton *)[self.view viewWithTag:355];
-        
-        NSString *buttonTitle =repeatLabel.currentTitle;
-        
-        
-        
-        EKEventStore *store = [EKEventStore new];
-        [store requestAccessToEntityType:EKEntityTypeEvent completion:^(BOOL granted, NSError *error) {
-            if (!granted) { return; }
-            EKEvent *event = [EKEvent eventWithEventStore:store];
-            //event.title = self.name : @"concatenation with operators" ;
-            NSDate *twoYearsFromNow = [NSDate dateWithTimeIntervalSinceNow:63113851];
-            
-            
-            
-            EKRecurrenceRule *recurrance;
-            NSDateComponents *comp = [[NSDateComponents alloc]init];
-            
-            // The application actually allows multiple combinations of reminder periods and expiry for contacts - I've
-            // only included the 2 week reminder here for simplicity
-            [comp setYear:0];
-            [comp setMonth:0];
-            [comp setDay:14];
-            //Recurr every 2weeks
-            //  recurrance = [[EKRecurrenceRule alloc] initRecurrenceWithFrequency:EKRecurrenceFrequencyWeekly interval:1 end:[EKRecurrenceEnd recurrenceEndWithEndDate:twoYearsFromNow]];
-            
-            //     EKRecurrenceRule *rule = [[EKRecurrenceRule alloc] init:EKRecurrenceFrequencyDaily interval:1 end:nil];
-            
-            
-            
-            
-            if  ([buttonTitle isEqualToString:@"Daily"]) {
-                recurrance = [[EKRecurrenceRule alloc] initRecurrenceWithFrequency:EKRecurrenceFrequencyDaily interval:1 end:[EKRecurrenceEnd recurrenceEndWithEndDate:twoYearsFromNow]];
+                NSString *TC = @"Tinnitus Coach: SKILL  ";
+                event.title = @"  Tinnitus Coach - Guided Meditation Skill";///[TC stringByAppendingString:self.name];
+                event.startDate = [Utils dateWithString:self.scheduleInfo.startDate inFormat:DATE_FORMAT] ;//[NSDate date]; //today
+                event.endDate =  [Utils dateWithString:self.scheduleInfo.endDate inFormat:DATE_FORMAT] ;  //event.startDate dateByAddingTimeInterval:60*60];  //set 1 hour meeting
+                event.recurrenceRules=@[recurrance];
+                event.calendar = [store defaultCalendarForNewEvents];
+                NSError *err = nil;
+                [store saveEvent:event span:EKSpanThisEvent commit:YES error:&err];
+                NSString *savedEventId = event.eventIdentifier;  //save the event id if you want to access this later
+                [PersistenceStorage setObject:savedEventId andKey:@"lastEventIdentifer"];  ///STORE to test it for deletion
+                NSLog(@"%@", [PersistenceStorage getObjectForKey:@"lastEventIdentifer"]);
+                NSString *dateWithRepeat = [PersistenceStorage getObjectForKey:@"localScheduledDate"];
+                NSString *text = nil;
+                if(self.scheduleInfo.remType == eRT_DAILY)
+                {
+                    text = @"Daily";
+                }
+                else if(self.scheduleInfo.remType == eRT_WEEKLY){
+                    text = @"Weekly";
+                }
+                if(text){
+                    dateWithRepeat = [[[PersistenceStorage getObjectForKey:@"localScheduledDate"] stringByAppendingString:@"\n"] stringByAppendingString:text];
+                }
+                NSString *queryClear = [NSString stringWithFormat:@"delete from MySkillReminders where SkillName = 'Guided Meditation' and PlanName = '%@'",[Utils getValidSqlString:[PersistenceStorage getObjectForKey:@"planName"]]];;
+                NSString *query = [NSString stringWithFormat:@"insert into MySkillReminders ('ID','SkillName','ScheduledDate','CalendarEventID','PlanName') values(1,'%@','%@','%@','%@')",@"Guided Meditation",dateWithRepeat,[PersistenceStorage getObjectForKey:@"lastEventIdentifer"],[Utils getValidSqlString:[PersistenceStorage getObjectForKey:@"planName"]]];
                 
-            }
-            if ([buttonTitle isEqualToString:@"Weekly"]) {
-                recurrance = [[EKRecurrenceRule alloc] initRecurrenceWithFrequency:EKRecurrenceFrequencyWeekly interval:1 end:[EKRecurrenceEnd recurrenceEndWithEndDate:twoYearsFromNow]];
-                
+                [self.manager executeQuery:queryClear];
+                [self.manager executeQuery:query];
+            }];
+            if (CalenderEventID != nil) {
+                // event exixts lets delete the corresponding notiifcation
+                [self deleteExistingEventNotitfication];
             }
             
-            if ([buttonTitle isEqualToString:@"None"]) {
-                recurrance = [[EKRecurrenceRule alloc] initRecurrenceWithFrequency:EKRecurrenceFrequencyYearly interval:1 end:[EKRecurrenceEnd recurrenceEndWithEndDate:twoYearsFromNow]];
+            UILocalNotification* localNotification = [[UILocalNotification alloc] init];
+            localNotification.fireDate = [Utils dateWithString:self.scheduleInfo.startDate inFormat:DATE_FORMAT]  ;
+            NSString *str = [NSString stringWithFormat:@"%@%@%@",@"\nThe 'Guided Meditation' skill is scheduled now in '",[PersistenceStorage getObjectForKey:@"planName"],@"' plan.\n\n You can access and run this skill from this plan."];
+            localNotification.alertBody =  str;
+            localNotification.applicationIconBadgeNumber = [[UIApplication sharedApplication] applicationIconBadgeNumber] + 1;
+            NSDictionary *infoDict = [NSDictionary dictionaryWithObjectsAndKeys:@"Guided Meditation",@"Type", [PersistenceStorage getObjectForKey:@"planName"],@"PlanName",nil];
+            localNotification.userInfo = infoDict;
+            [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
+            [self writeSkillReminder:@"On"];
+            
+        }
+        if ([[PersistenceStorage getObjectForKey:@"skillName"] isEqualToString:@"Tips for Better Sleep"]){
+            
+            NSString * schDate = self.scheduleInfo.startDate;
+            [PersistenceStorage setObject:schDate andKey:@"scheduledDate"];
+            UIButton *repeatLabel = (UIButton *)[self.view viewWithTag:355];
+            NSString *buttonTitle =repeatLabel.currentTitle;
+            NSLog(@"%@", buttonTitle);
+            CalenderEventID = [self eventExists];
+            EKEventStore *store = [EKEventStore new];
+            [store requestAccessToEntityType:EKEntityTypeEvent completion:^(BOOL granted, NSError *error) {
+                if (!granted) { return; }
+                EKEvent *event = (CalenderEventID == nil) ? [EKEvent eventWithEventStore:store] : [store eventWithIdentifier:CalenderEventID];
+                NSDate *twoYearsFromNow = [NSDate dateWithTimeIntervalSinceNow:63113851];
+                EKRecurrenceRule *recurrance;
+                NSDateComponents *comp = [[NSDateComponents alloc]init];
+                [comp setYear:0];
+                [comp setMonth:0];
+                [comp setDay:14];
+                if  (self.scheduleInfo.remType == eRT_DAILY) {
+                    recurrance = [[EKRecurrenceRule alloc] initRecurrenceWithFrequency:EKRecurrenceFrequencyDaily interval:1 end:[EKRecurrenceEnd recurrenceEndWithEndDate:twoYearsFromNow]];
+                    
+                }
+                else if (self.scheduleInfo.remType == eRT_WEEKLY) {
+                    recurrance = [[EKRecurrenceRule alloc] initRecurrenceWithFrequency:EKRecurrenceFrequencyWeekly interval:1 end:[EKRecurrenceEnd recurrenceEndWithEndDate:twoYearsFromNow]];
+                    
+                }
+                
+                else{
+                    recurrance = [[EKRecurrenceRule alloc] initRecurrenceWithFrequency:EKRecurrenceFrequencyYearly interval:1 end:[EKRecurrenceEnd recurrenceEndWithEndDate:twoYearsFromNow]];
+                }
+                NSString *TC = @"Tinnitus Coach: SKILL  ";
+                event.title = @" Tinnitus Coach - Tips for Better Sleep Skill";///[TC stringByAppendingString:self.name];
+                //NSLog(@"%@",  event.title );
+                event.startDate = [Utils dateWithString:self.scheduleInfo.startDate inFormat:DATE_FORMAT]  ;//[NSDate date]; //today
+                event.endDate =  [Utils dateWithString:self.scheduleInfo.endDate inFormat:DATE_FORMAT] ;  //event.startDate dateByAddingTimeInterval:60*60];  //set 1 hour meeting
+                
+                event.recurrenceRules=@[recurrance];
+                
+                event.calendar = [store defaultCalendarForNewEvents];
                 
                 
-            }
-            
-            
-            
-            
-            
-            
-            
-            NSString *TC = @"  Tinnitus Coach: ";
-            event.title = [TC stringByAppendingString:self.name];
-            //NSLog(@"%@",  event.title );
-            event.startDate = self.startDate ;//[NSDate date]; //today
-            event.endDate =  self.endDate;  //event.startDate dateByAddingTimeInterval:60*60];  //set 1 hour meeting
-            
-            event.recurrenceRules=@[recurrance];
-            
-            event.calendar = [store defaultCalendarForNewEvents];
-            //  event.recurrenceRules = recurrance;
-            
-            
-            NSError *err = nil;
-            
-            
-            
-            
-            [store saveEvent:event span:EKSpanThisEvent commit:YES error:&err];
-            //      [store saveEvent:event span:EKSpanFutureEvents commit:YES error:&err];
-            NSString *savedEventId = event.eventIdentifier;  //save the event id if you want to access this later
-            
-            [PersistenceStorage setObject:savedEventId andKey:@"lastEventIdentifer"];  ///STORE to test it for deletion
-            NSLog(@"%@", [PersistenceStorage getObjectForKey:@"lastEventIdentifer"]);
-            
-            
-            NSString *queryClear = [NSString stringWithFormat:@"delete from MyReminders where ActName = '%@'",[PersistenceStorage getObjectForKey:@"activityName"]];
-            
-            
-            NSString *query = [NSString stringWithFormat:@"insert into MyReminders ('ID','ActName','ScheduledDate','CalendarEventID') values(1,'%@','%@','%@' )",[PersistenceStorage getObjectForKey:@"activityName"],[PersistenceStorage getObjectForKey:@"localScheduledDate"],[PersistenceStorage getObjectForKey:@"lastEventIdentifer"]];
-            
-            
-            
-            
-            
-            
-            //      NSString *query = [NSString stringWithFormat:@"insert into MyReminders ('ID','ActName','ScheduledDate') values(1,'%@','%@' )",[PersistenceStorage getObjectForKey:@"activityName"],[PersistenceStorage getObjectForKey:@"scheduledDate"]];
-            
-            
-            
-            
-            NSLog(@"%@", query);
-            
-            // Execute the query.
-            [self.manager executeQuery:queryClear];
-            [self.manager executeQuery:query];
-            
-            
-            
-        }];
-        
-        
-        NSArray *skillListArray = [NSArray arrayWithObjects:@{@"name":@"Using Sound", @"description":@"Listening to sound can reduce your stress and help you cope with your tinnitus."}, @{@"name":@"Deep Breathing", @"description":@"This breathing exercise can reduce your stress and help you cope with your tinnitus."}, @{@"name":@"Imagery", @"description":@"Imagining a peaceful place can reduce your stress and help you cope with your tinnitus."}, @{@"name":@"Guided Meditation", @"description":@"Try several other guided relaxation exercises."}, @{@"name":@"Pleasant Activities", @"description":@"Make a list of activities that will help you take your mind off of tinnitus."}, @{@"name":@"Changing Thoughts & Feelings", @"description":@"Changing the way you think about tinnitus can improve how you feel."}, @{@"name":@"Tips for Better Sleeping", @"description":@"Following these suggestions can help you sleep better."}, nil];
-        
-        
-        
-        
-        
-        // Schedule the notification
-        
-        UILocalNotification* localNotification = [[UILocalNotification alloc] init];
-        localNotification.fireDate = self.startDate ;
-        NSString *str = [NSString stringWithFormat:@"%@%@%@%@%@%@",@"\nThe '",[PersistenceStorage getObjectForKey:@"activityName"],@"' pleasant activity is scheduled now in '",[PersistenceStorage getObjectForKey:@"planName"],@"' plan.\n\n You can access and run this activity from this plan. In the plan, look for the skill 'Pleasant Activities' and the list of values: ",[PersistenceStorage getObjectForKey:@"valueName"]];
-        localNotification.alertBody =  str;
-      //  NSDictionary   *dict = [NSDictionary dictionaryWithObject: @"String" forKey: @"Test"];
-NSDictionary* dict = @{@"total": @"Test"};
-      //  localNotif.userInfo = infoDict;
-        
-        NSLog(@"khjj  %@",dict[@"total"]);
-        
-      //      NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:@"setNotificationForEveryDay", @"Test", nil];
-        localNotification.userInfo = dict;//[NSMutableDictionary dictionaryWithObject:@"targetURL" forKey:@"Test"];
-        
-//        self.localno
-       // userInfo = [NSMutableDictionary dictionaryWithObject:targetURL
-           //                                                forKey:@"state"];
-        
-//        localNotification.applicationIconBadgeNumber = [[UIApplication sharedApplication] applicationIconBadgeNumber] + 1;
-        
-        
-        
-        [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
-        
+                
+                NSError *err = nil;
+                
+                
+                
+                
+                [store saveEvent:event span:EKSpanThisEvent commit:YES error:&err];
+                //      [store saveEvent:event span:EKSpanFutureEvents commit:YES error:&err];
+                NSString *savedEventId = event.eventIdentifier;  //save the event id if you want to access this later
+                
+                [PersistenceStorage setObject:savedEventId andKey:@"lastEventIdentifer"];  ///STORE to test it for deletion
+                NSLog(@"%@", [PersistenceStorage getObjectForKey:@"lastEventIdentifer"]);
+                
+                
+                NSString *queryClear = [NSString stringWithFormat:@"delete from MySkillReminders where SkillName = 'Tips for Better Sleep' and PlanName = '%@'",[Utils getValidSqlString:[PersistenceStorage getObjectForKey:@"planName"]]];
+                
+                
+                NSString *query = [NSString stringWithFormat:@"insert into MySkillReminders ('ID','SkillName','ScheduledDate','CalendarEventID','PlanName') values(1,'%@','%@','%@','%@')",@"Tips for Better Sleep",[PersistenceStorage getObjectForKey:@"localScheduledDate"],[PersistenceStorage getObjectForKey:@"lastEventIdentifer"],[Utils getValidSqlString:[PersistenceStorage getObjectForKey:@"planName"]]];
+                
+                [self.manager executeQuery:queryClear];
+                [self.manager executeQuery:query];
 
+            }];
+            
+            if (CalenderEventID != nil) {
+                // event exixts lets delete the corresponding notiifcation
+                [self deleteExistingEventNotitfication];
+            }
+            
+            UILocalNotification* localNotification = [[UILocalNotification alloc] init];
+            localNotification.fireDate = [Utils dateWithString:self.scheduleInfo.startDate inFormat:DATE_FORMAT] ; ;
+            NSString *str = [NSString stringWithFormat:@"%@%@%@",@"\nThe 'Tips for Better Sleep' skill is scheduled now in '",[PersistenceStorage getObjectForKey:@"planName"],@"' plan.\n\n You can access and run this skill from this plan."];
+            localNotification.alertBody =  str;
+            localNotification.applicationIconBadgeNumber = [[UIApplication sharedApplication] applicationIconBadgeNumber] + 1;
+            [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
+            
+        }
         
-        
-        
-        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-        hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark.png"] ];
-        
-        hud.mode = MBProgressHUDModeCustomView;
-        
-        hud.labelText = @"Scheduled Reminder";
-        
-        [hud show:YES];
-        [hud hide:YES afterDelay:1];
-        
-        
-        [self writeSkillReminderToggle:@"On"];
-        
-        
-        
+        if ([[PersistenceStorage getObjectForKey:@"skillName"] isEqualToString:@"Deep Breathing"]){
+            
+            NSString * schDate = self.scheduleInfo.startDate;
+            [PersistenceStorage setObject:schDate andKey:@"scheduledDate"];
+            UIButton *repeatLabel = (UIButton *)[self.view viewWithTag:355];
+            NSString *buttonTitle =repeatLabel.currentTitle;
+            NSLog(@"%@", buttonTitle);
+            CalenderEventID = [self eventExists];
+            EKEventStore *store = [EKEventStore new];
+            [store requestAccessToEntityType:EKEntityTypeEvent completion:^(BOOL granted, NSError *error) {
+                if (!granted) { return; }
+                if(CalenderEventID != nil){
+                    NSError* err = nil;
+                    EKEvent* eventToRemove = [store eventWithIdentifier:CalenderEventID];
+                    [store removeEvent:eventToRemove span:EKSpanFutureEvents commit:YES error:&err];
+                    if(err != nil){
+                        NSLog(@"Error in deletining event from calender:%@", [eventToRemove description]);
+                    }
+                }
+                EKEvent *event =[EKEvent eventWithEventStore:store] ;
+                NSDate *twoYearsFromNow = [NSDate dateWithTimeIntervalSinceNow:63113851];
+                EKRecurrenceRule *recurrance;
+                NSDateComponents *comp = [[NSDateComponents alloc]init];
+                [comp setYear:0];
+                [comp setMonth:0];
+                [comp setDay:14];
+                if  (self.scheduleInfo.remType == eRT_DAILY) {
+                    recurrance = [[EKRecurrenceRule alloc] initRecurrenceWithFrequency:EKRecurrenceFrequencyDaily interval:1 end:[EKRecurrenceEnd recurrenceEndWithEndDate:twoYearsFromNow]];
+                }
+                else if (self.scheduleInfo.remType == eRT_WEEKLY) {
+                    recurrance = [[EKRecurrenceRule alloc] initRecurrenceWithFrequency:EKRecurrenceFrequencyWeekly interval:1 end:[EKRecurrenceEnd recurrenceEndWithEndDate:twoYearsFromNow]];
+                    
+                }
+                
+                else {
+                    recurrance = [[EKRecurrenceRule alloc] initRecurrenceWithFrequency:EKRecurrenceFrequencyYearly interval:1 end:[EKRecurrenceEnd recurrenceEndWithEndDate:twoYearsFromNow]];
+                }
+                NSString *TC = @"Tinnitus Coach: SKILL  ";
+                event.title = @"  Tinnitus Coach - Deep Breathing Skill";///[TC stringByAppendingString:self.name];
+                event.startDate = [Utils dateWithString:self.scheduleInfo.startDate inFormat:DATE_FORMAT] ;//[NSDate date]; //today
+                event.endDate =  [Utils dateWithString:self.scheduleInfo.endDate inFormat:DATE_FORMAT];  //event.startDate dateByAddingTimeInterval:60*60];  //set 1 hour meeting
+                event.recurrenceRules=@[recurrance];
+                event.calendar = [store defaultCalendarForNewEvents];
+                NSError *err = nil;
+                [store saveEvent:event span:EKSpanThisEvent commit:YES error:&err];
+                if(err != nil) {
+                    NSLog(@"Error in saving:%@:",[err localizedDescription]);
+                }
+                NSString *savedEventId = event.eventIdentifier;  //save the event id if you want to access this later
+                [PersistenceStorage setObject:savedEventId andKey:@"lastEventIdentifer"];  ///STORE to test it for deletion
+                NSLog(@"%@", [PersistenceStorage getObjectForKey:@"lastEventIdentifer"]);
+                
+                NSString *dateWithRepeat = [PersistenceStorage getObjectForKey:@"localScheduledDate"];
+                
+                NSString *text = nil;
+                
+                if(self.scheduleInfo.remType == eRT_DAILY)
+                {
+                    text = @"Daily";
+                }
+                else if(self.scheduleInfo.remType == eRT_WEEKLY){
+                    text = @"Weekly";
+                }
+                
+                if(text){
+                    
+                    dateWithRepeat = [[[PersistenceStorage getObjectForKey:@"localScheduledDate"] stringByAppendingString:@"\n"] stringByAppendingString:text];
+                }
+                NSString *queryClear = [NSString stringWithFormat:@"delete from MySkillReminders where SkillName = 'Deep Breathing' and PlanName = '%@'",[Utils getValidSqlString:[PersistenceStorage getObjectForKey:@"planName"]]];
+                NSString *query = [NSString stringWithFormat:@"insert into MySkillReminders ('ID','SkillName','ScheduledDate','CalendarEventID','PlanName') values(1,'%@','%@','%@','%@')",@"Deep Breathing",dateWithRepeat,[PersistenceStorage getObjectForKey:@"lastEventIdentifer"],[Utils getValidSqlString:[PersistenceStorage getObjectForKey:@"planName"]]];
+                
+                [self.manager executeQuery:queryClear];
+                [self.manager executeQuery:query];
+            }];
+            
+            if (CalenderEventID != nil) {
+                // event exixts lets delete the corresponding notiifcation
+                [self deleteExistingEventNotitfication];
+            }
+            // Schedule the notification
+            UILocalNotification* localNotification = [[UILocalNotification alloc] init];
+            localNotification.fireDate = [Utils dateWithString:self.scheduleInfo.startDate inFormat:DATE_FORMAT] ;
+            NSString *str = [NSString stringWithFormat:@"%@%@%@",@"\nThe 'Deep Breathing' skill is scheduled now in '",[PersistenceStorage getObjectForKey:@"planName"],@"' plan.\n\n You can access and run this skill from this plan."];
+            localNotification.alertBody =  str;
+            localNotification.applicationIconBadgeNumber = [[UIApplication sharedApplication] applicationIconBadgeNumber] + 1;
+            NSDictionary *infoDict = [NSDictionary dictionaryWithObjectsAndKeys:@"Deep Breathing", @"Type",[PersistenceStorage getObjectForKey:@"planName"],@"PlanName", nil];
+            localNotification.userInfo = infoDict;
+            [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
+            [self writeSkillReminder:@"On"];
+            
+        }
         
     }
-    
-    if ([[PersistenceStorage getObjectForKey:@"skillName"] isEqualToString:@"Imagery"]){
-        
-        NSString * schDate = self.startDate;
-        
-        
-        
-        [PersistenceStorage setObject:schDate andKey:@"scheduledDate"];
-        
-        
-        UIButton *repeatLabel = (UIButton *)[self.view viewWithTag:355];
-        
-        NSString *buttonTitle =repeatLabel.currentTitle;
-        NSLog(@"%@", buttonTitle);
-        
-        
-        
-        EKEventStore *store = [EKEventStore new];
-        [store requestAccessToEntityType:EKEntityTypeEvent completion:^(BOOL granted, NSError *error) {
-            if (!granted) { return; }
-            EKEvent *event = [EKEvent eventWithEventStore:store];
-            //event.title = self.name : @"concatenation with operators" ;
-            NSDate *twoYearsFromNow = [NSDate dateWithTimeIntervalSinceNow:63113851];
-            
-            
-            
-            EKRecurrenceRule *recurrance;
-            NSDateComponents *comp = [[NSDateComponents alloc]init];
-            
-            
-            [comp setYear:0];
-            [comp setMonth:0];
-            [comp setDay:14];
-            
-            
-            
-            if  ([buttonTitle isEqualToString:@"Daily"]) {
-                recurrance = [[EKRecurrenceRule alloc] initRecurrenceWithFrequency:EKRecurrenceFrequencyDaily interval:1 end:[EKRecurrenceEnd recurrenceEndWithEndDate:twoYearsFromNow]];
-                
-            }
-            if ([buttonTitle isEqualToString:@"Weekly"]) {
-                recurrance = [[EKRecurrenceRule alloc] initRecurrenceWithFrequency:EKRecurrenceFrequencyWeekly interval:1 end:[EKRecurrenceEnd recurrenceEndWithEndDate:twoYearsFromNow]];
-                
-            }
-            
-            if ([buttonTitle isEqualToString:@"None"]) {
-                recurrance = [[EKRecurrenceRule alloc] initRecurrenceWithFrequency:EKRecurrenceFrequencyYearly interval:1 end:[EKRecurrenceEnd recurrenceEndWithEndDate:twoYearsFromNow]];
-                
-                
-            }
-            
-            
-            
-            NSString *TC = @"Tinnitus Coach: SKILL  ";
-                   
-            
-            event.title = @"  Tinnitus Coach - Imagery Skill";///[TC stringByAppendingString:self.name];
-
-            
-            event.startDate = self.startDate ;//[NSDate date]; //today
-            event.endDate =  self.endDate;  //event.startDate dateByAddingTimeInterval:60*60];  //set 1 hour meeting
-            
-            event.recurrenceRules=@[recurrance];
-            
-            event.calendar = [store defaultCalendarForNewEvents];
-            
-            
-            
-            NSError *err = nil;
-            
-            
-            
-            
-            [store saveEvent:event span:EKSpanThisEvent commit:YES error:&err];
-            NSString *savedEventId = event.eventIdentifier;  //save the event id if you want to access this later
-            
-            [PersistenceStorage setObject:savedEventId andKey:@"lastEventIdentifer"];  ///STORE to test it for deletion
-            NSLog(@"%@", [PersistenceStorage getObjectForKey:@"lastEventIdentifer"]);
-            
-            
-            NSString *queryClear = [NSString stringWithFormat:@"delete from MySkillReminders where SkillName = 'Imagery' and PlanName = '%@'",[PersistenceStorage getObjectForKey:@"planName"]];
-            
-            
-            NSString *query = [NSString stringWithFormat:@"insert into MySkillReminders ('ID','SkillName','ScheduledDate','CalendarEventID','PlanName') values(1,'%@','%@','%@','%@' )",@"Imagery",[PersistenceStorage getObjectForKey:@"localScheduledDate"],[PersistenceStorage getObjectForKey:@"lastEventIdentifer"],[PersistenceStorage getObjectForKey:@"planName"]];
-            
-            [self.manager executeQuery:queryClear];
-            [self.manager executeQuery:query];
-            
-            
-            
-        }];
-        
-        UILocalNotification* localNotification = [[UILocalNotification alloc] init];
-        localNotification.fireDate = self.startDate ;
-        NSString *str = [NSString stringWithFormat:@"%@%@%@",@"\nThe 'Imagery' skill is scheduled now in '",[PersistenceStorage getObjectForKey:@"planName"],@"' plan.\n\n You can access and run this skill from this plan."];
-        localNotification.alertBody =  str;
-        localNotification.applicationIconBadgeNumber = [[UIApplication sharedApplication] applicationIconBadgeNumber] + 1;
-        
-        NSDictionary *infoDict = [NSDictionary dictionaryWithObjectsAndKeys:@"Imagery", @"Type", [PersistenceStorage getObjectForKey:@"planName"],@"PlanName",nil];
-        localNotification.userInfo = infoDict;
-        
-        
-        [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
-        
-        
-        [self writeSkillReminder:@"On"];
-        
-        
-    }
-    
-    
-    
-    
-    if ([[PersistenceStorage getObjectForKey:@"skillName"] isEqualToString:@"Guided Meditation"]){
-        
-        NSString * schDate = self.startDate;
-        
-        
-        
-        [PersistenceStorage setObject:schDate andKey:@"scheduledDate"];
-        
-        
-        UIButton *repeatLabel = (UIButton *)[self.view viewWithTag:355];
-        
-        NSString *buttonTitle =repeatLabel.currentTitle;
-        NSLog(@"%@", buttonTitle);
-        
-        
-        
-        EKEventStore *store = [EKEventStore new];
-        [store requestAccessToEntityType:EKEntityTypeEvent completion:^(BOOL granted, NSError *error) {
-            if (!granted) { return; }
-            EKEvent *event = [EKEvent eventWithEventStore:store];
-            NSDate *twoYearsFromNow = [NSDate dateWithTimeIntervalSinceNow:63113851];
-            
-            
-            
-            EKRecurrenceRule *recurrance;
-            NSDateComponents *comp = [[NSDateComponents alloc]init];
-            
-            
-            [comp setYear:0];
-            [comp setMonth:0];
-            [comp setDay:14];
-            
-            
-            
-            if  ([buttonTitle isEqualToString:@"Daily"]) {
-                recurrance = [[EKRecurrenceRule alloc] initRecurrenceWithFrequency:EKRecurrenceFrequencyDaily interval:1 end:[EKRecurrenceEnd recurrenceEndWithEndDate:twoYearsFromNow]];
-                
-            }
-            if ([buttonTitle isEqualToString:@"Weekly"]) {
-                recurrance = [[EKRecurrenceRule alloc] initRecurrenceWithFrequency:EKRecurrenceFrequencyWeekly interval:1 end:[EKRecurrenceEnd recurrenceEndWithEndDate:twoYearsFromNow]];
-                
-            }
-            
-            if ([buttonTitle isEqualToString:@"None"]) {
-                recurrance = [[EKRecurrenceRule alloc] initRecurrenceWithFrequency:EKRecurrenceFrequencyYearly interval:1 end:[EKRecurrenceEnd recurrenceEndWithEndDate:twoYearsFromNow]];
-                
-                
-            }
-            
-            
-            
-            NSString *TC = @"Tinnitus Coach: SKILL  ";
-            event.title = @"  Tinnitus Coach - Guided Meditation Skill";///[TC stringByAppendingString:self.name];
-            //NSLog(@"%@",  event.title );
-            event.startDate = self.startDate ;//[NSDate date]; //today
-            event.endDate =  self.endDate;  //event.startDate dateByAddingTimeInterval:60*60];  //set 1 hour meeting
-            
-            event.recurrenceRules=@[recurrance];
-            
-            event.calendar = [store defaultCalendarForNewEvents];
-            
-            
-            
-            NSError *err = nil;
-            
-            
-            
-            
-            [store saveEvent:event span:EKSpanThisEvent commit:YES error:&err];
-            //      [store saveEvent:event span:EKSpanFutureEvents commit:YES error:&err];
-            NSString *savedEventId = event.eventIdentifier;  //save the event id if you want to access this later
-            
-            [PersistenceStorage setObject:savedEventId andKey:@"lastEventIdentifer"];  ///STORE to test it for deletion
-            NSLog(@"%@", [PersistenceStorage getObjectForKey:@"lastEventIdentifer"]);
-            
-            
-            NSString *queryClear = [NSString stringWithFormat:@"delete from MySkillReminders where SkillName = 'Guided Meditation'"];
-            
-            
-            NSString *query = [NSString stringWithFormat:@"insert into MySkillReminders ('ID','SkillName','ScheduledDate','CalendarEventID') values(1,'%@','%@','%@' )",@"Guided Meditation",[PersistenceStorage getObjectForKey:@"localScheduledDate"],[PersistenceStorage getObjectForKey:@"lastEventIdentifer"]];
-            
-            [self.manager executeQuery:queryClear];
-            [self.manager executeQuery:query];
-            
-            
-            
-        }];
-        UILocalNotification* localNotification = [[UILocalNotification alloc] init];
-        localNotification.fireDate = self.startDate ;
-        NSString *str = [NSString stringWithFormat:@"%@%@%@",@"\nThe 'Guided Meditation' skill is scheduled now in '",[PersistenceStorage getObjectForKey:@"planName"],@"' plan.\n\n You can access and run this skill from this plan."];
-        localNotification.alertBody =  str;
-        
-        
-        localNotification.applicationIconBadgeNumber = [[UIApplication sharedApplication] applicationIconBadgeNumber] + 1;
-        
-        NSDictionary *infoDict = [NSDictionary dictionaryWithObjectsAndKeys:@"Guided Meditation",@"Type", [PersistenceStorage getObjectForKey:@"planName"],@"PlanName",nil];
-        localNotification.userInfo = infoDict;
-        
-        [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
-        [self writeSkillReminder:@"On"];
-        
-    }
-    
-    
-    
-    
-    if ([[PersistenceStorage getObjectForKey:@"skillName"] isEqualToString:@"Tips for Better Sleep"]){
-        
-        NSString * schDate = self.startDate;
-        
-        
-        
-        [PersistenceStorage setObject:schDate andKey:@"scheduledDate"];
-        
-        
-        UIButton *repeatLabel = (UIButton *)[self.view viewWithTag:355];
-        
-        NSString *buttonTitle =repeatLabel.currentTitle;
-        NSLog(@"%@", buttonTitle);
-        
-        
-        
-        EKEventStore *store = [EKEventStore new];
-        [store requestAccessToEntityType:EKEntityTypeEvent completion:^(BOOL granted, NSError *error) {
-            if (!granted) { return; }
-            EKEvent *event = [EKEvent eventWithEventStore:store];
-            //event.title = self.name : @"concatenation with operators" ;
-            NSDate *twoYearsFromNow = [NSDate dateWithTimeIntervalSinceNow:63113851];
-            
-            
-            
-            EKRecurrenceRule *recurrance;
-            NSDateComponents *comp = [[NSDateComponents alloc]init];
-            
-            
-            [comp setYear:0];
-            [comp setMonth:0];
-            [comp setDay:14];
-            
-            
-            
-            if  ([buttonTitle isEqualToString:@"Daily"]) {
-                recurrance = [[EKRecurrenceRule alloc] initRecurrenceWithFrequency:EKRecurrenceFrequencyDaily interval:1 end:[EKRecurrenceEnd recurrenceEndWithEndDate:twoYearsFromNow]];
-                
-            }
-            if ([buttonTitle isEqualToString:@"Weekly"]) {
-                recurrance = [[EKRecurrenceRule alloc] initRecurrenceWithFrequency:EKRecurrenceFrequencyWeekly interval:1 end:[EKRecurrenceEnd recurrenceEndWithEndDate:twoYearsFromNow]];
-                
-            }
-            
-            if ([buttonTitle isEqualToString:@"None"]) {
-                recurrance = [[EKRecurrenceRule alloc] initRecurrenceWithFrequency:EKRecurrenceFrequencyYearly interval:1 end:[EKRecurrenceEnd recurrenceEndWithEndDate:twoYearsFromNow]];
-                
-                
-            }
-            
-            
-            
-            NSString *TC = @"Tinnitus Coach: SKILL  ";
-            event.title = @" Tinnitus Coach - Tips for Better Sleep Skill";///[TC stringByAppendingString:self.name];
-            //NSLog(@"%@",  event.title );
-            event.startDate = self.startDate ;//[NSDate date]; //today
-            event.endDate =  self.endDate;  //event.startDate dateByAddingTimeInterval:60*60];  //set 1 hour meeting
-            
-            event.recurrenceRules=@[recurrance];
-            
-            event.calendar = [store defaultCalendarForNewEvents];
-            
-            
-            
-            NSError *err = nil;
-            
-            
-            
-            
-            [store saveEvent:event span:EKSpanThisEvent commit:YES error:&err];
-            //      [store saveEvent:event span:EKSpanFutureEvents commit:YES error:&err];
-            NSString *savedEventId = event.eventIdentifier;  //save the event id if you want to access this later
-            
-            [PersistenceStorage setObject:savedEventId andKey:@"lastEventIdentifer"];  ///STORE to test it for deletion
-            NSLog(@"%@", [PersistenceStorage getObjectForKey:@"lastEventIdentifer"]);
-            
-            
-            NSString *queryClear = [NSString stringWithFormat:@"delete from MySkillReminders where SkillName = 'Tips for Better Sleep'"];
-            
-            
-            NSString *query = [NSString stringWithFormat:@"insert into MySkillReminders ('ID','SkillName','ScheduledDate','CalendarEventID') values(1,'%@','%@','%@' )",@"Tips for Better Sleep",[PersistenceStorage getObjectForKey:@"localScheduledDate"],[PersistenceStorage getObjectForKey:@"lastEventIdentifer"]];
-            
-            [self.manager executeQuery:queryClear];
-            [self.manager executeQuery:query];
-            
-            
-            
-        }];
-        
-        UILocalNotification* localNotification = [[UILocalNotification alloc] init];
-        localNotification.fireDate = self.startDate ;
-        NSString *str = [NSString stringWithFormat:@"%@%@%@",@"\nThe 'Tips for Better Sleep' skill is scheduled now in '",[PersistenceStorage getObjectForKey:@"planName"],@"' plan.\n\n You can access and run this skill from this plan."];
-        localNotification.alertBody =  str;
-        
-        
-        localNotification.applicationIconBadgeNumber = [[UIApplication sharedApplication] applicationIconBadgeNumber] + 1;
-        
-        
-        
-        [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
-        
-    }
-    
-    
-    
-    
-    
-    
-    
-    if ([[PersistenceStorage getObjectForKey:@"skillName"] isEqualToString:@"Deep Breathing"]){
-        
-        NSString * schDate = self.startDate;
-        
-        
-        
-        [PersistenceStorage setObject:schDate andKey:@"scheduledDate"];
-        
-        
-        UIButton *repeatLabel = (UIButton *)[self.view viewWithTag:355];
-        
-        NSString *buttonTitle =repeatLabel.currentTitle;
-        NSLog(@"%@", buttonTitle);
-        
-        
-        
-        EKEventStore *store = [EKEventStore new];
-        [store requestAccessToEntityType:EKEntityTypeEvent completion:^(BOOL granted, NSError *error) {
-            if (!granted) { return; }
-            EKEvent *event = [EKEvent eventWithEventStore:store];
-            //event.title = self.name : @"concatenation with operators" ;
-            NSDate *twoYearsFromNow = [NSDate dateWithTimeIntervalSinceNow:63113851];
-            
-            
-            
-            EKRecurrenceRule *recurrance;
-            NSDateComponents *comp = [[NSDateComponents alloc]init];
-            
-            
-            [comp setYear:0];
-            [comp setMonth:0];
-            [comp setDay:14];
-            
-            
-            
-            if  ([buttonTitle isEqualToString:@"Daily"]) {
-                recurrance = [[EKRecurrenceRule alloc] initRecurrenceWithFrequency:EKRecurrenceFrequencyDaily interval:1 end:[EKRecurrenceEnd recurrenceEndWithEndDate:twoYearsFromNow]];
-                
-            }
-            if ([buttonTitle isEqualToString:@"Weekly"]) {
-                recurrance = [[EKRecurrenceRule alloc] initRecurrenceWithFrequency:EKRecurrenceFrequencyWeekly interval:1 end:[EKRecurrenceEnd recurrenceEndWithEndDate:twoYearsFromNow]];
-                
-            }
-            
-            if ([buttonTitle isEqualToString:@"None"]) {
-                recurrance = [[EKRecurrenceRule alloc] initRecurrenceWithFrequency:EKRecurrenceFrequencyYearly interval:1 end:[EKRecurrenceEnd recurrenceEndWithEndDate:twoYearsFromNow]];
-                
-                
-            }
-            
-            
-            
-            NSString *TC = @"Tinnitus Coach: SKILL  ";
-            event.title = @"  Tinnitus Coach - Deep Breathing Skill";///[TC stringByAppendingString:self.name];
-            //NSLog(@"%@",  event.title );
-            event.startDate = self.startDate ;//[NSDate date]; //today
-            event.endDate =  self.endDate;  //event.startDate dateByAddingTimeInterval:60*60];  //set 1 hour meeting
-            
-            event.recurrenceRules=@[recurrance];
-            
-            event.calendar = [store defaultCalendarForNewEvents];
-            
-            
-            
-            NSError *err = nil;
-            
-            
-            
-            
-            [store saveEvent:event span:EKSpanThisEvent commit:YES error:&err];
-            //      [store saveEvent:event span:EKSpanFutureEvents commit:YES error:&err];
-            NSString *savedEventId = event.eventIdentifier;  //save the event id if you want to access this later
-            
-            [PersistenceStorage setObject:savedEventId andKey:@"lastEventIdentifer"];  ///STORE to test it for deletion
-            NSLog(@"%@", [PersistenceStorage getObjectForKey:@"lastEventIdentifer"]);
-            
-            
-            NSString *queryClear = [NSString stringWithFormat:@"delete from MySkillReminders where SkillName = 'Deep Breathing'"];
-            
-            
-            NSString *query = [NSString stringWithFormat:@"insert into MySkillReminders ('ID','SkillName','ScheduledDate','CalendarEventID') values(1,'%@','%@','%@' )",@"Deep Breathing",[PersistenceStorage getObjectForKey:@"localScheduledDate"],[PersistenceStorage getObjectForKey:@"lastEventIdentifer"]];
-            
-            [self.manager executeQuery:queryClear];
-            [self.manager executeQuery:query];
-            
-            
-            
-        }];
-        
-        
-        // Schedule the notification
-        UILocalNotification* localNotification = [[UILocalNotification alloc] init];
-        localNotification.fireDate = self.startDate ;
-        NSString *str = [NSString stringWithFormat:@"%@%@%@",@"\nThe 'Deep Breathing' skill is scheduled now in '",[PersistenceStorage getObjectForKey:@"planName"],@"' plan.\n\n You can access and run this skill from this plan."];
-        localNotification.alertBody =  str;
-        
-        
-        localNotification.applicationIconBadgeNumber = [[UIApplication sharedApplication] applicationIconBadgeNumber] + 1;
-        
-        
-        NSDictionary *infoDict = [NSDictionary dictionaryWithObjectsAndKeys:@"Deep Breathing", @"Type",[PersistenceStorage getObjectForKey:@"planName"],@"PlanName", nil];
-        localNotification.userInfo = infoDict;
-        [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
-        [self writeSkillReminder:@"On"];
-
-    }
-    
-    
-    
-}
-    
-    //[self dismissModalViewControllerAnimated:YES];
-    
-    
     [self.navigationController popViewControllerAnimated:YES];
-
+    
 }
 
 
@@ -866,15 +711,6 @@ NSDictionary* dict = @{@"total": @"Test"};
     // Dispose of any resources that can be recreated.
 }
 
-/*
- #pragma mark - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- */
 
 - (IBAction)startButtonTapped:(id)sender {
     [self.datePicker setHidden:NO];
@@ -882,19 +718,14 @@ NSDictionary* dict = @{@"total": @"Test"};
                         action:@selector(setDatePickerTime:)
               forControlEvents:UIControlEventValueChanged];
     NSDateFormatter *outputFormatter = [[NSDateFormatter alloc] init];
-    [outputFormatter setDateFormat:@"MMM dd,yyy HH:mm"];
+    [outputFormatter setDateFormat:DATE_FORMAT];
     
     NSString *title = [outputFormatter stringFromDate:self.datePicker.date];
-    self.startDate = self.datePicker.date;
-    
-    
-    
+    NSString * schDate = self.scheduleInfo.startDate;
+    [PersistenceStorage setObject:schDate andKey:@"scheduledDate"];
     [self.startButton setTitle:title forState:UIControlStateNormal];
-    self.endDate = [[NSDate alloc]initWithTimeInterval:3600 sinceDate:self.datePicker.date];
-    NSString *endTitle = [outputFormatter stringFromDate:self.endDate ];
-    [self.endButton setTitle:endTitle forState:UIControlStateNormal];
-}
 
+}
 
 
 - (IBAction)repeatButtonTapped:(id)sender {
@@ -913,48 +744,25 @@ NSDictionary* dict = @{@"total": @"Test"};
 }
 
 
-
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     NSString *buttonTitle = [actionSheet buttonTitleAtIndex:buttonIndex];
-    
-    //   NSString * theValue = [(UILabel*)[self viewWithTag:t200] text];
-    
-    
     UIButton *repeatLabel = (UIButton *)[self.view viewWithTag:355];
     if  ([buttonTitle isEqualToString:@"Daily"]) {
         
-    
-        
-        //
-        /*  UILabel *firstLabel = (UILabel *)[self.view viewWithTag:555];
-         firstLabel.text = @"Daily";
-         
-         [self.activityNameButton setTitle:[dict valueForKey:@"activityName"] forState:UIControlStateNormal];
-         */
-        [repeatLabel setTitle:@"Daily" forState:UIControlStateNormal];
-        //    [self.repeatLabel setTitle:@"Daily"];
+        self.scheduleInfo.remType = eRT_DAILY;
     }
     if ([buttonTitle isEqualToString:@"Weekly"]) {
-        /*       UILabel *firstLabel = (UILabel *)[self.view viewWithTag:555];
-         firstLabel.text = @"Weekly";*/
         
-        //      [self.repeatLabel setTitle:@"Weekly"];
-        [repeatLabel setTitle:@"Weekly" forState:UIControlStateNormal];
-        
-        
+        self.scheduleInfo.remType = eRT_WEEKLY;
     }
     
     if ([buttonTitle isEqualToString:@"None"]) {
-        /*UILabel *firstLabel = (UILabel *)[self.view viewWithTag:555];
-         firstLabel.text = @"None";*/
-        [repeatLabel setTitle:@"None" forState:UIControlStateNormal];
-        
-        //[self.repeatLabel setTitle:@"None"];
-        
-        
+        self.scheduleInfo.remType = eRT_NEVER;
     }
     
+    [self.scheduleTableView reloadData];
+
 }
 
 
@@ -964,16 +772,9 @@ NSDictionary* dict = @{@"total": @"Test"};
 -(void)setDatePickerTime:(id)sender
 {
     NSDateFormatter *outputFormatter = [[NSDateFormatter alloc] init];
-    [outputFormatter setDateFormat:@"MMM dd,yyy HH:mm"];
-    
+    [outputFormatter setDateFormat:DATE_FORMAT];
     NSString *title = [outputFormatter stringFromDate:self.datePicker.date];
-    self.startDate = self.datePicker.date;
-    
     [self.startButton setTitle:title forState:UIControlStateNormal];
-    //end date
-    self.endDate = [[NSDate alloc]initWithTimeInterval:3600 sinceDate:self.datePicker.date];
-    NSString *endTitle = [outputFormatter stringFromDate:self.endDate ];
-    [self.endButton setTitle:endTitle forState:UIControlStateNormal];
 }
 
 
@@ -990,30 +791,32 @@ NSDictionary* dict = @{@"total": @"Test"};
                                               otherButtonTitles:@"Run"];
         [alert show];
     }
-    
-    
     NSString *NotificationValue = [notification.userInfo objectForKey:@"name"];        //objectForKey:TheKeyNameYouUsed
-    
-    
-    
-    
-    
-    
     // Request to reload table view data
     [[NSNotificationCenter defaultCenter] postNotificationName:@"reloadData" object:self];
-    
     // Set icon badge number to zero
     application.applicationIconBadgeNumber = 0;
 }
 
 
+#pragma mark UITable View Datasource
+
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    if (![[PersistenceStorage getObjectForKey:@"showCancelActivityButton"] isEqualToString:@"No"])
+    {
+        return 2;
+    }
+    else
+    {
+        return 1;
+    }
+
+}
 
 -(void)writeSkillReminderToggle:theMode
 
 {
-    
-    //  NSURL *path = [self getUrlOfFiles:@"TinnitusCoachUsageData.csv"];
-    
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0];
     NSString *documentTXTPath = [documentsDirectory stringByAppendingPathComponent:@"TinnitusCoachUsageData.csv"];
@@ -1027,40 +830,19 @@ NSDictionary* dict = @{@"total": @"Test"};
     NSString *timeString = [timeFormatter stringFromDate: date];
     NSString *type = @"Reminder";
     NSString *str;
-
-    
     if ([theMode isEqualToString:@"On"])
     {
         str = @"Turned On Reminder";}
     else
-    {  str = @"Turned Off Reminder";}
-    
-
-    
-    
+    {
+        str = @"Turned Off Reminder";
+    }
     NSString * strippedActivityName = [[PersistenceStorage getObjectForKey:@"activityName"] stringByReplacingOccurrencesOfString:@"," withString:@"|"];
-
+    
+    NSString *finalStr = [NSString stringWithFormat:@"\r%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@",dateString,timeString,type,str,nil,[PersistenceStorage getObjectForKey:@"planName"],[PersistenceStorage getObjectForKey:@"situationName"],[PersistenceStorage getObjectForKey:@"skillName"],[PersistenceStorage getObjectForKey:@"valueName"],strippedActivityName,nil,nil,nil,nil,nil,nil];
     
     
-//if ([[PersistenceStorage getObjectForKey:@"skillName"] isEqualToString:@"Pleasant Activities" ])
-//{
-
-NSString *finalStr = [NSString stringWithFormat:@"\r%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@",dateString,timeString,type,str,nil,[PersistenceStorage getObjectForKey:@"planName"],[PersistenceStorage getObjectForKey:@"situationName"],[PersistenceStorage getObjectForKey:@"skillName"],[PersistenceStorage getObjectForKey:@"valueName"],strippedActivityName,nil,nil,nil,nil,nil,nil];
-    
-//}
-//
-//else
-//
-//{
-//    
-//    NSString *finalStr = [NSString stringWithFormat:@"\r%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@",dateString,timeString,type,theMode,nil,[PersistenceStorage getObjectForKey:@"planName"],[PersistenceStorage getObjectForKey:@"situationName"],[PersistenceStorage getObjectForKey:@"skillName"],nil,nil,nil,nil,nil,nil,nil,nil];
-//}
-
-
-
-
-
-NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSFileManager *fileManager = [NSFileManager defaultManager];
     if(![fileManager fileExistsAtPath:documentTXTPath])
     {
         [finalStr writeToFile:documentTXTPath atomically:YES];
@@ -1081,11 +863,7 @@ NSFileManager *fileManager = [NSFileManager defaultManager];
 
 
 -(void)writeSkillReminder:theMode
-
 {
-    
-    //  NSURL *path = [self getUrlOfFiles:@"TinnitusCoachUsageData.csv"];
-    
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0];
     NSString *documentTXTPath = [documentsDirectory stringByAppendingPathComponent:@"TinnitusCoachUsageData.csv"];
@@ -1099,23 +877,14 @@ NSFileManager *fileManager = [NSFileManager defaultManager];
     NSString *timeString = [timeFormatter stringFromDate: date];
     NSString *type = @"Reminder";
     NSString *str;
-    
     if ([theMode isEqualToString:@"Off"])
     {
- str = @"Turned Off Reminder";}
+        str = @"Turned Off Reminder";}
     else
-    {  str = @"Turned On Reminder";}
-    
-    
-   
-    
-        NSString *finalStr = [NSString stringWithFormat:@"\r%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@",dateString,timeString,type,str,nil,[PersistenceStorage getObjectForKey:@"planName"],[PersistenceStorage getObjectForKey:@"situationName"],[PersistenceStorage getObjectForKey:@"skillName"],nil,nil,nil,nil,nil,nil,nil,nil];
-    
-    
-
-    
-    
-    
+    {
+        str = @"Turned On Reminder";
+    }
+    NSString *finalStr = [NSString stringWithFormat:@"\r%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@",dateString,timeString,type,str,nil,[PersistenceStorage getObjectForKey:@"planName"],[PersistenceStorage getObjectForKey:@"situationName"],[PersistenceStorage getObjectForKey:@"skillName"],nil,nil,nil,nil,nil,nil,nil,nil];
     NSFileManager *fileManager = [NSFileManager defaultManager];
     if(![fileManager fileExistsAtPath:documentTXTPath])
     {
@@ -1128,9 +897,286 @@ NSFileManager *fileManager = [NSFileManager defaultManager];
         [myHandle writeData:[finalStr dataUsingEncoding:NSUTF8StringEncoding]];
         
     }
+
+}
+
+
+-(NSString*)eventExists{
+    //check for the Event
+    //get the skill first
+    NSString* calEvent = nil;
+    NSString* reminderQuery = [NSString stringWithFormat:@"select CalendarEventID from MySkillReminders where SkillName = \"%@\" and  PlanName = '%@'",[PersistenceStorage getObjectForKey:@"skillName"],[Utils getValidSqlString:[PersistenceStorage getObjectForKey:@"planName"]]];
+    NSArray* calenderEventsArray = [NSArray arrayWithArray:[self.manager loadDataFromDB:reminderQuery]];
+    if(calenderEventsArray != nil && calenderEventsArray.count > 0){
+        //get the calender event and return it back for rescheduling
+        calEvent = [[calenderEventsArray objectAtIndex:0] objectForKey:@"CalendarEventID"];
+        
+    }
+    return calEvent;
+}
+
+-(void)deleteExistingEventNotitfication{
+    NSArray *notificationArray = [[UIApplication sharedApplication] scheduledLocalNotifications];
+    NSString* skillName = [PersistenceStorage getObjectForKey:@"skillName"];
+    NSString* planName = [PersistenceStorage getObjectForKey:@"planName"];
+    for(UILocalNotification *notification in notificationArray){
+        if ([[notification.userInfo valueForKey:@"PlanName"] isEqualToString:planName] && [[notification.userInfo valueForKey:@"Type"] isEqualToString:skillName]) {
+            NSLog(@"Cancelling local notification for skill:%@ in Plan:%@", skillName, planName);
+            [[UIApplication sharedApplication] cancelLocalNotification:notification] ;
+        }
+        
+    }
+
+}
+
+-(NSString*)eventPAExists{
+    //check for the Event
+    //get the skill first
+    NSString* calEvent = nil;
+    NSString* reminderQuery = [NSString stringWithFormat:@"select CalendarEventID from MyReminders where SkillName = \"%@\" and PlanName = '%@' and ActName = '%@'",[PersistenceStorage getObjectForKey:@"skillName"],[Utils getValidSqlString:[PersistenceStorage getObjectForKey:@"planName"]],[PersistenceStorage getObjectForKey:@"activityName"]];
+    NSArray* tempArray = [self.manager loadDataFromDB:reminderQuery];
+    NSArray* calenderEventsArray = [NSArray arrayWithArray:tempArray];
+    if(calenderEventsArray != nil && calenderEventsArray.count > 0){
+        //get the calender event and return it back for rescheduling
+        calEvent = [[calenderEventsArray objectAtIndex:0] objectForKey:@"CalendarEventID"];
+        
+    }
+    return calEvent;
+}
+
+-(void)deleteExistingPAEventNotitfication{
+    NSArray *notificationArray = [[UIApplication sharedApplication] scheduledLocalNotifications];
+    NSString* skillName = [PersistenceStorage getObjectForKey:@"skillName"];
+    NSString* planName = [PersistenceStorage getObjectForKey:@"planName"];
+    NSString* activityName = [PersistenceStorage getObjectForKey:@"activityName"];
+    for(UILocalNotification *notification in notificationArray){
+        if ([[notification.userInfo valueForKey:@"PlanName"] isEqualToString:planName] && [[notification.userInfo valueForKey:@"Type"] isEqualToString:skillName] && [[notification.userInfo valueForKey:@"Activity"] isEqualToString:activityName]) {
+            NSLog(@"Cancelling local notification for skill:%@ in Plan:%@  Activity: %@" , skillName, planName,activityName);
+            [[UIApplication sharedApplication] cancelLocalNotification:notification] ;
+            break;
+        }
+        
+    }
     
+}
+
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    if(section == 1)
+    {
+        return 1;
+    }
+    else
+    {
+        return 4;
+    }
+}
+
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if(indexPath.section == 0)
+    {
+        if(indexPath.row == 1
+           || indexPath.row == 2)
+        {
+            DateCell *dateCell = [self.scheduleTableView dequeueReusableCellWithIdentifier:@"DateCell"];
+            
+            if(indexPath.row == 1)
+            {
+                dateCell.dateTypeLabel.text = @"Starts";
+                if(self.scheduleInfo.startDate)
+                {
+                    dateCell.dateLabel.text = self.scheduleInfo.startDate;
+                }
+                else
+                {
+                    dateCell.dateLabel.text = @"Select a Date";
+                }
+                
+            }
+            else
+            {
+                dateCell.dateTypeLabel.text = @"Ends";
+                if(self.scheduleInfo.endDate)
+                {
+                    dateCell.dateLabel.text = self.scheduleInfo.endDate;
+                }
+                else
+                {
+                    dateCell.dateLabel.text = @"Select a Date";
+                }
+            }
+            
+            return dateCell;
+        }
+        else if(indexPath.row == 3)
+        {
+            RepeatCell *repeatCell = [self.scheduleTableView dequeueReusableCellWithIdentifier:@"RepeatCell"];
+            
+            NSString *remTypeStr = @"Daily";
+            
+            if(self.scheduleInfo.remType == eRT_NEVER)
+            {
+                remTypeStr = @"Never";
+                
+            }
+            else if(self.scheduleInfo.remType == eRT_WEEKLY)
+            {
+                remTypeStr = @"Weekly";
+                
+            }
+            
+            repeatCell.repeatLabel.text = remTypeStr;
+            
+            return repeatCell;
+        }
+        else
+        {
+            
+            UITableViewCell *cell = [self.scheduleTableView dequeueReusableCellWithIdentifier:@"titleCell"];
+            
+            if(!cell)
+            {
+                
+                Pair *pallete = [Utils getColorFontPair:eCFS_PALLETE_3];
+                
+                cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"titleCell"];
+                
+                CGFloat constant = 27;
+                
+                CGFloat titleLabelHeight = [Utils heightForLabelForString:self.activityText width:276 font:pallete.secondObj];
+                
+                
+                UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(22, 15, 276, titleLabelHeight)];
+                
+                titleLabel.numberOfLines = 1000;
+                
+                titleLabel.tag = 190;
+                
+                titleLabel.text = self.activityText;
+                
+                
+                titleLabel.textColor = pallete.firstObj;
+                titleLabel.font = pallete.secondObj;
+                
+                [cell addSubview:titleLabel];
+                
+                UIView *separator = [[UIView alloc]initWithFrame:CGRectMake(22, constant + titleLabelHeight - 1, 280, 1)];
+                
+                separator.backgroundColor = [Utils colorWithHexValue:@"EEEEEE"];
+                
+                [cell addSubview:separator];
+            }
+            
+            return cell;
+        }
+    }
+    else if(indexPath.section == 1)
+    {
+        UITableViewCell *cell = [self.scheduleTableView dequeueReusableCellWithIdentifier:@"deleteCell"];
+        
+        if(!cell)
+        {
+            cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"deleteCell"];
+            
+            UIImageView *trashImage = [[UIImageView alloc]initWithFrame:CGRectMake(15, 8, 27, 27)];
+            
+            trashImage.image = [UIImage imageNamed:@"Active_Trash_Button.png"];
+            
+            [cell addSubview:trashImage];
+            
+            
+            UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake( 50, 12, 230, 20)];
+            
+            titleLabel.tag = 190;
+            titleLabel.textAlignment = NSTextAlignmentCenter;
+            
+            
+            titleLabel.text = [NSString stringWithFormat:@"Remove already existing event"];
+            
+            Pair *pallete = [Utils getColorFontPair:eCFS_PALLETE_4];
+            
+            titleLabel.textColor = pallete.firstObj;
+            titleLabel.font = pallete.secondObj;
+            
+            
+            [cell addSubview:titleLabel];
+            
+            UIView *separator = [[UIView alloc]initWithFrame:CGRectMake(0, 43, 320, 1)];
+            
+            separator.backgroundColor = [UIColor lightGrayColor];
+            
+            [cell addSubview:separator];
+        }
+        
+        return cell;
+    }
     
+    return nil;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     
+    if(indexPath.section == 0 && indexPath.row == 0){
+        CGFloat constant = 27;
+        
+        Pair *pallete = [Utils getColorFontPair:eCFS_PALLETE_3];
+        
+        CGFloat titleLabelHeight = [Utils heightForLabelForString:self.activityText width:276 font:pallete.secondObj];
+        
+        
+        constant += (titleLabelHeight);
+        
+        return constant;
+
+        
+    }
+    return 44;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+{
+    if(section == 0)
+    {
+        return 10;
+    }
+    return 0;
+}
+
+-(UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
+{
+    UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 10)];
+    
+    view.backgroundColor = [Utils colorWithHexValue:@"EEEEEE"];
+    
+    UIView *separator = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 1)];
+    separator.backgroundColor = [UIColor lightGrayColor];
+    
+    [view addSubview:separator];
+    
+    UIView *separator1 = [[UIView alloc]initWithFrame:CGRectMake(0, 9, 320, 1)];
+    separator1.backgroundColor = [UIColor lightGrayColor];
+    
+    [view addSubview:separator1];
+    
+    return view;
+}
+
+
+#pragma mark UITable View Delegate
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if(indexPath.section == 1)
+    {
+        [self DeleteReminder:self];
+    }
+    else if(indexPath.section == 0)
+    {
+        if(indexPath.row == 3)
+        {
+            [self repeatButtonTapped:self];
+        }
+    }
 }
 
 

@@ -10,8 +10,9 @@
 #import "WebsitesandAppsCell.h"
 #import "WebsitesandAppsWithCommentsCell.h"
 #import "SoundActivitiesViewController.h"
+#import "MBProgressHUD.h"
 
-@interface WebsitesandAppsViewController ()<UITableViewDelegate, UITableViewDataSource>
+@interface WebsitesandAppsViewController ()<UITableViewDelegate, UITableViewDataSource, WebsitesandAppsCellDelegate, WebsitesandAppsWithCommentsCellDelegate, WebSiteCaptureCommentsDelegate>
 {
     NSArray *websitesandAppsSoundsArray;
 }
@@ -26,54 +27,128 @@
 
 @implementation WebsitesandAppsViewController
 
+-(UIView *)tableHeaderView
+{
+    UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 30)];
+    
+    UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(22, 15, 276, 20)
+                           ];
+    
+    titleLabel.numberOfLines = 1000;
+    
+    titleLabel.backgroundColor = [UIColor clearColor];
+    view.backgroundColor = [Utils colorWithHexValue:@"EFEFF4"];
+    
+    titleLabel.text = [NSString stringWithFormat: @"Below are websites and apps with music, podcasts and other sounds. Select the websites and apps with %@ that you would like to add to your plan.", self.soundType];
+    
+    Pair *pallete = [Utils getColorFontPair:eCFS_PALLETE_2];
+    
+    titleLabel.font = pallete.secondObj;
+    titleLabel.textColor = pallete.firstObj;
+    
+    CGFloat height = [Utils heightForLabelForString:titleLabel.text width:276 font:pallete.secondObj];
+    
+    titleLabel.height = height;
+    
+    view.height += height;
+    
+    [view addSubview:titleLabel];
+    
+    return view;
+}
 
+
+-(CGFloat)heightForIndexPath:(NSIndexPath *)indexPath
+{
+    CGFloat constant = 37;
+    
+    if ([[self.checkFlagArray objectAtIndex:indexPath.row] boolValue]) {
+        constant = 90;
+    }
+    else
+    {
+        constant = 40;
+    }
+    
+    NSString *title = [[websitesandAppsSoundsArray objectAtIndex:indexPath.row] valueForKey:@"waName"];
+    
+    NSString *desc =[[websitesandAppsSoundsArray objectAtIndex:indexPath.row] valueForKey:@"waDetail"];
+    
+    CGFloat titleHeight = [Utils heightForLabelForString:title width:234 font:TITLE_LABEL_FONT];
+    
+    CGFloat subTitleHeight = [Utils heightForLabelForString:desc width:234 font:SUB_TITLE_LABEL_FONT];
+    
+    
+    constant += titleHeight + subTitleHeight;
+    
+    return constant;
+    
+}
 
 -(void)dismissKeyboard {
-[self.view endEditing:YES];}
+    [self.view endEditing:YES];}
+
+-(void)cancel
+{
+    [self.navigationController popViewControllerAnimated:YES];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-  //  [commentsTextField SetDelegate:self];
-
-    UINavigationBar *myBar = [[UINavigationBar alloc]initWithFrame:CGRectMake(0, 0, 320, 50)];
-    [self.view addSubview:myBar];
+    self.websitesandAppsSoundTableView.backgroundColor = [Utils colorWithHexValue:@"EFEFF4"];
     
+    self.websitesandAppsSoundTableView.tableHeaderView = [self tableHeaderView];
     
-    UINavigationItem *item = [[UINavigationItem alloc] initWithTitle:@"Add Websites & Apps"];
-
-    
-    UIBarButtonItem *leftButton = [[UIBarButtonItem alloc] initWithTitle:@"Cancel"
-                                                                   style:UIBarButtonItemStylePlain target:nil action:@selector(cancelTapped:)];
-    item.leftBarButtonItem = leftButton;
-    
-    
-    UIBarButtonItem *rightButton = [[UIBarButtonItem alloc] initWithTitle:@"Done"
-                                                                   style:UIBarButtonItemStyleDone target:nil action:@selector(addTapped:)];
-     item.rightBarButtonItem = rightButton;
-    
-    
-    
-    
-    [myBar pushNavigationItem:item animated:NO];
-    
-    
+    self.websitesandAppsSoundTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]
                                    initWithTarget:self
                                    action:@selector(dismissKeyboard)];
     
     [self.view addGestureRecognizer:tap];
     
-    
-    
-    
-    
-    
-    
-    
+    UIView *titleView = [[UIView alloc]initWithFrame:CGRectMake(0, 10, 320, 44)];
+    UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(60, 0, 200, 44)];
+    Pair *pallete = [Utils getColorFontPair:eCFS_PALLETE_1];
+    titleLabel.font = pallete.secondObj;
+    titleLabel.textColor = pallete.firstObj;
+    titleLabel.textAlignment = NSTextAlignmentCenter;
+    titleLabel.backgroundColor = [UIColor clearColor];
+    titleLabel.text = [NSString stringWithFormat:@"Add %@", self.soundType];
+    [titleView addSubview:titleLabel];
+    UILabel *situationLabel = [[UILabel alloc]initWithFrame:CGRectMake(60, 30
+                                                                       , 200, 20)];
+    pallete = [Utils getColorFontPair:eCFS_PALLETE_2];
+    situationLabel.font = pallete.secondObj;
+    situationLabel.textColor = pallete.firstObj;
+    situationLabel.textAlignment = NSTextAlignmentCenter;
+    situationLabel.backgroundColor = [UIColor clearColor];
+    situationLabel.text = @"Website & Apps";
+    [titleView addSubview:situationLabel];
+    [self.view addSubview:titleView];
+    UIImageView *backImg = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 15, 20)];
+    backImg.image = [UIImage imageNamed:@"Active_Back-Arrow.png"];
+    UILabel *backLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 32, 60, 20)];
+    [backLabel addSubview:backImg];
+    backLabel.text = @"";
+    pallete = [Utils getColorFontPair:eCFS_PALLETE_3];
+    backLabel.font = pallete.secondObj;
+    backLabel.textColor = pallete.firstObj;
+    [Utils addTapGestureToView:backLabel target:self
+                      selector:@selector(cancelTapped:)];
+    [self.view addSubview:backLabel];
+    UILabel *doneLabel = [[UILabel alloc]initWithFrame:CGRectMake(250, 32, 60, 20)];
+    doneLabel.textAlignment = NSTextAlignmentRight;
+    doneLabel.text = @"Done";
+    pallete = [Utils getColorFontPair:eCFS_PALLETE_3];
+    doneLabel.font = pallete.secondObj;
+    doneLabel.textColor = pallete.firstObj;
+    [Utils addTapGestureToView:doneLabel target:self
+                      selector:@selector(addTapped:)];
+    [self.view addSubview:doneLabel];
     self.websitesandAppsSoundDescriptionLabel.text = [NSString stringWithFormat:@"Below are websites and apps with music, podcasts and other sounds. Select the websites and apps with %@ that you would like to add to your plan.",self.soundType];
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStylePlain target:self action:@selector(addWebsitesandApps)];
-
+    
     // Do any additional setup after loading the view.
     
     self.dbManagerSoundsList = [[DBManager alloc]initWithDatabaseFileName:@"GNResoundDB.sqlite"];
@@ -82,6 +157,8 @@
     
     [self.websitesandAppsSoundTableView registerNib:[UINib nibWithNibName:@"WebsitesandAppsWithCommentsCell" bundle:nil] forCellReuseIdentifier:@"WebsitesandAppsWithCommentsCell"];
 }
+
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -98,12 +175,11 @@
 -(NSInteger)checkCountForSoundTypeID :(NSInteger )soundTypeID
 {
     NSString *query = [NSString stringWithFormat:@"SELECT (SELECT count(*) from MySounds  where soundTypeID = %ld) + (SELECT count(*) from MyDevices  where soundTypeID = %ld) + (SELECT count(*) from MyWebsites  where soundTypeID = %ld)", (long)soundTypeID, (long)soundTypeID, (long)soundTypeID];
-    
     NSArray *recordArray = [self.dbManagerSoundsList loadDataFromDB:query];
-    
     return [[[(NSDictionary *)[recordArray objectAtIndex:0] allValues] objectAtIndex:0] integerValue];
     
 }
+
 
 -(void)addWebsitesandApps
 {
@@ -120,91 +196,48 @@
     
     NSInteger countForSoundType = [self checkCountForSoundTypeID:soundTypeID];
     NSCountedSet *filter = [NSCountedSet setWithArray:self.checkFlagArray];
-    
-    
-
-    
     if ((countForSoundType + [filter countForObject:@"1"])<=1000) {
-        
-         
         NSMutableString *queryInsert = [NSMutableString stringWithFormat:@"insert into MyWebsites ('planID', 'groupID', 'skillID', 'soundTypeID', 'websiteID', 'comments','URL') values "];
-        
         for (int i = 0; i<[self.checkFlagArray count]; i++) {
             if ([[self.checkFlagArray objectAtIndex:i] boolValue] == 1) {
-                
                 WebsitesandAppsWithCommentsCell *cell = (WebsitesandAppsWithCommentsCell*)[self.websitesandAppsSoundTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0]];
-
-                
-                
-                
                 [queryInsert appendFormat:@"(%ld, %ld, %ld, %ld, %ld, '%@','%@'),",(long)[PersistenceStorage getIntegerForKey:@"currentPlanID"], (long)[PersistenceStorage getIntegerForKey:@"currentGroupID"], (long)[PersistenceStorage getIntegerForKey:@"currentSkillID"], (long)soundTypeID, (long)[[[websitesandAppsSoundsArray objectAtIndex:i] valueForKey:@"ID"] integerValue], cell.commentsTextField.text,[[websitesandAppsSoundsArray objectAtIndex:i] valueForKey:@"URL"]];
-                
             }
         }
-
+        
         NSString *newQuery = [queryInsert substringToIndex:[queryInsert length]-1];
-        
- 
-        
-        
         BOOL isDone = [self.dbManagerSoundsList executeQuery:newQuery];
-       
-   //     SoundActivitiesViewController *npsv = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"SoundActivitiesViewController"];
-        
-  
-        if (isDone == YES)
-     
+        if (isDone)
         {
-  
-            
-        [PersistenceStorage setObject:@"Added Using Sound Websites Apps Option" andKey:@"actionTypeForResource"];
-        [PersistenceStorage setObject:@"Websites & Apps" andKey:@"skillDetail2"];
- 
-        NSString *loadquery = [NSString stringWithFormat:@"select * from Plan_Website_Apps where soundTypeID = '%@' and ID IN (select websiteID from MyWebsites where planID ='%@') ",[PersistenceStorage getObjectForKey:@"soundTypeID"],[PersistenceStorage getObjectForKey:@"currentPlanID"]];
-    
-        NSArray *waArrayList = [self.dbManagerSoundsList loadDataFromDB:loadquery];
-        NSMutableString *waString =[NSMutableString stringWithString:@""];
-        NSLog(@"%@",waArrayList);
-        
-        
-        for(int i= 0 ;i<[waArrayList count];i++)
-        {
-        
-            [waString appendString:[[waArrayList objectAtIndex:i] valueForKey:@"waName"]];
-            [waString appendString:@"|"];
-            
+            [PersistenceStorage setObject:@"Added Using Sound Websites Apps Option" andKey:@"actionTypeForResource"];
+            [PersistenceStorage setObject:@"Websites & Apps" andKey:@"skillDetail2"];
+            NSString *loadquery = [NSString stringWithFormat:@"select * from Plan_Website_Apps where soundTypeID = '%@' and ID IN (select websiteID from MyWebsites where planID ='%@') ",[PersistenceStorage getObjectForKey:@"soundTypeID"],[PersistenceStorage getObjectForKey:@"currentPlanID"]];
+            NSArray *waArrayList = [self.dbManagerSoundsList loadDataFromDB:loadquery];
+            NSMutableString *waString =[NSMutableString stringWithString:@""];
+            for(int i= 0 ;i<[waArrayList count];i++)
+            {
+                [waString appendString:[[waArrayList objectAtIndex:i] valueForKey:@"waName"]];
+                [waString appendString:@"|"];
+                
+            }
+            if ([waString length] > 0) {
+                NSString *outPut = waString;
+                outPut = [outPut substringToIndex:[outPut length] - 2];
+                NSLog(@"%@",outPut);
+                [PersistenceStorage setObject:outPut andKey:@"skillDetail3"];
+            }
+            [self writeModifiedResource];
         }
-        
-        if ([waString length] > 0) {
-            NSString *outPut = waString;
-            outPut = [outPut substringToIndex:[outPut length] - 2];
-            NSLog(@"%@",outPut);
-            [PersistenceStorage setObject:outPut andKey:@"skillDetail3"];
-            
-            
-        }
-        
-        
-        [self writeModifiedResource];
-        
-        
-        
-        NSLog(@"Success");
     }
     
-           // [self.navigationController pushViewController:npsv animated:YES];
-
-    }
-  }
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
 
 
 
 
 
 -(void)writeModifiedResource{
-    //  NSURL *path = [self getUrlOfFiles:@"TinnitusCoachUsageData.csv"];
-    
-    
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0];
     NSString *documentTXTPath = [documentsDirectory stringByAppendingPathComponent:@"TinnitusCoachUsageData.csv"];
@@ -219,8 +252,35 @@
     NSString *type = @"Skill";
     NSString *optionName = [PersistenceStorage getObjectForKey:@"optionName"];
     NSString *str = [PersistenceStorage getObjectForKey:@"actionTypeForResource"];
+    NSMutableString *strItems = [NSMutableString string];
+    NSInteger index = 0;
+    NSMutableArray *filteredItems = [NSMutableArray array];
     
-    NSString   *finalStr = [NSString stringWithFormat:@"\r%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@",dateString,timeString,type,str,nil,[PersistenceStorage getObjectForKey:@"planName"],[PersistenceStorage getObjectForKey:@"situationName"],[PersistenceStorage getObjectForKey:@"skillName"],self.soundType,[PersistenceStorage getObjectForKey:@"skillDetail2"],[PersistenceStorage getObjectForKey:@"skillDetail3"],nil,nil,nil,nil,nil];
+    for(NSNumber *item in self.checkFlagArray){
+        
+        if([item boolValue]){
+            
+            [filteredItems addObject:[NSNumber numberWithInteger:index]];
+        }
+        
+        index++;
+    }
+    
+    NSInteger count = filteredItems.count;
+    
+    for(NSNumber *item in filteredItems){
+        
+        NSString *obj = [[websitesandAppsSoundsArray objectAtIndex:[item integerValue]] valueForKey:@"waName"];
+        
+        [strItems appendString:obj];
+        
+        count--;
+        
+        if(count > 0)
+            [strItems appendString:@"|"];
+    }
+    
+    NSString   *finalStr = [NSString stringWithFormat:@"\r%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@",dateString,timeString,type,str,nil,[PersistenceStorage getObjectForKey:@"planName"],[PersistenceStorage getObjectForKey:@"situationName"],[PersistenceStorage getObjectForKey:@"skillName"],self.soundType,[PersistenceStorage getObjectForKey:@"skillDetail2"],strItems,nil,nil,nil,nil,nil];
     
     NSFileManager *fileManager = [NSFileManager defaultManager];
     if(![fileManager fileExistsAtPath:documentTXTPath])
@@ -259,111 +319,72 @@
     else if ([self.soundType isEqualToString:@"Background Sound"]) {
         soundTypeID = 3;
     }
-    
     NSInteger countForSoundType = [self checkCountForSoundTypeID:soundTypeID];
     NSCountedSet *filter = [NSCountedSet setWithArray:self.checkFlagArray];
-    
-    
-    
-    
     if ((countForSoundType + [filter countForObject:@"1"])<=100) {
-        
-        
-        
-        
         NSMutableString *query = [NSMutableString stringWithFormat:@"insert into MyWebsites ('planID', 'groupID', 'skillID', 'soundTypeID', 'websiteID', 'comments','URL') values "];
         
         for (int i = 0; i<[self.checkFlagArray count]; i++) {
             if ([[self.checkFlagArray objectAtIndex:i] boolValue] == 1) {
-                
-                WebsitesandAppsWithCommentsCell *cell = (WebsitesandAppsWithCommentsCell*)[self.websitesandAppsSoundTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0]];
-                
-                [query appendFormat:@"(%ld, %ld, %ld, %ld, %ld, '%@','%@'),",(long)[PersistenceStorage getIntegerForKey:@"currentPlanID"], (long)[PersistenceStorage getIntegerForKey:@"currentGroupID"], (long)[PersistenceStorage getIntegerForKey:@"currentSkillID"], (long)soundTypeID, (long)[[[websitesandAppsSoundsArray objectAtIndex:i] valueForKey:@"ID"] integerValue], cell.commentsTextField.text,[[websitesandAppsSoundsArray objectAtIndex:i] valueForKey:@"URL"]];
+                NSString *comment = [self getCommentsAtIndex:i];
+                NSString *commentForSql = [Utils getValidSqlString:comment];
+                [query appendFormat:@"(%ld, %ld, %ld, %ld, %ld, '%@','%@'),",(long)[PersistenceStorage getIntegerForKey:@"currentPlanID"], (long)[PersistenceStorage getIntegerForKey:@"currentGroupID"], (long)[PersistenceStorage getIntegerForKey:@"currentSkillID"], (long)soundTypeID, (long)[[[websitesandAppsSoundsArray objectAtIndex:i] valueForKey:@"ID"] integerValue], commentForSql,[[websitesandAppsSoundsArray objectAtIndex:i] valueForKey:@"URL"]];
                 
             }
         }
-        
-        
-        
-        
-        
         NSString *newQuery = [query substringToIndex:[query length]-1];
-        
-        
-        
         BOOL isDone = [self.dbManagerSoundsList executeQuery:newQuery];
-        
         SoundActivitiesViewController *npsv = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"SoundActivitiesViewController"];
+        [PersistenceStorage setObject:@"Added Using Sound Websites Apps Option" andKey:@"actionTypeForResource"];
+        [PersistenceStorage setObject:@"Websites & Apps" andKey:@"skillDetail2"];
         
-        
-      //  if (isDone == YES)
+        NSString *loadquery = [NSString stringWithFormat:@"select * from Plan_Website_Apps where   ID IN (select websiteID from MyWebsites where planID ='%@') ",[PersistenceStorage getObjectForKey:@"currentPlanID"]];
+        NSArray *waArrayList = [self.dbManagerSoundsList loadDataFromDB:loadquery];
+        NSMutableString *waString =[NSMutableString stringWithString:@""];
+        for(int i= 0 ;i<[waArrayList count];i++)
+        {
+            [waString appendString:[[waArrayList objectAtIndex:i] valueForKey:@"waName"]];
+            [waString appendString:@"|"];
             
-      //{
-
-        
-      //  if (isDone == YES)
-            
-        //{
-            
-            
-            [PersistenceStorage setObject:@"Added Using Sound Websites Apps Option" andKey:@"actionTypeForResource"];
-            [PersistenceStorage setObject:@"Websites & Apps" andKey:@"skillDetail2"];
-            
-            NSString *loadquery = [NSString stringWithFormat:@"select * from Plan_Website_Apps where   ID IN (select websiteID from MyWebsites where planID ='%@') ",[PersistenceStorage getObjectForKey:@"currentPlanID"]];
-            
-            NSArray *waArrayList = [self.dbManagerSoundsList loadDataFromDB:loadquery];
-            NSMutableString *waString =[NSMutableString stringWithString:@""];
-            NSLog(@"%@",waArrayList);
-            
-            
-            for(int i= 0 ;i<[waArrayList count];i++)
-            {
-                
-                [waString appendString:[[waArrayList objectAtIndex:i] valueForKey:@"waName"]];
-                [waString appendString:@"|"];
-                
-            }
-            
-            if ([waString length] > 0) {
-                NSString *outPut = waString;
-                outPut = [outPut substringToIndex:[outPut length] - 1];
-                 [PersistenceStorage setObject:outPut andKey:@"skillDetail3"];
-                
-                
-            }
-            
-            
-            [self writeModifiedResource];
-            
-            
-        
-        
-        
-        
-        
-            [self dismissViewControllerAnimated:YES completion:^{
-                
-                
-            //    [[NSNotificationCenter defaultCenter] postNotificationName: @"sayHelloNotification"; object: nil;];
-                
-                
-         }];
-
-    //}
-    //else
-    //{
-     //   UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Tinnitus Coach" message:[NSString stringWithFormat:@"You have already added %ld sounds in this list. You cannot add more than 100 sounds.", (long)countForSoundType] delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles: nil];
-      //  [alert show];
-    //}
-    
-    
-    
+        }
+        if ([waString length] > 0) {
+            NSString *outPut = waString;
+            outPut = [outPut substringToIndex:[outPut length] - 1];
+            [PersistenceStorage setObject:outPut andKey:@"skillDetail3"];
+        }
+        [self writeModifiedResource];
+        [self performSelector:@selector(navigateBack) withObject:nil afterDelay:1.1];
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark.png"] ];
+        hud.mode = MBProgressHUDModeCustomView;
+        hud.labelText = @"Added";
+        [hud show:YES];
+        [hud hide:YES afterDelay:1];
+    }
 }
+
+
+-(void)navigateBack{
+    [self dismissViewControllerAnimated:YES completion:^{}];
+}
+
+
+-(NSString*)getCommentsAtIndex:(int) index{
+    NSString* retString = @"";
+    NSString* commentStringFromArray = [self.commentsArray objectAtIndex:index];
+    NSIndexPath* indexPath = [NSIndexPath indexPathForRow:index inSection:0];
+    NSString* commentsStringFromCell = ((WebsitesandAppsWithCommentsCell *)[self.websitesandAppsSoundTableView cellForRowAtIndexPath:indexPath]).commentsTextField.text;
+    if (commentStringFromArray.length > 0) {
+        return commentStringFromArray;
+    }else if (commentsStringFromCell.length > 0){
+        return commentsStringFromCell;
+    }else{
+        return retString;
+    }
 }
 
 
 - (BOOL)textFieldShouldReturn:(UITextField *)commentsTextField {
-   // [self.commentsTextField resignFirstResponder];
     return NO;
 }
 
@@ -379,20 +400,7 @@
     else if ([self.soundType isEqualToString:@"Background Sound"]) {
         soundTypeID = 3;
     }
-    
-    
-    
- //   NSString *query = [NSString stringWithFormat:@"select * from Plan_Website_Apps where soundTypeID = %d",soundTypeID];
-    
-    
-    
-    
     NSString *query = [NSString stringWithFormat:@"select * from Plan_Website_Apps where soundTypeID = %d and ID NOT IN (select websiteID from MyWebsites where planID==%@) ",soundTypeID,[PersistenceStorage getObjectForKey:@"currentPlanID"]];
-
-    
-    
-    
-    
     // Get the results.
     if (websitesandAppsSoundsArray!= nil) {
         websitesandAppsSoundsArray = nil;
@@ -406,10 +414,10 @@
         [self.checkFlagArray addObject:[NSNumber numberWithBool:0]];
         [self.commentsArray addObject:@""];
     }
-    
     // Reload the table view.
     [self.websitesandAppsSoundTableView reloadData];
 }
+
 
 #pragma mark - UITableViewDataSource
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
@@ -422,35 +430,38 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
-
+    
     if([[self.checkFlagArray objectAtIndex:indexPath.row]boolValue]) {
         
         WebsitesandAppsWithCommentsCell *cell = [tableView dequeueReusableCellWithIdentifier:@"WebsitesandAppsWithCommentsCell" forIndexPath:indexPath];
         cell.nameLabel.text = [[websitesandAppsSoundsArray objectAtIndex:indexPath.row] valueForKey:@"waName"];
         
+        cell.titleHeightConst.constant = [Utils heightForLabelForString:cell.nameLabel.text width:234 font:TITLE_LABEL_FONT];
+        
         cell.descriptionLabel.text =[[websitesandAppsSoundsArray objectAtIndex:indexPath.row] valueForKey:@"waDetail"];
+        cell.descriptionLabel.numberOfLines = 10;
         //cell.index = indexPath.row;
         cell.commentsTextField.text = [self.commentsArray objectAtIndex:indexPath.row];
-        
-        cell.checkBoxButton.tag = indexPath.row;
-        [cell.checkBoxButton addTarget:self action:@selector(checkBoxButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+        cell.checkDelegate = self;
         cell.delegate = self;
         return cell;
     }
     else
     {
         WebsitesandAppsCell *cell= [tableView dequeueReusableCellWithIdentifier:@"WebsitesandAppsCell" forIndexPath:indexPath];
-
+        
         cell.nameLabel.text = [[websitesandAppsSoundsArray objectAtIndex:indexPath.row] valueForKey:@"waName"];
         
-        cell.descriptionLabel.text =[[websitesandAppsSoundsArray objectAtIndex:indexPath.row] valueForKey:@"waDetail"];
-
+        cell.descriptionLabel.numberOfLines = 10;
         
-        cell.checkBoxButton.tag = indexPath.row;
-        [cell.checkBoxButton addTarget:self action:@selector(checkBoxButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+        cell.titleHeightConst.constant = [Utils heightForLabelForString:cell.nameLabel.text width:234 font:TITLE_LABEL_FONT];
+        
+        cell.descriptionLabel.text =[[websitesandAppsSoundsArray objectAtIndex:indexPath.row] valueForKey:@"waDetail"];
+        
+        cell.delegate = self;
         return cell;
     }
-
+    
     
     
     
@@ -459,13 +470,8 @@
 
 #pragma mark - UITableViewDelegate
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    if ([[self.checkFlagArray objectAtIndex:indexPath.row] boolValue]) {
-        return 100.0f;
-    }
-    else
-    {
-        return 70.0f;
-    }
+    
+    return [self heightForIndexPath:indexPath];
 }
 
 - (void)checkBoxButtonClicked:(id)sender
@@ -474,10 +480,6 @@
     if ([[self.checkFlagArray objectAtIndex:index]boolValue]) {
         [self.checkFlagArray replaceObjectAtIndex:index withObject:[NSNumber numberWithBool:NO]];
         [self.websitesandAppsSoundTableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:index inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
-      //  cell.commentsTextField.text
-        
-             //   cell.commentsTextField.text = [[websitesandAppsSoundsArray objectAtIndex:indexPath.row] valueForKey:@"waName"];
-        
     }
     else
     {
@@ -487,15 +489,25 @@
 }
 
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+-(void)didTapCheckBox:(id)sender{
+    
+    UITableViewCell *cell = (UITableViewCell *)sender;
+    
+    NSIndexPath *path = [self.websitesandAppsSoundTableView indexPathForCell:cell];
+    
+    NSInteger index = path.row;
+    
+    if ([[self.checkFlagArray objectAtIndex:index]boolValue]) {
+        [self.checkFlagArray replaceObjectAtIndex:index withObject:[NSNumber numberWithBool:NO]];
+        [self.websitesandAppsSoundTableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:index inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
+    }
+    else
+    {
+        [self.checkFlagArray replaceObjectAtIndex:index withObject:[NSNumber numberWithBool:YES]];
+        [self.websitesandAppsSoundTableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:index inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
+    }
+    
 }
-*/
 
 #pragma mark - WebSiteCaptureCommentsDelegate
 

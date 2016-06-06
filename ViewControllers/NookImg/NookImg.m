@@ -1,5 +1,6 @@
  
 #import "NookImg.h"
+#import "TCNSURLProtocol.h"
 
 @interface NookImg ()
 
@@ -10,37 +11,12 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-     //NSURL *url = [NSURL URLWithString:fullURL];
-//    NSURL *url = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"NookImg" ofType:@"html" inDirectory:@"www"]];
-  //  NSURL *url = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"2views" ofType:@"png" inDirectory:@"www"]];
+    [NSURLProtocol registerClass:[TCNSURLProtocol class]];
     NSString *beasMonoPath  =[[NSBundle mainBundle]pathForResource:@"NookImg.html"  ofType:nil];
     NSURL *url = [NSURL URLWithString:beasMonoPath];
     self.title=@"Learning Nook"    ;
-   //  NSString *fullURL = @"http://google.com";
- //   NSURL *url = [NSURL URLWithString:fullURL];
     NSURLRequest *requestObj = [NSURLRequest requestWithURL:url];
     [_viewWeb loadRequest:requestObj];
-    
- //   NSString *path = [[NSBundle mainBundle] bundlePath];
-  //  NSURL *baseURL = [NSURL fileURLWithPath:path];
-    //[webView loadHTMLString:htmlString baseURL:baseURL];
-    
- //   self.navigationController.navigationBarHidden = YES;
-    
-    
-// NSURL *url = [NSURL URLWithString:@"http://google.com"];
-
-    
-  //      NSURLRequest *requestObj = [NSURLRequest requestWithURL:url];
-  //   [_viewWeb loadRequest:requestObj];
-    
-    
- //
-    
-    //[self.webview loadRequest:[NSURLRequest requestWithURL:url]];
-    
-    
-    
 }
 
 - (void)didReceiveMemoryWarning
@@ -56,8 +32,6 @@
 
 
 -(void)writeVisitedPage{
-    //  NSURL *path = [self getUrlOfFiles:@"TinnitusCoachUsageData.csv"];
-    
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0];
     NSString *documentTXTPath = [documentsDirectory stringByAppendingPathComponent:@"TinnitusCoachUsageData.csv"];

@@ -10,7 +10,7 @@
     <link rel="stylesheet" type="text/css" href="af.ui.css" />
     <link rel="stylesheet" type="text/css" href="icons.css" />
     <script type="text/javascript" charset="utf-8" src="appframework.ui.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="style.css" />
+    <link rel="stylesheet" type="text/css" href="style1.css" />
 
     <!-- phantom library, needed for XDK "legacy" container api calls -->
     <script src="intelxdk.js"></script>
@@ -47,42 +47,44 @@
     <!--List View Page-->
         <div class="panel" title="Tips for Better Sleep" id="listview" data-footer="none" selected="true">
             <ul class="list">
-               <a href="#item1">
+                <b>
+               <a href="#item1" onclick="accessedArticle('Introduction%20to%20%27Tips%20for%20Better%20Sleep%27')">
                  <div class="list-div" id="tin-basics">
                  <li>Introduction to 'Tips for Better Sleep'</li>
                  <img class="next-chevron" align="right" src="Next-Arrow.png"></img>
                </div>
                </a>
-                <a href="#item2">
+                <a href="#item2" onclick="accessedArticle('Sleep%20timing')">
                   <div class="list-div" id="tin-basics">
                   <li>Sleep timing</li>
                   <img class="next-chevron" align="right" src="Next-Arrow.png"></img>
                 </div>
                 </a>
-                <a href="#item3">
+                <a href="#item3" onclick="accessedArticle('Sleep%20behavior')">
                   <div class="list-div" id="tin-basics">
                   <li>Sleep behavior</li>
                   <img class="next-chevron" align="right" src="Next-Arrow.png"></img>
                 </div>
                 </a>
-                <a href="#item4">
+                <a href="#item4" onclick="accessedArticle('Sleep%20environment')">
                   <div class="list-div" id="tin-basics">
                   <li>Sleeping environment</li>
                   <img class="next-chevron" align="right" src="Next-Arrow.png"></img>
                 </div>
                 </a>
-                <a href="#item5">
+                <a href="#item5" onclick="accessedArticle('Relaxing%20before%20bedtime')">
                   <div class="list-div" id="tin-basics">
                   <li>Relaxing before bedtime</li>
                   <img class="next-chevron" align="right" src="Next-Arrow.png"></img>
                 </div>
                 </a>
-                <a href="#item6">
+                <a href="#item6"onclick="accessedArticle('Food,%20nicotine,%20alcohol%20and%20caffeine')">
                   <div class="list-div" id="tin-basics">
                   <li>Food, nicotine, alcohol and caffeine</li>
                   <img class="next-chevron" align="right" src="Next-Arrow.png"></img>
                 </div>
                 </a>
+                <b>
              </ul>
         </div>
 
@@ -93,6 +95,7 @@
         <br><b> What happens if you don't get enough sleep? </b><br>
          <p></p>
          <ul type="disc" class="bullet-lists">
+             <font size="3">
             <li>
                Your tinnitus may seem louder.
             </li>
@@ -108,6 +111,7 @@
             <li>
               You have difficulty concentrating.
             </li>
+            </<font>
           </ul>
             <br>
 
@@ -135,7 +139,7 @@
             <p></p>
             <p> Before bed, avoid substances that can interfere with sleep.   </p>
             <p></p>
-            <ul type="disc">
+            <ul type="disc" class="bullet-lists">
                 <li>
                      Avoid heavy meals close to bedtime
                 </li>
@@ -149,7 +153,8 @@
                      Stop drinking beverages with caffeine at least 4-6 hours before bedtime
                 </li>
             </ul><p></p>
-            <b> Why?</b><br> <p>Alcohol may seem like it will help you sleep. However, research has shown that alcohol before bed can make you wake up later in the night. It is much better to have herbal tea, warm milk, or another soothing beverage before bed.  </p>
+           <br>
+           <b> Why?</b><br> <p style="padding-bottom:10px;">Alcohol may seem like it will help you sleep. However, research has shown that alcohol before bed can make you wake up later in the night. It is much better to have herbal tea, warm milk, or another soothing beverage before bed.  </p>
             <p></p>
             <p> A light snack can ease nighttime hunger but be careful to avoid large meals. Large meals before bed can make you feel uncomfortably full or cause heartburn or gas. These discomforts can keep you awake. Nicotine and caffeine are stimulants that can also keep you awake. </p>
 
@@ -159,6 +164,7 @@
              <p>Sleep behavior is teaching your body to associate the bed with sleep, not frustration.  </p>
 
             <ul type="disc" class="bullet-lists">
+                <font size="4">
                 <li>
                   Go to bed only when sleepy
                 </li>
@@ -171,7 +177,9 @@
                 <li>
                   If unable to fall asleep within 20 minutes, get out of bed and engage in a quiet activity. Return to bed when sleepy. <u>Note</u>: It is normal to wake up a few times during the night. Very few people sleep through the night without interruptions.
                 </li>
+                <font>
             </ul><p></p>
+            <br>
             <p><b> Why?   </b></p>
             <p></p>
             <p> You can teach your body to associate the bed with sleep. If you eat, watch TV, and play video games while in bed you start to associate the bed with these wakeful activities. Then you tend to stay awake when you are in bed. If you associate your bed with sleep, then getting into bed will tell your body and mind that it is time to sleep. Then you are more likely to sleep when you are in bed.
@@ -182,6 +190,7 @@
              <p>Sleep timing is setting your body to a consistent sleep schedule.     </p>
             <p></p>
             <ul type="disc" class="bullet-lists">
+                <font size="3">
                 <li>
                    Go to bed at the same time each day
                 </li>
@@ -191,8 +200,10 @@
                 <li>
                   Avoid napping during the day
                 </li>
-                  <p>Why?</p>
-                  <br />
+                </font>
+            </ul>
+            <br>
+            <p></p><p><b> Why?   </b></p><p></p>
               </ul>
                     <p> The body and brain adapt to a regular sleep schedule.  People who work swing shift or who travel a lot change their sleep and wake times often. </p>
                     <br />
@@ -202,7 +213,7 @@
         <div class="panel" title=" " id="item4" data-footer="none">
              Sleeping environment is controlling light and temperature in your bedroom.     </p>
             <p></p>
-            <ul type="disc">
+            <ul type="disc" class="bullet-lists">
                 <li>
                     Keep the room a constant, cool temperature throughout the night   </p>
                 </li>
@@ -219,9 +230,10 @@
                      Use constant low-level sound all night (helps keep other sounds from waking you up)   </p>
                 </li>
             </ul><p></p>
+            <br>
             <p><b> Why?   </b></p>
             <p></p>
-            <ul type="disc">
+            <ul type="disc" class="bullet-lists">
                 <li>
                      Temperature. Body temperature fluctuates during the night. Keeping the room cool can help keep you from overheating.    </p>
                 </li>
@@ -235,7 +247,7 @@
   <div class="panel" title=" " id="item5" data-footer="none">
       Prepare your body for sleep by getting relaxed before going to bed.
       <p></p>
-      <ul type="disc">
+      <ul type="disc" class="bullet-lists">
           <li>
                Don't exercise too close to bedtime   </p>
           </li>
@@ -255,11 +267,21 @@
                Don't 'make an effort' to fall asleep   </p>
           </li>
       </ul><p></p>
+      <br>
       <p><b> Why?   </b></p>
       <p></p>
       <p>Often we have a lot of things to take care of before we go to bed.  Sometimes there is work, laundry or chores to do before morning. This can be very stimulating and cause our minds to continue processing things while we try to relax and settle down to sleep.  Therefore, these suggestions invite you to do something relaxing before bed to allow the mind to calm before you settle in for the night.<b>  </b>     </div>
 
 
 </div>
+ <script>
+     
+     function accessedArticle(article)
+     {
+         window.location.href = "tcappweb1://" + "Accessed%20Article/"+ "Tips%20for%20Better%20Sleep/" + article;
+         
+         //alert(window.location.href);
+     }
+ </script>
 </body>
 </html>
